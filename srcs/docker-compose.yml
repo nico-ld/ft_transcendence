@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "443:443"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - ft_silk_space
+
+  frontend:
+    build: ./frontend
+    environment:
+      - NEXT_PUBLIC_API_URL=https://localhost/api
+    expose:
+      - "3000"
+    networks:
+      - ft_silk_space
+
+  backend:
+    build: ./backend
+    environment:
+      - DATABASE_URL=postgresql://user:pass@db:5432/transcendence
+    expose:
+      - "8000"
+    depends_on:
+      - db
+    networks:
+      - ft_silk_space
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: silk_space_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ft_silk_space
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
