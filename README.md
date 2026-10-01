@@ -109,6 +109,7 @@ As tech leads, *mmansier* and *amartel* helped choose the proper technical stack
 
 * Python (FastAPI)
 * Docker
+* Nginx (as a reverse proxy to forward traffic to NextJS, FastAPI, and handle WebSocket)
 
 ### Database system
 
