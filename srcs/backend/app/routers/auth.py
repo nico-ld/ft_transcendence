@@ -33,9 +33,8 @@ async def callback_42(request: Request):
     resp = await oauth.fortytwo.get("me", token=token)
     profile = resp.json()
     print(profile)
-    # TODO: find or create the user in your DB using profile["id"]
     # TODO: create session/JWT and set it as an HttpOnly cookie
 
     response = RedirectResponse(settings.frontend_url)
-    # response.set_cookie("access_token", your_jwt, httponly=True, samesite="lax")
+    # response.set_cookie("access_token", jwt, httponly=True, samesite="lax")
     return response
