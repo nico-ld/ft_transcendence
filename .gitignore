@@ -11,6 +11,7 @@ dist/
 build/
 .next/
 out/
+*.pyc
 
 # Logs
 *.log
@@ -38,3 +39,6 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Virtual Environments
+.venv
