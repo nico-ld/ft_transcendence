@@ -29,7 +29,7 @@ export function LoginForm() {
 	return (
 		<form action={formAction} className="flex flex-col gap-4">
 			<input
-				className="bg-white dark:text-zinc-900 text-center"
+				className="bg-white font-mono dark:text-zinc-900 text-center"
 				name="email"
 				type="email"
 				placeholder="Email"
@@ -37,7 +37,7 @@ export function LoginForm() {
 				required
 			/>
 			<input
-				className="bg-white dark:text-zinc-900 text-center"
+				className="bg-white font-mono dark:text-zinc-900 text-center"
 				name="password"
 				type="password"
 				placeholder="Password"
@@ -45,7 +45,7 @@ export function LoginForm() {
 				required
 			/>
 			{error && <p role="alert" className="text-red-500">{error}</p>}
-			<Button type="submit" variant="outline" disabled={pending}>
+			<Button type="submit" variant="outline" className="font-mono" disabled={pending}>
 				{pending ? "Logging in..." : "Log in"}
 			</Button>
 		</form>
