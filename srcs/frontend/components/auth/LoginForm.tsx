@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
 import { login, ROLE_HOME} from "@/lib/auth";
+import { Button } from "@/components/ui/Button";
 
 export function LoginForm() {
 	const router = useRouter();
@@ -44,9 +45,9 @@ export function LoginForm() {
 				required
 			/>
 			{error && <p role="alert" className="text-red-500">{error}</p>}
-			<button type="submit" disabled={pending}>
+			<Button type="submit" variant="outline" disabled={pending}>
 				{pending ? "Logging in..." : "Log in"}
-			</button>
+			</Button>
 		</form>
 	);
 }
