@@ -29,3 +29,13 @@
 * The 5th RUN is to avoid having setuid and setgid accessed by the user, as they can allow to change password among other security related things.
 
 * The rest of the file is to set metadata for the container image, switches execution to the unprivileged user, and configures the container to start up cleanly and remain running indefinitely in the background so terminal sessions can attach to it as needed.
+
+### On roles images
+
+* At the bottom of roles Dockerfile, we can find LABEL silk_space.role=. It's there so the list_roles() function can read this label to fill the HR dropdown.
+
+### On the Makefile
+
+* The Makefile build the workspace images. It runs before `docker compose up`. So the idea is that compose does not build these, the backend starts them on demand.
+
+### On the docker-compose
