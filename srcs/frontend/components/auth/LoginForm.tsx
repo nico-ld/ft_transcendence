@@ -2,8 +2,9 @@
 
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
-import { login, ROLE_HOME} from "@/lib/auth";
+import { Login} from "@/app/actions/auth";
 import { Button } from "@/components/ui/Button";
+import { ROLE_HOME } from "@/lib/utils";
 
 export function LoginForm() {
 	const router = useRouter();
@@ -11,7 +12,7 @@ export function LoginForm() {
 	const [error, formAction, pending] = useActionState(
 		async (_prev: string, formData: FormData) => {
 			try {
-				const result = await login({
+				const result = await Login({
 					email: String(formData.get("email")),
 					password: String(formData.get("password"))
 				});

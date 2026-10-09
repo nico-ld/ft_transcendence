@@ -1,5 +1,5 @@
 import { LoginForm } from "@/components/auth/LoginForm";
-import { ThemeSwitch } from "@/components/ui/ThemeSwicth";
+import { ThemeSwitch } from "@/components/layout/ThemeSwicth";
 
 export default function LoginPage() {
 	return (

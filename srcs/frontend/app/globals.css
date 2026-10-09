@@ -51,6 +51,7 @@
   --color-highlight: var(--highlight);
   --color-highlight-foreground: var(--highlight-foreground);
   --shadow-glow: var(--glow);
+  --bg-card: var(--card);
 }
 
 /* ========== LIGHT = "Minimal" (warm off-white, green primary) ========== */

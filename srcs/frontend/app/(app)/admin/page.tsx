@@ -1,9 +1,14 @@
 "use client";
 
+import { Header } from "@/components/layout/Header"
+
 export default function AdminPage() {
 	return (
-		<main className="min-h-screen flex items-center justify-center">
-			<h1>Hello Admin !</h1>
-		</main>
+		<>
+			{/* SIMULATION USERNAME */}
+			<Header role="admin" username="nico" />
+			<main className="min-h-screen">
+			</main>
+		</>
 	);
 }
