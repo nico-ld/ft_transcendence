@@ -20,6 +20,8 @@ services:
 
   backend:
     build: ./backend
+    env_file:
+        - ./backend/.env
     environment:
       - DATABASE_URL=postgresql://user:pass@db:5432/silk_space_db
     expose:

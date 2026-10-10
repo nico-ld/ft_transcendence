@@ -6,6 +6,7 @@ httpx
 itsdangerous
 pydantic-settings
 httpx2
-sqlalchemy[asyncio]
+sqlalchemy[asyncio] >= 2.1
 asyncpg
 alembic
+psycopg

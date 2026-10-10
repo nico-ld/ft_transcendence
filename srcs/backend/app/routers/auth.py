@@ -1,5 +1,5 @@
-from app.config import settings
 from authlib.integrations.starlette_client import OAuth, OAuthError
+from config import settings
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import RedirectResponse
 
