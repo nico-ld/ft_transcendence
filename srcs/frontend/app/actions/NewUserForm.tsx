@@ -1,4 +1,4 @@
-import { Button } from "../ui/Button";
+import { Button } from "../../components/ui/Button";
 import { 
 	Dialog,
 	DialogClose,
@@ -8,10 +8,10 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger
- } from "../ui/dialog";
-import { Field, FieldGroup } from "../ui/field"
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+ } from "../../components/ui/dialog";
+import { Field, FieldGroup } from "../../components/ui/field"
+import { Input } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
 import { UserRoundPlus } from "lucide-react";
 
 export function NewUserForm() {

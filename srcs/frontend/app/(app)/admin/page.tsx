@@ -2,11 +2,12 @@
 
 import { Header } from "@/components/layout/Header"
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { UserRoundX, UserRoundPlus, Funnel } from "lucide-react";
+import { Funnel } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { NewUserForm } from "@/components/layout/NewUserForm";
+import { NewUserForm } from "@/app/actions/NewUserForm";
+import { RemoveUser } from "@/app/actions/RemoveUser"
 import * as React from "react"
 import { 
 	Avatar,
@@ -32,20 +33,8 @@ import {
 	DropdownMenuRadioItem,
 	DropdownMenuTrigger
 } from "@/components/ui/Dropdown-menu";
-import { 
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogMedia,
-	AlertDialogTitle,
-	AlertDialogTrigger
- } from "@/components/ui/alert-dialog"
 
-type User = { username: string; avatar: string; email: string; createdAt: string };
+export type User = { username: string; avatar: string; email: string; createdAt: string };
 type SortKey = "date" | "username" | "email";
 
 // REPLACE BY REAL USERS
@@ -120,33 +109,6 @@ function sortUsers(list: User[], key: SortKey) {
 	);
 }
 
-function RemoveUser({ user }: {user: User}) {
-	return (
-		<AlertDialog>
-			<AlertDialogTrigger
-				render={<Button variant="ghost" size="icon" className="rounded-full text-red-500"><UserRoundX /></Button>}
-			/>
-			<AlertDialogContent size="sm">
-			<AlertDialogHeader>
-			<AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
-				<UserRoundX />
-			</AlertDialogMedia>
-			<AlertDialogTitle>Delete {user.username} profil</AlertDialogTitle>
-			<AlertDialogDescription>
-				This will permanently delete this user and his data. 
-				Be sure you save every sensitives data.
-			</AlertDialogDescription>
-			</AlertDialogHeader>
-			<AlertDialogFooter>
-				<AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
-				<AlertDialogAction variant="destructive">Delete</AlertDialogAction>
-			</AlertDialogFooter>
-		</AlertDialogContent>
-	</AlertDialog>
-	);
-}
-
-
 function UserList({ users }: {users:User[] }) {
 	if (users.length === 0) {
 		return <p className="p-4 text-center text-sm text-muted-foreground">No user found</p>
@@ -213,9 +175,9 @@ export default function AdminPage() {
 											onChange={(e) => setQuery(e.target.value)}
 										/>
 										<Button type="submit">Search</Button>
-										<NewUserForm />
 									</Field>
 								</form>
+								<NewUserForm />
 							</ItemTitle>
 						</Item>
 						<ItemSeparator className="my-0 mb-2"/>
