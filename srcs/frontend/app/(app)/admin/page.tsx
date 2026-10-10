@@ -6,6 +6,7 @@ import { UserRoundX, UserRoundPlus, Funnel } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { NewUserForm } from "@/components/layout/NewUserForm";
 import * as React from "react"
 import { 
 	Avatar,
@@ -195,8 +196,35 @@ export default function AdminPage() {
 	return (
 		<>
 			{/* SIMULATION USERNAME */}
-			<Header role="admin" username="nico" />
-			<main className="min-h-screen">
+			<Header role="admin" username="Julien" />
+			
+			<main className="min-h-screen flex flex-row items-center justify-around">
+				<div className="flex h-150 w-105 flex-col rounded-md border p-2 bg-card">
+					<ItemGroup className="max-w-sm bg-card">
+						<Item variant="muted">
+							<ItemTitle>
+								<form onSubmit={(e) => e.preventDefault()} className="w-full">
+									<Field orientation="horizontal">
+										<Filter sortBy={sortBy} onSortChange={setSortBy} />
+										<Input 
+											type="search"
+											placeholder="Search an user"
+											value={query}
+											onChange={(e) => setQuery(e.target.value)}
+										/>
+										<Button type="submit">Search</Button>
+										<NewUserForm />
+									</Field>
+								</form>
+							</ItemTitle>
+						</Item>
+						<ItemSeparator className="my-0 mb-2"/>
+					</ItemGroup>
+
+					<ScrollArea className="min-h-0 flex-1">
+						<UserList users={visibleUsers} />
+					</ScrollArea>
+				</div>
 			</main>
 		</>
 	);
