@@ -11,12 +11,12 @@ export function WeekChart({ data }: {data: number[]}) {
 					<div
 						key={i}
 						title={`${hours}h`}
-						className="flex-1 rounded-md bg-primary"
+						className="flex-1 rounded-md bg-primary border"
 						style={{ height: `${(hours / max) * 100}%`}}
 					/>
 				))}
 			</div>
-			<div className="mt-1 felx gap-2 text-[10px] text-muted-foreground">
+			<div className="mt-1 flex gap-2 text-[10px] text-muted-foreground">
 				{data.map((_, i) => (
 					<span key={i} className="flex-1 text-center">{DAYS[i]}</span>
 				))}

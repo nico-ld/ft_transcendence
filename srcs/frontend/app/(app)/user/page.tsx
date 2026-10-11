@@ -8,7 +8,8 @@ export default async function UserPage() {
 
 	return (
 		// SIMULATION USERNAME
-		<DashboardShell role="user" username="nico" sidebar={<StatsPanel stats={stats} />}>
+		<DashboardShell role="user" username="nico">
+			<StatsPanel stats={stats} />
 			<WorkspaceLink href="/workspace" />
 		</DashboardShell>
 	);
