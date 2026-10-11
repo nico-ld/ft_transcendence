@@ -1,4 +1,12 @@
+import { 
+	Tooltip, 
+	TooltipContent,
+	TooltipTrigger
+} from "../ui/tooltip";
+
 const DAYS = ["M", "T", "W", "T", "F", "S",  "S"]
+
+// title={`${hours}h`}
 
 export function WeekChart({ data }: {data: number[]}) {
 	const max = Math.max(...data, 1);
@@ -8,12 +16,16 @@ export function WeekChart({ data }: {data: number[]}) {
 			<p className="mb-2 text-xs uppercase tracking-wider text-muted-foreground">Daily log time</p>
 			<div className="flex h-16 items-end gap-2">
 				{data.map((hours, i) => (
-					<div
-						key={i}
-						title={`${hours}h`}
-						className="flex-1 rounded-md bg-primary border"
-						style={{ height: `${(hours / max) * 100}%`}}
-					/>
+				<Tooltip key={i}>
+						<TooltipTrigger render={<div
+							key={i}
+							className="flex-1 rounded-md bg-primary border"
+							style={{ height: `${(hours / max) * 100}%`}}
+						/>} />
+						<TooltipContent>
+							<p className="font-bold">{`${hours}h`}</p>
+						</TooltipContent>
+					</Tooltip>
 				))}
 			</div>
 			<div className="mt-1 flex gap-2 text-[10px] text-muted-foreground">

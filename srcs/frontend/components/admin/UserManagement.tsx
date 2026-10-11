@@ -56,7 +56,7 @@ function UserList({ users, onSelect }: {users:User[]; onSelect: (user: User) => 
 			{users.map((person) => (
 				<Item 
 					key={person.username} 
-					className="bg-muted/50" 
+					className="bg-muted/50 transition hover:bg-popover" 
 					variant="outline"
 					role="button"
 					tabIndex={0}
@@ -93,7 +93,7 @@ function UserList({ users, onSelect }: {users:User[]; onSelect: (user: User) => 
 function Filter({ sortBy, onSortChange }: { sortBy: SortKey; onSortChange: (k: SortKey) => void }) {
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger render={<Button variant="ghost"><Funnel /></Button>} />
+			<DropdownMenuTrigger render={<Button variant="ghost" className="rounded-full hover:text-primary"><Funnel /></Button>} />
 			<DropdownMenuContent className="w-32">
 				<DropdownMenuGroup>
 					<DropdownMenuLabel>Sort By</DropdownMenuLabel>
