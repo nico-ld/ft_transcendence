@@ -14,7 +14,7 @@ export function DashboardShell({ role, username, avatarUrl, sidebar, children }:
 		<>
 			<Header role={role} username={username} avatarUrl={avatarUrl} />
 			<main
-				className={`mx-auto grid min-h-screen w-full max-w-6xl gap-5 px-4 pb-8 pt-20 md:px-6 ${
+				className={`mx-auto grid min-h-screen w-full max-w-7xl gap-5 px-4 pb-8 pt-20 md:px-6 ${
 					sidebar ? "lg:grid-cols-[360px_1fr]" : ""
 				}`}
 			>

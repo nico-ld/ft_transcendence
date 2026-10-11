@@ -3,10 +3,11 @@
 import { useTransition } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import {ChevronDown, LogOut, Moon, Settings, Sun} from "lucide-react";
+import {ChevronDown, LogOut, Moon, Settings, Sun, Sword} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
+import { AdminBadge } from "./CustomBadge";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -39,11 +40,7 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 			<div className="flex items-center gap-2 font-semibold">
 				<span className="size-7 rounded-lg bg-primary" aria-hidden="true" />
 				{APP_NAME}
-				{role === "admin" && (
-					<span className="rounded-md bg-primary/10 px-1.5 py-0.5 text-xs font-medium text-primary">
-						Admin
-					</span>
-				)}
+				{role === "admin" && (<AdminBadge />)}
 			</div>
 
 			{/* Right:user menu */}

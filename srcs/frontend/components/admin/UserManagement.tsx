@@ -7,6 +7,7 @@ import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { NewUserForm } from "@/app/actions/NewUserForm";
 import { RemoveUser } from "@/app/actions/RemoveUser"
+import { UserBadge } from "../layout/CustomBadge";
 import * as React from "react"
 import { 
 	Avatar,
@@ -50,7 +51,7 @@ function UserList({ users }: {users:User[] }) {
 		return <p className="p-4 text-center text-sm text-muted-foreground">No user found</p>
 	}
 	return (
-		<ItemGroup className="max-w-sm">
+		<ItemGroup className="max-w-md">
 			{users.map((person) => (
 				<Item key={person.username} className="bg-muted/50" variant="outline">
 					<ItemMedia>
@@ -64,6 +65,7 @@ function UserList({ users }: {users:User[] }) {
 						<ItemDescription>{person.email}</ItemDescription>
 					</ItemContent>
 					<ItemActions>
+						<UserBadge job={person.job} />
 						<RemoveUser user={person} />
 					</ItemActions>
 				</Item>
@@ -103,24 +105,29 @@ export function UserManagement({ users }: { users: User[] }) {
 	}, [users, query, sortBy]);
 
 	return (
-		<div className="flex h-150 w-full max-w-105 flex-col rounded-xl border bg-card p-2 shadow-glow">
-			<ItemGroup className="max-w-sm bg-card">
+		<div className="flex h-150 w-full max-w-125 flex-col rounded-xl border bg-card p-2 shadow-glow">
+			<ItemGroup className="max-w-md bg-card">
 				<Item variant="muted">
-					<ItemTitle>
-						<form onSubmit={(e) => e.preventDefault()} className="w-full">
-							<Field orientation="horizontal">
-								<Filter sortBy={sortBy} onSortChange={setSortBy} />
-								<Input
-									type="search"
-									placeholder="Search an user"
-									value={query}
-									onChange={(e) => setQuery(e.target.value)}
-								/>
-								<Button type="submit">Search</Button>
-							</Field>
-						</form>
+					<ItemContent>
+						<ItemTitle>
+							<form onSubmit={(e) => e.preventDefault()} className="w-full">
+								<Field orientation="horizontal">
+									<Filter sortBy={sortBy} onSortChange={setSortBy} />
+									<Input
+										type="search"
+										placeholder="Search an user"
+										value={query}
+										onChange={(e) => setQuery(e.target.value)}
+										/>
+									<Button type="submit">Search</Button>
+								</Field>
+							</form>
+						</ItemTitle>
+					</ItemContent>
+
+					<ItemActions>
 						<NewUserForm />
-					</ItemTitle>
+					</ItemActions>
 				</Item>
 				<ItemSeparator className="my-0 mb-2" />
 			</ItemGroup>

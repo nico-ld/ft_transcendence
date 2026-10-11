@@ -1,4 +1,8 @@
-import { Button } from "../../components/ui/button";
+import { Button } from "@/components/ui/button";
+import { Field, FieldGroup } from "@/components/ui/field"
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { UserRoundPlus } from "lucide-react";
 import { 
 	Dialog,
 	DialogClose,
@@ -8,11 +12,38 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger
- } from "../../components/ui/dialog";
-import { Field, FieldGroup } from "../../components/ui/field"
-import { Input } from "../../components/ui/input";
-import { Label } from "../../components/ui/label";
-import { UserRoundPlus } from "lucide-react";
+} from "@/components/ui/dialog";
+import { 
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue
+} from "@/components/ui/select";
+
+import { Jobs } from "@/lib/jobs";
+
+function SelectJob() {
+	return (
+		<Select items={Jobs}>
+			<SelectTrigger className="w-full max-w-48">
+				<SelectValue />
+			</SelectTrigger>
+			<SelectContent>
+				<SelectGroup>
+					<SelectLabel>Jobs</SelectLabel>
+					{Jobs.map((item) => (
+						<SelectItem key={item.value} value={item.value}>
+							{item.label}
+						</SelectItem>
+					))}
+				</SelectGroup>
+			</SelectContent>
+		</Select>
+	);
+}
 
 export function NewUserForm() {
 	return (
@@ -44,6 +75,10 @@ export function NewUserForm() {
 						<Field>
 							<Label htmlFor="password-1">Password</Label>
 							<Input id="password-1" name="password" type="password" placeholder="Create a Password"/>
+						</Field>
+						<Field>
+							<Label htmlFor="job-1">Job</Label>
+							<SelectJob />
 						</Field>
 					</FieldGroup>
 					<DialogFooter>
