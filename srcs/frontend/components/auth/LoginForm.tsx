@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
 import { Login} from "@/app/actions/auth";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/button";
 import { ROLE_HOME } from "@/lib/utils";
 import { Spinner } from "../ui/spinner";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";

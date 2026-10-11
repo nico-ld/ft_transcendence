@@ -1,5 +1,5 @@
 import { User } from "../(app)/admin/page";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { UserRoundX } from "lucide-react";
 import { 
 	AlertDialog,

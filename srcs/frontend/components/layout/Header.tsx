@@ -4,8 +4,9 @@ import { useTransition } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import {ChevronDown, LogOut, Moon, Settings, Sun} from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/Button";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
+import { Spinner } from "../ui/spinner";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -35,7 +36,7 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 	return (
 		<header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b bg-background/80 px-4 backdrop-blur md:px-6">
 			{/* Left: logo */}
-			<div className="flex items-center gap-2 font0semibold">
+			<div className="flex items-center gap-2 font-semibold">
 				<span className="size-7 rounded-lg bg-primary" aria-hidden="true" />
 				{APP_NAME}
 				{role === "admin" && (
@@ -95,7 +96,8 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 						onClick={() => startTransition(() => Logout())}
 					>
 						<LogOut />
-						{isPending ? "Logging out..." : "Log out"}
+						{isPending ? "Logging out" : "Log out"}
+						{isPending && <Spinner />}
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
