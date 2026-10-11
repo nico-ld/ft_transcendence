@@ -16,7 +16,7 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger
-} from "@/components/ui/Dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { Logout } from "@/app/actions/auth";
 
 const APP_NAME="Silk Space";

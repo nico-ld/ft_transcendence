@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { NewUserForm } from "@/app/actions/NewUserForm";
-import { RemoveUser } from "@/app/actions/RemoveUser"
+import { RemoveUser } from "@/app/actions/RemoveUser";
+import { ModifyUser } from "@/app/actions/ModifyUser";
 import { UserBadge } from "../layout/CustomBadge";
 import * as React from "react"
 import { 
@@ -32,7 +33,7 @@ import {
 	DropdownMenuRadioGroup,
 	DropdownMenuRadioItem,
 	DropdownMenuTrigger
-} from "@/components/ui/Dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 
 import type { User } from "@/lib/types"
 
@@ -46,14 +47,29 @@ function sortUsers(list: User[], key: SortKey) {
 	);
 }
 
-function UserList({ users }: {users:User[] }) {
+function UserList({ users, onSelect }: {users:User[]; onSelect: (user: User) => void }) {
 	if (users.length === 0) {
 		return <p className="p-4 text-center text-sm text-muted-foreground">No user found</p>
 	}
 	return (
 		<ItemGroup className="max-w-md">
 			{users.map((person) => (
-				<Item key={person.username} className="bg-muted/50" variant="outline">
+				<Item 
+					key={person.username} 
+					className="bg-muted/50" 
+					variant="outline"
+					role="button"
+					tabIndex={0}
+					onClick={() => onSelect(person)}
+					onKeyDown={(e) => {
+						if (e.target !== e.currentTarget)
+							return ;
+						if (e.key === "Enter" || e.key === " ") {
+							e.preventDefault();
+							onSelect(person);
+						}
+					}}
+				>
 					<ItemMedia>
 						<Avatar>
 							<AvatarImage src={person.avatar} />
@@ -64,7 +80,7 @@ function UserList({ users }: {users:User[] }) {
 						<ItemTitle>{person.username}</ItemTitle>
 						<ItemDescription>{person.email}</ItemDescription>
 					</ItemContent>
-					<ItemActions>
+					<ItemActions onClick={(e) => e.stopPropagation()}>
 						<UserBadge job={person.job} />
 						<RemoveUser user={person} />
 					</ItemActions>
@@ -95,6 +111,13 @@ function Filter({ sortBy, onSortChange }: { sortBy: SortKey; onSortChange: (k: S
 export function UserManagement({ users }: { users: User[] }) {
 	const [query, setQuery] = React.useState("");
 	const [sortBy, setSortBy] = React.useState<SortKey>("username");
+	const [selectedUser, setSelectedUser] = React.useState<User | null>(null);
+	const [open, setOpen] = React.useState(false);
+
+	function handleSelect(user: User) {
+		setSelectedUser(user);
+		setOpen(true);
+	}
 
 	const visibleUsers = React.useMemo(() => {
 		const q = query.trim().toLowerCase();
@@ -133,8 +156,16 @@ export function UserManagement({ users }: { users: User[] }) {
 			</ItemGroup>
 
 			<ScrollArea className="min-h-0 flex-1">
-				<UserList users={visibleUsers} />
+				<UserList users={visibleUsers} onSelect={handleSelect}/>
 			</ScrollArea>
+
+			{selectedUser && (
+				<ModifyUser
+					user={selectedUser}
+					open={open}
+					onOpenChange={setOpen}
+				/>
+			)}
 		</div>
 	);
 }

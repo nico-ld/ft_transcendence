@@ -3,6 +3,7 @@ import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UserRoundPlus } from "lucide-react";
+import { SelectJob } from "@/components/layout/SelectJob";
 import { 
 	Dialog,
 	DialogClose,
@@ -13,37 +14,6 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from "@/components/ui/dialog";
-import { 
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectLabel,
-	SelectTrigger,
-	SelectValue
-} from "@/components/ui/select";
-
-import { Jobs } from "@/lib/jobs";
-
-function SelectJob() {
-	return (
-		<Select items={Jobs}>
-			<SelectTrigger className="w-full max-w-48">
-				<SelectValue />
-			</SelectTrigger>
-			<SelectContent>
-				<SelectGroup>
-					<SelectLabel>Jobs</SelectLabel>
-					{Jobs.map((item) => (
-						<SelectItem key={item.value} value={item.value}>
-							{item.label}
-						</SelectItem>
-					))}
-				</SelectGroup>
-			</SelectContent>
-		</Select>
-	);
-}
 
 export function NewUserForm() {
 	return (
