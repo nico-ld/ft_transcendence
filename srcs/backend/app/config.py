@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from sqlalchemy import URL
 
 
 class Settings(BaseSettings):
@@ -12,7 +13,24 @@ class Settings(BaseSettings):
 	ft_client_secret: str
 	session_secret: str
 	frontend_url: str = "http://localhost:5173"
-	database_url: str = "postgresql://user:pass@localhost:5432/silk_space_db"
+
+	# same variables as the postgres container (postgres/.env)
+	postgres_user: str
+	postgres_password: str
+	postgres_db: str
+	postgres_host: str = "db"
+	postgres_port: int = 5432
+
+	@property
+	def database_url(self) -> URL:
+		return URL.create(
+            "postgresql+psycopg",
+            username=self.postgres_user,
+            password=self.postgres_password,
+            host=self.postgres_host,
+            port=self.postgres_port,
+            database=self.postgres_db,
+        )
 
 
 settings = Settings() # pyright: ignore[reportCallIssue]
