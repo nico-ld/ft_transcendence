@@ -1,6 +1,6 @@
 from .auth_db import employee_creds
 from .connection import Roles, User, UserFront, engine
-from .requests import SQLRequest
+from .requests import SQLRequest, request
 
 __all__ = [
 	"Roles",
@@ -9,4 +9,5 @@ __all__ = [
 	"UserFront",
 	"employee_creds",
 	"engine",
+	"request"
 ]
