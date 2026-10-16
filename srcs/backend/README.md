@@ -2,8 +2,6 @@
 
 ## Run the app
 
-From `srcs/backend`:
-
 ```sh
 docker compose -f srcs/docker-compose.yml up -d backend
 or
@@ -20,7 +18,7 @@ Example:
 
 | What | Example |
 |---|---|
-| Tables | `users`, `employee_creds`, `user_id` |
+| Tables | `users`, `employee_creds` |
 | Columns | `first_name`, `last_name`, `email`, `password_hash`... |
 | Postgres enum type | `user_role`, with values such as `admin`, `lead_dev`, `dev`. |
 
