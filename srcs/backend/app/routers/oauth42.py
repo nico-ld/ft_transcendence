@@ -1,7 +1,6 @@
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from config import settings
-from db import Role, User
-from db import request as db_request  # "request" is the HTTP request in the routes
+from db import Role, User, users_db
 from fastapi import APIRouter, HTTPException, Request, status
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import RedirectResponse
@@ -52,11 +51,11 @@ def get_or_create_42_user(profile: FtProfile) -> User:
         HTTPException: 409 if the email belongs to an account already linked
             to another 42 account.
     """
-    user = db_request.get_user_by_ft_id(profile.id)
+    user = users_db.get_user_by_ft_id(profile.id)
     if user is not None:
         return user
 
-    user = db_request.get_user_by_email(profile.email)
+    user = users_db.get_user_by_email(profile.email)
     if user is not None:
         if user.ft_id == profile.id:
             # created by a concurrent callback between the two lookups
@@ -66,12 +65,12 @@ def get_or_create_42_user(profile: FtProfile) -> User:
             raise HTTPException(
                 status.HTTP_409_CONFLICT, "This email is linked to another 42 account"
             )
-        linked = db_request.link_ft_id(user.id, profile.id)
+        linked = users_db.link_ft_id(user.id, profile.id)
         if linked is not None:
             return linked
 
     try:
-        return db_request.add_user(
+        return users_db.add_user(
             profile.login,
             profile.first_name,
             profile.last_name,
@@ -84,7 +83,7 @@ def get_or_create_42_user(profile: FtProfile) -> User:
         # two callbacks for the same new user at once,
         # the other one won, very likely but still here
         # because it maaaay happen
-        user = db_request.get_user_by_ft_id(profile.id)
+        user = users_db.get_user_by_ft_id(profile.id)
         if user is None:
             raise
         return user

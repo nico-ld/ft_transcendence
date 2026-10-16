@@ -1,4 +1,4 @@
-from db import Role, request
+from db import Role, users_db
 from fastapi import APIRouter, HTTPException, Response, status
 from schemas import LoginIn, SignupIn, UserOut
 from security import (
@@ -16,7 +16,7 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 @router.post("/signup", status_code=status.HTTP_201_CREATED)
 def signup(body: SignupIn, response: Response) -> UserOut:
     try:
-        user = request.add_user(
+        user = users_db.add_user(
             body.username,
             body.first_name,
             body.last_name,

@@ -3,7 +3,7 @@ from typing import Annotated
 
 import jwt
 from config import settings
-from db import User, request
+from db import User, users_db
 from fastapi import Depends, HTTPException, Response, status
 from fastapi.security import APIKeyCookie
 from pwdlib import PasswordHash
@@ -32,7 +32,7 @@ def authenticate(email: str, password: str) -> User | None:
         User | None: the user if the password matches, None if the email is
         unknown, the account has no password (42 only) or the password is wrong
     """
-    user = request.get_user_by_email(email)
+    user = users_db.get_user_by_email(email)
     if user is None or user.password_hash is None:
         password_hasher.verify(password, _DUMMY_HASH)
         return None
@@ -88,7 +88,7 @@ def get_current_user(token: Annotated[str | None, Depends(session_cookie)]) -> U
     except jwt.InvalidTokenError:
         raise unauthorized from None
     # loaded on every request, so a deleted user or a role change applies directly
-    user = request.get_user(int(payload["sub"]))
+    user = users_db.get_user(int(payload["sub"]))
     if user is None:
         raise unauthorized
     return user

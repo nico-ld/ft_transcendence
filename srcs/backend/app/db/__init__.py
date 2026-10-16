@@ -1,5 +1,5 @@
 from .connection import Base, Role, User, engine
-from .requests import SQLRequest, request
+from .requests import SQLRequest, users_db
 
 __all__ = [
     "Base",
@@ -7,5 +7,5 @@ __all__ = [
     "SQLRequest",
     "User",
     "engine",
-    "request",
+    "users_db",
 ]

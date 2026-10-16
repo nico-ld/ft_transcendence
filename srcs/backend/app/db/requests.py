@@ -145,4 +145,4 @@ class SQLRequest:
             return True
 
 
-request: SQLRequest = SQLRequest(engine)
+users_db: SQLRequest = SQLRequest(engine)

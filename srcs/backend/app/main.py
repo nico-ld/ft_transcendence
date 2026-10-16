@@ -1,14 +1,16 @@
 import logging
+import time
 from contextlib import asynccontextmanager
 
 from config import settings
-from db import Base, Role, engine, request
+from db import Base, Role, engine, users_db
 from fastapi import FastAPI
 from routers import auth, oauth42, users
 from security import hash_password
 from starlette.middleware.sessions import SessionMiddleware
 
 logger = logging.getLogger("uvicorn.error")
+start = time.time()
 
 
 def create_initial_admin() -> None:
@@ -16,7 +18,7 @@ def create_initial_admin() -> None:
     if settings.admin_email is None or settings.admin_password is None:
         return
     email = settings.admin_email.lower()
-    existing = request.get_user_by_email(email)
+    existing = users_db.get_user_by_email(email)
     if existing is not None:
         # do not change an existing account, could overwrite an user account into admin
         if existing.role != Role.ADMIN:
@@ -24,7 +26,7 @@ def create_initial_admin() -> None:
                 "ADMIN_EMAIL %s is a non admin account, so it wasn't created", email
             )
         return
-    request.add_user(
+    users_db.add_user(
         "admin",
         "Admin",
         "Admin",
@@ -61,4 +63,4 @@ app.include_router(users.router)
 
 @app.get("/")
 def root():
-    return {"status": "ok", "robert": 67}
+    return {"status": "ok", "robert": 67, "uptime": int(time.time() - start)}
