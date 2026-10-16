@@ -1,7 +1,6 @@
 import { DashboardShell } from "@/components/dashboard/DashboardShell";
 import { StatsPanel } from "@/components/dashboard/StatsPanel";
 import { UserManagement } from "@/components/admin/UserManagement";
-import { ModifyUser } from "@/app/actions/ModifyUser";
 import { getSystemStats } from "@/lib/stats";
 import type { User } from "@/lib/types";
 
@@ -104,11 +103,8 @@ export default async function AdminPage() {
 
 	return (
 		<>
-		// SIMULATION USERNAME
-		<DashboardShell
-			role="admin"
-			username="Julien"
-		>
+		{/* SIMULATION USERNAME */}
+		<DashboardShell role="admin" username="Julien">
 			<StatsPanel
 				stats={stats}
 				extras={[{ label: "Registered users", value: String(users.length) }]}
