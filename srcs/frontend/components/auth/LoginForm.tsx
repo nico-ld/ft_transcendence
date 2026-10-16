@@ -70,7 +70,7 @@ export function LoginForm() {
 							<div className="grid gap-2">
 								<Label htmlFor="email">Email</Label>
 								<input
-									className="w-full bg-gray-100 rounded-2xl dark:text-zinc-900 text-center"
+									className="w-full p-0.5 bg-gray-100 rounded-2xl dark:text-zinc-900 text-center text-base"
 									name="email"
 									type="email"
 									placeholder="Email"
@@ -81,7 +81,7 @@ export function LoginForm() {
 							<div className="grid gap-2">
 								<Label htmlFor="password">Password</Label>
 								<input
-									className="w-full bg-gray-100 rounded-2xl dark:text-zinc-900 text-center"
+									className="w-full p-0.5 bg-gray-100 rounded-2xl dark:text-zinc-900 text-center text-base"
 									name="password"
 									type="password"
 									placeholder="Password"
