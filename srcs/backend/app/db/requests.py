@@ -1,7 +1,8 @@
-from connection import Roles, User, engine
 from sqlalchemy import Engine, Select
 from sqlalchemy.orm import Session
 from typing_extensions import Self
+
+from .connection import Roles, User, engine
 
 
 class SQLRequest:
@@ -59,7 +60,7 @@ class SQLRequest:
 				sess.add(User(name = name, lastname = lastname, email= email, role=role, avatar=avatar))
 				sess.commit()
 
-	"""deleta a User.
+	"""delete a a User.
 			
 	delete the User where the id provided match with User.ID.
 			
@@ -101,10 +102,6 @@ class SQLRequest:
 			user:User|None = sess.get(User, id)
 			if user is None:
 				return False
-			if not hasattr(user, fieldname) or fieldname.startswith("_"):
-				return False
-			if (type(getattr(user, fieldname) != type(fieldvalue))):
-				return False
 			setattr(user, fieldname, fieldvalue)
 			sess.commit()
 			return True
@@ -119,4 +116,4 @@ class SQLRequest:
 				return None
 			return getattr(user, fieldname)
 
-request: SQLRequest = SQLRequest(engine)
+requestUser: SQLRequest = SQLRequest(engine)

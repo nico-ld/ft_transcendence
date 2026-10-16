@@ -24,8 +24,8 @@ services:
         - ./backend/.env
     environment:
       - DATABASE_URL=postgresql://user:pass@db:5432/silk_space_db
-    expose:
-      - "8000"
+    ports:
+      - "8080:8080"
     depends_on:
       db:
         condition: service_healthy

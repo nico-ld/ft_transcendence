@@ -10,3 +10,8 @@ sqlalchemy[asyncio] >= 2.1
 asyncpg
 alembic
 psycopg
+authlib
+psycopg
+itsdangerous
+httpx
+uvicorn

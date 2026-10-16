@@ -1,6 +1,7 @@
 import enum
 
 from config import settings
+from pydantic import BaseModel
 from sqlalchemy import Enum as SAEnum
 from sqlalchemy import (
 	Integer,
@@ -43,5 +44,13 @@ class User(Base):
     def __repr__(self) -> str:
         return f"User:{self.name}, id:{self.id}, role:{self.role!r}"
 
-engine = create_engine(settings.database_url, echo=True);
+engine = create_engine(settings.database_url);
 User.metadata.create_all(engine)
+
+class UserFront(BaseModel):
+	id: int
+	name:str
+	lastname: str
+	email: str
+	avatar: str | None
+	role: Roles
