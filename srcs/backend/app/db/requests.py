@@ -1,7 +1,16 @@
-from connection import Roles, User, engine
+from db.connection import Roles, User, engine
 from sqlalchemy import Engine, Select
 from sqlalchemy.orm import Session
 from typing_extensions import Self
+
+# fields that can be read or updated from outside with their accepted types
+USER_FIELDS: dict[str, type | tuple[type, ...]] = {
+	"name": str,
+	"lastname": str,
+	"email": str,
+	"role": Roles,
+	"avatar": (str, type(None)),
+}
 
 
 class SQLRequest:
@@ -44,9 +53,9 @@ class SQLRequest:
 			return res
 
 	"""add a user
-	
+
 	add a new User with name, lastname, email, role, avatar provided
-		
+
 	Args:
 		name (str): the user name
 		lastname (str): the user lastname
@@ -60,9 +69,9 @@ class SQLRequest:
 				sess.commit()
 
 	"""deleta a User.
-			
+
 	delete the User where the id provided match with User.ID.
-			
+
 	Args:
 		id (int): the user id.
 
@@ -80,16 +89,16 @@ class SQLRequest:
 
 	"""Update a single field of an existing user.
 
-	change a single field of an existing user 
+	change a single field of an existing user
 	where the id match with an User.id and the fieldname
 	that exist in User (e.g User.id, User.name),
 	fieldvalue is the new value of User.fieldname.
     Args:
         id (int): Primary key of the user to update.
         fieldname (str): Name of the User attribute to set. Must be a
-            public attribute (not starting with "_").
+            key of USER_FIELDS.
         fieldvalue (str | Roles | None): New value for the field. Its type
-            must match the current attribute's type.
+            must match the type listed in USER_FIELDS.
 
     Returns:
         bool: True if the field was updated and committed, False if the
@@ -101,9 +110,9 @@ class SQLRequest:
 			user:User|None = sess.get(User, id)
 			if user is None:
 				return False
-			if not hasattr(user, fieldname) or fieldname.startswith("_"):
+			if fieldname not in USER_FIELDS:
 				return False
-			if (type(getattr(user, fieldname) != type(fieldvalue))):
+			if not isinstance(fieldvalue, USER_FIELDS[fieldname]):
 				return False
 			setattr(user, fieldname, fieldvalue)
 			sess.commit()
@@ -111,8 +120,7 @@ class SQLRequest:
 
 	def GetUserField(self, id: int, fieldname: str) -> str|Roles|None:
 		with Session(self.engine) as sess:
-			FIELDS = {"name", "lastname", "email", "role", "avatar"}
-			if fieldname not in FIELDS:
+			if fieldname not in USER_FIELDS:
 				return None
 			user:User|None = sess.get(User, id)
 			if user is None:
