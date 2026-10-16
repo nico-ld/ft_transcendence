@@ -12,7 +12,7 @@ class Settings(BaseSettings):
 	ft_client_id: str
 	ft_client_secret: str
 	session_secret: str
-	frontend_url: str = "http://localhost:5173"
+	frontend_url: str = "https://localhost"
 
 	# same variables as the postgres container (postgres/.env)
 	postgres_user: str
