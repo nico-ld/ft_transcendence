@@ -1,56 +1,85 @@
 import enum
+from datetime import datetime
 
 from config import settings
-from pydantic import BaseModel
-from sqlalchemy import Enum as SAEnum
+from pydantic import BaseModel, ConfigDict
+from pydantic.alias_generators import to_camel
 from sqlalchemy import (
-	Integer,
-	MetaData,
-	Sequence,
-	String,
-	create_engine,
+    CheckConstraint,
+    DateTime,
+    String,
+    create_engine,
+    func,
 )
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy.orm.decl_api import DeclarativeBase
+from sqlalchemy import Enum as SAEnum
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-USER_ID_SEQ = Sequence('UserID', start=1)
 
-class Roles(enum.Enum):
-	Adminstrator = "Administrator"
-	Lead_Dev = "Lead_Developer"
-	Dev = "Developer"
+class Role(enum.Enum):
+    ADMIN = "admin"
+    LEAD_DEV = "lead_dev"
+    DEV = "dev"
 
-meta_data = MetaData();
 
 class Base(DeclarativeBase):
-	metadata = meta_data
+    pass
+
+
+class CamelModel(BaseModel):
+    """Base for API schemas: snake_case in Python, camelCase in the JSON"""
+
+    # from_attributes lets UserOut.model_validate(user) read a SQLAlchemy User directly
+    model_config = ConfigDict(
+        alias_generator=to_camel, validate_by_name=True, from_attributes=True
+    )
+
+
+class UserOut(CamelModel):
+    id: int
+    email: str
+    username: str
+    first_name: str
+    last_name: str
+    avatar: str | None
+    job: str | None
+    role: Role
+    created_at: datetime
+
 
 class User(Base):
-	__tablename__ = "User_account"
+    __tablename__ = "users"
+    __table_args__ = (
+        # every account needs at least one way to log in
+        CheckConstraint(
+            "password_hash IS NOT NULL OR ft_id IS NOT NULL",
+            name="users_has_login_method",
+        ),
+    )
 
-	id: Mapped[int] = mapped_column(
-		Integer, USER_ID_SEQ, primary_key=True,
-		server_default=USER_ID_SEQ.next_value(),
-	)
-	name: Mapped[str] = mapped_column(String)
-	lastname: Mapped[str] = mapped_column(String)
-	email: Mapped[str] = mapped_column(String)
-	avatar: Mapped[str | None] = mapped_column(String, nullable=True)
-	role: Mapped[Roles] = mapped_column(
-		SAEnum(Roles, values_callable=lambda e: [m.value for m in e]),
-		nullable=False, default=Roles.Dev,
-	)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(String, unique=True)
+    # None for accounts that only log in with 42
+    password_hash: Mapped[str | None] = mapped_column(String)
+    # 42 user id, None for accounts that only log in with email/password
+    ft_id: Mapped[int | None] = mapped_column(unique=True)
+    # display name only, not used to log in
+    username: Mapped[str] = mapped_column(String)
+    first_name: Mapped[str] = mapped_column(String)
+    last_name: Mapped[str] = mapped_column(String)
+    avatar: Mapped[str | None] = mapped_column(String, nullable=True)
+    job: Mapped[str | None] = mapped_column(String)
+    # values_callable stores the enum values ("admin") instead of the names ("ADMIN")
+    role: Mapped[Role] = mapped_column(
+        SAEnum(Role, name="user_role", values_callable=lambda e: [m.value for m in e]),
+        nullable=False,
+        default=Role.DEV,
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
 
-	def __repr__(self) -> str:
-		return f"User:{self.name}, id:{self.id}, role:{self.role!r}"
+    def __repr__(self) -> str:
+        return f"ID: {self.id}, User: {self.first_name}, Role: {self.role!r}"
 
-engine = create_engine(settings.database_url);
-User.metadata.create_all(engine)
 
-class UserFront(BaseModel):
-	id: int
-	name:str
-	lastname: str
-	email: str
-	avatar: str | None
-	role: Roles
+engine = create_engine(settings.database_url)

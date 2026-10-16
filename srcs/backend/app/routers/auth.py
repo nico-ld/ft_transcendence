@@ -28,7 +28,7 @@ async def callback_42(request: Request):
     try:
         token = await oauth.fortytwo.authorize_access_token(request)
     except OAuthError as e:
-        raise HTTPException(status_code=400, detail=f"42 auth failed: {e.error}")
+        raise HTTPException(status_code=400, detail=f"42 auth failed: {e.error}") from e
 
     resp = await oauth.fortytwo.get("me", token=token)
     profile = resp.json()

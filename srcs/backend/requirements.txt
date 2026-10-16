@@ -3,15 +3,10 @@ uvicorn
 pydantic
 authlib
 httpx
-itsdangerous
 pydantic-settings
 httpx2
 sqlalchemy[asyncio] >= 2.1
 asyncpg
 alembic
 psycopg
-authlib
-psycopg
 itsdangerous
-httpx
-uvicorn
