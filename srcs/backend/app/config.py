@@ -6,8 +6,8 @@ from sqlalchemy import URL
 
 class Settings(BaseSettings):
 	model_config = SettingsConfigDict(
-        env_file=Path(__file__).parent.parent / ".env"
-    )
+		env_file=Path(__file__).parent.parent / ".env"
+	)
 
 	ft_client_id: str
 	ft_client_secret: str
@@ -24,13 +24,13 @@ class Settings(BaseSettings):
 	@property
 	def database_url(self) -> URL:
 		return URL.create(
-            "postgresql+psycopg",
-            username=self.postgres_user,
-            password=self.postgres_password,
-            host=self.postgres_host,
-            port=self.postgres_port,
-            database=self.postgres_db,
-        )
+			"postgresql+psycopg",
+			username=self.postgres_user,
+			password=self.postgres_password,
+			host=self.postgres_host,
+			port=self.postgres_port,
+			database=self.postgres_db,
+		)
 
 
 settings = Settings() # pyright: ignore[reportCallIssue]

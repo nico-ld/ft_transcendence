@@ -1,7 +1,7 @@
 from sqlalchemy import Engine, Select
 from sqlalchemy.orm import Session
 
-from db.connection import Roles, User, engine
+from .connection import Roles, User, engine
 
 # fields that can be read or updated from outside with their accepted types
 USER_FIELDS: dict[str, type | tuple[type, ...]] = {
@@ -11,8 +11,6 @@ USER_FIELDS: dict[str, type | tuple[type, ...]] = {
 	"role": Roles,
 	"avatar": (str, type(None)),
 }
-
-from .connection import Roles, User, engine
 
 
 class SQLRequest:
@@ -131,6 +129,14 @@ class SQLRequest:
 			if user is None:
 				return False
 			if fieldname not in USER_FIELDS:
+				return False
+			# query params arrive as str, so convert role values to the enum
+			if USER_FIELDS[fieldname] is Roles and isinstance(fieldvalue, str):
+				try:
+					fieldvalue = Roles(fieldvalue)
+				except ValueError:
+					return False
+			if not isinstance(fieldvalue, USER_FIELDS[fieldname]):
 				return False
 			setattr(user, fieldname, fieldvalue)
 			sess.commit()

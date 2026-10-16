@@ -23,26 +23,26 @@ class Roles(enum.Enum):
 meta_data = MetaData();
 
 class Base(DeclarativeBase):
-    metadata = meta_data
+	metadata = meta_data
 
 class User(Base):
-    __tablename__ = "User_account"
+	__tablename__ = "User_account"
 
-    id: Mapped[int] = mapped_column(
-        Integer, USER_ID_SEQ, primary_key=True,
-        server_default=USER_ID_SEQ.next_value(),
-    )
-    name: Mapped[str] = mapped_column(String)
-    lastname: Mapped[str] = mapped_column(String)
-    email: Mapped[str] = mapped_column(String)
-    avatar: Mapped[str | None] = mapped_column(String, nullable=True)
-    role: Mapped[Roles] = mapped_column(
-        SAEnum(Roles, values_callable=lambda e: [m.value for m in e]),
-        nullable=False, default=Roles.Dev,
-    )
+	id: Mapped[int] = mapped_column(
+		Integer, USER_ID_SEQ, primary_key=True,
+		server_default=USER_ID_SEQ.next_value(),
+	)
+	name: Mapped[str] = mapped_column(String)
+	lastname: Mapped[str] = mapped_column(String)
+	email: Mapped[str] = mapped_column(String)
+	avatar: Mapped[str | None] = mapped_column(String, nullable=True)
+	role: Mapped[Roles] = mapped_column(
+		SAEnum(Roles, values_callable=lambda e: [m.value for m in e]),
+		nullable=False, default=Roles.Dev,
+	)
 
-    def __repr__(self) -> str:
-        return f"User:{self.name}, id:{self.id}, role:{self.role!r}"
+	def __repr__(self) -> str:
+		return f"User:{self.name}, id:{self.id}, role:{self.role!r}"
 
 engine = create_engine(settings.database_url);
 User.metadata.create_all(engine)
