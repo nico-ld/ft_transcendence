@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from pydantic import EmailStr, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy import URL
 
@@ -9,8 +10,13 @@ class Settings(BaseSettings):
 
     ft_client_id: str
     ft_client_secret: str
-    session_secret: str
+    session_secret: str = Field(min_length=32)
+    jwt_expire_minutes: int = 60 * 24
     frontend_url: str = "https://localhost"
+
+    # first admin account, created at startup if it doesn't exist yet
+    admin_email: EmailStr | None = None
+    admin_password: str | None = Field(default=None, min_length=8, max_length=128)
 
     # same variables as the postgres container (postgres/.env)
     postgres_user: str

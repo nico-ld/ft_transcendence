@@ -2,8 +2,6 @@ import enum
 from datetime import datetime
 
 from config import settings
-from pydantic import BaseModel, ConfigDict
-from pydantic.alias_generators import to_camel
 from sqlalchemy import (
     CheckConstraint,
     DateTime,
@@ -23,27 +21,6 @@ class Role(enum.Enum):
 
 class Base(DeclarativeBase):
     pass
-
-
-class CamelModel(BaseModel):
-    """Base for API schemas: snake_case in Python, camelCase in the JSON"""
-
-    # from_attributes lets UserOut.model_validate(user) read a SQLAlchemy User directly
-    model_config = ConfigDict(
-        alias_generator=to_camel, validate_by_name=True, from_attributes=True
-    )
-
-
-class UserOut(CamelModel):
-    id: int
-    email: str
-    username: str
-    first_name: str
-    last_name: str
-    avatar: str | None
-    job: str | None
-    role: Role
-    created_at: datetime
 
 
 class User(Base):

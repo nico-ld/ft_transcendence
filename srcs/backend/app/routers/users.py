@@ -1,5 +1,6 @@
-from db import Role, UserOut, request
+from db import Role, request
 from fastapi import APIRouter, HTTPException, status
+from schemas import UserOut
 
 router = APIRouter(prefix="/users", tags=["users"])
 

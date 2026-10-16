@@ -1,13 +1,11 @@
-from .connection import Base, CamelModel, Role, User, UserOut, engine
+from .connection import Base, Role, User, engine
 from .requests import SQLRequest, request
 
 __all__ = [
     "Base",
-    "CamelModel",
     "Role",
     "SQLRequest",
     "User",
-    "UserOut",
     "engine",
     "request",
 ]

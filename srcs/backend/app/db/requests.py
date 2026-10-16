@@ -25,6 +25,19 @@ class SQLRequest:
             stmt = select(User).where(User.id == user_id)
             return sess.scalar(stmt)
 
+    def get_user_by_email(self, email: str) -> User | None:
+        """Get a user from the db by email.
+
+        Args:
+            email (str): the user email, already lowercased.
+
+        Returns:
+            User | None: the matching User, or None if no User matches.
+        """
+        with Session(self.engine) as sess:
+            stmt = select(User).where(User.email == email)
+            return sess.scalar(stmt)
+
     def add_user(
         self,
         username: str,
@@ -34,11 +47,12 @@ class SQLRequest:
         role: Role,
         avatar: str | None = None,
         job: str | None = None,
+        password_hash: str | None = None,
     ) -> User:
         """Add a user.
 
         Add a new User with the username, first_name, last_name, email, role,
-        avatar and job provided.
+        avatar, job and password_hash provided.
 
         Args:
             username (str): the user display name.
@@ -49,6 +63,12 @@ class SQLRequest:
             avatar (str | None): the string path to the avatar, None if no
                 avatar provided. Defaults to None.
             job (str | None): the user job, None if not provided. Defaults to None.
+            password_hash (str | None): the argon2 hash of the password, None for
+                accounts that only log in with 42. Defaults to None.
+
+        Raises:
+            IntegrityError: the email (or ft_id) is already used, or the account
+                has neither a password_hash nor an ft_id.
         """
         with Session(self.engine) as sess:
             user = User(
@@ -59,6 +79,7 @@ class SQLRequest:
                 role=role,
                 avatar=avatar,
                 job=job,
+                password_hash=password_hash,
             )
             sess.add(user)
             sess.commit()

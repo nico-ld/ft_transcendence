@@ -10,3 +10,5 @@ asyncpg
 alembic
 psycopg
 itsdangerous
+pwdlib[argon2]
+pyjwt
