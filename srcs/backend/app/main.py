@@ -6,6 +6,7 @@ from db import Base, Role, engine, request
 from fastapi import FastAPI
 from routers import auth, oauth42, users
 from security import hash_password
+from starlette.middleware.sessions import SessionMiddleware
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -17,7 +18,7 @@ def create_initial_admin() -> None:
     email = settings.admin_email.lower()
     existing = request.get_user_by_email(email)
     if existing is not None:
-        # never change an existing account: it could be someone's own signup
+        # do not change an existing account, could overwrite an user account into admin
         if existing.role != Role.ADMIN:
             logger.warning(
                 "ADMIN_EMAIL %s is a non admin account, so it wasn't created", email
@@ -43,12 +44,21 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan, root_path="/api")
-# app.add_middleware(SessionMiddleware, secret_key=settings.session_secret)
-# app.include_router(oauth42.router)
+
+# only holds authlib OAuth state during the 42 redirect, its own cookie name
+# so it doesnt overwrite our session JWT cookie
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=settings.session_secret,
+    session_cookie="oauth_state",
+    max_age=600,
+    https_only=True,
+)
+app.include_router(oauth42.router)
 app.include_router(auth.router)
 app.include_router(users.router)
 
 
 @app.get("/")
 def root():
-    return {"status": "ok"}
+    return {"status": "ok", "robert": 67}

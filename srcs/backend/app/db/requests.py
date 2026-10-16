@@ -38,6 +38,41 @@ class SQLRequest:
             stmt = select(User).where(User.email == email)
             return sess.scalar(stmt)
 
+    def get_user_by_ft_id(self, ft_id: int) -> User | None:
+        """Get a user from the db by 42 user id.
+
+        Args:
+            ft_id (int): the id of the user on the 42 intra.
+
+        Returns:
+            User | None: the matching User, or None if no User matches.
+        """
+        with Session(self.engine) as sess:
+            stmt = select(User).where(User.ft_id == ft_id)
+            return sess.scalar(stmt)
+
+    def link_ft_id(self, user_id: int, ft_id: int) -> User | None:
+        """Link a 42 account to an existing user.
+
+        Args:
+            user_id (int): the user id.
+            ft_id (int): the id of the user on the intra.
+
+        Returns:
+            User | None: the updated User, or None if no User matches.
+
+        Raises:
+            IntegrityError: the ft_id is already linked to another user.
+        """
+        with Session(self.engine) as sess:
+            user: User | None = sess.get(User, user_id)
+            if user is None:
+                return None
+            user.ft_id = ft_id
+            sess.commit()
+            sess.refresh(user)
+        return user
+
     def add_user(
         self,
         username: str,
@@ -48,11 +83,12 @@ class SQLRequest:
         avatar: str | None = None,
         job: str | None = None,
         password_hash: str | None = None,
+        ft_id: int | None = None,
     ) -> User:
         """Add a user.
 
         Add a new User with the username, first_name, last_name, email, role,
-        avatar, job and password_hash provided.
+        avatar, job, password_hash and ft_id provided.
 
         Args:
             username (str): the user display name.
@@ -65,6 +101,8 @@ class SQLRequest:
             job (str | None): the user job, None if not provided. Defaults to None.
             password_hash (str | None): the argon2 hash of the password, None for
                 accounts that only log in with 42. Defaults to None.
+            ft_id (int | None): the id of the user on the intra, None for
+                accounts that only log in with email/pass. Defaults to None.
 
         Raises:
             IntegrityError: the email (or ft_id) is already used, or the account
@@ -80,6 +118,7 @@ class SQLRequest:
                 avatar=avatar,
                 job=job,
                 password_hash=password_hash,
+                ft_id=ft_id,
             )
             sess.add(user)
             sess.commit()

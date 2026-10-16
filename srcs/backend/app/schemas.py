@@ -22,7 +22,8 @@ class CamelModel(BaseModel):
     )
 
 
-# emails are stored in lowercase, so Robert67@robert.io and robert67@robert.io are the same account
+# emails are stored in lowercase, so Robert67@robert.io and robert67@robert.io
+# are the same account
 Email = Annotated[EmailStr, AfterValidator(str.lower)]
 Name = Annotated[
     str, StringConstraints(strip_whitespace=True, min_length=1, max_length=100)
@@ -56,5 +57,6 @@ class LoginIn(CamelModel):
     model_config = ConfigDict(extra="forbid")
 
     email: Email
-    # no min length here because that rule is for signup, login only compares with the hash
+    # no min length here because that rule is for signup
+    # login only compares with the hash
     password: str = Field(min_length=1, max_length=128)
