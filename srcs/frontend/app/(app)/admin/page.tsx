@@ -61,11 +61,11 @@ const users: User[] = [
 		createdAt: "2026-01-05"
 	},
 	{
-		lastname: "Random",
-		name: "Guy",
-		username: "User3",
+		lastname: "Du ponton de ligue 1",
+		name: "Xavier",
+		username: "Jean-benoit",
 		avatar: "",
-		email: "random@email.com",
+		email: "pantoufle@email.com",
 		job: "Accountant",
 		createdAt: "2026-01-06"
 	},

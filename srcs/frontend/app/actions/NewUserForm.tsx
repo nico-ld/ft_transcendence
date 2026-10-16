@@ -22,7 +22,7 @@ export function NewUserForm() {
 				<DialogTrigger render={<Button variant="ghost" className="text-green-500"><UserRoundPlus /></Button>} />
 				<DialogContent className="sm:max-w-sm">
 					<DialogHeader>
-						<DialogTitle>Add an User</DialogTitle>
+						<DialogTitle>Create a Profil</DialogTitle>
 						<DialogDescription>
 							Enter information about the new user,
 							a new session will be create.
@@ -32,19 +32,23 @@ export function NewUserForm() {
 					<FieldGroup>
 						<Field>
 							<Label htmlFor="lastname-1">LastName</Label>
-							<Input id="lastname-1" name="lastname" placeholder="Enter the LastName"/>
+							<Input id="lastname-1" name="lastname" placeholder="Enter the LastName" required/>
 						</Field>
 						<Field>
 							<Label htmlFor="name-1">Name</Label>
-							<Input id="name-1" name="name" placeholder="Enter the name"/>
+							<Input id="name-1" name="name" placeholder="Enter the name" required/>
+						</Field>
+						<Field>
+							<Label htmlFor="name-1">Username</Label>
+							<Input id="username-1" name="username" placeholder="Enter an username" required/>
 						</Field>
 						<Field>
 							<Label htmlFor="email-1">Email</Label>
-							<Input id="email-1" name="email" type="email" placeholder="Enter the email"/>
+							<Input id="email-1" name="email" type="email" placeholder="Enter the email" required/>
 						</Field>
 						<Field>
 							<Label htmlFor="password-1">Password</Label>
-							<Input id="password-1" name="password" type="password" placeholder="Create a Password"/>
+							<Input id="password-1" name="password" type="password" placeholder="Create a Password" required/>
 						</Field>
 						<Field>
 							<Label htmlFor="job-1">Job</Label>
@@ -53,7 +57,7 @@ export function NewUserForm() {
 					</FieldGroup>
 					<DialogFooter>
 						<DialogClose render={<Button variant="outline">Cancel</Button>} />
-						<Button type="submit">Save changes</Button>
+						<Button type="submit">Create profil</Button>
 					</DialogFooter>
 				</DialogContent>
 			</form>
