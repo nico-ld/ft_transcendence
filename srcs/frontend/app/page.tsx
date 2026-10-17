@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { SilkSpaceLogo } from '@/components/ui/logo';
 import Link from 'next/link';
 import Head from 'next/head';
 
@@ -12,7 +13,7 @@ export default function Home() {
 			<header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b bg-background/80 px-4 backdrop:blur md:px-6">
 			{/* Left area : Logo & other pages */}
 				<article>
-
+					<SilkSpaceLogo />
 				</article>
 
 			{/* Right Area : Sign in */}
