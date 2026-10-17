@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import { LandingHeader } from "@/components/landing/LandingHeader";
+import { LandingFooter } from "@/components/landing/LandingFooter";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,7 +29,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
     	<body className="min-h-full flex flex-col">
 			<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-				{children}
+				<div className="flex min-h-dvh flex-col">
+					<LandingHeader />
+					<main className="flex-1">{children}</main>
+					<LandingFooter />
+				</div>
 			</ThemeProvider>
 		</body>
     </html>

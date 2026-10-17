@@ -12,10 +12,11 @@ export function Features() {
 			<h2 className="text-center text-3xl font-semibold tracking-tight">Everything in one place</h2>
 			<div className="mt-12 grid gap-6 mf:grid-cols-3">
 				{FEATURES.map(({icon: Icon, title, text}) => (
-					<Icon className="rounded-xl border bg-card p-6">
+					<div key={title} className="rounded-xl border bg-card p-6">
+						<Icon className="rounded-xl border bg-card p-6" />
 						<h3 className="mt-4 font-medium">{title}</h3>
 						<p className="mt-2 text-sm text-muted-foreground">{text}</p>
-					</Icon>
+ 					</div>
 				))}
 			</div>
 		</section>
