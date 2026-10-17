@@ -1,4 +1,4 @@
-import { User } from "@/lib/types";
+import type { User } from "@/types/User";
 import { Button } from "@/components/ui/button";
 import { UserRoundX } from "lucide-react";
 import { 

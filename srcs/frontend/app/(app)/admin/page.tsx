@@ -2,7 +2,7 @@ import { DashboardShell } from "@/components/dashboard/DashboardShell";
 import { StatsPanel } from "@/components/dashboard/StatsPanel";
 import { UserManagement } from "@/components/admin/UserManagement";
 import { getSystemStats } from "@/lib/stats";
-import type { User } from "@/lib/types";
+import type { User } from "@/types/User";
 
 // REPLACE BY REAL USERS
 const users: User[] = [
