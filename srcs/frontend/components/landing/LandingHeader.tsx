@@ -2,6 +2,7 @@ import Link from "next/link";
 import { buttonVariants } from "../ui/button";
 import { SilkSpaceLogo } from "../ui/logo";
 import { LandingHoverCard } from "../layout/LandingHoverCard";
+import { ThemeSwitch } from "../layout/ThemeSwicth";
 
 export function LandingHeader() {
 	return (
@@ -15,8 +16,8 @@ export function LandingHeader() {
 				</article>
 
 				<article className="flex items-center gap-3">
-					<Link href="/login" className="text-sm hover:underline">Sign in</Link>
-					<Link href="/login" className={buttonVariants({variant: 'outline'})}>Sign up</Link>
+					<ThemeSwitch />
+					<Link href="/login" className={buttonVariants({variant: 'outline'})}>Sign in</Link>
 				</article>
 			</section>
 		</header>

@@ -1,23 +1,43 @@
 import { Zap, Shield, Users, type LucideIcon } from "lucide-react";
 
-const FEATURES: {icon: LucideIcon; title: string; text: string}[] = [
-	{icon: Zap, title: 'Fast', text: 'Short description of the first benefit.'},
-	{icon: Shield, title: 'Secure', text: 'Short description of the Second benefit.'},
-	{icon: Users, title: 'Collaborative', text: 'Short description of the third benefit.'}
-];
+function FeatureCard({Icon, title, text}: {Icon: LucideIcon; title: string; text: React.ReactNode}) {
+	return (
+		<article className="rounded-xl border bg-card p-6">
+			<div className="w-1/2 flex gap-5">
+				<div className=" rounded-xl border bg-card p-3"><Icon className="relative"/></div>
+				<h3 className="mt-4 font-medium">{title}</h3>
+			</div>
+			<p className="mt-2 text-sm text-muted-foreground">{text}</p>
+		</article>
+	);
+}
 
 export function Features() {
 	return (
 		<section id="features" className="mx-auto max-w-6xl px-4 py-20 md:px-6">
 			<h2 className="text-center text-3xl font-semibold tracking-tight">Everything in one place</h2>
-			<div className="mt-12 grid gap-6 mf:grid-cols-3">
-				{FEATURES.map(({icon: Icon, title, text}) => (
-					<div key={title} className="rounded-xl border bg-card p-6">
-						<Icon className="rounded-xl border bg-card p-6" />
-						<h3 className="mt-4 font-medium">{title}</h3>
-						<p className="mt-2 text-sm text-muted-foreground">{text}</p>
- 					</div>
-				))}
+			<div className="mt-12 grid gap-6 md:grid-cols-3">
+				<FeatureCard Icon={Zap} title="Fast" text={
+					<p>
+						<strong>Silk Space</strong> is designed to be intuitive, fast and efficient in your everyday
+						work. Create, edit or delete a session in under 3 minutes. With quick and direct access to your
+						workspace, everything you need is always just a few clicks away. Spend less time managing
+						your workspace and more time focusing on what matters.
+					</p>
+					}/>
+				<FeatureCard Icon={Shield} title="Secure" text={
+					<p>
+						Your data stays on your machine. <strong>Silk Space</strong> doesn't store or collect your
+						information, giving you full control over your workspace. Each user session is isolated from the others,
+						helping prevent unauthorized access and privilege escalation. With privacy and security built into its design,
+						<strong>Silk Space</strong> keeps your workspace yours and your data under your control.
+					</p>
+				}/>
+				<FeatureCard Icon={Users} title="Collaborative" text={
+					<p>
+						Text
+					</p>
+				}/>
 			</div>
 		</section>
 	);

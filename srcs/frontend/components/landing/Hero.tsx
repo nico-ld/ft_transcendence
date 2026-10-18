@@ -3,7 +3,7 @@ import { Input } from "../ui/input";
 
 export function Hero() {
 	return (
-		<section className="relative overflow-hidden border-b">
+		<section className="relative overflow-hidden">
 			<div aria-hidden className="absolute inset-0 -z-10 bg-linear-to-b from-primary/15 via-background to-background" />
 
 			<div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 pt-20 text-center md:pt-28">
@@ -19,10 +19,6 @@ export function Hero() {
 					<Input id="email" name="email" type="email" placeholder="you@email.com" required/>
 					<Button type="submit" size="lg">Sign up for Silk space</Button>
 				</form>
-			</div>
-
-			<div className="mx-auto mt-16-w-5xl px-4">
-				<div className="aspect-video rounded-t-xl border border-b-0 bg-card shadow-2xl" />
 			</div>
 		</section>
 	);
