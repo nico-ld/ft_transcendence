@@ -18,25 +18,25 @@ export function Features() {
 			<h2 className="text-center text-3xl font-semibold tracking-tight">Everything in one place</h2>
 			<div className="mt-12 grid gap-6 md:grid-cols-3">
 				<FeatureCard Icon={Zap} title="Fast" text={
-					<p>
+					<>
 						<strong>Silk Space</strong> is designed to be intuitive, fast and efficient in your everyday
 						work. Create, edit or delete a session in under 3 minutes. With quick and direct access to your
 						workspace, everything you need is always just a few clicks away. Spend less time managing
 						your workspace and more time focusing on what matters.
-					</p>
+					</>
 					}/>
 				<FeatureCard Icon={Shield} title="Secure" text={
-					<p>
+					<>
 						Your data stays on your machine. <strong>Silk Space</strong> doesn't store or collect your
 						information, giving you full control over your workspace. Each user session is isolated from the others,
 						helping prevent unauthorized access and privilege escalation. With privacy and security built into its design,
 						<strong>Silk Space</strong> keeps your workspace yours and your data under your control.
-					</p>
+					</>
 				}/>
 				<FeatureCard Icon={Users} title="Collaborative" text={
-					<p>
+					<>
 						Text
-					</p>
+					</>
 				}/>
 			</div>
 		</section>
