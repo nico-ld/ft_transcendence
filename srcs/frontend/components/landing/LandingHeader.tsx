@@ -25,7 +25,7 @@ export function LandingHeader() {
 				<article className="flex items-center gap-6">
 					<SilkSpaceLogo />
 					<nav aria-label="Main" className="hidden items-center gap-4 text-sm md:flex">
-						<LandingHoverCard name="Documentation" />
+						<LandingHoverCard/>
 					</nav>
 				</article>
 
