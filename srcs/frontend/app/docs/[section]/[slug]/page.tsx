@@ -24,9 +24,11 @@ async function DocContent({params}: Props) {
 	const {default: Content} = await import(`@/content/docs/${section}/${entry.file}.mdx`);
 
 	return (
-		<article>
-			<Content />
-		</article>
+		<main className="mx-auto w-full max-w-3xl px-6 py-12">
+			<article className="prose max-w-none">
+				<Content />
+			</article>
+		</main>
 	);
 }
 
