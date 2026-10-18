@@ -35,7 +35,10 @@ export function Features() {
 				}/>
 				<FeatureCard Icon={Users} title="Collaborative" text={
 					<>
-						Text
+						<strong>Silk Space</strong> fosters efficient collaboration and stronger working relationships.
+						Managers can quickly adapt a workspace to meet changing roles and project requirements, ensuring that
+						every team is organized for the right task at the right time. With minimal effort and a low adaptation
+						cost, teams can stay flexible, respond to new challenges, and focus on what matters most: working together efficiently.
 					</>
 				}/>
 			</div>
