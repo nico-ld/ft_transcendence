@@ -12,10 +12,10 @@ export function LandingHoverCard({name}: {name: string}) {
 				</Button>
 			}/>
 			<HoverCardContent className="flex w-64 flex-col gap-0.5">
-				<div className="font-semibold">This is an example of title</div>
-				<div>This is an example of text</div>
+				<div className="font-semibold">Documentations</div>
+				<div>Content not available here, please check another git branch</div>
 				<div className="mt-1 text-xs text-muted-foreground">
-					This is an example of subtitle
+					Someone told me my PR was to big..
 				</div>
 			</HoverCardContent>
 		</HoverCard>
