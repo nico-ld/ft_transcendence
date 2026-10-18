@@ -1,6 +1,6 @@
 import { LoginForm } from "@/components/auth/LoginForm";
 import { ThemeSwitch } from "@/components/layout/ThemeSwicth";
-import Link from "next/link";
+import { LegalLink } from "@/components/layout/LegalLink";
 
 export default function LoginPage() {
 	return (
@@ -11,10 +11,8 @@ export default function LoginPage() {
 			<section className="flex flex-1 items-center justify-center">
 				<LoginForm />
 			</section>
-			<footer className="py-4 text-center text-sm text-muted-foreground">
-				<Link href="#" className="hover:underline">Privacy Policy</Link>
-				<span aria-hidden="true"> - </span>
-				<Link href="#" className="hover:underline">Terms of Service</Link>
+			<footer className="py-4">
+				<LegalLink />
 			</footer>
 		</main>
 	);

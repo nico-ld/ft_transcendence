@@ -1,6 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import type { Role } from "@/lib/utils";
-import Link from "next/link";
+import { LegalLink } from "@/components/layout/LegalLink";
 
 type DashboardShellProps = {
 	role: Role;
@@ -24,10 +24,8 @@ export function DashboardShell({ role, username, avatarUrl, sidebar, children }:
 					</section>
 				</div>
 
-				<footer className="py-4 text-center text-sm text-muted-foreground">
-					<Link href="#" className="hover:underline">Privacy Policy</Link>
-					<span aria-hidden="true"> - </span>
-					<Link href="#" className="hover:underline">Terms of Service</Link>
+				<footer className="py-4">
+					<LegalLink />
 				</footer>
 			</main>
 		</>
