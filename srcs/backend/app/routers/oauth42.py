@@ -75,7 +75,7 @@ def get_or_create_42_user(profile: FtProfile) -> User:
             profile.first_name,
             profile.last_name,
             profile.email,
-            Role.DEV,
+            Role.SOFTWARE_ENGINEER,
             avatar=profile.image.link if profile.image else None,
             ft_id=profile.id,
         )

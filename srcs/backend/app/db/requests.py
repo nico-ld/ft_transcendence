@@ -144,5 +144,15 @@ class SQLRequest:
             sess.commit()
             return True
 
+    def list_users(self) -> list[User]:
+        """Get every user from the db
+
+        Returns:
+            list[User]: all of the users
+        """
+        with Session(self.engine) as sess:
+            stmt = select(User).order_by(User.id)
+            return list(sess.scalars(stmt))
+
 
 users_db: SQLRequest = SQLRequest(engine)
