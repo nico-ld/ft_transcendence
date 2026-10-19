@@ -13,7 +13,7 @@ def create_user(
     email: str,
     avatar: str | None = None,
     job: str | None = None,
-    role: Role = Role.DEV,
+    role: Role = Role.SOFTWARE_INGE,
 ) -> UserOut:
     user = users_db.add_user(username, first_name, last_name, email, role, avatar, job)
     return UserOut.model_validate(user)

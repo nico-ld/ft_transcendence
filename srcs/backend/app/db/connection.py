@@ -19,8 +19,6 @@ class Role(enum.Enum):
     DATA = "data-analyst"
     DEVOPS_INGE = "devops"
     SOFTWARE_INGE = "software-engineer"
-    LEAD_DEV = "lead-dev"
-    DEV = "dev"
     TECH_WRITER = "technical-writer"
 
 
