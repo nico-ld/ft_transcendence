@@ -18,8 +18,8 @@ services:
 
   backend:
     build: ./backend
-    environment:
-      - DATABASE_URL=postgresql://user:pass@db:5432/transcendence
+    env_file:
+      - .env
     ports:
       - "8000:8000"
     depends_on:
