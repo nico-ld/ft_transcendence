@@ -1,8 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
+import matter from "gray-matter";
 import { ComponentType } from "react";
 
 const DOCS_DIR = path.join(process.cwd(), "content", "docs");
+
+export const DOC_SECTIONS = [
+	{id: "users", label: "User guide"},
+	// {id: "dev", label: "Developer guide"}
+] as const;
 
 export type DocEntry = {
 	file: string;
@@ -12,6 +18,18 @@ export type DocEntry = {
 export type DocFrontmatter = {
 	title: string;
 	description?: string;
+};
+
+export type DocNavItem = {
+	slug: string;
+	title: string;
+	href: string;
+};
+
+export type DocNavSection = {
+	id: string;
+	label: string;
+	items: DocNavItem[];
 };
 
 export function getDocEntries(section: string): DocEntry[] {
@@ -40,4 +58,23 @@ export async function getDoc(section: string, slug: string) {
 		Content: mod.default as ComponentType,
 		frontmatter: mod.frontmatter as DocFrontmatter
 	};
+}
+
+export function getDocNav(): DocNavSection[] {
+	return DOC_SECTIONS.map(({id, label}) => ({
+		id,
+		label,
+		items: getDocEntries(id).map(({file, slug}) => {
+			const raw = fs.readFileSync(
+				path.join(DOCS_DIR, id, `${file}.mdx`),
+				"utf8"
+			);
+			const {data} = matter(raw);
+			return {
+				slug,
+				title: (data.title as string) ?? slug,
+				href: `/docs/${id}/${slug}`
+			};
+		})
+	}));
 }

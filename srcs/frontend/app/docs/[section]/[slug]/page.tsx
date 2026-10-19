@@ -1,17 +1,15 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { getDocEntries, getDoc } from "@/lib/docs";
-
-const SECTIONS = ["user"];
+import { getDocEntries, getDoc, DOC_SECTIONS } from "@/lib/docs";
 
 type Props = {
 	params: Promise<{section: string; slug: string}>;
 };
 
 export function generateStaticparams() {
-	return SECTIONS.flatMap((section) =>
-		getDocEntries(section).map(({slug}) => ({section, slug}))
+	return DOC_SECTIONS.flatMap(( {id} ) =>
+		getDocEntries(id).map(({slug}) => ({section: id, slug}))
 	);
 }
 
@@ -36,7 +34,7 @@ async function DocContent({params}: Props) {
 	const {Content, frontmatter} = doc;
 
 	return (
-		<main className="mx-auto w-full max-w-3xl px-6 py-12">
+		<div>
 			<header className="mb-8 border-b pb-6">
 				<h1 className="text-4xl font-bold tracking-tight">
 					{frontmatter.title}
@@ -51,7 +49,7 @@ async function DocContent({params}: Props) {
 			<article className="prose max-w-none">
 				<Content />
 			</article>
-		</main>
+		</div>
 	);
 }
 
