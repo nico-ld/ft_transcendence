@@ -15,8 +15,13 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 class Role(enum.Enum):
     ADMIN = "admin"
-    LEAD_DEV = "lead_dev"
+    ACCOUNTANT = "accountant"
+    DATA = "data-analyst"
+    DEVOPS_INGE = "devops"
+    SOFTWARE_INGE = "software-engineer"
+    LEAD_DEV = "lead-dev"
     DEV = "dev"
+    TECH_WRITER = "technical-writer"
 
 
 class Base(DeclarativeBase):
