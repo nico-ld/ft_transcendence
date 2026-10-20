@@ -9,7 +9,7 @@ export function DocsNav({sections}: {sections: DocNavSection[]}) {
 	const pathname = usePathname();
 
 	return (
-		<div className="flex felx-col gap-6">
+		<div className="flex flex-col gap-6">
 			{sections.map((section) => (
 				<div key={section.id}>
 					<h2 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
