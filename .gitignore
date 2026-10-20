@@ -11,6 +11,7 @@ dist/
 build/
 .next/
 out/
+*.pyc
 
 # Logs
 *.log
@@ -23,6 +24,7 @@ pnpm-debug.log*
 .cache/
 .parcel-cache/
 .vite/
+__pycache__/
 
 # Coverage
 coverage/
@@ -38,3 +40,6 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Virtual Environments
+.venv
