@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
 import { AdminBadge } from "./CustomBadge";
+import { SilkSpaceLogo } from "../ui/logo";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -18,8 +19,6 @@ import {
 	DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Logout } from "@/app/actions/auth";
-
-const APP_NAME="Silk Space";
 
 type HeaderProps = {
 	role: "user" | "admin";
@@ -37,11 +36,7 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 	return (
 		<header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b bg-background/80 px-4 backdrop-blur md:px-6">
 			{/* Left: logo */}
-			<div className="flex items-center gap-2 font-semibold">
-				<span className="size-7 rounded-lg bg-primary" aria-hidden="true" />
-				{APP_NAME}
-				{role === "admin" && (<AdminBadge />)}
-			</div>
+			<SilkSpaceLogo>{role === "admin" && (<AdminBadge />)}</SilkSpaceLogo>
 
 			{/* Right:user menu */}
 			<DropdownMenu>
