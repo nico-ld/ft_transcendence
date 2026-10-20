@@ -24,13 +24,9 @@ import {
   FieldLabel,
   FieldTitle,
 } from "@/components/ui/field";
-import { User } from "@/lib/types";
+import type { ModifyUserProps } from "@/types/ModifyUserProps";
 
-type ModifyUserProps = {
-	user: User;
-	open: boolean;
-	onOpenChange: (open: boolean) => void;
-}
+
 
 export function ModifyUser({user, open, onOpenChange}: ModifyUserProps) {
 	return (
