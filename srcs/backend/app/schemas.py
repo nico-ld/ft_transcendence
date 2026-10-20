@@ -93,3 +93,13 @@ class UserUpdateIn(CamelModel):
             if field in self.model_fields_set and getattr(self, field) is None:
                 raise ValueError(f"{field} can't be null")
         return self
+
+
+class ProfileUpdateIn(CamelModel):
+    """Edit user profile"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    username: Name | None = None
+    first_name: Name | None = None
+    last_name: Name | None = None
