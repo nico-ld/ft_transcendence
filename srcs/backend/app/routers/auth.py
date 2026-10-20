@@ -21,7 +21,7 @@ def signup(body: SignupIn, response: Response) -> UserOut:
             body.first_name,
             body.last_name,
             body.email,
-            Role.SOFTWARE_ENGINEER,
+            Role.USER,
             password_hash=hash_password(body.password),
         )
     except IntegrityError:

@@ -14,10 +14,22 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
 class Role(enum.Enum):
+    """What the account is allowed to do"""
+
     ADMIN = "admin"
+    USER = "user"
+
+
+class Job(enum.Enum):
+    """Which workspace the user gets.
+
+    The values must match the image names built by srcs/workspaces/Makefile
+    (workspace-<value>).
+    """
+
     ACCOUNTANT = "accountant"
-    DATA = "data-analyst"
-    DEVOPS_INGE = "devops"
+    DATA_ANALYST = "data-analyst"
+    DEVOPS_ENGINEER = "devops-engineer"
     SOFTWARE_ENGINEER = "software-engineer"
     TECH_WRITER = "technical-writer"
 
@@ -47,12 +59,15 @@ class User(Base):
     first_name: Mapped[str] = mapped_column(String)
     last_name: Mapped[str] = mapped_column(String)
     avatar: Mapped[str | None] = mapped_column(String, nullable=True)
-    job: Mapped[str | None] = mapped_column(String)
     # values_callable stores the enum values ("admin") instead of the names ("ADMIN")
     role: Mapped[Role] = mapped_column(
         SAEnum(Role, name="user_role", values_callable=lambda e: [m.value for m in e]),
         nullable=False,
-        default=Role.SOFTWARE_ENGINEER,
+        default=Role.USER,
+    )
+    # None means the user has no workspace
+    job: Mapped[Job | None] = mapped_column(
+        SAEnum(Job, name="user_job", values_callable=lambda e: [m.value for m in e])
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()

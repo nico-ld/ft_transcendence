@@ -1,7 +1,8 @@
 from sqlalchemy import Engine, select
 from sqlalchemy.orm import Session
+from typing_extensions import Any
 
-from .connection import Role, User, engine
+from .connection import Job, Role, User, engine
 
 
 class SQLRequest:
@@ -81,7 +82,7 @@ class SQLRequest:
         email: str,
         role: Role,
         avatar: str | None = None,
-        job: str | None = None,
+        job: Job | None = None,
         password_hash: str | None = None,
         ft_id: int | None = None,
     ) -> User:
@@ -95,10 +96,11 @@ class SQLRequest:
             first_name (str): the user first name.
             last_name (str): the user last name.
             email (str): the user email
-            role (Role): the user role.
+            role (Role): what the account is allowed to do.
             avatar (str | None): the string path to the avatar, None if no
                 avatar provided. Defaults to None.
-            job (str | None): the user job, None if not provided. Defaults to None.
+            job (Job | None): the workspace the user gets, None for no
+                workspace. Defaults to None.
             password_hash (str | None): the argon2 hash of the password, None for
                 accounts that only log in with 42. Defaults to None.
             ft_id (int | None): the id of the user on the intra, None for
@@ -153,6 +155,18 @@ class SQLRequest:
         with Session(self.engine) as sess:
             stmt = select(User).order_by(User.id)
             return list(sess.scalars(stmt))
+
+    def update_user(self, user_id: int, changes: dict[str, Any]) -> User | None:
+        """Update some columns of a user"""
+
+        with Session(self.engine) as sess:
+            user: User | None = sess.get(User, user_id)
+            if user is None:
+                return None
+            for column, value in changes.items():
+                setattr(user, column, value)
+            sess.commit()
+        return user
 
 
 users_db: SQLRequest = SQLRequest(engine)

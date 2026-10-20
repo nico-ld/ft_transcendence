@@ -1,7 +1,8 @@
 from db import Role, users_db
 from fastapi import APIRouter, Depends, HTTPException, status
-from schemas import UserOut
-from security import AdminUser, require_admin
+from schemas import UserCreateIn, UserOut, UserUpdateIn
+from security import AdminUser, hash_password, require_admin
+from sqlalchemy.exc import IntegrityError
 
 router = APIRouter(
     prefix="/users", tags=["users"], dependencies=[Depends(require_admin)]
@@ -9,16 +10,22 @@ router = APIRouter(
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
-def create_user(
-    username: str,
-    first_name: str,
-    last_name: str,
-    email: str,
-    avatar: str | None = None,
-    job: str | None = None,
-    role: Role = Role.SOFTWARE_ENGINEER,
-) -> UserOut:
-    user = users_db.add_user(username, first_name, last_name, email, role, avatar, job)
+def create_user(body: UserCreateIn) -> UserOut:
+    try:
+        user = users_db.add_user(
+            body.username,
+            body.first_name,
+            body.last_name,
+            body.email,
+            body.role,
+            job=body.job,
+            password_hash=hash_password(body.password),
+        )
+    except IntegrityError:
+        # email is the only unique column set here
+        raise HTTPException(
+            status.HTTP_409_CONFLICT, "Email already registered"
+        ) from None
     return UserOut.model_validate(user)
 
 
@@ -43,3 +50,17 @@ def delete_user(user_id: int, admin: AdminUser) -> None:
 @router.get("", status_code=status.HTTP_200_OK)
 def list_users() -> list[UserOut]:
     return [UserOut.model_validate(user) for user in users_db.list_users()]
+
+
+@router.patch("/{user_id}")
+def update_user(user_id: int, body: UserUpdateIn, admin: AdminUser) -> UserOut:
+    # only the keys the client sent with snake_case names = the col names
+    changes = body.model_dump(exclude_unset=True)
+    if user_id == admin.id and changes.get("role", Role.ADMIN) != Role.ADMIN:
+        raise HTTPException(
+            status.HTTP_400_BAD_REQUEST, "You can't remove your own admin role"
+        )
+    user = users_db.update_user(user_id, changes)
+    if user is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "User not found")
+    return UserOut.model_validate(user)
