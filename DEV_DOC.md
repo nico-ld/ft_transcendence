@@ -86,6 +86,23 @@ Sensitive information must never be stored in frontend source files because file
 
 ## Backend :
 
+The full API (routes, bodies, responses) is at `/api/docs`.
+
+| Method | Route | Who |
+|---|---|---|
+| POST | `/api/auth/signup` | anyone |
+| POST | `/api/auth/login` | anyone |
+| POST | `/api/auth/logout` | anyone |
+| GET | `/api/auth/42/login` | anyone |
+| GET | `/api/auth/me` | logged in |
+| PATCH | `/api/auth/me` | logged in |
+| GET | `/api/users` | admin |
+| POST | `/api/users` | admin |
+| GET | `/api/users/{user_id}` | admin |
+| PATCH | `/api/users/{user_id}` | admin |
+| DELETE | `/api/users/{user_id}` | admin |
+| WS | `/api/ws/terminal` | logged in |
+
 ## Nginx :
 
 * Regarding the config file, we set the worker_connections at 1024, considering our project scale. We won't reach near having the worker thread opening 1024 simulatenous connexion.
