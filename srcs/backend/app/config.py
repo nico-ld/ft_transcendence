@@ -27,6 +27,9 @@ class Settings(BaseSettings):
 
     # mounted by docker compose, we run the workspaces through it
     docker_url: str = "unix:///var/run/docker.sock"
+    workspace_memory_mb: int = 1024
+    workspace_cpus: float = 1.0
+    workspace_pids: int = 256
 
     @property
     def database_url(self) -> URL:
