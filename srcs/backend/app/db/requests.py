@@ -167,6 +167,7 @@ class SQLRequest:
             for column, value in changes.items():
                 setattr(user, column, value)
             sess.commit()
+            sess.refresh(user)
         return user
 
 
