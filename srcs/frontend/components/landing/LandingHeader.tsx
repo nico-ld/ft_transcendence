@@ -4,10 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { buttonVariants } from "../ui/button";
 import { SilkSpaceLogo } from "../ui/logo";
-import { LandingHoverCard } from "../layout/LandingHoverCard";
 import { ThemeSwitch } from "../layout/ThemeSwicth";
 
-export function LandingHeader() {
+export function LandingHeader({tab}: {tab: React.ReactNode}) {
 	const [isTop, setIsTop] = useState(true);
 
 	useEffect(() => {
@@ -25,7 +24,7 @@ export function LandingHeader() {
 				<article className="flex items-center gap-6">
 					<SilkSpaceLogo />
 					<nav aria-label="Main" className="hidden items-center gap-4 text-sm md:flex">
-						<LandingHoverCard/>
+						{tab}
 					</nav>
 				</article>
 

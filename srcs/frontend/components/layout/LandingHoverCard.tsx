@@ -2,11 +2,12 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
 import { ChevronDown } from "lucide-react";
+import { DocNavSection } from "@/lib/docs";
 
-function DocElem({title}: {title: string}) {
+function DocElem({title, href}: {title: string; href: string}) {
 	return (
 		<Link
-			href="#"
+			href={href}
 			className="relative w-fit font-semibold
 						after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:bg-current
 						after:origin-right hover:after:origin-left after:scale-x-0
@@ -18,7 +19,7 @@ function DocElem({title}: {title: string}) {
 	);
 }
 
-export function LandingHoverCard() {
+export function LandingHoverCard({sections}: {sections: DocNavSection[]}) {
 	return (
 		<HoverCard>
 			<HoverCardTrigger delay={10} closeDelay={100} render={
@@ -27,22 +28,17 @@ export function LandingHoverCard() {
 					<ChevronDown />
 				</Button>
 			}/>
-			<HoverCardContent className="flex w-75 flex-row gap-5">
-				<article className="flex w-34 flex-col gap-3">
-					<div className="text-muted-foreground">USAGE</div>
-					<DocElem title="Overview"/>
-					<DocElem title="Getting started"/>
-					<DocElem title="Account & setting"/>
-					<DocElem title="FAQ"/>
-				</article>
-
-				<article className="flex w-30 flex-col gap-3">
-					<div className="text-muted-foreground">DOC</div>
-					<DocElem title="Overview"/>
-					<DocElem title="Structure"/>
-					<DocElem title="API & Back-end"/>
-					<DocElem title="Troubleshooting"/>
-				</article>
+			<HoverCardContent className="flex w-auto flex-row gap-5">
+				{sections.map((section) => (
+					<article key={section.id} className="flex min-w-32 flex-col gap-3">
+						<div className="uppercase text-muted-foreground">
+							{section.label}
+						</div>
+						{section.items.map((item) => (
+							<DocElem key={item.href} title={item.title} href={item.href} />
+						))}
+					</article>
+				))}
 			</HoverCardContent>
 		</HoverCard>
 	);

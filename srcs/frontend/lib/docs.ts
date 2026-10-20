@@ -7,7 +7,7 @@ const DOCS_DIR = path.join(process.cwd(), "content", "docs");
 
 export const DOC_SECTIONS = [
 	{id: "users", label: "User guide"},
-	// {id: "dev", label: "Developer guide"}
+	{id: "developers", label: "Developer guide"}
 ] as const;
 
 export type DocEntry = {
