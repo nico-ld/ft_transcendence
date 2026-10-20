@@ -1,6 +1,7 @@
+from typing import Any
+
 from sqlalchemy import Engine, select
 from sqlalchemy.orm import Session
-from typing_extensions import Any
 
 from .connection import Job, Role, User, engine
 
