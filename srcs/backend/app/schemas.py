@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Annotated
+from typing import Annotated, Self
 
 from db import Job, Role
 from pydantic import (
@@ -12,7 +12,6 @@ from pydantic import (
     model_validator,
 )
 from pydantic.alias_generators import to_camel
-from typing_extensions import Self
 
 
 class CamelModel(BaseModel):
