@@ -13,7 +13,7 @@ export default function DocsLayout({children}: {children: React.ReactNode}) {
 					<DocsSidebar />
 				</div>
 			</aside>
-			<div className="min-w-0 max-w-5xl flex-1">
+			<div className="min-w-0 flex-1">
 				<Suspense fallback={null}>
 					<DocsMobileNav sections={sections} />
 				</Suspense>

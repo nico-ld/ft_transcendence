@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import GithubSlugger from "github-slugger";
 import { ComponentType } from "react";
 
 const DOCS_DIR = path.join(process.cwd(), "content", "docs");
@@ -32,6 +33,8 @@ export type DocNavSection = {
 	items: DocNavItem[];
 };
 
+export type TocItem ={id: string; text: string; level: 2 | 3};
+
 export function getDocEntries(section: string): DocEntry[] {
 	const dir = path.join(DOCS_DIR, section);
 
@@ -54,9 +57,17 @@ export async function getDoc(section: string, slug: string) {
 		return null;
 
 	const mod = await import(`@/content/docs/${section}/${entry.file}.mdx`);
+
+	const raw = fs.readFileSync(
+		path.join(DOCS_DIR, section, `${entry.file}.mdx`),
+		"utf8"
+	);
+	const toc = extractToc(matter(raw).content);
+
 	return {
 		Content: mod.default as ComponentType,
-		frontmatter: mod.frontmatter as DocFrontmatter
+		frontmatter: mod.frontmatter as DocFrontmatter,
+		toc
 	};
 }
 
@@ -90,4 +101,36 @@ export function getAdjacentDocs(section: string, slug: string) {
 		prev: items[index - 1] ?? null,
 		next: items[index + 1] ?? null
 	};
+}
+
+export function extractToc(source: string): TocItem[] {
+	const slugger = new GithubSlugger();
+	const items: TocItem[] = [];
+	let inFence = false;
+
+	for (const line of source.split("\n")) {
+		if (/^\s*(```|~~~)/.test(line)) {
+			inFence = !inFence;
+			continue ;
+		}
+		if (inFence)
+			continue ;
+
+		const match = /^(#{2,3})\s+(.+?)(?:\s+#+)?\s*$/.exec(line);
+		if (!match)
+			continue ;
+		
+		const text = match[2]
+			.replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
+			.replace(/[`*~]/g, "")
+			.trim();
+
+		items.push({
+			id: slugger.slug(text),
+			text,
+			level: match[1].length as 2 | 3
+		});
+	}
+
+	return items;
 }
