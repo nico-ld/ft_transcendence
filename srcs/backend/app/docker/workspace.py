@@ -127,6 +127,7 @@ async def ensure_container(docker: Docker, user_id: int, job: Job) -> DockerCont
 
 
 async def start_workspace(docker: Docker, user_id: int, job: Job) -> DockerContainer:
+    # prevent double requests
     async with _locks[user_id]:
         if not await image_exists(docker, job):
             raise ImageNotBuilt(image_name(job))
