@@ -7,3 +7,8 @@ export type User = {
 	job: string;
 	createdAt: string;
 };
+
+export type Role = "admin" | "user";
+
+export type SortKey = "date" | "username" | "email";
+

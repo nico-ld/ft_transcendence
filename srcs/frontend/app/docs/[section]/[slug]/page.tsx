@@ -6,13 +6,10 @@ import { DocsToc } from "@/components/docs/docs-toc";
 import { 
 	getDoc, 
 	getDocEntries,
-	getAdjacentDocs, 
+	getAdjacentDocs,
+	DocPageProps,
 	DOC_SECTIONS 
 } from "@/lib/docs";
-
-type Props = {
-	params: Promise<{section: string; slug: string}>;
-};
 
 export function generateStaticparams() {
 	return DOC_SECTIONS.flatMap(( {id} ) =>
@@ -20,7 +17,7 @@ export function generateStaticparams() {
 	);
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: DocPageProps): Promise<Metadata> {
 	const { section, slug} = await params;
 	const doc = await getDoc(section, slug);
 	if (!doc)
@@ -32,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	};
 }
 
-async function DocContent({params}: Props) {
+async function DocContent({params}: DocPageProps) {
 	const {section, slug} = await params;
 	const doc = await getDoc(section, slug);
 	if (!doc)
@@ -71,7 +68,7 @@ async function DocContent({params}: Props) {
 	);
 }
 
-export default function DocPage({params}: Props) {
+export default function DocPage({params}: DocPageProps) {
 	return (
 		<Suspense fallback={<p>Loading...</p>}>
 			<DocContent params={params} />

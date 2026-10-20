@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
 import { AdminBadge } from "./CustomBadge";
 import { SilkSpaceLogo } from "../ui/logo";
+import { HeaderProps } from "@/types/HeaderProps";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -20,11 +21,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Logout } from "@/app/actions/auth";
 
-type HeaderProps = {
-	role: "user" | "admin";
-	username: string;
-	avatarUrl?: string;
-};
 
 export function Header({ role, username, avatarUrl }: HeaderProps) {
 	const { resolvedTheme, setTheme } = useTheme();

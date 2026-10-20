@@ -11,6 +11,10 @@ export const DOC_SECTIONS = [
 	{id: "developers", label: "Developer guide"}
 ] as const;
 
+export type DocPageProps = {
+	params: Promise<{section: string; slug: string}>;
+};
+
 export type DocEntry = {
 	file: string;
 	slug: string;

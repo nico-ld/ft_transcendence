@@ -2,7 +2,8 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { LoginPayload, Role } from "@/lib/utils";
+import { Role } from "@/types/User";
+import { LoginPayload } from "@/types/LoginPayload";
 
 export async function Logout() {
 	// TODO : manage cookies

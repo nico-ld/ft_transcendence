@@ -1,14 +1,7 @@
 import { Header } from "@/components/layout/Header";
-import type { Role } from "@/lib/utils";
+import { DashboardShellProps } from "@/types/DashboardShellProps"
 import Link from "next/link";
 
-type DashboardShellProps = {
-	role: Role;
-	username: string;
-	avatarUrl?: string;
-	sidebar?: React.ReactNode;
-	children: React.ReactNode;
-};
 
 export function DashboardShell({ role, username, avatarUrl, sidebar, children }: DashboardShellProps) {
 	return (

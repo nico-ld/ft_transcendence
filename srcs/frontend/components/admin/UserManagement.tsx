@@ -35,9 +35,8 @@ import {
 	DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 
-import type { User } from "@/lib/types"
+import type { User, SortKey } from "@/types/User"
 
-type SortKey = "date" | "username" | "email";
 
 function sortUsers(list: User[], key: SortKey) {
 	return [...list].sort((a, b) =>

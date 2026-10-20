@@ -18,7 +18,6 @@ import {
 	CardHeader,
 	CardTitle
 } from "../ui/card";
-import { Input } from "@base-ui/react";
 
 function ConnectionFailed({ error }: {error: string;}) {
 	return (
