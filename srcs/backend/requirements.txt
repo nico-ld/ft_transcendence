@@ -12,3 +12,4 @@ psycopg
 itsdangerous
 pwdlib[argon2]
 pyjwt
+aiodocker

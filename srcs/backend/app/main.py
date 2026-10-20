@@ -2,6 +2,7 @@ import logging
 import time
 from contextlib import asynccontextmanager
 
+from aiodocker import Docker
 from config import settings
 from db import Base, Role, engine, users_db
 from fastapi import FastAPI
@@ -42,7 +43,9 @@ async def lifespan(app: FastAPI):
     # all models are imported through db so it creates every table
     Base.metadata.create_all(engine)
     create_initial_admin()
-    yield
+    async with Docker(url=settings.docker_url) as docker:
+        app.state.docker = docker
+        yield
 
 
 app = FastAPI(lifespan=lifespan, root_path="/api")
