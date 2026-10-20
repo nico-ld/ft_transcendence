@@ -1,6 +1,11 @@
+import { Suspense } from "react";
 import { DocsSidebar } from "@/components/docs/docs-sidebar";
+import { DocsMobileNav } from "@/components/docs/docs-mobile-nav";
+import { getDocNav } from "@/lib/docs";
 
 export default function DocsLayout({children}: {children: React.ReactNode}) {
+	const sections = getDocNav();
+
 	return (
 		<div className="mx-auto flex w-full max-w-6xl gap-10 px-6 py-12">
 			<aside className="hidden w-56 shrink-0 md:block">
@@ -8,7 +13,12 @@ export default function DocsLayout({children}: {children: React.ReactNode}) {
 					<DocsSidebar />
 				</div>
 			</aside>
-			<main className="min-w-0 max-w-3xl flex-1">{children}</main>
+			<div className="min-w-0 max-w-3xl flex-1">
+				<Suspense fallback={null}>
+					<DocsMobileNav sections={sections} />
+				</Suspense>
+				<main>{children}</main>
+			</div>
 		</div>
 	);
 }
