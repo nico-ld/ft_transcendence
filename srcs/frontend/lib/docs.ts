@@ -78,3 +78,16 @@ export function getDocNav(): DocNavSection[] {
 		})
 	}));
 }
+
+export function getAdjacentDocs(section: string, slug: string) {
+	const items = getDocNav().find((s) => s.id === section)?.items ?? [];
+	const index = items.findIndex((item) => item.slug === slug);
+
+	if (index === -1)
+		return {prev: null, next: null};
+
+	return {
+		prev: items[index - 1] ?? null,
+		next: items[index + 1] ?? null
+	};
+}

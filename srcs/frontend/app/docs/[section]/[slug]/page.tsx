@@ -1,7 +1,13 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { getDocEntries, getDoc, DOC_SECTIONS } from "@/lib/docs";
+import { DocsPager } from "@/components/docs/docs-pager";
+import { 
+	getDoc, 
+	getDocEntries,
+	getAdjacentDocs, 
+	DOC_SECTIONS 
+} from "@/lib/docs";
 
 type Props = {
 	params: Promise<{section: string; slug: string}>;
@@ -32,6 +38,7 @@ async function DocContent({params}: Props) {
 		notFound();
 
 	const {Content, frontmatter} = doc;
+	const {prev, next} = getAdjacentDocs(section, slug);
 
 	return (
 		<div>
@@ -49,6 +56,7 @@ async function DocContent({params}: Props) {
 			<article className="prose max-w-none">
 				<Content />
 			</article>
+			<DocsPager prev={prev} next={next} />
 		</div>
 	);
 }
