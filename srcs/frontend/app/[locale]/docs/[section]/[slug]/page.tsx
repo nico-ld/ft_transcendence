@@ -12,7 +12,7 @@ import {
 	DOC_SECTIONS 
 } from "@/lib/docs";
 
-export async function generateStaticparams() {
+export async function generateStaticParams() {
 	const locale = await getLocale();
 	return DOC_SECTIONS.flatMap(( {id} ) =>
 		getDocEntries(locale, id).map(({slug}) => ({section: id, slug}))

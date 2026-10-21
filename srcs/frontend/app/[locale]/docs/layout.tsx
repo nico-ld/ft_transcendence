@@ -20,7 +20,7 @@ export default async function DocsLayout({children}: {children: React.ReactNode}
 					<Suspense fallback={null}>
 						<DocsMobileNav sections={sections} />
 					</Suspense>
-					<main>{children}</main>
+					<div>{children}</div>
 				</div>
 			</div>
 			<LandingFooter />

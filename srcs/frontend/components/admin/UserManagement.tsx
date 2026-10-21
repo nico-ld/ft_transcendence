@@ -5,9 +5,9 @@ import { Funnel } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { NewUserForm } from "@/app/actions/NewUserForm";
-import { RemoveUser } from "@/app/actions/RemoveUser";
-import { ModifyUser } from "@/app/actions/ModifyUser";
+import { NewUserForm } from "@/actions/NewUserForm";
+import { RemoveUser } from "@/actions/RemoveUser";
+import { ModifyUser } from "@/actions/ModifyUser";
 import { UserBadge } from "../layout/CustomBadge";
 import * as React from "react"
 import { 
