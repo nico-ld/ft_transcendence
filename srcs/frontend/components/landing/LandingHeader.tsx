@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { buttonVariants } from "../ui/button";
 import { SilkSpaceLogo } from "../ui/logo";
@@ -8,6 +9,7 @@ import { ThemeSwitch } from "../layout/ThemeSwicth";
 
 export function LandingHeader({tab}: {tab: React.ReactNode}) {
 	const [isTop, setIsTop] = useState(true);
+	const t = useTranslations("Landing");
 
 	useEffect(() => {
 		const onScroll = () => setIsTop(window.scrollY === 0);
@@ -30,7 +32,7 @@ export function LandingHeader({tab}: {tab: React.ReactNode}) {
 
 				<article className="flex items-center gap-3">
 					<ThemeSwitch />
-					<Link href="/login" className={buttonVariants({variant: 'outline'})}>Sign in</Link>
+					<Link href="/login" className={buttonVariants({variant: 'outline'})}>{t("signin")}</Link>
 				</article>
 			</section>
 		</header>

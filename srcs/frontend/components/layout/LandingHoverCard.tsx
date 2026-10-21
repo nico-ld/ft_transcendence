@@ -1,4 +1,5 @@
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
 import { ChevronDown } from "lucide-react";
@@ -20,11 +21,13 @@ function DocElem({title, href}: {title: string; href: string}) {
 }
 
 export function LandingHoverCard({sections}: {sections: DocNavSection[]}) {
+	const t = useTranslations("Landing");
+
 	return (
 		<HoverCard>
 			<HoverCardTrigger delay={10} closeDelay={100} render={
 				<Button variant="ghost">
-					<span>Resources</span>
+					<span>{t("resources")}</span>
 					<ChevronDown />
 				</Button>
 			}/>
