@@ -17,7 +17,7 @@ class Role(enum.Enum):
     ADMIN = "admin"
     ACCOUNTANT = "accountant"
     DATA = "data-analyst"
-    DEVOPS_INGE = "devops"
+    DEVOPS_INGE = "devops-engineer"
     SOFTWARE_INGE = "software-engineer"
     TECH_WRITER = "technical-writer"
 
@@ -52,7 +52,7 @@ class User(Base):
     role: Mapped[Role] = mapped_column(
         SAEnum(Role, name="user_role", values_callable=lambda e: [m.value for m in e]),
         nullable=False,
-        default=Role.DEV,
+        default=Role.SOFTWARE_INGE,
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
