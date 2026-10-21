@@ -1,6 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { DashboardShellProps } from "@/types/DashboardShellProps"
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 
 export function DashboardShell({ role, username, avatarUrl, sidebar, children }: DashboardShellProps) {

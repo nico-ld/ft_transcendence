@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ChevronLeft, ChevronRight, House } from "lucide-react";
 import type { DocNavItem } from "@/lib/docs";
 

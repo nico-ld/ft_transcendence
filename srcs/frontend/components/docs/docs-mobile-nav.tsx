@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { ChevronDown } from "lucide-react";
 import { DocNavSection } from "@/lib/docs";
 import { DocsNav } from "./docs-nav";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useTheme } from "next-themes";
 import {ChevronDown, LogOut, Moon, Settings, Sun, Sword} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -19,7 +19,9 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { Logout } from "@/app/actions/auth";
+import { Logout } from "@/actions/auth";
+import { useLocale } from "next-intl";
+import { ROLE_HOME } from "@/lib/utils";
 
 
 export function Header({ role, username, avatarUrl }: HeaderProps) {
@@ -27,7 +29,8 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 	const [isPending, startTransition] = useTransition();
 
 	const isDark = resolvedTheme === "dark";
-	const home = role === "admin" ? "/admin" : "/dashboard";
+	const home = ROLE_HOME[role];
+	const locale = useLocale();
 
 	return (
 		<header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b bg-background/80 px-4 backdrop-blur md:px-6">
@@ -81,7 +84,7 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 					<DropdownMenuItem
 						variant="destructive"
 						disabled={isPending}
-						onClick={() => startTransition(() => Logout())}
+						onClick={() => startTransition(() => Logout(locale))}
 					>
 						<LogOut />
 						{isPending ? "Logging out" : "Log out"}
