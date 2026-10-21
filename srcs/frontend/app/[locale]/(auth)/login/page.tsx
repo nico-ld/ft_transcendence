@@ -1,6 +1,6 @@
 import { LoginForm } from "@/components/auth/LoginForm";
 import { ThemeSwitch } from "@/components/layout/ThemeSwicth";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 export default function LoginPage() {
 	return (
