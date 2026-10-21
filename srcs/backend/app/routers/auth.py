@@ -1,6 +1,6 @@
 from db import Role, users_db
 from fastapi import APIRouter, HTTPException, Response, status
-from schemas import LoginIn, SignupIn, UserOut
+from schemas import LoginIn, ProfileUpdateIn, SignupIn, UserOut
 from security import (
     CurrentUser,
     authenticate,
@@ -21,7 +21,7 @@ def signup(body: SignupIn, response: Response) -> UserOut:
             body.first_name,
             body.last_name,
             body.email,
-            Role.SOFTWARE_INGE,
+            Role.USER,
             password_hash=hash_password(body.password),
         )
     except IntegrityError:
@@ -51,3 +51,12 @@ def logout(response: Response) -> None:
 @router.get("/me")
 def me(user: CurrentUser) -> UserOut:
     return UserOut.model_validate(user)
+
+
+@router.patch("/me")
+def update_me(body: ProfileUpdateIn, user: CurrentUser) -> UserOut:
+    # none of these cols can be null so a null = no change
+    updated = users_db.update_user(user.id, body.model_dump(exclude_none=True))
+    if updated is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "User not found")
+    return UserOut.model_validate(updated)

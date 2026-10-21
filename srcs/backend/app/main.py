@@ -2,10 +2,11 @@ import logging
 import time
 from contextlib import asynccontextmanager
 
+from aiodocker import Docker
 from config import settings
 from db import Base, Role, engine, users_db
 from fastapi import FastAPI
-from routers import auth, oauth42, users
+from routers import auth, oauth42, users, websocket, workspace
 from security import hash_password
 from starlette.middleware.sessions import SessionMiddleware
 
@@ -42,7 +43,9 @@ async def lifespan(app: FastAPI):
     # all models are imported through db so it creates every table
     Base.metadata.create_all(engine)
     create_initial_admin()
-    yield
+    async with Docker(url=settings.docker_url) as docker:
+        app.state.docker = docker
+        yield
 
 
 app = FastAPI(lifespan=lifespan, root_path="/api")
@@ -59,6 +62,8 @@ app.add_middleware(
 app.include_router(oauth42.router)
 app.include_router(auth.router)
 app.include_router(users.router)
+app.include_router(websocket.router)
+app.include_router(workspace.router)
 
 
 @app.get("/")

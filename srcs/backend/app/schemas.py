@@ -1,7 +1,7 @@
 from datetime import datetime
-from typing import Annotated
+from typing import Annotated, Self
 
-from db import Role
+from db import Job, Role
 from pydantic import (
     AfterValidator,
     BaseModel,
@@ -9,6 +9,7 @@ from pydantic import (
     EmailStr,
     Field,
     StringConstraints,
+    model_validator,
 )
 from pydantic.alias_generators import to_camel
 
@@ -37,9 +38,21 @@ class UserOut(CamelModel):
     first_name: str
     last_name: str
     avatar: str | None
-    job: str | None
+    job: Job | None
     role: Role
     created_at: datetime
+
+
+class UserCreateIn(CamelModel):
+    model_config = ConfigDict(extra="forbid")
+
+    username: Name
+    first_name: Name
+    last_name: Name
+    email: Email
+    password: str = Field(min_length=8, max_length=128)
+    job: Job | None
+    role: Role
 
 
 class SignupIn(CamelModel):
@@ -60,3 +73,32 @@ class LoginIn(CamelModel):
     # no min length here because that rule is for signup
     # login only compares with the hash
     password: str = Field(min_length=1, max_length=128)
+
+
+class UserUpdateIn(CamelModel):
+    """Admin edit of a user"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    username: Name | None = None
+    first_name: Name | None = None
+    last_name: Name | None = None
+    job: Job | None = None
+    role: Role | None = None
+
+    @model_validator(mode="after")
+    def only_job_can_be_null(self) -> Self:
+        for field in ("username", "first_name", "last_name", "role"):
+            if field in self.model_fields_set and getattr(self, field) is None:
+                raise ValueError(f"{field} can't be null")
+        return self
+
+
+class ProfileUpdateIn(CamelModel):
+    """Edit user profile"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    username: Name | None = None
+    first_name: Name | None = None
+    last_name: Name | None = None

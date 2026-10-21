@@ -5,10 +5,11 @@ authlib
 httpx
 pydantic-settings
 httpx2
-sqlalchemy[asyncio] >= 2.1
+sqlalchemy[asyncio]
 asyncpg
 alembic
 psycopg
 itsdangerous
 pwdlib[argon2]
 pyjwt
+aiodocker

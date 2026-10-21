@@ -1,96 +1,136 @@
+import asyncio
+from collections import defaultdict
 
-from dataclasses import dataclass
+from aiodocker.containers import DockerContainer
+from aiodocker.docker import Docker
+from aiodocker.exceptions import DockerError
+from aiodocker.networks import DockerNetwork
+from aiodocker.volumes import DockerVolume
+from config import settings
+from db import Job
+
+_locks: defaultdict[int, asyncio.Lock] = defaultdict(asyncio.Lock)
 
 
-@dataclass
-class Volume_workspace:
-	from_: str
-	command: list[str]
-	working_dir: str
-	user: str
-	labels: dict[str, str]
+class ImageNotBuilt(Exception):
+    pass
 
-Vaccountant = Volume_workspace(
-	from_= "workspace-base",
-	command=[
-		"RUN apt-get update \
-		&& apt-get install -y --no-install-recommends \
-      	visidata sqlite3 bc ledger \
-       	&& rm -rf /var/lib/apt/lists/* \
-        && { find / -xdev -perm /6000 -type f -exec chmod a-s {} + || true; }",
-       	"printf '%s\n' \
-        'export WORKSPACE_ROLE=accountant' \
-        'export LEDGER_FILE=\"$HOME/main.ledger\"' \
-        > /etc/workspace.d/role.sh"
-    ],
-	labels= {"silkspace.role" : "acccountant"},
-	user="1000:1000",
-	working_dir="/home/workspace",
-)
-Vdata_analyst = Volume_workspace(
-	from_= "workspace-base",
-	command= [
-			"apt-get update \
-				&& apt-get install -y --no-install-recommends \
-      			python3 python3-pandas sqlite3 visidata \
-         		&& rm -rf /var/lib/apt/lists/* \
-        		&& { find / -xdev -perm /6000 -type f -exec chmod a-s {} + || true; }",
-          "printf '%s\n' \
-                'export WORKSPACE_ROLE=data-analyst' \
-              > /etc/workspace.d/role.sh"
-		],
-		labels= {"silkspace" : {"role" : "data-analyst"}},
-		user="1000:1000",
-		working_dir="/home/workspace",
-)
-Vdevops = Volume_workspace(
-	from_= "workspace-base",
-	command= [
-			"apt-get update \
-			&& apt-get install -y --no-install-recommends \
-      		git ansible-core openssh-client curl jq vim \
-        	&& rm -rf /var/lib/apt/lists/* \
-         	&& { find / -xdev -perm /6000 -type f -exec chmod a-s {} + || true; }",
-          	"printf '%s\n' \
-           	'export WORKSPACE_ROLE=devops-engineer' \
-            'export EDITOR=vim' \
-            > /etc/workspace.d/role.sh"
-		],
-		labels= {"silkspace" : {"role" : "devops-engineer"}},
-		user="1000:1000",
-		working_dir="/home/workspace",
-)
-Vsoftware_engineer = Volume_workspace(
-	from_= "workspace-base",
-	command= [
-			"apt-get update \
-			&& apt-get install -y --no-install-recommends \
-      		git gcc libc6-dev make python3 vim \
-        	&& rm -rf /var/lib/apt/lists/* \
-         	&& { find / -xdev -perm /6000 -type f -exec chmod a-s {} + || true; }",
-          	"printf '%s\n' \
-           'export WORKSPACE_ROLE=software-engineer' \
-           'export EDITOR=vim' \
-           > /etc/workspace.d/role.sh"
-		],
-		labels= {"silkspace" : {"role" : "software-engineer"}},
-		user="1000:1000",
-		working_dir="/home/workspace",
-)
-Vtechnical_writer = Volume_workspace(
-	from_= "workspace-base",
-	command= [
-			"apt-get update \
-			&& apt-get install -y --no-install-recommends \
-      		pandoc git vim aspell aspell-en aspell-fr \
-        	&& rm -rf /var/lib/apt/lists/* \
-         	&& { find / -xdev -perm /6000 -type f -exec chmod a-s {} + || true; }",
-          "printf '%s\n' \
-          'export WORKSPACE_ROLE=technical-writer' \
-          'export EDITOR=vim' \
-          > /etc/workspace.d/role.sh"
-		],
-		labels= {"silkspace" : {"role" : "software-engineer"}},
-		user="1000:1000",
-		working_dir="/home/workspace",
-)
+
+def container_name(user_id: int) -> str:
+    return f"silk-ws-{user_id}"
+
+
+def network_name(user_id: int) -> str:
+    return f"silk-ws-net-{user_id}"
+
+
+def volume_name(user_id: int) -> str:
+    return f"silk-ws-home-{user_id}"
+
+
+def image_name(job: Job) -> str:
+    return f"workspace-{job.value}"
+
+
+def labels(user_id: int, job: Job) -> dict:
+    return {"silk_space.user_id": str(user_id), "silk_space.job": job.value}
+
+
+async def image_exists(docker: Docker, job: Job) -> bool:
+    try:
+        await docker.images.inspect(image_name(job))
+    except DockerError as e:
+        if e.status == 404:
+            return False
+        raise
+    return True
+
+
+async def ensure_volume(docker: Docker, user_id: int, job: Job) -> DockerVolume:
+    return await docker.volumes.create(
+        {"Name": volume_name(user_id), "Labels": labels(user_id, job)}
+    )
+
+
+async def ensure_network(docker: Docker, user_id: int, job: Job) -> DockerNetwork:
+    try:
+        return await docker.networks.get(network_name(user_id))
+    except DockerError as e:
+        if e.status != 404:
+            raise
+    try:
+        return await docker.networks.create(
+            {
+                "Name": network_name(user_id),
+                "Driver": "bridge",
+                "Labels": labels(user_id, job),
+            }
+        )
+    except DockerError as e:
+        if e.status != 409:
+            raise
+    return await docker.networks.get(network_name(user_id))
+
+
+def container_config(user_id: int, job: Job) -> dict:
+    memory = settings.workspace_memory_mb * 1024 * 1024
+    return {
+        "Image": image_name(job),
+        "Hostname": job.value,
+        "Labels": labels(user_id, job),
+        "HostConfig": {
+            "Memory": memory,
+            "MemorySwap": memory,
+            "NanoCpus": int(settings.workspace_cpus * 1_000_000_000),
+            "PidsLimit": settings.workspace_pids,
+            "CapDrop": ["ALL"],
+            "SecurityOpt": ["no-new-privileges"],
+            "NetworkMode": network_name(user_id),
+            "Mounts": [
+                {
+                    "Type": "volume",
+                    "Source": volume_name(user_id),
+                    "Target": "/home/workspace",
+                }
+            ],
+        },
+    }
+
+
+async def ensure_container(docker: Docker, user_id: int, job: Job) -> DockerContainer:
+    name = container_name(user_id)
+    try:
+        container = await docker.containers.get(name)
+    except DockerError as e:
+        if e.status != 404:
+            raise
+        container = None
+
+    if container is not None:
+        info = await container.show()
+        if info["Config"]["Labels"].get("silk_space.job") != job.value:
+            await container.delete(force=True)
+        elif not info["State"]["Running"]:
+            await container.start()
+            return container
+        else:
+            return container
+
+    try:
+        await docker.containers.create(container_config(user_id, job), name=name)
+    except DockerError as e:
+        if e.status != 409:
+            raise
+    container = await docker.containers.get(name)
+    await container.start()
+    return container
+
+
+async def start_workspace(docker: Docker, user_id: int, job: Job) -> DockerContainer:
+    # prevent double requests
+    async with _locks[user_id]:
+        if not await image_exists(docker, job):
+            raise ImageNotBuilt(image_name(job))
+        await ensure_network(docker, user_id, job)
+        await ensure_volume(docker, user_id, job)
+        return await ensure_container(docker, user_id, job)

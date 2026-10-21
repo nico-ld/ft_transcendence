@@ -3,7 +3,7 @@ from typing import Annotated
 
 import jwt
 from config import settings
-from db import User, users_db
+from db import Role, User, users_db
 from fastapi import Depends, HTTPException, Response, status
 from fastapi.security import APIKeyCookie
 from pwdlib import PasswordHash
@@ -56,9 +56,9 @@ def set_session_cookie(response: Response, user_id: int) -> None:
         SESSION_COOKIE,
         create_session_token(user_id),
         max_age=settings.jwt_expire_minutes * 60,
-        httponly=True, # JS can't access it
-        secure=True, # https only
-        samesite="lax", # not sent on cross site POST
+        httponly=True,  # JS can't access it
+        secure=True,  # https only
+        samesite="lax",  # not sent on cross site POST
         path="/",
     )
 
@@ -75,9 +75,16 @@ session_cookie = APIKeyCookie(name=SESSION_COOKIE, auto_error=False)
 
 def get_current_user(token: Annotated[str | None, Depends(session_cookie)]) -> User:
     """FastAPI dependency: the logged in user or a 401"""
-    unauthorized = HTTPException(status.HTTP_401_UNAUTHORIZED, "Not authenticated")
+    user = user_from_token(token)
+    if user is None:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Not authenticated")
+    return user
+
+
+def user_from_token(token: str | None) -> User | None:
+    """The user of a session JWT, or None if missing, invalid, expired or deleted"""
     if token is None:
-        raise unauthorized
+        return None
     try:
         payload = jwt.decode(
             token,
@@ -86,12 +93,15 @@ def get_current_user(token: Annotated[str | None, Depends(session_cookie)]) -> U
             options={"require": ["exp", "sub"]},
         )
     except jwt.InvalidTokenError:
-        raise unauthorized from None
-    # loaded on every request, so a deleted user or a role change applies directly
-    user = users_db.get_user(int(payload["sub"]))
-    if user is None:
-        raise unauthorized
-    return user
-
+        return None
+    return users_db.get_user(int(payload["sub"]))
 
 CurrentUser = Annotated[User, Depends(get_current_user)]
+
+def require_admin(user: CurrentUser) -> User:
+    """FastAPI dependency that returns the logged in admin, 401 if not logged in, 403 if not admin"""
+    if user.role != Role.ADMIN:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Forbidden")
+    return user
+
+AdminUser = Annotated[User, Depends(require_admin)]
