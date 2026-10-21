@@ -5,7 +5,7 @@ import { backendFetch } from "@/lib/backend";
 // Admin actions on users, called by the admin components. The backend checks that
 // the caller is a logged-in admin (users.py), from the forwarded session cookie.
 
-/** What a form action returns: an error to show, or "" when it worked. */
+/** What a form action returns: an error, or "" when success. */
 export type ActionResult = { error: string; done: boolean };
 
 /** One readable line from a FastAPI error answer. */
