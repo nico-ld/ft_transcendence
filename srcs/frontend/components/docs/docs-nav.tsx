@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "cn";
-import type { DocNavSection } from "@/lib/docs";
+import type { DocNavSection } from "@/types/Doc";
 
 export function DocsNav({sections}: {sections: DocNavSection[]}) {
 	const pathname = usePathname();

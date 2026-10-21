@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { ChevronDown } from "lucide-react";
-import { DocNavSection } from "@/lib/docs";
+import { DocNavSection } from "@/types/Doc";
 import { DocsNav } from "./docs-nav";
 
 export function DocsMobileNav({sections}: {sections: DocNavSection[]}) {

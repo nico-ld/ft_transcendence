@@ -7,9 +7,9 @@ import {
 	getDoc, 
 	getDocEntries,
 	getAdjacentDocs,
-	DocPageProps,
 	DOC_SECTIONS 
 } from "@/lib/docs";
+import { DocPageProps } from "@/types/Doc";
 
 export function generateStaticparams() {
 	return DOC_SECTIONS.flatMap(( {id} ) =>
