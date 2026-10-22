@@ -1,6 +1,6 @@
 import { LoginForm } from "@/components/auth/LoginForm";
 import { ThemeSwitch } from "@/components/layout/ThemeSwicth";
-import { Link } from "@/i18n/navigation";
+import { LegalFooter } from "@/components/landing/LegalFooter";
 
 export default function LoginPage() {
 	return (
@@ -12,9 +12,7 @@ export default function LoginPage() {
 				<LoginForm />
 			</section>
 			<footer className="py-4 text-center text-sm text-muted-foreground">
-				<Link href="#" className="hover:underline">Privacy Policy</Link>
-				<span aria-hidden="true"> - </span>
-				<Link href="#" className="hover:underline">Terms of Service</Link>
+				<LegalFooter />
 			</footer>
 		</main>
 	);

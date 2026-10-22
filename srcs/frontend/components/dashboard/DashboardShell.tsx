@@ -1,6 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { DashboardShellProps } from "@/types/DashboardShellProps"
-import { Link } from "@/i18n/navigation";
+import { LegalFooter } from "../landing/LegalFooter";
 
 
 export function DashboardShell({ role, username, avatarUrl, sidebar, children }: DashboardShellProps) {
@@ -18,9 +18,7 @@ export function DashboardShell({ role, username, avatarUrl, sidebar, children }:
 				</div>
 
 				<footer className="py-4 text-center text-sm text-muted-foreground">
-					<Link href="#" className="hover:underline">Privacy Policy</Link>
-					<span aria-hidden="true"> - </span>
-					<Link href="#" className="hover:underline">Terms of Service</Link>
+					<LegalFooter />
 				</footer>
 			</main>
 		</>
