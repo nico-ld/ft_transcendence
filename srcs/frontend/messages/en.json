@@ -77,8 +77,7 @@
 			"phLastName": "Enter the lastName",
 			"phUserName": "Enter the userName",
 			"phEmail": "Enter the email",
-			"phPassword": "Create a password",
-			"phJob": "Select a job"
+			"phPassword": "Create a password"
 		},
 		"delete": {
 			"label": "Delete {username}'s profile ?",
@@ -86,11 +85,12 @@
 		},
 		"editProfil": "Edit {username}'s profile",
 		"jobList": {
+			"placeholder": "Select a job",
 			"accountant": "Accountant",
-			"dataAnalyst": "Data Analyst",
-			"devops": "Devops Engineer",
-			"softEngineer": "Software Engineer",
-			"techWriter": "Technical Writer"
+			"data-analyst": "Data Analyst",
+			"devops-engineer": "Devops Engineer",
+			"software-engineer": "Software Engineer",
+			"technical-writer": "Technical Writer"
 		}
 	}
 }
