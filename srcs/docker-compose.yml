@@ -45,8 +45,38 @@ services:
     networks:
       - ft_silk_space
 
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # ← Add this
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    networks:
+      - ft_silk_space
+    depends_on:
+      - cadvisor
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # Docker API
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro                # (CPU, mem, ...)
+      - /var/lib/docker/:/var/lib/docker:ro            # Container filesystem
+      - /proc:/host/proc:ro                              # Process info
+    ports:
+      - "8081:8080"  # to debug, remove it when pushing
+    networks:
+      - ft_silk_space
+
 volumes:
   postgres_data:
+  prometheus-data:
 
 networks:
   ft_silk_space:
