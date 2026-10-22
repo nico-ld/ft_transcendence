@@ -24,4 +24,8 @@ export type DocNavSection = {
 	items: DocNavItem[];
 };
 
-export type TocItem ={id: string; text: string; level: 2 | 3};
+export type TocItem ={
+	id: string;
+	text: string;
+	level: 2 | 3;
+};
