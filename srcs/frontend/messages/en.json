@@ -58,6 +58,7 @@
 		"title": "System Overview",
 		"memory": {"label": "memory", "used": "Used", "free": "Free", "path": "Path"},
 		"weekLabel": "Daily log time",
+		"week": "This week", "month": "This month",
 		"extra": "Registered users"
 	},
 	"Users": {

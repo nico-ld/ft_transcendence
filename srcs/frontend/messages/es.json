@@ -58,6 +58,7 @@
 		"title": "Resumen del sistema",
 		"memory": {"label": "memoria", "used": "Usada", "free": "Libre", "path": "Ruta"},
 		"weekLabel": "Tiempo de registro diario",
+		"week": "esta semana", "month": "este mes",
 		"extra": "Usuarios registrados"
 	},
 	"Users": {

@@ -25,8 +25,8 @@ export function StatsPanel({stats, extras = []}: StatsPanelProps) {
 				<MemoryRing {...stats.memory} />
 
 				<div className="grid grid-cols-2 gap-3">
-					<StatBlock label="This week" value={stats.logTime.week} />
-					<StatBlock label="This month" value={stats.logTime.month} />
+					<StatBlock label={t("week")} value={stats.logTime.week} />
+					<StatBlock label={t("month")} value={stats.logTime.month} />
 				</div>
 
 				<WeekChart data={stats.daily} />
