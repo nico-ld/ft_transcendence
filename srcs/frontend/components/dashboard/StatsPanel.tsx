@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import type { ExtraStat, SystemStats } from "@/lib/stats";
+import type { StatsPanelProps } from "@/lib/stats";
 import { MemoryRing } from "./MemoryRing";
 import { WeekChart } from "./WeekChart";
+import { useTranslations } from "next-intl";
 
 function StatBlock({label, value}: {label: string; value: string}) {
 	return (
@@ -12,16 +13,13 @@ function StatBlock({label, value}: {label: string; value: string}) {
 	);
 }
 
-type StatsPanelProps = {
-	stats: SystemStats;
-	extras?: ExtraStat[];
-};
-
 export function StatsPanel({stats, extras = []}: StatsPanelProps) {
+	const t = useTranslations("Stats");
+
 	return (
 		<Card className="shadow-glow ring-border">
 			<CardHeader>
-				<CardTitle>System overview</CardTitle>
+				<CardTitle>{t("title")}</CardTitle>
 			</CardHeader>
 			<CardContent className="flex flex-col gap-6">
 				<MemoryRing {...stats.memory} />

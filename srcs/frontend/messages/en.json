@@ -6,12 +6,15 @@
 		"close": "Close", 
 		"save": "Save",
 		"saveChanges": "Save Changes",
-		"delete": "delete"
+		"create": "Create profile",
+		"delete": "Delete",
+		"workSpace": "Working Space"
 	},
 	"Header": {
 		"settings": "Settings",
 		"logout": "Log out", "loggingOut": "Logging out",
-		"admin": "Admin"
+		"light": "Light Mode", "dark": "Dark Mode",
+		"admin": "Admin", "user": "Utilisateur"
 	},
 	"Login": {
 		"title": "Login to your account",
@@ -50,5 +53,44 @@
 		"mobileTitle": "Documentation", "loading": "Loading...",
 		"sections": {"users": "User guide", "developers": "Developers guide"},
 		"pager": {"label": "Pagination", "previous": "Previous", "next": "Next", "home": "Home"}
+	},
+	"Stats": {
+		"title": "System Overview",
+		"memory": {"label": "memory", "used": "Used", "free": "Free", "path": "Path"},
+		"weekLabel": "Daily log time",
+		"extra": "Registered users"
+	},
+	"Users": {
+		"search": "Search",
+		"searchBar": "Search an user",
+		"userInfo": {
+			"name": "Name", 
+			"lastName": "LastName", 
+			"userName": "UserName",
+			"job": "Job",
+			"jobs": "Jobs"
+		},
+		"create": {
+			"label": "Create a Profile",
+			"description": "Enter information about the new user, a new session will be create.",
+			"phName": "Enter the name",
+			"phLastName": "Enter the lastName",
+			"phUserName": "Enter the userName",
+			"phEmail": "Enter the email",
+			"phPassword": "Create a password",
+			"phJob": "Select a job"
+		},
+		"delete": {
+			"label": "Delete {username}'s profile ?",
+			"description": "This will permanently delete this user and his data. Be sure you save every sensitives data."
+		},
+		"editProfil": "Edit {username}'s profile",
+		"jobList": {
+			"accountant": "Accountant",
+			"dataAnalyst": "Data Analyst",
+			"devops": "Devops Engineer",
+			"softEngineer": "Software Engineer",
+			"techWriter": "Technical Writer"
+		}
 	}
 }

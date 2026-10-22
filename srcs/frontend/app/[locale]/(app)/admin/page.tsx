@@ -3,6 +3,7 @@ import { StatsPanel } from "@/components/dashboard/StatsPanel";
 import { UserManagement } from "@/components/admin/UserManagement";
 import { getSystemStats } from "@/lib/stats";
 import type { User } from "@/types/User";
+import { getTranslations } from "next-intl/server";
 
 // REPLACE BY REAL USERS
 const users: User[] = [
@@ -100,6 +101,7 @@ const users: User[] = [
 
 export default async function AdminPage() {
 	const stats = await getSystemStats();
+	const t = await getTranslations("Stats");
 
 	return (
 		<>
@@ -107,7 +109,7 @@ export default async function AdminPage() {
 		<DashboardShell role="admin" username="Julien">
 			<StatsPanel
 				stats={stats}
-				extras={[{ label: "Registered users", value: String(users.length) }]}
+				extras={[{ label: t("extra"), value: String(users.length) }]}
 			/>
 			<UserManagement users={users} />
 		</DashboardShell>

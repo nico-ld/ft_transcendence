@@ -4,5 +4,5 @@ export const Jobs = [
 	{ label: "Data Analyst", value: "data-analyst"},
 	{ label: "Devops Engineer", value: "devops-engineer"},
 	{ label: "Software Engineer", value: "software-engineer"},
-	{ label: "Technical Writer", value: "techinical-writer"}
+	{ label: "Technical Writer", value: "technical-writer"}
 ]

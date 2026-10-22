@@ -6,12 +6,15 @@
 		"close": "Cerrar",
 		"save": "Guardar",
 		"saveChanges": "Guardar cambios",
-		"delete": "eliminar"
+		"create": "crear perfil",
+		"delete": "eliminar",
+		"workSpace": "Espacio de trabajo"
 	},
 	"Header": {
 		"settings": "Configuración",
 		"logout": "Cerrar sesión", "loggingOut": "Cerrando sesión",
-		"admin": "Administrador"
+		"light": "Modo claro", "dark": "Modo oscuro",
+		"admin": "Admin", "user": "Usuario"
 	},
 	"Login": {
 		"title": "Inicia sesión en tu cuenta",
@@ -50,5 +53,44 @@
 		"mobileTitle": "Documentación", "loading": "Cargando...",
 		"sections": {"users": "Guía del usuario", "developers": "Guía para desarrolladores"},
 		"pager": {"label": "Paginación", "previous": "Anterior", "next": "Siguiente", "home": "Inicio"}
+	},
+	"Stats": {
+		"title": "Resumen del sistema",
+		"memory": {"label": "memoria", "used": "Usada", "free": "Libre", "path": "Ruta"},
+		"weekLabel": "Tiempo de registro diario",
+		"extra": "Usuarios registrados"
+	},
+	"Users": {
+		"search": "Buscar",
+		"searchBar": "Buscar un usuario",
+		"userInfo": {
+			"name": "Nombre",
+			"lastName": "Apellido",
+			"userName": "Nombre de usuario",
+			"job": "Puesto",
+			"jobs": "Puestos"
+		},
+		"create": {
+			"label": "Crear un perfil",
+			"description": "Introduce los datos del nuevo usuario. Se creará una nueva sesión.",
+			"phName": "Introduce el nombre",
+			"phLastName": "Introduce el apellido",
+			"phUserName": "Introduce el nombre de usuario",
+			"phEmail": "Introduce el correo electrónico",
+			"phPassword": "Crea una contraseña",
+			"phJob": "Selecciona un puesto"
+		},
+		"delete": {
+			"label": "¿Eliminar el perfil de {username}?",
+			"description": "Esta acción eliminará permanentemente al usuario y sus datos. Asegúrate de haber guardado todos los datos importantes."
+		},
+		"editProfil": "Modificar el perfil de {username}",
+		"jobList": {
+			"accountant": "Contable",
+			"dataAnalyst": "Analista de datos",
+			"devops": "Ingeniero DevOps",
+			"softEngineer": "Ingeniero de software",
+			"techWriter": "Redactor técnico"
+		}
 	}
 }

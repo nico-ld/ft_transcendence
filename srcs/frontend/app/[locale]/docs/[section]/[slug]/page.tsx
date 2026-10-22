@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { DocsPager } from "@/components/docs/docs-pager";
 import { DocsToc } from "@/components/docs/docs-toc";
 import { getLocale } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import { 
 	getDoc, 
 	getDocEntries,
@@ -71,8 +72,10 @@ async function DocContent({params}: DocPageProps) {
 }
 
 export default function DocPage({params}: DocPageProps) {
+	const t = useTranslations("Docs");
+
 	return (
-		<Suspense fallback={<p>Loading...</p>}>
+		<Suspense fallback={<p>{t("loading")}</p>}>
 			<DocContent params={params} />
 		</Suspense>
 	);

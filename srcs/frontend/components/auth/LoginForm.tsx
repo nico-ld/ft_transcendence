@@ -1,7 +1,9 @@
 "use client";
 
-import { useActionState } from "react";
 import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
+import type { LoginError } from "@/types/LoginError";
+import { useActionState } from "react";
 import { Login } from "@/actions/auth";
 import { Button } from "../ui/button";
 import { ROLE_HOME } from "@/lib/utils";
@@ -11,7 +13,6 @@ import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { TriangleAlert } from "lucide-react";
 import {
 	Card,
-	CardAction,
 	CardContent,
 	CardDescription,
 	CardFooter,
@@ -19,32 +20,35 @@ import {
 	CardTitle
 } from "../ui/card";
 
-function ConnectionFailed({ error }: {error: string;}) {
+function ConnectionFailed({ error }: {error: Exclude<LoginError, "">}) {
+	const t = useTranslations("Login");
+
 	return (
 		<Alert variant="destructive" className="max-w-wd bg-muted/50">
 			<TriangleAlert />
-			<AlertTitle>Connection Failed</AlertTitle>
-			<AlertDescription>{error}</AlertDescription>
+			<AlertTitle>{t("failedTitle")}</AlertTitle>
+			<AlertDescription>{t(`errors.${error}`)}</AlertDescription>
 		</Alert>
 	);
 }
 
 export function LoginForm() {
 	const router = useRouter();
+	const t = useTranslations("Login");
 
-	const [error, formAction, pending] = useActionState(
-		async (_prev: string, formData: FormData) => {
+	const [error, formAction, pending] = useActionState<LoginError, FormData>(
+		async (_prev, formData) => {
 			try {
 				const result = await Login({
 					email: String(formData.get("email")),
 					password: String(formData.get("password"))
 				});
 				if (!result)
-					return "Invalid email or password.";
+					return "invalidCredentials";
 				router.replace(ROLE_HOME[result.role]);
 				return "";
 			} catch {
-				return "Something went wrong. Please try again.";
+				return "generic";
 			}
 		},
 		""
@@ -58,32 +62,30 @@ export function LoginForm() {
 
 		<Card className="w-full max-w-sm">
 			<CardHeader>
-				<CardTitle>Login to your account</CardTitle>
-				<CardDescription>
-					Enter your email below to login to your account
-				</CardDescription>
+				<CardTitle>{t("title")}</CardTitle>
+				<CardDescription>{t("description")}</CardDescription>
 			</CardHeader>
 			<form action={formAction}>
 				<CardContent className="mb-3">
 						<div className="flex flex-col gap-6">
 							<div className="grid gap-2">
-								<Label htmlFor="email">Email</Label>
+								<Label htmlFor="email">{t("email")}</Label>
 								<input
 									className="w-full p-0.5 bg-gray-100 rounded-2xl dark:text-zinc-900 text-center text-base"
 									name="email"
 									type="email"
-									placeholder="Email"
+									placeholder={t("email")}
 									autoComplete="email"
 									required
 								/>
 							</div>
 							<div className="grid gap-2">
-								<Label htmlFor="password">Password</Label>
+								<Label htmlFor="password">{t("password")}</Label>
 								<input
 									className="w-full p-0.5 bg-gray-100 rounded-2xl dark:text-zinc-900 text-center text-base"
 									name="password"
 									type="password"
-									placeholder="Password"
+									placeholder={t("password")}
 									autoComplete="current-password"
 									required
 								/>
@@ -93,11 +95,11 @@ export function LoginForm() {
 
 				<CardFooter className="flex-col gap-2">
 					<Button type="submit" className="w-full" disabled={pending}>
-						{pending ? "Logging in" : "Log in"}
+						{pending ? t("loggingIn") : t("login")}
 						{pending && <Spinner />}
 					</Button>
 					<Button variant="outline" className="w-full">
-						Log in with 42
+						{t("with42")}
 					</Button>
 				</CardFooter>
 			</form>

@@ -36,6 +36,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import type { User, SortKey } from "@/types/User"
+import { useTranslations } from "next-intl";
 
 
 function sortUsers(list: User[], key: SortKey) {
@@ -126,6 +127,8 @@ export function UserManagement({ users }: { users: User[] }) {
 		return sortUsers(filtered, sortBy);
 	}, [users, query, sortBy]);
 
+	const t = useTranslations("Users");
+
 	return (
 		<div className="flex h-150 w-full max-w-125 flex-col rounded-xl border bg-card p-2 shadow-glow">
 			<ItemGroup className="max-w-md bg-card">
@@ -137,11 +140,11 @@ export function UserManagement({ users }: { users: User[] }) {
 									<Filter sortBy={sortBy} onSortChange={setSortBy} />
 									<Input
 										type="search"
-										placeholder="Search an user"
+										placeholder={t("searchBar")}
 										value={query}
 										onChange={(e) => setQuery(e.target.value)}
 										/>
-									<Button type="submit">Search</Button>
+									<Button type="submit">{t("search")}</Button>
 								</Field>
 							</form>
 						</ItemTitle>

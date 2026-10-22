@@ -6,12 +6,15 @@
 		"close": "Fermer", 
 		"save": "Sauvegarder",
 		"saveChanges": "Sauvegarder les changements",
-		"delete": "Supprimer"
+		"create": "Créer un profil",
+		"delete": "Supprimer",
+		"workSpace": "Espace de travail"
 	},
 	"Header": {
 		"settings": "Paramètres",
 		"logout": "Se Déconnecter", "loggingOut": "Déconnexion",
-		"admin": "Admin"
+		"light": "Mode Clair", "dark": "Mode Sombre",
+		"admin": "Admin", "user": "Utilisateur"
 	},
 	"Login": {
 		"title": "Connexion à votre compte",
@@ -50,5 +53,44 @@
 		"mobileTitle": "Documentation", "loading": "Chargement...",
 		"sections": {"users": "Guide d'utilisation", "developers": "Guide de developpement"},
 		"pager": {"label": "Pagination", "previous": "Précédent", "next": "Suivant", "home": "Accueil"}
+	},
+	"Stats": {
+		"title": "Apperçu Système",
+		"memory": {"label": "mémoire", "used": "Utilisé", "free": "Libre", "path": "Chemin"},
+		"weekLabel": "Temps de connexion quotidien",
+		"extra": "Utilisateur inscrit"
+	},
+	"Users": {
+		"search": "Chercher",
+		"searchBar": "Chercher un utilisateur",
+		"userInfo": {
+			"name": "Prénom", 
+			"lastName": "Nom", 
+			"userName": "Nom d'utilisateur",
+			"job": "Poste",
+			"jobs": "Postes"
+		},
+		"create": {
+			"label": "Créer un Profil",
+			"description": "Entrez les informations du nouvel utilisateur, une nouvelle session va être créée.",
+			"phName": "Entrez le nom",
+			"phLastName": "Entrez le prénom",
+			"phUserName": "Entrez le nom d'utilisateur",
+			"phEmail": "Entrez l'email",
+			"phPassword": "Créez un mot de passe",
+			"phJob": "Selectionnez un poste"
+		},
+		"delete": {
+			"label": "Supprimer le profil de {username} ?",
+			"description": "Cette action va effacer de façon permanente l'utilisateur et ses données. Soyez sûr d'avoir enregistré toutes données importantes"
+		},
+		"editProfil": "Modifier le profil de {username}",
+		"jobList": {
+			"accountant": "Comptable",
+			"dataAnalyst": "Analyste de données",
+			"devops": "Ingénieur DevOps",
+			"softEngineer": "Ingénieur logiciel",
+			"techWriter": "Rédacteur technique"
+		}
 	}
 }
