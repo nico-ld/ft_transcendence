@@ -102,3 +102,14 @@ class ProfileUpdateIn(CamelModel):
     username: Name | None = None
     first_name: Name | None = None
     last_name: Name | None = None
+
+
+class PasswordChangeIn(CamelModel):
+    """The logged in user changes their own password"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    # no min length here, like LoginIn: it is only compared with the hash
+    current_password: str = Field(min_length=1, max_length=128)
+    # same rules as the password of signup and user creation
+    new_password: str = Field(min_length=8, max_length=128)
