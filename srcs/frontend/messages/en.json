@@ -56,10 +56,11 @@
 	},
 	"Stats": {
 		"title": "System Overview",
-		"memory": {"label": "memory", "used": "Used", "free": "Free", "path": "Path"},
 		"weekLabel": "Daily log time",
 		"week": "This week", "month": "This month",
-		"extra": "Registered users"
+		"extra": "Registered users",
+		"memory": {"label": "memory", "used": "Used", "free": "Free", "path": "Path"},
+		"days": {"mon": "M", "tue": "T", "wen": "W", "thu": "T", "fri": "F", "sat": "S", "sun": "S"}
 	},
 	"Users": {
 		"search": "Search",

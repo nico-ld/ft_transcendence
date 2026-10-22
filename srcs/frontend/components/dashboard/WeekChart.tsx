@@ -5,7 +5,7 @@ import {
 	TooltipTrigger
 } from "../ui/tooltip";
 
-const DAYS = ["M", "T", "W", "T", "F", "S",  "S"]
+const DAYS = ["mon", "tue", "wen", "thu", "fri", "sat",  "sun"];
 
 export function WeekChart({ data }: {data: number[]}) {
 	const max = Math.max(...data, 1);
@@ -30,7 +30,7 @@ export function WeekChart({ data }: {data: number[]}) {
 			</div>
 			<div className="mt-1 flex gap-2 text-[10px] text-muted-foreground">
 				{data.map((_, i) => (
-					<span key={i} className="flex-1 text-center">{DAYS[i]}</span>
+					<span key={i} className="flex-1 text-center">{t(`days.${DAYS[i]}`)}</span>
 				))}
 			</div>
 		</div>

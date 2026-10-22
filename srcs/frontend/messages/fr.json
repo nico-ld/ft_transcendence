@@ -56,10 +56,11 @@
 	},
 	"Stats": {
 		"title": "Apperçu Système",
-		"memory": {"label": "mémoire", "used": "Utilisée", "free": "Libre", "path": "Chemin"},
 		"weekLabel": "Temps de connexion quotidien",
 		"week": "Cette semaine", "month": "Ce mois",
-		"extra": "Utilisateur inscrit"
+		"extra": "Utilisateur inscrit",
+		"memory": {"label": "mémoire", "used": "Utilisée", "free": "Libre", "path": "Chemin"},
+		"days": {"mon": "L", "tue": "M", "wen": "M", "thu": "J", "fri": "V", "sat": "S", "sun": "D"}
 	},
 	"Users": {
 		"search": "Chercher",

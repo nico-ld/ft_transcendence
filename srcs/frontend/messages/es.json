@@ -56,10 +56,11 @@
 	},
 	"Stats": {
 		"title": "Resumen del sistema",
-		"memory": {"label": "memoria", "used": "Usada", "free": "Libre", "path": "Ruta"},
 		"weekLabel": "Tiempo de registro diario",
 		"week": "esta semana", "month": "este mes",
-		"extra": "Usuarios registrados"
+		"extra": "Usuarios registrados",
+		"memory": {"label": "memoria", "used": "Usada", "free": "Libre", "path": "Ruta"},
+		"days": {"mon": "L", "tue": "M", "wen": "M", "thu": "J", "fri": "V", "sat": "S", "sun": "D"}
 	},
 	"Users": {
 		"search": "Buscar",
