@@ -21,15 +21,16 @@ async function UserDashboard() {
 	const t = await getTranslations("Common");
 
 	// hypothesis : not logged in, or the session ended (logout, account deleted)
-	if (!user)
-		redirect("/login");
+	// if (!user)
+	// 	redirect("/login");
 	// distinguishing since an admin has their own dashboard
-	if (user.role !== "user")
-		redirect(ROLE_HOME[user.role]);
+	// if (user.role !== "user")
+	// 	redirect(ROLE_HOME[user.role]);
 
 	//I swear, those multi-lines returns are going to make me cry
 	return (
-		<DashboardShell role={user.role} username={user.username} avatarUrl={user.avatar ?? undefined}>
+		// <DashboardShell role={user.role} username={user.username} avatarUrl={user.avatar ?? undefined}>
+		<DashboardShell role="user" username="le roux" avatarUrl="https://github.com/nico-ld.png">
 			<StatsPanel stats={stats} />
 			<WorkspaceLink href="/workspace" label={t("workSpace")}/>
 		</DashboardShell>
