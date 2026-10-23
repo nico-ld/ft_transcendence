@@ -13,7 +13,7 @@
 		"workSpace": "Working Space"
 	},
 	"Header": {
-		"settings": "Settings",
+		"editProfile": "Edit your profile",
 		"logout": "Log out", "loggingOut": "Logging out",
 		"light": "Light Mode", "dark": "Dark Mode",
 		"admin": "Admin", "user": "Utilisateur"

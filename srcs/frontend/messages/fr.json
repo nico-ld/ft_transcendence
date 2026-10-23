@@ -13,7 +13,7 @@
 		"workSpace": "Espace de travail"
 	},
 	"Header": {
-		"settings": "Paramètres",
+		"editProfile": "Modifier le profil",
 		"logout": "Se Déconnecter", "loggingOut": "Déconnexion",
 		"light": "Mode Clair", "dark": "Mode Sombre",
 		"admin": "Admin", "user": "Utilisateur"

@@ -1,9 +1,8 @@
 "use client";
 
 import { useTransition } from "react";
-import { Link } from "@/i18n/navigation";
 import { useTheme } from "next-themes";
-import {ChevronDown, LogOut, Moon, Settings, Sun} from "lucide-react";
+import {ChevronDown, LogOut, Moon, UserRoundPen, Sun} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
@@ -69,9 +68,9 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 
 					<DropdownMenuSeparator />
 
-					<DropdownMenuItem render={<Link href={`${home}/settings`} />}>
-						<Settings />
-						{t("settings")}
+					<DropdownMenuItem>
+						<UserRoundPen />
+						{t("editProfile")}
 					</DropdownMenuItem>
 
 					<LanguageSwitcher variant="submenu" />
