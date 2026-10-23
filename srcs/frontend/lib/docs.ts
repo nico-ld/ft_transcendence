@@ -4,6 +4,7 @@ import matter from "gray-matter";
 import GithubSlugger from "github-slugger";
 import { ComponentType } from "react";
 import { DocEntry, DocFrontmatter, DocNavSection, TocItem} from "@/types/Doc";
+import { routing } from "@/i18n/routing";
 
 const DOCS_DIR = path.join(process.cwd(), "content", "docs");
 
@@ -13,8 +14,18 @@ export const DOC_SECTIONS = [
 ] as const;
 
 
-export function getDocEntries(section: string): DocEntry[] {
-	const dir = path.join(DOCS_DIR, section);
+function resolveDir(locale: string, section: string) {
+	const dir = path.join(DOCS_DIR, locale, section);
+	if (fs.existsSync(dir))
+		return {locale, dir};
+	return {
+		locale: routing.defaultLocale,
+		dir: path.join(DOCS_DIR, routing.defaultLocale, section)
+	};
+}
+
+export function getDocEntries(locale: string, section: string): DocEntry[] {
+	const {dir} = resolveDir(locale, section);
 
 	if (!fs.existsSync(dir))
 		return [];
@@ -29,17 +40,16 @@ export function getDocEntries(section: string): DocEntry[] {
 		});
 }
 
-export async function getDoc(section: string, slug: string) {
-	const entry = getDocEntries(section).find((e) => e.slug == slug);
+export async function getDoc(locale: string, section: string, slug: string) {
+	const {locale: loc, dir} = resolveDir(locale, section);
+	const entry = getDocEntries(locale, section).find((e) => e.slug == slug);
 	if (!entry)
 		return null;
 
-	const mod = await import(`@/content/docs/${section}/${entry.file}.mdx`);
+	const mod = await import(`@/content/docs/${loc}/${section}/${entry.file}.mdx`);
 
-	const raw = fs.readFileSync(
-		path.join(DOCS_DIR, section, `${entry.file}.mdx`),
-		"utf8"
-	);
+	const raw = fs.readFileSync(path.join(dir, `${entry.file}.mdx`), "utf8");
+	
 	const toc = extractToc(matter(raw).content);
 
 	return {
@@ -49,27 +59,22 @@ export async function getDoc(section: string, slug: string) {
 	};
 }
 
-export function getDocNav(): DocNavSection[] {
-	return DOC_SECTIONS.map(({id, label}) => ({
-		id,
-		label,
-		items: getDocEntries(id).map(({file, slug}) => {
-			const raw = fs.readFileSync(
-				path.join(DOCS_DIR, id, `${file}.mdx`),
-				"utf8"
-			);
-			const {data} = matter(raw);
-			return {
-				slug,
-				title: (data.title as string) ?? slug,
-				href: `/docs/${id}/${slug}`
-			};
-		})
-	}));
+export function getDocNav(locale: string): DocNavSection[] {
+	return DOC_SECTIONS.map(({id, label}) => {
+		const {dir} = resolveDir(locale, id);
+		return {
+			id, label,
+			items: getDocEntries(locale, id).map(({file, slug}) => {
+				const raw = fs.readFileSync(path.join(dir, `${file}.mdx`), "utf8");
+				const {data} = matter(raw);
+				return {slug, title: (data.title as string) ?? slug, href: `/docs/${id}/${slug}`};
+			})
+		};
+	});
 }
 
-export function getAdjacentDocs(section: string, slug: string) {
-	const items = getDocNav().find((s) => s.id === section)?.items ?? [];
+export function getAdjacentDocs(locale: string, section: string, slug: string) {
+	const items = getDocNav(locale).find((s) => s.id === section)?.items ?? [];
 	const index = items.findIndex((item) => item.slug === slug);
 
 	if (index === -1)

@@ -1,9 +1,9 @@
 "use client";
 
 import { useTransition } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useTheme } from "next-themes";
-import {ChevronDown, LogOut, Moon, Settings, Sun, Sword} from "lucide-react";
+import {ChevronDown, LogOut, Moon, Settings, Sun} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
@@ -19,7 +19,10 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { Logout } from "@/app/actions/auth";
+import { Logout } from "@/actions/auth";
+import { useLocale, useTranslations } from "next-intl";
+import { ROLE_HOME } from "@/lib/utils";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 
 export function Header({ role, username, avatarUrl }: HeaderProps) {
@@ -27,7 +30,10 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 	const [isPending, startTransition] = useTransition();
 
 	const isDark = resolvedTheme === "dark";
-	const home = role === "admin" ? "/admin" : "/dashboard";
+	const home = ROLE_HOME[role];
+	
+	const locale = useLocale();
+	const t = useTranslations("Header");
 
 	return (
 		<header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b bg-background/80 px-4 backdrop-blur md:px-6">
@@ -57,7 +63,7 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 					<DropdownMenuGroup>
 						<DropdownMenuLabel>
 							<span className="block text-sm font-medium text-foreground">{username}</span>
-							<span className="block capitalize">{role}</span>
+							<span className="block capitalize">{t(role)}</span>
 						</DropdownMenuLabel>
 					</DropdownMenuGroup>
 
@@ -65,15 +71,17 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 
 					<DropdownMenuItem render={<Link href={`${home}/settings`} />}>
 						<Settings />
-						Settings
+						{t("settings")}
 					</DropdownMenuItem>
+
+					<LanguageSwitcher variant="submenu" />
 
 					<DropdownMenuItem
 						closeOnClick={false}
 						onClick={() => setTheme(isDark ? "light" : "dark")}
 					>
 						{isDark ? <Sun /> : <Moon />}
-						{isDark ? "Light mode" : "Dark mode"}
+						{isDark ? t("light") : t("dark")}
 					</DropdownMenuItem>
 
 					<DropdownMenuSeparator />
@@ -81,10 +89,10 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 					<DropdownMenuItem
 						variant="destructive"
 						disabled={isPending}
-						onClick={() => startTransition(() => Logout())}
+						onClick={() => startTransition(() => Logout(locale))}
 					>
 						<LogOut />
-						{isPending ? "Logging out" : "Log out"}
+						{isPending ? t("loggingOut") : t("logout")}
 						{isPending && <Spinner />}
 					</DropdownMenuItem>
 				</DropdownMenuContent>

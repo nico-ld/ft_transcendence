@@ -1,0 +1,137 @@
+{
+  "Metadata": {
+    "title": "Silk Space",
+    "description": "This is a description"
+  },
+  "Legal": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "Language": {
+    "selectLanguage": "Select the language",
+    "language": "Language"
+  },
+  "Common": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "save": "Save",
+    "saveChanges": "Save Changes",
+    "create": "Create profile",
+    "creating": "Creating",
+    "delete": "Delete",
+    "workSpace": "Working Space"
+  },
+  "Header": {
+    "settings": "Settings",
+    "logout": "Log out",
+    "loggingOut": "Logging out",
+    "light": "Light Mode",
+    "dark": "Dark Mode",
+    "admin": "Admin",
+    "user": "Utilisateur"
+  },
+  "Login": {
+    "title": "Login to your account",
+    "description": "Enter your email below to login to your account",
+    "email": "Email",
+    "password": "Password",
+    "login": "Log in",
+    "loggingIn": "Logging In",
+    "with42": "Log in with 42",
+    "failedTitle": "Connection Failed",
+    "errors": {
+      "invalidCredentials": "Invalid email or password.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "Landing": {
+    "signin": "Sign in",
+    "heroCta": "Sign in to Silk Space",
+    "resources": "Resources",
+    "headline": "Ready to use work sessions for fast past environments",
+    "subtitle": "A turnkey solution for your business. Manage your teams and work sessions in just a few clicks, all from one central place.",
+    "features": {
+      "title": "Everything in one place",
+      "fast": {
+        "title": "Fast",
+        "description": "<strong>Silk Space</strong> is designed to be intuitive, fast and efficient in your everyday work. Create, edit or delete a session in under 3 minutes. With quick and direct access to your workspace, everything you need is always just a few clicks away. Spend less time managing your workspace and more time focusing on what matters."
+      },
+      "secure": {
+        "title": "Secure",
+        "description": "Your data stays on your machine. <strong>Silk Space</strong> doesn't store or collect your information, giving you full control over your workspace. Each user session is isolated from the others, helping prevent unauthorized access and privilege escalation. With privacy and security built into its design, <strong>Silk Space</strong> keeps your workspace yours and your data under your control."
+      },
+      "collaborative": {
+        "title": "Collaborative",
+        "description": "<strong>Silk Space</strong> fosters efficient collaboration and stronger working relationships. Managers can quickly adapt a workspace to meet changing roles and project requirements, ensuring that every team is organized for the right task at the right time. With minimal effort and a low adaptation cost, teams can stay flexible, respond to new challenges, and focus on what matters most: working together efficiently."
+      }
+    }
+  },
+  "Docs": {
+    "documentation": "Documentation",
+    "tocLabel": "On this page",
+    "loading": "Loading...",
+    "sections": { "users": "User guide", "developers": "Developers guide" },
+    "pager": {
+      "label": "Pagination",
+      "previous": "Previous",
+      "next": "Next",
+      "home": "Home"
+    }
+  },
+  "Stats": {
+    "title": "System Overview",
+    "weekLabel": "Daily log time",
+    "week": "This week",
+    "month": "This month",
+    "extra": "Registered users",
+    "memory": {
+      "label": "memory",
+      "used": "Used",
+      "free": "Free",
+      "path": "Path"
+    },
+    "days": {
+      "mon": "M",
+      "tue": "T",
+      "wen": "W",
+      "thu": "T",
+      "fri": "F",
+      "sat": "S",
+      "sun": "S"
+    }
+  },
+  "Users": {
+    "search": "Search",
+    "searchBar": "Search an user",
+    "noUsers": "No users found",
+    "userInfo": {
+      "name": "Name",
+      "lastName": "LastName",
+      "userName": "UserName",
+      "job": "Job",
+      "jobs": "Jobs"
+    },
+    "create": {
+      "label": "Create a Profile",
+      "description": "Enter information about the new user, a new session will be create.",
+      "phName": "Enter the name",
+      "phLastName": "Enter the lastName",
+      "phUserName": "Enter the userName",
+      "phEmail": "Enter the email",
+      "phPassword": "Create a password"
+    },
+    "delete": {
+      "label": "Delete {username}'s profile ?",
+      "description": "This will permanently delete this user and his data. Be sure you save every sensitives data."
+    },
+    "editProfil": "Edit {username}'s profile",
+    "jobList": {
+      "placeholder": "Select a job",
+      "accountant": "Accountant",
+      "data-analyst": "Data Analyst",
+      "devops-engineer": "Devops Engineer",
+      "software-engineer": "Software Engineer",
+      "technical-writer": "Technical Writer"
+    }
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "Metadata": {
+    "title": "Silk Space",
+    "description": "Ceci est une description"
+  },
+  "Legal": {
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisations"
+  },
+  "Language": { "selectLanguage": "Choisir la langue", "language": "Langue" },
+  "Common": {
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "save": "Sauvegarder",
+    "saveChanges": "Sauvegarder les changements",
+    "create": "Créer un profil",
+    "creating": "Création",
+    "delete": "Supprimer",
+    "workSpace": "Espace de travail"
+  },
+  "Header": {
+    "settings": "Paramètres",
+    "logout": "Se Déconnecter",
+    "loggingOut": "Déconnexion",
+    "light": "Mode Clair",
+    "dark": "Mode Sombre",
+    "admin": "Admin",
+    "user": "Utilisateur"
+  },
+  "Login": {
+    "title": "Connexion à votre compte",
+    "description": "Entrer votre email ci-dessous pour vous connecter à votre compte",
+    "email": "Email",
+    "password": "Mot de Passe",
+    "login": "Se connecter",
+    "loggingIn": "Connexion",
+    "with42": "Se connecter avec 42",
+    "failedTitle": "Connexion impossible",
+    "errors": {
+      "invalidCredentials": "Email ou mot de passe invalid",
+      "generic": "Une erreur s'est produite. Merci de réessayer."
+    }
+  },
+  "Landing": {
+    "signin": "Se connecter",
+    "heroCta": "Se connecter à Silk Space",
+    "resources": "Ressources",
+    "headline": "Des environnements de travail prêts à l'emploi, rapidement déployés",
+    "subtitle": "Une solution clé en main pour votre entreprise. Gérez vos équipes et vos sessions de travail en quelques clics, le tout depuis un espace centralisé.",
+    "features": {
+      "title": "Tout au même endroit",
+      "fast": {
+        "title": "Rapide",
+        "description": "<strong>Silk Space</strong> est conçu pour être intuitif, rapide et efficace au quotidien. Créez, modifiez ou supprimez une session en moins de 3 minutes. Grâce à un accès rapide et direct à votre espace de travail, tout ce dont vous avez besoin est toujours à quelques clics. Passez moins de temps à gérer votre espace de travail et davantage à vous concentrer sur l'essentiel."
+      },
+      "secure": {
+        "title": "Sécurisé",
+        "description": "Vos données restent sur votre machine. <strong>Silk Space</strong> ne stocke ni ne collecte vos informations, vous laissant ainsi le contrôle total de votre espace de travail. Chaque session utilisateur est isolée des autres, ce qui contribue à prévenir les accès non autorisés et les élévations de privilèges. La confidentialité et la sécurité étant intégrées dès sa conception, <strong>Silk Space</strong> vous permet de garder votre espace de travail et vos données sous votre contrôle."
+      },
+      "collaborative": {
+        "title": "Collaboratif",
+        "description": "<strong>Silk Space</strong> favorise une collaboration efficace et des relations de travail plus solides. Les responsables peuvent rapidement adapter un espace de travail à l'évolution des rôles et aux besoins des projets, afin que chaque équipe soit organisée pour accomplir la bonne tâche au bon moment. Avec un minimum d'efforts et un coût d'adaptation réduit, les équipes restent flexibles, relèvent de nouveaux défis et se concentrent sur l'essentiel : travailler ensemble efficacement."
+      }
+    }
+  },
+  "Docs": {
+    "documentation": "Documentation",
+    "tocLabel": "Sur cette page",
+    "loading": "Chargement...",
+    "sections": {
+      "users": "Guide d'utilisation",
+      "developers": "Guide de developpement"
+    },
+    "pager": {
+      "label": "Pagination",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "home": "Accueil"
+    }
+  },
+  "Stats": {
+    "title": "Apperçu Système",
+    "weekLabel": "Temps de connexion quotidien",
+    "week": "Cette semaine",
+    "month": "Ce mois",
+    "extra": "Utilisateur inscrit",
+    "memory": {
+      "label": "mémoire",
+      "used": "Utilisée",
+      "free": "Libre",
+      "path": "Chemin"
+    },
+    "days": {
+      "mon": "L",
+      "tue": "M",
+      "wen": "M",
+      "thu": "J",
+      "fri": "V",
+      "sat": "S",
+      "sun": "D"
+    }
+  },
+  "Users": {
+    "search": "Chercher",
+    "searchBar": "Chercher un utilisateur",
+    "noUsers": "Aucun utilisateur trouvé",
+    "userInfo": {
+      "name": "Prénom",
+      "lastName": "Nom",
+      "userName": "Nom d'utilisateur",
+      "job": "Poste",
+      "jobs": "Postes"
+    },
+    "create": {
+      "label": "Créer un Profil",
+      "description": "Entrez les informations du nouvel utilisateur, une nouvelle session va être créée.",
+      "phName": "Entrez le nom",
+      "phLastName": "Entrez le prénom",
+      "phUserName": "Entrez le nom d'utilisateur",
+      "phEmail": "Entrez l'email",
+      "phPassword": "Créez un mot de passe"
+    },
+    "delete": {
+      "label": "Supprimer le profil de {username} ?",
+      "description": "Cette action va effacer de façon permanente l'utilisateur et ses données. Soyez sûr d'avoir enregistré toutes données importantes"
+    },
+    "editProfil": "Modifier le profil de {username}",
+    "jobList": {
+      "placeholder": "Selectionnez un poste",
+      "accountant": "Comptable",
+      "data-analyst": "Analyste de données",
+      "devops-engineer": "Ingénieur DevOps",
+      "software-engineer": "Ingénieur logiciel",
+      "technical-writer": "Rédacteur technique"
+    }
+  }
+}

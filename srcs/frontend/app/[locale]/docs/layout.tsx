@@ -1,11 +1,12 @@
+import { getLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { DocsSidebar } from "@/components/docs/docs-sidebar";
 import { DocsMobileNav } from "@/components/docs/docs-mobile-nav";
 import { getDocNav } from "@/lib/docs";
 import { LandingFooter } from "@/components/landing/LandingFooter";
 
-export default function DocsLayout({children}: {children: React.ReactNode}) {
-	const sections = getDocNav();
+export default async function DocsLayout({children}: {children: React.ReactNode}) {
+	const sections = getDocNav(await getLocale());
 
 	return (
 		<main className="flex min-h-dvh flex-col justify-between">
@@ -19,7 +20,7 @@ export default function DocsLayout({children}: {children: React.ReactNode}) {
 					<Suspense fallback={null}>
 						<DocsMobileNav sections={sections} />
 					</Suspense>
-					<main>{children}</main>
+					<div>{children}</div>
 				</div>
 			</div>
 			<LandingFooter />

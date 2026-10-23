@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { TocItem } from "@/lib/docs";
+import { useTranslations } from "next-intl";
 
 export function DocsToc({items}: {items: TocItem[]}) {
 	const [activeId, setActiveId] = useState<string | null>(null);
+	const t = useTranslations("Docs");
 
 	useEffect(() => {
 		const headings = items
@@ -28,7 +30,7 @@ export function DocsToc({items}: {items: TocItem[]}) {
 	return (
 		<nav aria-label="On this page">
 			<h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-				On this page
+				{t("tocLabel")}
 			</h2>
 			<ul className="flex flex-col gap-2 text-sm">
 				{items.map((item) => (

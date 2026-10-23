@@ -5,9 +5,9 @@ import { Funnel } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { NewUserForm } from "@/app/actions/NewUserForm";
-import { RemoveUser } from "@/app/actions/RemoveUser";
-import { ModifyUser } from "@/app/actions/ModifyUser";
+import { NewUserForm } from "@/actions/NewUserForm";
+import { RemoveUser } from "@/actions/RemoveUser";
+import { ModifyUser } from "@/actions/ModifyUser";
 import { UserBadge } from "../layout/CustomBadge";
 import * as React from "react"
 import { 
@@ -36,6 +36,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import type { User, SortKey } from "@/types/User"
+import { useTranslations } from "next-intl";
 
 
 function sortUsers(list: User[], key: SortKey) {
@@ -47,9 +48,12 @@ function sortUsers(list: User[], key: SortKey) {
 }
 
 function UserList({ users, onSelect }: {users:User[]; onSelect: (user: User) => void }) {
+	const t = useTranslations("Users");
+
 	if (users.length === 0) {
-		return <p className="p-4 text-center text-sm text-muted-foreground">No user found</p>
+		return <p className="p-4 text-center text-sm text-muted-foreground">{t("noUsers")}</p>
 	}
+
 	return (
 		<ItemGroup className="max-w-md">
 			{users.map((person) => (
@@ -80,7 +84,7 @@ function UserList({ users, onSelect }: {users:User[]; onSelect: (user: User) => 
 						<ItemDescription>{person.email}</ItemDescription>
 					</ItemContent>
 					<ItemActions onClick={(e) => e.stopPropagation()}>
-						<UserBadge job={person.job} />
+						<UserBadge job={t(`jobList.${person.job}`)} />
 						<RemoveUser user={person} />
 					</ItemActions>
 				</Item>
@@ -126,6 +130,8 @@ export function UserManagement({ users }: { users: User[] }) {
 		return sortUsers(filtered, sortBy);
 	}, [users, query, sortBy]);
 
+	const t = useTranslations("Users");
+
 	return (
 		<div className="flex h-150 w-full max-w-125 flex-col rounded-xl border bg-card p-2 shadow-glow">
 			<ItemGroup className="max-w-md bg-card">
@@ -137,11 +143,11 @@ export function UserManagement({ users }: { users: User[] }) {
 									<Filter sortBy={sortBy} onSortChange={setSortBy} />
 									<Input
 										type="search"
-										placeholder="Search an user"
+										placeholder={t("searchBar")}
 										value={query}
 										onChange={(e) => setQuery(e.target.value)}
 										/>
-									<Button type="submit">Search</Button>
+									<Button type="submit">{t("search")}</Button>
 								</Field>
 							</form>
 						</ItemTitle>

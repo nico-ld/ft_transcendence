@@ -1,7 +1,7 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ArrowRight } from "lucide-react";
 
-export function WorkspaceLink({href, label = "Working space"}: {href: string; label?: string}) {
+export function WorkspaceLink({href, label}: {href: string; label: string}) {
 	return (
 		<Link
 			href={href}

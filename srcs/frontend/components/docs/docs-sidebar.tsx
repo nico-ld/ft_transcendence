@@ -1,9 +1,10 @@
 import { Suspense } from "react";
 import { getDocNav } from "@/lib/docs";
 import { DocsNav } from "./docs-nav";
+import { getLocale } from "next-intl/server";
 
-export function DocsSidebar() {
-	const sections = getDocNav();
+export async function DocsSidebar() {
+	const sections = getDocNav(await getLocale());
 
 	return (
 		<nav aria-label="Documentation">

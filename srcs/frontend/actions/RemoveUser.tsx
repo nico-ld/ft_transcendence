@@ -13,8 +13,12 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger
 } from "@/components/ui/alert-dialog"
+import { useTranslations } from "next-intl";
 
 export function RemoveUser({ user }: {user: User}) {
+	const t = useTranslations("Users");
+	const c = useTranslations("Common");
+
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger
@@ -25,15 +29,12 @@ export function RemoveUser({ user }: {user: User}) {
 			<AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
 				<UserRoundX />
 			</AlertDialogMedia>
-			<AlertDialogTitle>Delete {user.username} profil</AlertDialogTitle>
-			<AlertDialogDescription>
-				This will permanently delete this user and his data. 
-				Be sure you save every sensitives data.
-			</AlertDialogDescription>
+			<AlertDialogTitle>{t("delete.label", {username: user.username})}</AlertDialogTitle>
+			<AlertDialogDescription>{t("delete.description")}</AlertDialogDescription>
 			</AlertDialogHeader>
 			<AlertDialogFooter>
-				<AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
-				<AlertDialogAction variant="destructive">Delete</AlertDialogAction>
+				<AlertDialogCancel variant="outline">{c("cancel")}</AlertDialogCancel>
+				<AlertDialogAction variant="destructive">{c("delete")}</AlertDialogAction>
 			</AlertDialogFooter>
 		</AlertDialogContent>
 	</AlertDialog>

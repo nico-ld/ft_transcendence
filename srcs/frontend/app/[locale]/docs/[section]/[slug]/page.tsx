@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { DocsPager } from "@/components/docs/docs-pager";
 import { DocsToc } from "@/components/docs/docs-toc";
+import { getLocale } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import { 
 	getDoc, 
 	getDocEntries,
@@ -11,15 +13,16 @@ import {
 } from "@/lib/docs";
 import { DocPageProps } from "@/types/Doc";
 
-export function generateStaticparams() {
+export async function generateStaticParams() {
+	const locale = await getLocale();
 	return DOC_SECTIONS.flatMap(( {id} ) =>
-		getDocEntries(id).map(({slug}) => ({section: id, slug}))
+		getDocEntries(locale, id).map(({slug}) => ({section: id, slug}))
 	);
 }
 
 export async function generateMetadata({ params }: DocPageProps): Promise<Metadata> {
 	const { section, slug} = await params;
-	const doc = await getDoc(section, slug);
+	const doc = await getDoc(await getLocale(), section, slug);
 	if (!doc)
 		return {};
 
@@ -31,12 +34,12 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
 
 async function DocContent({params}: DocPageProps) {
 	const {section, slug} = await params;
-	const doc = await getDoc(section, slug);
+	const doc = await getDoc(await getLocale(), section, slug);
 	if (!doc)
 		notFound();
 
 	const {Content, frontmatter, toc} = doc;
-	const {prev, next} = getAdjacentDocs(section, slug);
+	const {prev, next} = getAdjacentDocs(await getLocale(), section, slug);
 
 	return (
 		<div className="flex gap-20">
@@ -69,8 +72,10 @@ async function DocContent({params}: DocPageProps) {
 }
 
 export default function DocPage({params}: DocPageProps) {
+	const t = useTranslations("Docs");
+
 	return (
-		<Suspense fallback={<p>Loading...</p>}>
+		<Suspense fallback={<p>{t("loading")}</p>}>
 			<DocContent params={params} />
 		</Suspense>
 	);
