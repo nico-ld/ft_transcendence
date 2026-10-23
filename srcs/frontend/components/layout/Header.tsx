@@ -22,7 +22,7 @@ import {
 import { Logout } from "@/actions/auth";
 import { useLocale, useTranslations } from "next-intl";
 import { ROLE_HOME } from "@/lib/utils";
-import { SelectLanguage } from "./SelectLanguage";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 
 export function Header({ role, username, avatarUrl }: HeaderProps) {
@@ -74,7 +74,7 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 						{t("settings")}
 					</DropdownMenuItem>
 
-					<SelectLanguage />
+					<LanguageSwitcher variant="submenu" />
 
 					<DropdownMenuItem
 						closeOnClick={false}
