@@ -1,6 +1,7 @@
 {
 	"Metadata": {"title": "Silk Space", "description": "This is a description"},
 	"Legal": {"privacy": "Privacy Policy", "terms": "Terms of Service"},
+	"Language": {"selectLanguage": "Select the language", "language": "Language"},
 	"Common": {
 		"cancel": "Cancel",
 		"close": "Close", 

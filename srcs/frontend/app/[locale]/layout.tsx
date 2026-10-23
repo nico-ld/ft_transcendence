@@ -35,9 +35,11 @@ export default async function RootLayout({ children }: {children: React.ReactNod
 			suppressHydrationWarning
 		>
 			<body className="min-h-full flex flex-col">
-				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-					<NextIntlClientProvider>{children}</NextIntlClientProvider>
-				</ThemeProvider>
+				<NextIntlClientProvider>
+					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+						{children}
+					</ThemeProvider>
+				</NextIntlClientProvider>
 			</body>
 		</html>
 	);

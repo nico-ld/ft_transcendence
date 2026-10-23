@@ -1,6 +1,7 @@
 {
 	"Metadata": {"title": "Silk Space", "description": "Ceci est une description"},
 	"Legal": {"privacy": "Politique de Confidentialité", "terms": "Conditions d'Utilisations"},
+	"Language": {"selectLanguage": "Choisir la langue", "language": "Langue"},
 	"Common": {
 		"cancel": "Annuler",
 		"close": "Fermer", 

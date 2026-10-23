@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import { Link } from "@/i18n/navigation";
 import { useTheme } from "next-themes";
-import {ChevronDown, LogOut, Moon, Settings, Sun, Sword} from "lucide-react";
+import {ChevronDown, LogOut, Moon, Settings, Sun} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
@@ -22,6 +22,7 @@ import {
 import { Logout } from "@/actions/auth";
 import { useLocale, useTranslations } from "next-intl";
 import { ROLE_HOME } from "@/lib/utils";
+import { SelectLanguage } from "./SelectLanguage";
 
 
 export function Header({ role, username, avatarUrl }: HeaderProps) {
@@ -72,6 +73,8 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 						<Settings />
 						{t("settings")}
 					</DropdownMenuItem>
+
+					<SelectLanguage />
 
 					<DropdownMenuItem
 						closeOnClick={false}

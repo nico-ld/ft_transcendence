@@ -1,6 +1,7 @@
 {
 	"Metadata": {"title": "Silk Space", "description": "Esta es una descripción"},
 	"Legal": {"privacy": "Política de privacidad", "terms": "Términos del servicio"},
+	"Language": {"selectLanguage": "Selecciona el idioma", "language": "idioma"},
 	"Common": {
 		"cancel": "Cancelar",
 		"close": "Cerrar",
@@ -10,7 +11,7 @@
 		"creating": "creación",
 		"delete": "eliminar",
 		"workSpace": "Espacio de trabajo"
-	},
+		},
 	"Header": {
 		"settings": "Configuración",
 		"logout": "Cerrar sesión", "loggingOut": "Cerrando sesión",
