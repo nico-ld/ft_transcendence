@@ -1,15 +1,19 @@
 "use client";
 
-import { ScrollArea } from "@/components/ui/scroll-area";
+import * as React from "react";
 import { Funnel } from "lucide-react";
+
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { ModifyUser } from "@/components/users/ModifyUser";
+
 import { NewUserForm } from "@/actions/NewUserForm";
 import { RemoveUser } from "@/actions/RemoveUser";
-import { ModifyUser } from "@/actions/ModifyUser";
+
 import { UserBadge } from "../layout/CustomBadge";
-import * as React from "react"
+import { useTranslations } from "next-intl";
 import { 
 	Avatar,
 	AvatarFallback,
@@ -35,11 +39,11 @@ import {
 	DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 
-import type { User, SortKey } from "@/types/User"
-import { useTranslations } from "next-intl";
+import type { SortKey } from "@/types/User"
+import type { BackendUser } from "@/lib/backend";
+import type { Viewer } from "@/types/Viewer";
 
-
-function sortUsers(list: User[], key: SortKey) {
+function sortUsers(list: BackendUser[], key: SortKey) {
 	return [...list].sort((a, b) =>
 			key === "date"
 					? b.createdAt.localeCompare(a.createdAt)
@@ -47,10 +51,10 @@ function sortUsers(list: User[], key: SortKey) {
 	);
 }
 
-function UserList({ users, onSelect }: {users:User[]; onSelect: (user: User) => void }) {
+function UserList({ users, onSelect }: {users: BackendUser[] | null; onSelect: (user: BackendUser) => void }) {
 	const t = useTranslations("Users");
 
-	if (users.length === 0) {
+	if (users == null || users.length === 0) {
 		return <p className="p-4 text-center text-sm text-muted-foreground">{t("noUsers")}</p>
 	}
 
@@ -58,7 +62,7 @@ function UserList({ users, onSelect }: {users:User[]; onSelect: (user: User) => 
 		<ItemGroup className="max-w-md">
 			{users.map((person) => (
 				<Item 
-					key={person.username} 
+					key={person.id} 
 					className="bg-muted/50 transition hover:bg-popover" 
 					variant="outline"
 					role="button"
@@ -75,7 +79,7 @@ function UserList({ users, onSelect }: {users:User[]; onSelect: (user: User) => 
 				>
 					<ItemMedia>
 						<Avatar>
-							<AvatarImage src={person.avatar} />
+							<AvatarImage src={person.avatar ?? undefined} />
 							<AvatarFallback>{person.username.slice(0, 2).toUpperCase()}</AvatarFallback>
 						</Avatar>
 					</ItemMedia>
@@ -85,7 +89,7 @@ function UserList({ users, onSelect }: {users:User[]; onSelect: (user: User) => 
 					</ItemContent>
 					<ItemActions onClick={(e) => e.stopPropagation()}>
 						<UserBadge job={t(`jobList.${person.job}`)} />
-						<RemoveUser user={person} />
+						{/* <RemoveUser user={person} /> */}
 					</ItemActions>
 				</Item>
 			))}
@@ -111,26 +115,26 @@ function Filter({ sortBy, onSortChange }: { sortBy: SortKey; onSortChange: (k: S
 	);
 }
 
-export function UserManagement({ users }: { users: User[] }) {
+export function UserManagement({ users, viewer }: { users: BackendUser[] | null; viewer: Viewer }) {
+	const t = useTranslations("Users");
 	const [query, setQuery] = React.useState("");
 	const [sortBy, setSortBy] = React.useState<SortKey>("username");
-	const [selectedUser, setSelectedUser] = React.useState<User | null>(null);
+	const [selectedUser, setSelectedUser] = React.useState<BackendUser | null>(null);
 	const [open, setOpen] = React.useState(false);
 
-	function handleSelect(user: User) {
+	function handleSelect(user: BackendUser) {
 		setSelectedUser(user);
-		setOpen(true);
 	}
 
 	const visibleUsers = React.useMemo(() => {
+		if (users == null)
+				return null;
 		const q = query.trim().toLowerCase();
 		const filtered = q
 			? users.filter((u) => u.username.toLowerCase().includes(q) || u.email.toLowerCase().includes(q))
 			: users;
 		return sortUsers(filtered, sortBy);
 	}, [users, query, sortBy]);
-
-	const t = useTranslations("Users");
 
 	return (
 		<div className="flex h-150 w-full max-w-125 flex-col rounded-xl border bg-card p-2 shadow-glow">
@@ -167,6 +171,7 @@ export function UserManagement({ users }: { users: User[] }) {
 			{selectedUser && (
 				<ModifyUser
 					user={selectedUser}
+					viewer={viewer}
 					open={open}
 					onOpenChange={setOpen}
 				/>

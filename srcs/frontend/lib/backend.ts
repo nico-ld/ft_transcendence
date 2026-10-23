@@ -60,3 +60,10 @@ export async function getCurrentUser(): Promise<BackendUser | null> {
 	const res = await backendFetch("/auth/me");
 	return res.ok ? ((await res.json()) as BackendUser) : null;
 }
+
+export async function getUsers(): Promise<BackendUser[] | null> {
+	return null;
+	const res = await backendFetch("/users");
+	return res.ok ? ((await res.json()) as BackendUser[]) : null;
+}
+
