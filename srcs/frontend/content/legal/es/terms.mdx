@@ -1,0 +1,90 @@
+---
+title: Condiciones de uso
+description: Descubre qué es Silk Space y cómo empezar
+---
+
+import { Link } from "@/i18n/navigation";
+import { ContactEmail } from "@/components/legal/LegalPage";
+import { legalInfo, teamList } from "@/components/legal/LegalInfo";
+
+export const title = "Condiciones de uso";
+
+export const description = `Las normas para utilizar ${legalInfo.projectName} y sus espacios de trabajo.`;
+
+export const intro = (
+  <p>
+    Estas condiciones establecen las normas para utilizar {legalInfo.projectName}: qué ofrece el servicio, qué puedes y qué no puedes hacer con tu cuenta y tu espacio de trabajo, y cuáles son los límites de nuestra responsabilidad.
+  </p>
+);
+
+## Sobre estas condiciones
+
+Estas condiciones rigen el uso de {legalInfo.projectName}, una aplicación web desarrollada por {teamList}, estudiantes de {legalInfo.school}, como parte del programa de 42. Al iniciar sesión, aceptas estas condiciones. Si no las aceptas, no utilices el servicio.
+
+**Responsable de la publicación:** el equipo del proyecto {legalInfo.projectName} (indicado anteriormente), un grupo de estudiantes sin actividad comercial. Contacto: <ContactEmail />.<br />
+**Alojamiento:** los equipos propios del equipo y los ordenadores de {legalInfo.school}, en Francia.
+
+## El servicio
+
+{legalInfo.projectName} permite a los usuarios de RR. HH. crear, actualizar y eliminar espacios de trabajo personales para los empleados. Cada espacio de trabajo es un entorno Linux aislado con las herramientas necesarias para el puesto del empleado. Los empleados inician sesión y utilizan su espacio de trabajo a través de un terminal en su navegador web. Varios usuarios pueden utilizar el servicio al mismo tiempo.
+
+El servicio es gratuito. Se trata de un proyecto de desarrollo y evaluación: las funciones pueden cambiar sin previo aviso y el servicio puede detenerse, restablecerse o eliminarse en cualquier momento, especialmente al finalizar el proyecto.
+
+## Tu cuenta
+
+- Las cuentas de los empleados las crea un usuario de RR. HH.
+- Mantén tu contraseña en secreto y no compartas tu cuenta. Eres responsable de lo que se haga con ella.
+- Si crees que otra persona ha utilizado tu cuenta, avísanos de inmediato en <ContactEmail />.
+- La información que añadas a tu perfil debe ser exacta y no debe suplantar la identidad de nadie.
+
+## Normas adicionales para usuarios de RR. HH.
+
+- Crea cuentas y espacios de trabajo únicamente para las personas que los necesiten e introduce información exacta.
+- Utiliza la información de los empleados solo para gestionar sus cuentas y espacios de trabajo.
+- Cuando un empleado se marche, elimina su cuenta y su espacio de trabajo. Infórmale con antelación para que pueda solicitar una copia de sus archivos.
+- Durante el desarrollo y la evaluación, utiliza datos de prueba en lugar de información de personas reales.
+
+## Uso aceptable de los espacios de trabajo
+
+Los espacios de trabajo se ejecutan en máquinas compartidas que varias personas utilizan al mismo tiempo. Para mantener el servicio seguro y utilizable para todos, no debes:
+
+- intentar salir de tu espacio de trabajo, obtener permisos de administrador o acceder a la máquina anfitriona, la base de datos, otros espacios de trabajo o cualquier otra parte del servicio;
+- intentar acceder a la cuenta, el espacio de trabajo o los datos de otro usuario;
+- sobrecargar la máquina, por ejemplo, mediante fork bombs, minería de criptomonedas, llenando el disco o ejecutando tareas que ralenticen a otros usuarios;
+- utilizar tu espacio de trabajo para atacar o escanear otros sistemas, o enviarles spam;
+- almacenar o compartir contenido ilegal, software malicioso o contenido que infrinja los derechos de otras personas.
+
+Podemos limitar los recursos disponibles para cada espacio de trabajo (procesador, memoria, disco y número de procesos) para proteger a los demás usuarios. Si encuentras un problema de seguridad, comunícanoslo en lugar de explotarlo.
+
+## Tus archivos
+
+- Los archivos que crees en tu espacio de trabajo siguen siendo tuyos. No reclamamos ningún derecho sobre ellos y eres responsable de lo que almacenes y ejecutes.
+- **No hay copias de seguridad.** Los archivos pueden perderse debido a un error, un restablecimiento o el fin del proyecto. Guarda tu propia copia de todo lo que sea importante.
+- Cuando se elimina tu espacio de trabajo o tu cuenta, sus archivos se eliminan permanentemente. Si necesitas una copia, solicítala antes de que esto ocurra.
+
+## Suspensión y eliminación
+
+- El equipo o un usuario de RR. HH. puede suspender o eliminar una cuenta que incumpla estas condiciones o ponga en riesgo el servicio u otros usuarios. Cuando sea posible, te avisaremos primero.
+- Puedes solicitarnos que eliminemos tu cuenta en cualquier momento escribiendo a <ContactEmail />.
+
+## Propiedad intelectual
+
+El código, el diseño y la documentación de {legalInfo.projectName} son obra del equipo del proyecto. El servicio se desarrolla con software de código abierto, incluidos Next.js, FastAPI, PostgreSQL, nginx, Docker y xterm.js; las herramientas de los espacios de trabajo proceden de paquetes de Debian. Cada uno de estos elementos sigue estando sujeto a su propia licencia.
+
+## Ausencia de garantía y limitación de responsabilidad
+
+{legalInfo.projectName} se ofrece gratuitamente, tal cual, con fines educativos. No garantizamos que esté siempre disponible, libre de errores o protegido.
+
+En la medida en que la ley lo permita, el equipo no será responsable de ninguna pérdida de datos ni de daños indirectos derivados del uso del servicio. Nada de lo dispuesto en estas condiciones limita una responsabilidad que no pueda limitarse conforme a la legislación francesa.
+
+## Datos personales
+
+La forma en que tratamos tus datos personales se explica en nuestra <Link href="/legal/privacy">Política de privacidad</Link>.
+
+## Cambios en estas condiciones
+
+Si modificamos estas condiciones, actualizaremos la fecha que aparece en la parte superior de esta página e informaremos a los usuarios de los cambios importantes en la aplicación. Si sigues utilizando el servicio después de un cambio, aceptas las nuevas condiciones.
+
+## Legislación aplicable
+
+Estas condiciones se rigen por la legislación francesa. Si tienes algún desacuerdo con nosotros, ponte primero en contacto con nosotros para intentar resolverlo de forma amistosa. De lo contrario, serán competentes los tribunales franceses correspondientes.

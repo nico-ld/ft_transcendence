@@ -1,0 +1,90 @@
+---
+title: Privacy
+description: Discover what Silk Space is and how to get started
+---
+
+import { Link } from "@/i18n/navigation";
+import { ContactEmail } from "@/components/legal/LegalPage";
+import { legalInfo, teamList } from "@/components/legal/LegalInfo";
+
+export const title = "Terms of Service";
+
+export const description = `The rules for using ${legalInfo.projectName} and its workspaces.`;
+
+export const intro = (
+  <p>
+    These terms set out the rules for using {legalInfo.projectName}: what the service offers, what you may and may not do with your account and workspace, and the limits of our responsibility.
+  </p>
+);
+
+## About these terms
+
+These terms govern your use of {legalInfo.projectName}, a web application built by {teamList}, students at {legalInfo.school}, as part of the 42 curriculum. By logging in, you accept these terms. If you do not accept them, do not use the service.
+
+**Publisher:** the {legalInfo.projectName} project team (listed above), a group of students with no commercial activity. Contact: <ContactEmail />.<br />
+**Hosting:** the team’s own machines and {legalInfo.school} computers, in France.
+
+## The service
+
+{legalInfo.projectName} lets HR users create, update and delete personal workspaces for employees. Each workspace is an isolated Linux environment with the tools for the employee’s job. Employees log in and use their workspace through a terminal in their web browser. Several users can use the service at the same time.
+
+The service is free. It is a development and evaluation project: features may change without notice, and the service may be stopped, reset or deleted at any time, in particular at the end of the project.
+
+## Your account
+
+- Employee accounts are created by an HR user.
+- Keep your password secret and do not share your account. You are responsible for what is done with it.
+- If you think someone else has used your account, tell us right away at <ContactEmail />.
+- Information you add to your profile must be accurate and must not impersonate anyone.
+
+## Additional rules for HR users
+
+- Only create accounts and workspaces for people who need them, with accurate information.
+- Use employees’ information only to manage their accounts and workspaces.
+- When an employee leaves, delete their account and workspace. Tell them beforehand, so they can ask for a copy of their files.
+- During development and evaluation, use test data rather than real people’s information.
+
+## Acceptable use of workspaces
+
+Workspaces run on shared machines used by several people at once. To keep the service safe and usable for everyone, you must not:
+
+- try to leave your workspace, gain administrator rights, or reach the host machine, the database, other workspaces or any other part of the service;
+- try to access another user’s account, workspace or data;
+- overload the machine, for example with fork bombs, cryptocurrency mining, filling the disk, or jobs that slow down other users;
+- use your workspace to attack, scan or send spam to other systems;
+- store or share illegal content, malware, or content that infringes the rights of others.
+
+We may limit the resources available to each workspace (processor, memory, disk, number of processes) to protect other users. If you find a security problem, please tell us instead of using it.
+
+## Your files
+
+- Files you create in your workspace remain yours. We claim no rights over them, and you are responsible for what you store and run.
+- **There are no backups.** Files can be lost because of a bug, a reset or the end of the project. Keep your own copy of anything important.
+- When your workspace or account is deleted, its files are permanently deleted. If you need a copy, ask us before that happens.
+
+## Suspension and deletion
+
+- The team, or an HR user, may suspend or delete an account that breaks these terms or puts the service or other users at risk. When possible, we will warn you first.
+- You can ask us to delete your account at any time by writing to <ContactEmail />.
+
+## Intellectual property
+
+The code, design and documentation of {legalInfo.projectName} are the work of the project team. The service is built with open-source software, including Next.js, FastAPI, PostgreSQL, nginx, Docker and xterm.js, and the tools inside workspaces come from Debian packages. Each of these remains under its own licence.
+
+## No warranty and limitation of liability
+
+{legalInfo.projectName} is provided free of charge, as is, for educational purposes. We do not guarantee that it will always be available, free of errors or secure.
+
+To the extent permitted by law, the team is not liable for any loss of data or any indirect damage resulting from the use of the service. Nothing in these terms limits any liability that cannot be limited under French law.
+
+## Personal data
+
+How we handle your personal data is explained in our <Link href="/legal/privacy">Privacy Policy</Link>.
+
+## Changes to these terms
+
+If we change these terms, we will update the date at the top of this page and tell users about important changes in the application. If you keep using the service after a change, you accept the new terms.
+
+## Governing law
+
+These terms are governed by French law. If you have a disagreement with us, please contact us first so we can try to resolve it amicably. Otherwise, the competent French courts will have jurisdiction.

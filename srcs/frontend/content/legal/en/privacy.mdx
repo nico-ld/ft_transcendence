@@ -1,0 +1,127 @@
+---
+title: Privacy
+description: Discover what Silk Space is and how to get started
+---
+
+import { ContactEmail, TableWrap } from "@/components/legal/LegalPage";
+import { legalInfo, teamList } from "@/components/legal/LegalInfo";
+
+export const title = "Privacy Policy";
+
+export const description = `How ${legalInfo.projectName} collects, uses and protects your personal data.`;
+
+export const intro = (
+  <p>
+    This policy explains what personal data {legalInfo.projectName} collects, why, who can see it, how long it is kept and what your rights are.
+  </p>
+);
+
+## Who is responsible for your data
+
+The data controller is the {legalInfo.projectName} project team: {teamList}, students at {legalInfo.school}, France. The team is a group of students, not a company.
+
+For any question about your data, or to use your rights, write to <ContactEmail />.
+
+## What the service does
+
+{legalInfo.projectName} helps a company handle hiring, promotions and departures. HR users create a personal workspace for each employee: an isolated Linux environment with the tools needed for their job (for example software engineer, accountant, data analyst, DevOps engineer or technical writer). Employees log in and use their workspace through a terminal in their web browser. To do this, the service needs to process some personal data, described below.
+
+## What data we collect
+
+### Account and profile
+
+<TableWrap>
+
+| Data | Why it is needed |
+| --- | --- |
+| Username | To log in and identify your account. |
+| First name, last name, display name | To show who you are to HR users and in the interface. |
+| Email address | To identify you and contact you about your account. |
+| Password | To log in. It is stored only as a hash: nobody, including the team, can read it. |
+| Profile picture (optional) | Shown in the interface, only if one is added to your account. |
+| Job (optional) | Your job title. It decides which tools are installed in your workspace. |
+| Account type | For example HR or employee. It decides what you are allowed to do in the app. |
+| Account creation date | To manage accounts over time (hiring, promotion, departure). |
+
+</TableWrap>
+
+This information is entered by the HR user who creates your account, or by you when you edit your profile.
+
+### Your workspace
+
+Files you create or change in your workspace are stored on a persistent volume, so they are still there the next time you log in. As on any Linux system, your shell also saves the commands you type in a history file (`~/.bash_history`) inside your workspace. You can delete that file at any time.
+
+We do not record what you type in the terminal or what it displays. We only log when a terminal session starts and ends.
+
+### Technical data
+
+When you use the site, our web server and application keep technical logs: your IP address, the date and time, the page or address requested and your browser type. For the terminal, they record the start and end of each session, with your account and workspace. These logs are only used to keep the service working and secure.
+
+### What we do not collect
+
+No analytics, no advertising, no tracking cookies and no third-party services. We do not sell, rent or share your data with anyone.
+
+## Why we use your data
+
+Under the General Data Protection Regulation (GDPR), every use of personal data needs a legal basis. Ours are:
+
+<TableWrap>
+
+| Purpose | Legal basis |
+| --- | --- |
+| Giving you an account, letting you log in and providing your workspace | Providing the service you use (GDPR art. 6(1)(b)) |
+| Letting HR users manage employees’ accounts and workspaces | Our legitimate interest in running the hiring, promotion and departure features that are the purpose of the app (GDPR art. 6(1)(f)) |
+| Keeping the service secure and fixing problems, using technical logs | Our legitimate interest in a secure and reliable service (GDPR art. 6(1)(f)) |
+| Showing the project during its evaluation at 42 | Our legitimate interest in completing our school curriculum (GDPR art. 6(1)(f)) |
+
+</TableWrap>
+
+We never use your data for advertising, profiling or automated decisions about you.
+
+## Who can see your data
+
+- **You** can see your profile and everything in your workspace.
+- **HR users** can see employees’ profile information and create, change or delete their accounts and workspaces. They cannot open your terminal.
+- **The project team** administers the servers, so it can technically access all data, including workspace files. We only do so when needed to run, fix or evaluate the project.
+- **Evaluators**: during peer evaluation at 42, other students and school staff may see the running application and the data in it. This is another reason to use test data.
+
+Nobody else has access. Your data stays on machines located in France and is never transferred outside the European Union.
+
+## How long we keep it
+
+- **Account and profile:** as long as your account exists. They are deleted when the account is deleted, for example when an HR user records your departure.
+- **Workspace files:** until your workspace is deleted. Its storage volume is deleted with it, so the files cannot be recovered afterwards.
+- **Technical logs:** kept inside the service’s containers, and erased when those containers are removed.
+- **End of the project:** once the project has been evaluated, the database, all workspaces and all logs are deleted.
+
+## Cookies
+
+We use one cookie, which keeps you logged in. It is strictly necessary for the service to work, so under the rules of the CNIL (the French data protection authority) it does not require your consent, and there is no cookie banner. It is removed when you log out or when it expires. We use no analytics or advertising cookies.
+
+## How we protect your data
+
+- All connections to the site are encrypted with HTTPS.
+- Passwords are stored as hashes, never in plain text.
+- Each workspace runs in its own isolated container, under an account without administrator rights, so one user cannot reach another user’s files.
+- Every connection to a workspace terminal is checked against your account.
+
+No system is perfectly secure. If a security incident affects your data, we will tell you as soon as possible.
+
+## Your rights
+
+Under the GDPR and the French Data Protection Act (loi Informatique et Libertés), you have the right to:
+
+- access the personal data we hold about you and get a copy of it;
+- have inaccurate data corrected;
+- have your data deleted;
+- restrict how we use your data, or object to it;
+- receive your data in a common, machine-readable format (data portability);
+- give instructions about what happens to your data after your death.
+
+To use any of these rights, email <ContactEmail />. We will answer within one month and may ask you to confirm your identity first. If you need a copy of your workspace files, ask before your account is deleted.
+
+If you think we have not respected your rights, you can file a complaint with the CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">www.cnil.fr</a>).
+
+## Changes to this policy
+
+If we change this policy, we will update the date at the top of this page. For important changes, we will also tell users in the application.

@@ -1,0 +1,127 @@
+---
+title: Confidentialité
+description: Découvrez ce qu’est Silk Space et comment commencer
+---
+
+import { ContactEmail, TableWrap } from "@/components/legal/LegalPage";
+import { legalInfo, teamList } from "@/components/legal/LegalInfo";
+
+export const title = "Politique de confidentialité";
+
+export const description = `Comment ${legalInfo.projectName} collecte, utilise et protège vos données personnelles.`;
+
+export const intro = (
+  <p>
+    Cette politique explique quelles données personnelles {legalInfo.projectName} collecte, pourquoi elles sont collectées, qui peut les consulter, combien de temps elles sont conservées et quels sont vos droits.
+  </p>
+);
+
+## Qui est responsable de vos données
+
+Le responsable du traitement est l’équipe du projet {legalInfo.projectName} : {teamList}, étudiants à {legalInfo.school}, en France. L’équipe est un groupe d’étudiants, et non une entreprise.
+
+Pour toute question concernant vos données ou pour exercer vos droits, écrivez à <ContactEmail />.
+
+## Fonctionnement du service
+
+{legalInfo.projectName} aide une entreprise à gérer les recrutements, les promotions et les départs. Les utilisateurs RH créent un espace de travail personnel pour chaque employé : un environnement Linux isolé contenant les outils nécessaires à son métier (par exemple, ingénieur logiciel, comptable, analyste de données, ingénieur DevOps ou rédacteur technique). Les employés se connectent et utilisent leur espace de travail depuis un terminal dans leur navigateur web. Pour cela, le service doit traiter certaines données personnelles, décrites ci-dessous.
+
+## Données que nous collectons
+
+### Compte et profil
+
+<TableWrap>
+
+| Donnée | Pourquoi est-elle nécessaire ? |
+| --- | --- |
+| Nom d’utilisateur | Pour vous connecter et identifier votre compte. |
+| Prénom, nom, nom affiché | Pour vous identifier auprès des utilisateurs RH et dans l’interface. |
+| Adresse e-mail | Pour vous identifier et vous contacter au sujet de votre compte. |
+| Mot de passe | Pour vous connecter. Il est uniquement stocké sous forme d’empreinte cryptographique (hash) : personne, y compris l’équipe, ne peut le lire. |
+| Photo de profil (facultative) | Affichée dans l’interface, uniquement si vous en ajoutez une à votre compte. |
+| Poste (facultatif) | Votre intitulé de poste. Il détermine les outils installés dans votre espace de travail. |
+| Type de compte | Par exemple, RH ou employé. Il détermine les actions que vous êtes autorisé à effectuer dans l’application. |
+| Date de création du compte | Pour gérer les comptes au fil du temps (recrutement, promotion, départ). |
+
+</TableWrap>
+
+Ces informations sont saisies par l’utilisateur RH qui crée votre compte, ou par vous-même lorsque vous modifiez votre profil.
+
+### Votre espace de travail
+
+Les fichiers que vous créez ou modifiez dans votre espace de travail sont stockés sur un volume persistant : ils sont donc toujours présents lors de votre prochaine connexion. Comme sur tout système Linux, votre shell enregistre également les commandes que vous saisissez dans un fichier d’historique (`~/.bash_history`) au sein de votre espace de travail. Vous pouvez supprimer ce fichier à tout moment.
+
+Nous n’enregistrons ni ce que vous saisissez dans le terminal ni ce qu’il affiche. Nous consignons uniquement le début et la fin d’une session de terminal.
+
+### Données techniques
+
+Lorsque vous utilisez le site, notre serveur web et l’application conservent des journaux techniques : votre adresse IP, la date et l’heure, la page ou l’adresse demandée et le type de navigateur utilisé. Pour le terminal, ils enregistrent le début et la fin de chaque session, ainsi que le compte et l’espace de travail concernés. Ces journaux servent uniquement à assurer le fonctionnement et la sécurité du service.
+
+### Ce que nous ne collectons pas
+
+Aucune mesure d’audience, aucune publicité, aucun cookie de suivi et aucun service tiers. Nous ne vendons, ne louons ni ne partageons vos données avec qui que ce soit.
+
+## Pourquoi nous utilisons vos données
+
+Conformément au Règlement général sur la protection des données (RGPD), chaque utilisation de données personnelles doit reposer sur une base juridique. Les nôtres sont les suivantes :
+
+<TableWrap>
+
+| Finalité | Base juridique |
+| --- | --- |
+| Vous fournir un compte, vous permettre de vous connecter et mettre votre espace de travail à votre disposition | Fourniture du service que vous utilisez (art. 6(1)(b) du RGPD) |
+| Permettre aux utilisateurs RH de gérer les comptes et espaces de travail des employés | Notre intérêt légitime à faire fonctionner les fonctionnalités de recrutement, de promotion et de départ qui constituent l’objectif de l’application (art. 6(1)(f) du RGPD) |
+| Assurer la sécurité du service et résoudre les problèmes à l’aide des journaux techniques | Notre intérêt légitime à fournir un service sécurisé et fiable (art. 6(1)(f) du RGPD) |
+| Présenter le projet lors de son évaluation à 42 | Notre intérêt légitime à mener à bien notre cursus scolaire (art. 6(1)(f) du RGPD) |
+
+</TableWrap>
+
+Nous n’utilisons jamais vos données à des fins publicitaires, de profilage ou de prise de décision automatisée vous concernant.
+
+## Qui peut consulter vos données
+
+- **Vous** pouvez consulter votre profil et tout le contenu de votre espace de travail.
+- **Les utilisateurs RH** peuvent consulter les informations de profil des employés et créer, modifier ou supprimer leurs comptes et espaces de travail. Ils ne peuvent pas ouvrir votre terminal.
+- **L’équipe du projet** administre les serveurs et peut donc techniquement accéder à toutes les données, y compris aux fichiers des espaces de travail. Nous ne le faisons que lorsque cela est nécessaire pour faire fonctionner le projet, corriger des problèmes ou l’évaluer.
+- **Les évaluateurs** : lors des évaluations entre pairs à 42, d’autres étudiants et des membres du personnel de l’école peuvent voir l’application en fonctionnement et les données qu’elle contient. C’est une autre raison d’utiliser des données de test.
+
+Personne d’autre n’a accès à vos données. Elles restent sur des machines situées en France et ne sont jamais transférées hors de l’Union européenne.
+
+## Durée de conservation
+
+- **Compte et profil :** tant que votre compte existe. Ils sont supprimés lorsque le compte est supprimé, par exemple lorsqu’un utilisateur RH enregistre votre départ.
+- **Fichiers de l’espace de travail :** jusqu’à la suppression de votre espace de travail. Le volume de stockage est supprimé en même temps ; les fichiers ne peuvent alors plus être récupérés.
+- **Journaux techniques :** conservés dans les conteneurs du service et effacés lorsque ces conteneurs sont supprimés.
+- **Fin du projet :** une fois le projet évalué, la base de données, tous les espaces de travail et tous les journaux sont supprimés.
+
+## Cookies
+
+Nous utilisons un seul cookie, qui permet de maintenir votre session ouverte. Il est strictement nécessaire au fonctionnement du service ; selon les règles de la CNIL (l’autorité française de protection des données), votre consentement n’est donc pas nécessaire et aucune bannière de cookies n’est affichée. Il est supprimé lorsque vous vous déconnectez ou lorsqu’il expire. Nous n’utilisons aucun cookie de mesure d’audience ou de publicité.
+
+## Comment nous protégeons vos données
+
+- Toutes les connexions au site sont chiffrées avec HTTPS.
+- Les mots de passe sont stockés sous forme d’empreintes cryptographiques (hash), jamais en texte brut.
+- Chaque espace de travail s’exécute dans son propre conteneur isolé, avec un compte sans droits d’administrateur, afin qu’un utilisateur ne puisse pas accéder aux fichiers d’un autre.
+- Chaque connexion au terminal d’un espace de travail est vérifiée à partir de votre compte.
+
+Aucun système n’est parfaitement sécurisé. Si un incident de sécurité affecte vos données, nous vous en informerons dès que possible.
+
+## Vos droits
+
+En vertu du RGPD et de la loi française Informatique et Libertés, vous avez le droit de :
+
+- accéder aux données personnelles que nous détenons à votre sujet et en obtenir une copie ;
+- faire rectifier les données inexactes ;
+- faire supprimer vos données ;
+- limiter l’utilisation de vos données ou vous y opposer ;
+- recevoir vos données dans un format courant lisible par machine (droit à la portabilité) ;
+- donner des directives concernant le devenir de vos données après votre décès.
+
+Pour exercer l’un de ces droits, envoyez un e-mail à <ContactEmail />. Nous répondrons dans un délai d’un mois et pourrons vous demander de confirmer votre identité au préalable. Si vous avez besoin d’une copie des fichiers de votre espace de travail, demandez-la avant la suppression de votre compte.
+
+Si vous estimez que vos droits n’ont pas été respectés, vous pouvez déposer une réclamation auprès de la CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">www.cnil.fr</a>).
+
+## Modifications de cette politique
+
+Si nous modifions cette politique, nous mettrons à jour la date en haut de cette page. En cas de modification importante, nous en informerons également les utilisateurs dans l’application.
