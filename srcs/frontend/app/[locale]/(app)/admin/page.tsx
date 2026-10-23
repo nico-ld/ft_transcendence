@@ -13,7 +13,7 @@ const users: User[] = [
 		username: "Nico",
 		avatar: "https://github.com/nico-ld.png",
 		email: "nico@email.com",
-		job: "Software Engineer",
+		job: "software-engineer",
 		createdAt: "2026-01-01"
 	},
 	{
@@ -22,7 +22,7 @@ const users: User[] = [
 		username: "Alexandre",
 		avatar: "https://github.com/0verLighT.png",
 		email: "alexandre@email.com",
-		job: "Data Analyst",
+		job: "data-analyst",
 		createdAt: "2026-01-02"
 	},
 	{
@@ -31,7 +31,7 @@ const users: User[] = [
 		username: "Titouan",
 		avatar: "https://github.com/Tisaan.png",
 		email: "titouan@email.com",
-		job: "Devops Engineer",
+		job: "devops-engineer",
 		createdAt: "2026-01-02"
 	},
 	{
@@ -40,7 +40,7 @@ const users: User[] = [
 		username: "Mathis",
 		avatar: "https://github.com/xth24.png",
 		email: "mathis@email.com",
-		job: "Devops Engineer",
+		job: "devops-engineer",
 		createdAt: "2026-01-03"
 	},
 	{
@@ -49,7 +49,7 @@ const users: User[] = [
 		username: "User1",
 		avatar: "No icons",
 		email: "random@email.com",
-		job: "Accountant",
+		job: "accountant",
 		createdAt: "2026-01-04"
 	},
 	{
@@ -58,7 +58,7 @@ const users: User[] = [
 		username: "User2",
 		avatar: "",
 		email: "random@email.com",
-		job: "Accountant",
+		job: "accountant",
 		createdAt: "2026-01-05"
 	},
 	{
@@ -67,7 +67,7 @@ const users: User[] = [
 		username: "Jean-benoit",
 		avatar: "",
 		email: "pantoufle@email.com",
-		job: "Accountant",
+		job: "accountant",
 		createdAt: "2026-01-06"
 	},
 	{
@@ -76,7 +76,7 @@ const users: User[] = [
 		username: "User4",
 		avatar: "",
 		email: "random@email.com",
-		job: "Accountant",
+		job: "accountant",
 		createdAt: "2026-01-07"
 	},
 	{
@@ -85,7 +85,7 @@ const users: User[] = [
 		username: "User5",
 		avatar: "",
 		email: "random@email.com",
-		job: "Accountant",
+		job: "accountant",
 		createdAt: "2026-01-08"
 	},
 	{
@@ -94,7 +94,7 @@ const users: User[] = [
 		username: "User6",
 		avatar: "",
 		email: "random@email.com",
-		job: "Technical Writer",
+		job: "technical-writer",
 		createdAt: "2026-01-09"
 	}
 ]

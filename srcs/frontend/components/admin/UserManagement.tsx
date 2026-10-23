@@ -48,9 +48,12 @@ function sortUsers(list: User[], key: SortKey) {
 }
 
 function UserList({ users, onSelect }: {users:User[]; onSelect: (user: User) => void }) {
+	const t = useTranslations("Users");
+
 	if (users.length === 0) {
-		return <p className="p-4 text-center text-sm text-muted-foreground">No user found</p>
+		return <p className="p-4 text-center text-sm text-muted-foreground">{t("noUsers")}</p>
 	}
+
 	return (
 		<ItemGroup className="max-w-md">
 			{users.map((person) => (
@@ -81,7 +84,7 @@ function UserList({ users, onSelect }: {users:User[]; onSelect: (user: User) => 
 						<ItemDescription>{person.email}</ItemDescription>
 					</ItemContent>
 					<ItemActions onClick={(e) => e.stopPropagation()}>
-						<UserBadge job={person.job} />
+						<UserBadge job={t(`jobList.${person.job}`)} />
 						<RemoveUser user={person} />
 					</ItemActions>
 				</Item>
