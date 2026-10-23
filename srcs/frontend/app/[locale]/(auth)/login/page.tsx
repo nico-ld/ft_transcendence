@@ -1,6 +1,6 @@
 import { LoginForm } from "@/components/auth/LoginForm";
 import { ThemeSwitch } from "@/components/layout/ThemeSwicth";
-import { LegalFooter } from "@/components/landing/LegalFooter";
+import { LegalFooter } from "@/components/legal/LegalFooter";
 
 export default function LoginPage() {
 	return (

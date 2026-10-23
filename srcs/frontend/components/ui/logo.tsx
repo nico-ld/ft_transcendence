@@ -1,4 +1,4 @@
-const APP_NAME="Silk Space"
+const APP_NAME="ft_silk_space"
 
 export function SilkSpaceLogo({children}: {children?: React.ReactNode}) {
 	return (

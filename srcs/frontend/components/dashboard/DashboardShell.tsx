@@ -1,6 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { DashboardShellProps } from "@/types/DashboardShellProps"
-import { LegalFooter } from "../landing/LegalFooter";
+import { LegalFooter } from "../legal/LegalFooter";
 
 
 export function DashboardShell({ role, username, avatarUrl, sidebar, children }: DashboardShellProps) {
@@ -20,7 +20,7 @@ export function DashboardShell({ role, username, avatarUrl, sidebar, children }:
 				<footer className="py-4 text-center text-sm text-muted-foreground">
 					<LegalFooter />
 				</footer>
-			</main>
+			</section>
 		</>
 	);
 }
