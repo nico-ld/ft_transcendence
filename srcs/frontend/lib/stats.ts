@@ -6,6 +6,12 @@ export type SystemStats = {
 
 export type ExtraStat = {label: string; value: string};
 
+export type StatsPanelProps = {
+	stats: SystemStats;
+	extras?: ExtraStat[];
+};
+
+
 // TMP : replace it with a real API call
 export async function getSystemStats(): Promise<SystemStats> {
 	return {

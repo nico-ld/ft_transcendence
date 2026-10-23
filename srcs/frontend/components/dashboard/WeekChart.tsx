@@ -1,19 +1,19 @@
+import { useTranslations } from "next-intl";
 import { 
 	Tooltip, 
 	TooltipContent,
 	TooltipTrigger
 } from "../ui/tooltip";
 
-const DAYS = ["M", "T", "W", "T", "F", "S",  "S"]
-
-// title={`${hours}h`}
+const DAYS = ["mon", "tue", "wen", "thu", "fri", "sat",  "sun"];
 
 export function WeekChart({ data }: {data: number[]}) {
 	const max = Math.max(...data, 1);
+	const t = useTranslations("Stats");
 
 	return (
 		<div>
-			<p className="mb-2 text-xs uppercase tracking-wider text-muted-foreground">Daily log time</p>
+			<p className="mb-2 text-xs uppercase tracking-wider text-muted-foreground">{t("weekLabel")}</p>
 			<div className="flex h-16 items-end gap-2">
 				{data.map((hours, i) => (
 				<Tooltip key={i}>
@@ -30,7 +30,7 @@ export function WeekChart({ data }: {data: number[]}) {
 			</div>
 			<div className="mt-1 flex gap-2 text-[10px] text-muted-foreground">
 				{data.map((_, i) => (
-					<span key={i} className="flex-1 text-center">{DAYS[i]}</span>
+					<span key={i} className="flex-1 text-center">{t(`days.${DAYS[i]}`)}</span>
 				))}
 			</div>
 		</div>

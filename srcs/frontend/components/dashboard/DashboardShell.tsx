@@ -1,13 +1,7 @@
 import { Header } from "@/components/layout/Header";
-import type { Role } from "@/lib/utils";
+import { DashboardShellProps } from "@/types/DashboardShellProps"
+import { LegalFooter } from "../landing/LegalFooter";
 
-type DashboardShellProps = {
-	role: Role;
-	username: string;
-	avatarUrl?: string;
-	sidebar?: React.ReactNode;
-	children: React.ReactNode;
-};
 
 export function DashboardShell({ role, username, avatarUrl, sidebar, children }: DashboardShellProps) {
 	return (
@@ -22,7 +16,11 @@ export function DashboardShell({ role, username, avatarUrl, sidebar, children }:
 						<article className="flex min-w-0 flex-row items-center justify-around gap-5">{children}</article>
 					</section>
 				</div>
-			</section>
+
+				<footer className="py-4 text-center text-sm text-muted-foreground">
+					<LegalFooter />
+				</footer>
+			</main>
 		</>
 	);
 }

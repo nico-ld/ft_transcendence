@@ -1,0 +1,15 @@
+fastapi[standard]
+uvicorn
+pydantic
+authlib
+httpx
+pydantic-settings
+httpx2
+sqlalchemy[asyncio]
+asyncpg
+alembic
+psycopg
+itsdangerous
+pwdlib[argon2]
+pyjwt
+aiodocker

@@ -1,4 +1,5 @@
-type MemoryRingProps = {usedGb: number; totalGb: number; path: string};
+import { MemoryRingProps } from "@/types/MemoryRingProps";
+import { useTranslations } from "next-intl";
 
 const RADIUS = 52;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
@@ -6,6 +7,7 @@ const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 export function MemoryRing({usedGb, totalGb, path}: MemoryRingProps) {
 	const percent = Math.min(100, Math.max(0, Math.round((usedGb / totalGb) * 100)));
 	const freegb = totalGb - usedGb;
+	const t = useTranslations("Stats.memory");
 
 	return (
 		<div className="flex items-center gap-5">
@@ -24,21 +26,21 @@ export function MemoryRing({usedGb, totalGb, path}: MemoryRingProps) {
 				</svg>
 				<div className="absolute inset-0 flex flex-col items-center justify-center">
 					<span className="text-2xl font-bold">{percent}</span>
-					<span className="text-[10px] uppercase tracking-widest text-muted-foreground">memory</span>
+					<span className="text-[10px] uppercase tracking-widest text-muted-foreground">{t("label")}</span>
 				</div>
 			</div>
 
 			<dl className="space-y-1.5 text-sm">
 				<div>
-					<dt className="inline text-muted-foreground">Used </dt>
+					<dt className="inline text-muted-foreground">{t("used")} </dt>
 					<dd className="inline font-medium">{usedGb.toFixed(2)}</dd>
 				</div>
 				<div>
-					<dt className="inline text-muted-foreground">Free </dt>
+					<dt className="inline text-muted-foreground">{t("free")} </dt>
 					<dd className="inline font-medium">{freegb.toFixed(2)}</dd>
 				</div>
 				<div>
-					<dt className="inline text-muted-foreground">Path </dt>
+					<dt className="inline text-muted-foreground">{t("path")} </dt>
 					<dd className="inline font-medium">{path}</dd>
 				</div>
 			</dl>
