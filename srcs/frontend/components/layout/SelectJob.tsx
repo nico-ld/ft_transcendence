@@ -7,24 +7,31 @@ import {
 	SelectTrigger,
 	SelectValue
 } from "@/components/ui/select";
-
-import { Jobs } from "@/lib/jobs";
+import { useTranslations } from "next-intl";
+import { JOBS } from "@/types/jobs";
 
 export function SelectJob({value, name}: {value?: string | null; name?: string;}) {
+	const t = useTranslations("Users.jobList");
+
+	const items = [
+		{value: null, label: t("placeholder")},
+		...JOBS.map((job) => ({value: job, label: t(job)}))
+	];
+
 	return (
 		<Select 
 			key={value ?? "none"}
 			name={name}
-			items={Jobs}
+			items={items}
 			defaultValue={value ?? null}
 		>
-			<SelectTrigger id="job-1" className="w-full max-w-48">
+			<SelectTrigger id="job-1" className="w-auto">
 				<SelectValue />
 			</SelectTrigger>
 			<SelectContent>
 				<SelectGroup>
 					<SelectLabel>Jobs</SelectLabel>
-					{Jobs.map((item) => (
+					{items.map((item) => (
 						<SelectItem key={item.value ?? "none"} value={item.value}>
 							{item.label}
 						</SelectItem>

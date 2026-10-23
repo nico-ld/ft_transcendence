@@ -1,14 +1,7 @@
 import { Header } from "@/components/layout/Header";
-import type { Role } from "@/lib/utils";
-import Link from "next/link";
+import { DashboardShellProps } from "@/types/DashboardShellProps"
+import { LegalFooter } from "../landing/LegalFooter";
 
-type DashboardShellProps = {
-	role: Role;
-	username: string;
-	avatarUrl?: string;
-	sidebar?: React.ReactNode;
-	children: React.ReactNode;
-};
 
 export function DashboardShell({ role, username, avatarUrl, sidebar, children }: DashboardShellProps) {
 	return (
@@ -25,9 +18,7 @@ export function DashboardShell({ role, username, avatarUrl, sidebar, children }:
 				</div>
 
 				<footer className="py-4 text-center text-sm text-muted-foreground">
-					<Link href="#" className="hover:underline">Privacy Policy</Link>
-					<span aria-hidden="true"> - </span>
-					<Link href="#" className="hover:underline">Terms of Service</Link>
+					<LegalFooter />
 				</footer>
 			</main>
 		</>

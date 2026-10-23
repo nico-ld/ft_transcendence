@@ -1,4 +1,5 @@
 import { Zap, Shield, Users, type LucideIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 function FeatureCard({Icon, title, text}: {Icon: LucideIcon; title: string; text: React.ReactNode}) {
 	return (
@@ -13,32 +14,25 @@ function FeatureCard({Icon, title, text}: {Icon: LucideIcon; title: string; text
 }
 
 export function Features() {
+	const t = useTranslations("Landing");
+
 	return (
 		<section id="features" className="mx-auto max-w-6xl px-4 py-20 md:px-6">
-			<h2 className="text-center text-3xl font-semibold tracking-tight">Everything in one place</h2>
+			<h2 className="text-center text-3xl font-semibold tracking-tight">{t("features.title")}</h2>
 			<div className="mt-12 grid gap-6 md:grid-cols-3">
-				<FeatureCard Icon={Zap} title="Fast" text={
+				<FeatureCard Icon={Zap} title={t("features.fast.title")} text={
 					<>
-						<strong>Silk Space</strong> is designed to be intuitive, fast and efficient in your everyday
-						work. Create, edit or delete a session in under 3 minutes. With quick and direct access to your
-						workspace, everything you need is always just a few clicks away. Spend less time managing
-						your workspace and more time focusing on what matters.
+						{t.rich("features.fast.description", {strong: (chunks) => <strong>{chunks}</strong>})}
 					</>
 					}/>
-				<FeatureCard Icon={Shield} title="Secure" text={
+				<FeatureCard Icon={Shield} title={t("features.secure.title")} text={
 					<>
-						Your data stays on your machine. <strong>Silk Space</strong> doesn't store or collect your
-						information, giving you full control over your workspace. Each user session is isolated from the others,
-						helping prevent unauthorized access and privilege escalation. With privacy and security built into its design,
-						<strong>Silk Space</strong> keeps your workspace yours and your data under your control.
+						{t.rich("features.secure.description", {strong: (chunks) => <strong>{chunks}</strong>})}
 					</>
 				}/>
-				<FeatureCard Icon={Users} title="Collaborative" text={
+				<FeatureCard Icon={Users} title={t("features.collaborative.title")} text={
 					<>
-						<strong>Silk Space</strong> fosters efficient collaboration and stronger working relationships.
-						Managers can quickly adapt a workspace to meet changing roles and project requirements, ensuring that
-						every team is organized for the right task at the right time. With minimal effort and a low adaptation
-						cost, teams can stay flexible, respond to new challenges, and focus on what matters most: working together efficiently.
+						{t.rich("features.collaborative.description", {strong: (chunks) => <strong>{chunks}</strong>})}
 					</>
 				}/>
 			</div>

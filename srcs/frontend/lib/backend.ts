@@ -1,6 +1,6 @@
 import "server-only";
 import { cookies } from "next/headers";
-import type { Role } from "@/lib/utils";
+import type { Role } from "@/types/User";
 
 // docker-compose service name and port (see nginx.conf). BACKEND_URL can override
 // it, e.g. when running `bun dev` outside Docker.

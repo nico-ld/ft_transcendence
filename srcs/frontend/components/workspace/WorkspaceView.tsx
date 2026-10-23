@@ -7,7 +7,7 @@
 
 import { useEffect, useState } from "react";
 import { Header } from "@/components/layout/Header";
-import type { Role } from "@/lib/utils";
+import type { Role } from "@/types/User";
 import { WorkspaceTerminal } from "./WorkspaceTerminal";
 
 // the fields used here from GET /api/auth/me (backend schemas.py UserOut, camelCase JSON)
