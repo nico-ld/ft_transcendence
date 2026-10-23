@@ -219,7 +219,7 @@ export default function TermsOfServicePage() {
         </p>
       }
       sections={sections}
-      related={{ href: "/privacy", label: "Privacy Policy" }}
+      related={{ href: "/legal/privacy", label: "Privacy Policy" }}
     />
   );
 }

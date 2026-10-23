@@ -305,7 +305,7 @@ export default function PrivacyPolicyPage() {
         </p>
       }
       sections={sections}
-      related={{ href: "/terms", label: "Terms of Service" }}
+      related={{ href: "/legal/terms", label: "Terms of Service" }}
     />
   );
 }
