@@ -3,7 +3,7 @@
 import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import type { LoginError } from "@/types/LoginError";
-import { useActionState } from "react";
+import { startTransition, useActionState } from "react";
 import { Login } from "@/actions/auth";
 import { Button, buttonVariants } from "../ui/button";
 import { ROLE_HOME } from "@/lib/utils";
@@ -20,7 +20,6 @@ import {
 	CardTitle
 } from "../ui/card";
 
-// handled by the backend (routers/oauth42.py)
 const FT_LOGIN_URL = "/api/auth/42/login";
 
 function ConnectionFailed({ error }: {error: Exclude<LoginError, "">}) {
@@ -35,6 +34,7 @@ function ConnectionFailed({ error }: {error: Exclude<LoginError, "">}) {
 	);
 }
 
+// oauthError: why the last 42 login failed, shown until the form is submitted
 export function LoginForm({ oauthError = "" }: { oauthError?: LoginError }) {
 	const router = useRouter();
 	const t = useTranslations("Login");
@@ -57,6 +57,13 @@ export function LoginForm({ oauthError = "" }: { oauthError?: LoginError }) {
 		oauthError
 	);
 
+	// onSubmit format instead of <form action>, since React empties the fields after a form action (as in NewUserForm)
+	function submit(event: React.FormEvent<HTMLFormElement>) {
+		event.preventDefault();
+		const form = new FormData(event.currentTarget);
+		startTransition(() => formAction(form));
+	}
+
 	return (
 		<div className="w-80 h-auto flex flex-col gap-2">
 		<div className="mb-4" aria-live="polite">
@@ -68,7 +75,7 @@ export function LoginForm({ oauthError = "" }: { oauthError?: LoginError }) {
 				<CardTitle>{t("title")}</CardTitle>
 				<CardDescription>{t("description")}</CardDescription>
 			</CardHeader>
-			<form action={formAction}>
+			<form onSubmit={submit}>
 				<CardContent className="mb-3">
 						<div className="flex flex-col gap-6">
 							<div className="grid gap-2">
@@ -101,7 +108,6 @@ export function LoginForm({ oauthError = "" }: { oauthError?: LoginError }) {
 						{pending ? t("loggingIn") : t("login")}
 						{pending && <Spinner />}
 					</Button>
-					{/* plain <a>, not Link: a full page load, without a locale prefix */}
 					<a href={FT_LOGIN_URL} className={buttonVariants({ variant: "outline", className: "w-full" })}>
 						{t("with42")}
 					</a>
