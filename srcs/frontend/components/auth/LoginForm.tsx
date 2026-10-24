@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import type { LoginError } from "@/types/LoginError";
 import { useActionState } from "react";
 import { Login } from "@/actions/auth";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import { ROLE_HOME } from "@/lib/utils";
 import { Spinner } from "../ui/spinner";
 import { Label } from "../ui/label";
@@ -20,6 +20,9 @@ import {
 	CardTitle
 } from "../ui/card";
 
+// handled by the backend (routers/oauth42.py)
+const FT_LOGIN_URL = "/api/auth/42/login";
+
 function ConnectionFailed({ error }: {error: Exclude<LoginError, "">}) {
 	const t = useTranslations("Login");
 
@@ -32,7 +35,7 @@ function ConnectionFailed({ error }: {error: Exclude<LoginError, "">}) {
 	);
 }
 
-export function LoginForm() {
+export function LoginForm({ oauthError = "" }: { oauthError?: LoginError }) {
 	const router = useRouter();
 	const t = useTranslations("Login");
 
@@ -51,7 +54,7 @@ export function LoginForm() {
 				return "generic";
 			}
 		},
-		""
+		oauthError
 	);
 
 	return (
@@ -98,9 +101,10 @@ export function LoginForm() {
 						{pending ? t("loggingIn") : t("login")}
 						{pending && <Spinner />}
 					</Button>
-					<Button variant="outline" className="w-full">
+					{/* plain <a>, not Link: a full page load, without a locale prefix */}
+					<a href={FT_LOGIN_URL} className={buttonVariants({ variant: "outline", className: "w-full" })}>
 						{t("with42")}
-					</Button>
+					</a>
 				</CardFooter>
 			</form>
 		</Card>

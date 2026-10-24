@@ -41,7 +41,11 @@
     "failedTitle": "Connection Failed",
     "errors": {
       "invalidCredentials": "Invalid email or password.",
-      "generic": "Something went wrong. Please try again."
+      "generic": "Something went wrong. Please try again.",
+      "oauthCancelled": "The login with 42 was cancelled.",
+      "oauthExpired": "The login with 42 has expired. Please try again.",
+      "oauthUnavailable": "Logging in with 42 is unavailable right now. Please try again later or log in with your email.",
+      "oauthConflict": "This email is already linked to another 42 account."
     }
   },
   "Landing": {
