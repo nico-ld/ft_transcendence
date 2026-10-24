@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Annotated, Self
+from typing import Annotated
 
 from db import Job, Role
 from pydantic import (
@@ -12,6 +12,7 @@ from pydantic import (
     model_validator,
 )
 from pydantic.alias_generators import to_camel
+from typing_extensions import Self
 
 
 class CamelModel(BaseModel):
@@ -102,6 +103,17 @@ class ProfileUpdateIn(CamelModel):
     username: Name | None = None
     first_name: Name | None = None
     last_name: Name | None = None
+
+
+class WorkspaceMetrics(CamelModel):
+    user_id: str
+    cpu_usage_percent: float
+    memory_usage_percent: float
+    memory_used_mb: float
+    memory_total_mb: float
+    network_rx_kbps: float | None = None
+    network_tx_kbps: float | None = None
+    uptime_seconds: float | None = None
 
 
 class PasswordChangeIn(CamelModel):
