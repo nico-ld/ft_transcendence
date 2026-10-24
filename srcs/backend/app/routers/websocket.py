@@ -1,4 +1,5 @@
 import asyncio
+import json
 import logging
 import uuid
 
@@ -10,7 +11,7 @@ from config import settings
 from docker.workspace import ImageNotBuilt, start_workspace
 from fastapi import APIRouter, WebSocket, status
 from fastapi.concurrency import run_in_threadpool
-from fastapi.websockets import WebSocketDisconnect, WebSocketState
+from fastapi.websockets import WebSocketState
 from security import SESSION_COOKIE, user_from_token
 
 router = APIRouter(prefix="/ws", tags=["websocket"])
@@ -27,17 +28,21 @@ async def pump_output(ws: WebSocket, stream: Stream):
 
 async def pump_input(ws: WebSocket, stream: Stream, shell: Exec):
     while True:
-        try:
-            data = await ws.receive_json()
-        except WebSocketDisconnect:
+        message = await ws.receive()
+        if message["type"] == "websocket.disconnect":
             return
+        # keystrokes come as binary frames
+        if message.get("bytes") is not None:
+            await stream.write_in(message["bytes"])
+            continue
+        # text frames are json control messages
+        try:
+            data = json.loads(message.get("text") or "")
         except ValueError:  # not json
             continue
         if not isinstance(data, dict):
             continue
-        if data.get("type") == "input" and isinstance(data.get("data"), str):
-            await stream.write_in(data["data"].encode())
-        elif data.get("type") == "resize":
+        if data.get("type") == "resize":
             cols, rows = data.get("cols"), data.get("rows")
             if (
                 isinstance(cols, int)
@@ -99,4 +104,4 @@ async def terminal(ws: WebSocket):
     finally:
         await hangup(container, pidfile)
     if ws.client_state == WebSocketState.CONNECTED:
-        await ws.close()
+        await ws.close(reason="Session ended")
