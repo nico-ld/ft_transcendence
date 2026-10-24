@@ -38,7 +38,11 @@
     "failedTitle": "Connexion impossible",
     "errors": {
       "invalidCredentials": "Email ou mot de passe invalid",
-      "generic": "Une erreur s'est produite. Merci de réessayer."
+      "generic": "Une erreur s'est produite. Merci de réessayer.",
+      "oauthCancelled": "La connexion avec 42 a été annulée.",
+      "oauthExpired": "La connexion avec 42 a expiré. Merci de réessayer.",
+      "oauthUnavailable": "La connexion avec 42 est indisponible pour le moment. Merci de réessayer plus tard ou de vous connecter avec votre email.",
+      "oauthConflict": "Cet email est déjà associé à un autre compte 42."
     }
   },
   "Landing": {

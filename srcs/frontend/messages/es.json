@@ -41,7 +41,11 @@
     "failedTitle": "Error de conexión",
     "errors": {
       "invalidCredentials": "Correo electrónico o contraseña incorrectos.",
-      "generic": "Algo ha salido mal. Inténtalo de nuevo."
+      "generic": "Algo ha salido mal. Inténtalo de nuevo.",
+      "oauthCancelled": "Se ha cancelado el inicio de sesión con 42.",
+      "oauthExpired": "El inicio de sesión con 42 ha caducado. Inténtalo de nuevo.",
+      "oauthUnavailable": "El inicio de sesión con 42 no está disponible en este momento. Inténtalo más tarde o inicia sesión con tu correo electrónico.",
+      "oauthConflict": "Este correo electrónico ya está vinculado a otra cuenta de 42."
     }
   },
   "Landing": {
