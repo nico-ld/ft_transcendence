@@ -4,6 +4,7 @@ from typing import Annotated
 import jwt
 from config import settings
 from db import Role, User, users_db
+from db.sessions import sessions_db
 from fastapi import Depends, HTTPException, Response, status
 from fastapi.security import APIKeyCookie
 from pwdlib import PasswordHash
@@ -43,10 +44,14 @@ def authenticate(email: str, password: str) -> User | None:
 
 def create_session_token(user_id: int) -> str:
     now = datetime.now(UTC)
+    expires = now + timedelta(minutes=settings.jwt_expire_minutes)
     payload = {
         "sub": str(user_id),
+        # a row in the sessions table (db/sessions.py): deleting it invalidates
+        # this token, see user_from_token
+        "sid": sessions_db.create_session(user_id, expires),
         "iat": now,
-        "exp": now + timedelta(minutes=settings.jwt_expire_minutes),
+        "exp": expires,
     }
     return jwt.encode(payload, settings.session_secret, algorithm=JWT_ALGORITHM)
 
@@ -82,7 +87,8 @@ def get_current_user(token: Annotated[str | None, Depends(session_cookie)]) -> U
 
 
 def user_from_token(token: str | None) -> User | None:
-    """The user of a session JWT, or None if missing, invalid, expired or deleted"""
+    """The user of a session JWT, or None if missing, invalid, expired, logged
+    out or deleted"""
     if token is None:
         return None
     try:
@@ -90,11 +96,39 @@ def user_from_token(token: str | None) -> User | None:
             token,
             settings.session_secret,
             algorithms=[JWT_ALGORITHM],
-            options={"require": ["exp", "sub"]},
+            # tokens made before sessions existed have no sid: refused
+            options={"require": ["exp", "sub", "sid"]},
         )
     except jwt.InvalidTokenError:
         return None
+    # a valid signature isn't enough: the session must still exist (logout
+    # and account deletion remove it)
+    if not sessions_db.is_active(payload["sid"], int(payload["sub"])):
+        return None
     return users_db.get_user(int(payload["sub"]))
+
+
+def revoke_session_token(token: str | None) -> None:
+    """Logout: delete the session of a JWT so the cookie stops working everywhere,
+    even if someone kept a copy. Other browsers of the same user stay logged in.
+    """
+    if token is None:
+        return
+    try:
+        payload = jwt.decode(
+            token,
+            settings.session_secret,
+            algorithms=[JWT_ALGORITHM],
+            # an expired token can still be logged out, it just cleans its row
+            options={"require": ["sid"], "verify_exp": False},
+        )
+    except jwt.InvalidTokenError:
+        return  # not one of ours, nothing to delete
+    sessions_db.delete_session(payload["sid"])
+
+
+# the raw session cookie, for routes that need the token itself (logout)
+SessionToken = Annotated[str | None, Depends(session_cookie)]
 
 CurrentUser = Annotated[User, Depends(get_current_user)]
 

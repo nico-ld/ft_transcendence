@@ -1,5 +1,5 @@
-export type Role = "admin" | "user"
-export type LoginPayload = {email: string; password: string };
+import { Role } from "@/types/User";
+
 export const ROLE_HOME: Record<Role, string> = {
 	admin: "/admin",
 	user: "/user"

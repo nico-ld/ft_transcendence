@@ -11,10 +11,8 @@ services:
 
   frontend:
     build: ./frontend
-    environment:
-      - NEXT_PUBLIC_API_URL=https://localhost/api
-    expose:
-      - "3000"
+    ports:
+      - "3000:3000"
     networks:
       - ft_silk_space
 

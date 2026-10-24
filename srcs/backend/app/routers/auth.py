@@ -3,9 +3,11 @@ from fastapi import APIRouter, HTTPException, Response, status
 from schemas import LoginIn, ProfileUpdateIn, SignupIn, UserOut
 from security import (
     CurrentUser,
+    SessionToken,
     authenticate,
     clear_session_cookie,
     hash_password,
+    revoke_session_token,
     set_session_cookie,
 )
 from sqlalchemy.exc import IntegrityError
@@ -44,7 +46,10 @@ def login(body: LoginIn, response: Response) -> UserOut:
 
 
 @router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
-def logout(response: Response) -> None:
+def logout(response: Response, token: SessionToken) -> None:
+    # invalidate the session on the server first: deleting the cookie only
+    # cleans this browser, a copy of it would still work
+    revoke_session_token(token)
     clear_session_cookie(response)
 
 
