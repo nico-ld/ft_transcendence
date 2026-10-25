@@ -1,6 +1,6 @@
 from db import Role, users_db
 from fastapi import APIRouter, HTTPException, Response, status
-from schemas import LoginIn, ProfileUpdateIn, SignupIn, UserOut
+from schemas import LoginIn, PasswordChangeIn, ProfileUpdateIn, SignupIn, UserOut
 from security import (
     CurrentUser,
     SessionToken,
@@ -65,3 +65,24 @@ def update_me(body: ProfileUpdateIn, user: CurrentUser) -> UserOut:
     if updated is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "User not found")
     return UserOut.model_validate(updated)
+
+
+@router.patch("/me/password", status_code=status.HTTP_204_NO_CONTENT)
+def change_password(body: PasswordChangeIn, user: CurrentUser) -> None:
+    if user.password_hash is None:
+        raise HTTPException(
+            status.HTTP_400_BAD_REQUEST, "This account logged in using 42, no password to change"
+        )
+    # asked again so someone using a session left open can't lock the owner out
+    # 400 and not 401: the user is logged in, only the password they typed is wrong
+    if authenticate(user.email, body.current_password) is None:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Current password is incorrect")
+    if body.new_password == body.current_password:
+        raise HTTPException(
+            status.HTTP_400_BAD_REQUEST, "The new password must be different"
+        )
+    updated = users_db.update_user(
+        user.id, {"password_hash": hash_password(body.new_password)}
+    )
+    if updated is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "User not found")

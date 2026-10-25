@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Annotated
+from typing import Annotated, Self
 
 from db import Job, Role
 from pydantic import (
@@ -12,7 +12,6 @@ from pydantic import (
     model_validator,
 )
 from pydantic.alias_generators import to_camel
-from typing_extensions import Self
 
 
 class CamelModel(BaseModel):
@@ -121,7 +120,29 @@ class PasswordChangeIn(CamelModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    # no min length here, like LoginIn: it is only compared with the hash
     current_password: str = Field(min_length=1, max_length=128)
-    # same rules as the password of signup and user creation
     new_password: str = Field(min_length=8, max_length=128)
+
+
+class MemoryOut(CamelModel):
+    """RAM of the workspace in GB"""
+
+    used_gb: float
+    total_gb: float
+    path: str
+
+
+class LogTimeOut(CamelModel):
+    """Time with a terminal open, as "22h12" """
+
+    week: str
+    month: str
+
+
+class StatsOut(CamelModel):
+    """User stats"""
+
+    memory: MemoryOut
+    log_time: LogTimeOut
+    # hours with a terminal open each day of this week
+    daily: list[float]

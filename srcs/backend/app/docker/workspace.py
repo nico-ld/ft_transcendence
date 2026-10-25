@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from collections import defaultdict
 
 from aiodocker.containers import DockerContainer
@@ -9,11 +10,16 @@ from aiodocker.volumes import DockerVolume
 from config import settings
 from db import Job
 
+logger = logging.getLogger("uvicorn.error")
 _locks: defaultdict[int, asyncio.Lock] = defaultdict(asyncio.Lock)
 
 
 class ImageNotBuilt(Exception):
     pass
+
+
+# where the home volume is mounted in the containers
+HOME_PATH = "/home/workspace"
 
 
 def container_name(user_id: int) -> str:
@@ -90,7 +96,7 @@ def container_config(user_id: int, job: Job) -> dict:
                 {
                     "Type": "volume",
                     "Source": volume_name(user_id),
-                    "Target": "/home/workspace",
+                    "Target": HOME_PATH,
                 }
             ],
         },
@@ -111,8 +117,14 @@ async def ensure_container(docker: Docker, user_id: int, job: Job) -> DockerCont
         if info["Config"]["Labels"].get("silk_space.job") != job.value:
             await container.delete(force=True)
         elif not info["State"]["Running"]:
-            await container.start()
-            return container
+            try:
+                await container.start()
+                return container
+            except DockerError as e:
+                # broken container case, the files are in the volume,
+                # so we recreate it below instead of failing forever
+                logger.warning("Recreating the container of user %s: %s", user_id, e)
+                await container.delete(force=True)
         else:
             return container
 
@@ -134,3 +146,56 @@ async def start_workspace(docker: Docker, user_id: int, job: Job) -> DockerConta
         await ensure_network(docker, user_id, job)
         await ensure_volume(docker, user_id, job)
         return await ensure_container(docker, user_id, job)
+
+
+async def memory_used(docker: Docker, user_id: int) -> int:
+    """Bytes of RAM used by the workspace of a user"""
+    try:
+        # one shot is a single sample directly (by default docker waits for two)
+        stats = await docker._query_json(
+            f"containers/{container_name(user_id)}/stats",
+            params={"stream": "false", "one-shot": "true"},
+        )
+    except DockerError as e:
+        if e.status == 404:
+            return 0
+        raise
+    memory = stats.get("memory_stats") or {}
+    details = memory.get("stats") or {}
+    cache = details.get("inactive_file", details.get("total_inactive_file", 0))
+    return max(memory.get("usage", 0) - cache, 0)
+
+
+async def remove_container(docker: Docker, user_id: int) -> None:
+    # force also kills it + the terminals open in it
+    try:
+        await docker.containers.container(container_name(user_id)).delete(force=True)
+    except DockerError as e:
+        if e.status != 404:
+            raise
+
+
+async def reset_workspace(docker: Docker, user_id: int) -> None:
+    """Delete the container of a user when its job changed or was removed
+
+    Their open terminals end and the home volume stays, so they keep all
+    of their files when their next job is created
+    """
+    async with _locks[user_id]:
+        await remove_container(docker, user_id)
+
+
+async def delete_workspace(docker: Docker, user_id: int) -> None:
+    """Delete everything of a workspace including files"""
+    async with _locks[user_id]:
+        await remove_container(docker, user_id)
+        # only the container used them, so they can go now
+        for resource in (
+            DockerNetwork(docker, network_name(user_id)),
+            DockerVolume(docker, volume_name(user_id)),
+        ):
+            try:
+                await resource.delete()
+            except DockerError as e:
+                if e.status != 404:
+                    raise
