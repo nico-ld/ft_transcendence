@@ -9,9 +9,9 @@ import {
 	getDoc, 
 	getDocEntries,
 	getAdjacentDocs,
-	DocPageProps,
 	DOC_SECTIONS 
 } from "@/lib/docs";
+import { DocPageProps } from "@/types/Doc";
 
 export async function generateStaticParams() {
 	const locale = await getLocale();

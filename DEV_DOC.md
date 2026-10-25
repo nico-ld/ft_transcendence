@@ -84,6 +84,23 @@ Sensitive information must never be stored in frontend source files because file
 - Configure appropriate security headers in Nginx.
 - Avoid inserting untrusted user input directly into the DOM.
 
+### Browser test checklist
+Run it in every supported browser (Chrome, Chromium, Firefox), with an admin and a user account:
+1. Open https://localhost and accept the self-signed certificate: the landing page loads.
+2. The light theme uses Geist Sans; the dark switch turns on the dark theme (mono font).
+3. "Resources" shows the docs links; footer Language → Français translates the page.
+4. Docs: the sidebar, "On this page" and Next/Previous links work; in a narrow window, the "Documentation" menu opens and closes.
+5. Wrong password: the message shows and the email stays filled in.
+6. Password login lands on `/user` with your name; the stats render.
+7. Header menu: dark/light mode, Language → Español (stays on the dashboard), Log out → `/login`, and Back doesn't show the dashboard.
+8. Log in with 42 lands on `/user`; cancelling on the intra shows the "cancelled" message.
+9. Admin: search, sort by email, clicking a user opens the edit panel, the red icon asks for confirmation.
+10. Admin: the green + creates a user (job picked in the dropdown) and the dialog closes.
+11. Admin: the user list scrolls with the mouse wheel.
+12. Workspace: the terminal connects; typing, accents (é, ✓) and resizing the window work.
+13. The landing page, `/login` and `/user` look the same as in Chrome.
+14. No red errors in the console (F12).
+
 ## Backend :
 
 The full API (routes, bodies, responses) is at `/api/docs`.
@@ -94,6 +111,7 @@ The full API (routes, bodies, responses) is at `/api/docs`.
 | POST | `/api/auth/login` | anyone |
 | POST | `/api/auth/logout` | anyone |
 | GET | `/api/auth/42/login` | anyone |
+| GET | `/api/auth/42/callback` | 42 (sends the browser back here) |
 | GET | `/api/auth/me` | logged in |
 | PATCH | `/api/auth/me` | logged in |
 | GET | `/api/users` | admin |
@@ -102,6 +120,27 @@ The full API (routes, bodies, responses) is at `/api/docs`.
 | PATCH | `/api/users/{user_id}` | admin |
 | DELETE | `/api/users/{user_id}` | admin |
 | WS | `/api/ws/terminal` | logged in |
+
+### Log in with 42 (OAuth 2.0) :
+
+* `routers/oauth42.py`, with the authlib library. `/api/auth/42/login` sends the browser to the 42 intra, which sends it back to `/api/auth/42/callback`. The callback logs the user in and redirects to `/admin` or `/user` without a locale: next-intl adds the one the user picked. The full flow is explained in the README, Modules section.
+
+* Setup: create an app on the intra (https://profile.intra.42.fr/oauth/applications/new) with the redirect URI **exactly** `https://localhost/api/auth/42/callback`, then put its UID and secret in `srcs/backend/.env` as `FT_CLIENT_ID` and `FT_CLIENT_SECRET`.
+
+* When the login fails, the callback redirects to `/login?error=<code>` and the login page shows a translated message (`Login.errors` in `messages/*.json`). The codes are a fixed list, in `FtLoginError` (backend) and `OAUTH_ERRORS` (`frontend/types/LoginError.ts`). Anything else in the URL is ignored.
+
+| Code | When |
+|---|---|
+| `oauth_cancelled` | the user clicked "Cancel" on the intra |
+| `oauth_expired` | the `state` doesn't match (the `oauth_state` cookie expired after 10 minutes, or this browser didn't start the login), or the code expired or was already used |
+| `oauth_unavailable` | 42 is unreachable or answers with an error, `FT_CLIENT_SECRET` is wrong, or the profile can't be read |
+| `oauth_conflict` | the email belongs to an account already linked to another 42 account |
+
+* The redirect URI is built from the address the browser used, through the `Host` header that nginx forwards (`proxy_set_header Host $host`). So:
+  * open the site on https://localhost, not https://127.0.0.1: 42 refuses a redirect URI that isn't registered on the app, and the session cookie would end up on the wrong address anyway.
+  * `$host` has no port, so this only works on 443. To publish on another port, use `$http_host` in nginx.conf and register the redirect URI with that port on the intra.
+
+* If every 42 login suddenly ends with `oauth_unavailable`, check the app on the intra: its secret may have been replaced or have expired.
 
 ## Nginx :
 

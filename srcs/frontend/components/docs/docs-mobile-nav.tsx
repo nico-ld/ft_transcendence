@@ -2,7 +2,7 @@
 
 import { usePathname } from "@/i18n/navigation";
 import { ChevronDown } from "lucide-react";
-import { DocNavSection } from "@/lib/docs";
+import { DocNavSection } from "@/types/Doc";
 import { DocsNav } from "./docs-nav";
 import { useTranslations } from "next-intl";
 

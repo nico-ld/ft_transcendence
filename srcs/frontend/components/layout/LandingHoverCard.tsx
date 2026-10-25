@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
 import { ChevronDown } from "lucide-react";
-import { DocNavSection } from "@/lib/docs";
+import { DocNavSection } from "@/types/Doc";
 
 function DocElem({title, href}: {title: string; href: string}) {
 	return (

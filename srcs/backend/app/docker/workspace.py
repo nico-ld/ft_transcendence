@@ -1,0 +1,201 @@
+import asyncio
+import logging
+from collections import defaultdict
+
+from aiodocker.containers import DockerContainer
+from aiodocker.docker import Docker
+from aiodocker.exceptions import DockerError
+from aiodocker.networks import DockerNetwork
+from aiodocker.volumes import DockerVolume
+from config import settings
+from db import Job
+
+logger = logging.getLogger("uvicorn.error")
+_locks: defaultdict[int, asyncio.Lock] = defaultdict(asyncio.Lock)
+
+
+class ImageNotBuilt(Exception):
+    pass
+
+
+# where the home volume is mounted in the containers
+HOME_PATH = "/home/workspace"
+
+
+def container_name(user_id: int) -> str:
+    return f"silk-ws-{user_id}"
+
+
+def network_name(user_id: int) -> str:
+    return f"silk-ws-net-{user_id}"
+
+
+def volume_name(user_id: int) -> str:
+    return f"silk-ws-home-{user_id}"
+
+
+def image_name(job: Job) -> str:
+    return f"workspace-{job.value}"
+
+
+def labels(user_id: int, job: Job) -> dict:
+    return {"silk_space.user_id": str(user_id), "silk_space.job": job.value}
+
+
+async def image_exists(docker: Docker, job: Job) -> bool:
+    try:
+        await docker.images.inspect(image_name(job))
+    except DockerError as e:
+        if e.status == 404:
+            return False
+        raise
+    return True
+
+
+async def ensure_volume(docker: Docker, user_id: int, job: Job) -> DockerVolume:
+    return await docker.volumes.create(
+        {"Name": volume_name(user_id), "Labels": labels(user_id, job)}
+    )
+
+
+async def ensure_network(docker: Docker, user_id: int, job: Job) -> DockerNetwork:
+    try:
+        return await docker.networks.get(network_name(user_id))
+    except DockerError as e:
+        if e.status != 404:
+            raise
+    try:
+        return await docker.networks.create(
+            {
+                "Name": network_name(user_id),
+                "Driver": "bridge",
+                "Labels": labels(user_id, job),
+            }
+        )
+    except DockerError as e:
+        if e.status != 409:
+            raise
+    return await docker.networks.get(network_name(user_id))
+
+
+def container_config(user_id: int, job: Job) -> dict:
+    memory = settings.workspace_memory_mb * 1024 * 1024
+    return {
+        "Image": image_name(job),
+        "Hostname": job.value,
+        "Labels": labels(user_id, job),
+        "HostConfig": {
+            "Memory": memory,
+            "MemorySwap": memory,
+            "NanoCpus": int(settings.workspace_cpus * 1_000_000_000),
+            "PidsLimit": settings.workspace_pids,
+            "CapDrop": ["ALL"],
+            "SecurityOpt": ["no-new-privileges"],
+            "NetworkMode": network_name(user_id),
+            "Mounts": [
+                {
+                    "Type": "volume",
+                    "Source": volume_name(user_id),
+                    "Target": HOME_PATH,
+                }
+            ],
+        },
+    }
+
+
+async def ensure_container(docker: Docker, user_id: int, job: Job) -> DockerContainer:
+    name = container_name(user_id)
+    try:
+        container = await docker.containers.get(name)
+    except DockerError as e:
+        if e.status != 404:
+            raise
+        container = None
+
+    if container is not None:
+        info = await container.show()
+        if info["Config"]["Labels"].get("silk_space.job") != job.value:
+            await container.delete(force=True)
+        elif not info["State"]["Running"]:
+            try:
+                await container.start()
+                return container
+            except DockerError as e:
+                # broken container case, the files are in the volume,
+                # so we recreate it below instead of failing forever
+                logger.warning("Recreating the container of user %s: %s", user_id, e)
+                await container.delete(force=True)
+        else:
+            return container
+
+    try:
+        await docker.containers.create(container_config(user_id, job), name=name)
+    except DockerError as e:
+        if e.status != 409:
+            raise
+    container = await docker.containers.get(name)
+    await container.start()
+    return container
+
+
+async def start_workspace(docker: Docker, user_id: int, job: Job) -> DockerContainer:
+    # prevent double requests
+    async with _locks[user_id]:
+        if not await image_exists(docker, job):
+            raise ImageNotBuilt(image_name(job))
+        await ensure_network(docker, user_id, job)
+        await ensure_volume(docker, user_id, job)
+        return await ensure_container(docker, user_id, job)
+
+
+async def memory_used(docker: Docker, user_id: int) -> int:
+    """Bytes of RAM used by the workspace of a user"""
+    try:
+        # one shot is a single sample directly (by default docker waits for two)
+        stats = await docker._query_json(
+            f"containers/{container_name(user_id)}/stats",
+            params={"stream": "false", "one-shot": "true"},
+        )
+    except DockerError as e:
+        if e.status == 404:
+            return 0
+        raise
+    memory = stats.get("memory_stats") or {}
+    details = memory.get("stats") or {}
+    cache = details.get("inactive_file", details.get("total_inactive_file", 0))
+    return max(memory.get("usage", 0) - cache, 0)
+
+
+async def remove_container(docker: Docker, user_id: int) -> None:
+    # force also kills it + the terminals open in it
+    try:
+        await docker.containers.container(container_name(user_id)).delete(force=True)
+    except DockerError as e:
+        if e.status != 404:
+            raise
+
+
+async def reset_workspace(docker: Docker, user_id: int) -> None:
+    """Delete the container of a user when its job changed or was removed
+
+    Their open terminals end and the home volume stays, so they keep all
+    of their files when their next job is created
+    """
+    async with _locks[user_id]:
+        await remove_container(docker, user_id)
+
+
+async def delete_workspace(docker: Docker, user_id: int) -> None:
+    """Delete everything of a workspace including files"""
+    async with _locks[user_id]:
+        await remove_container(docker, user_id)
+        # only the container used them, so they can go now
+        for resource in (
+            DockerNetwork(docker, network_name(user_id)),
+            DockerVolume(docker, volume_name(user_id)),
+        ):
+            try:
+                await resource.delete()
+            except DockerError as e:
+                if e.status != 404:
+                    raise

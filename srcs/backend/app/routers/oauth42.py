@@ -1,3 +1,6 @@
+from enum import StrEnum
+
+import httpx2
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from config import settings
 from db import Role, User, users_db
@@ -22,14 +25,34 @@ oauth.register(
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
+# where each role lands after logging in with 42
+ROLE_HOME = {Role.ADMIN: "/admin", Role.USER: "/user"}
+
+#each match an oauth error situation, like cancelled = the user clicked "Cancel" on the 42 page
+class FtLoginError(StrEnum):
+    CANCELLED = "oauth_cancelled"
+    EXPIRED = "oauth_expired"
+    UNAVAILABLE = "oauth_unavailable"
+    CONFLICT = "oauth_conflict"
+
+
+OAUTH_ERROR_REASONS = {
+    "access_denied": FtLoginError.CANCELLED,
+    "mismatching_state": FtLoginError.EXPIRED,
+    "invalid_grant": FtLoginError.EXPIRED,
+}
+
+#Send the browser back to the login page + explains what happened
+def login_failed(reason: FtLoginError) -> RedirectResponse:
+    return RedirectResponse(f"{settings.frontend_url}/login?error={reason}")
+
 
 class FtImage(BaseModel):
     link: str | None = None
 
 
+# Fields matching 42 oauth response
 class FtProfile(BaseModel):
-    """The fields we use from the 42 oauth response"""
-
     id: int
     email: Email
     login: str
@@ -39,27 +62,14 @@ class FtProfile(BaseModel):
 
 
 def get_or_create_42_user(profile: FtProfile) -> User:
-    """Find the user of a 42 profile, link or create an account.
-
-    Args:
-        profile (FtProfile): the profile returned by 42
-
-    Returns:
-        User: the user to login
-
-    Raises:
-        HTTPException: 409 if the email belongs to an account already linked
-            to another 42 account.
-    """
     user = users_db.get_user_by_ft_id(profile.id)
     if user is not None:
         return user
 
     user = users_db.get_user_by_email(profile.email)
     if user is not None:
+        # security against concurrent callback between two lookups
         if user.ft_id == profile.id:
-            # created by a concurrent callback between the two lookups
-            # which is very rare but may happen so who knows
             return user
         if user.ft_id is not None:
             raise HTTPException(
@@ -80,9 +90,7 @@ def get_or_create_42_user(profile: FtProfile) -> User:
             ft_id=profile.id,
         )
     except IntegrityError:
-        # two callbacks for the same new user at once,
-        # the other one won, very likely but still here
-        # because it maaaay happen
+        # security against two callbacks for the same user at once
         user = users_db.get_user_by_ft_id(profile.id)
         if user is None:
             raise
@@ -99,24 +107,26 @@ async def login_42(request: Request):
 async def callback_42(request: Request):
     try:
         token = await oauth.fortytwo.authorize_access_token(request)
+        resp = await oauth.fortytwo.get("me", token=token)
     except OAuthError as e:
-        raise HTTPException(status_code=400, detail=f"42 auth failed: {e.error}") from e
+        return login_failed(OAUTH_ERROR_REASONS.get(e.error, FtLoginError.UNAVAILABLE))
+    except (httpx2.HTTPError, ValueError):
+        return login_failed(FtLoginError.UNAVAILABLE)
 
-    resp = await oauth.fortytwo.get("me", token=token)
     if resp.status_code != 200:
-        raise HTTPException(status.HTTP_502_BAD_GATEWAY, "Couldn't get the 42 profile")
+        return login_failed(FtLoginError.UNAVAILABLE)
     try:
         profile = FtProfile.model_validate(resp.json())
-    except ValueError:  # not JSON, or a pydantic error on 42 info
-        raise HTTPException(
-            status.HTTP_502_BAD_GATEWAY, "Unexpected 42 profile"
-        ) from None
+    except ValueError:
+        return login_failed(FtLoginError.UNAVAILABLE)
 
-    # the DB calls are sync so we run them in the threadpool
-    # to not block the event loop since we can't put this func
-    # in sync because we await for 42 oauth.
-    user = await run_in_threadpool(get_or_create_42_user, profile)
+    try:
+        user = await run_in_threadpool(get_or_create_42_user, profile)
+    except HTTPException as e:
+        if e.status_code != status.HTTP_409_CONFLICT:
+            raise
+        return login_failed(FtLoginError.CONFLICT)
 
-    response = RedirectResponse(settings.frontend_url)
+    response = RedirectResponse(settings.frontend_url + ROLE_HOME[user.role])
     set_session_cookie(response, user.id)
     return response

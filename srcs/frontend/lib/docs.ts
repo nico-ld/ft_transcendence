@@ -3,6 +3,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import GithubSlugger from "github-slugger";
 import { ComponentType } from "react";
+import { DocEntry, DocFrontmatter, DocNavSection, TocItem} from "@/types/Doc";
 import { routing } from "@/i18n/routing";
 
 const DOCS_DIR = path.join(process.cwd(), "content", "docs");
@@ -12,33 +13,6 @@ export const DOC_SECTIONS = [
 	{id: "developers", label: "Developer guide"}
 ] as const;
 
-export type DocPageProps = {
-	params: Promise<{section: string; slug: string}>;
-};
-
-export type DocEntry = {
-	file: string;
-	slug: string;
-};
-
-export type DocFrontmatter = {
-	title: string;
-	description?: string;
-};
-
-export type DocNavItem = {
-	slug: string;
-	title: string;
-	href: string;
-};
-
-export type DocNavSection = {
-	id: string;
-	label: string;
-	items: DocNavItem[];
-};
-
-export type TocItem ={id: string; text: string; level: 2 | 3};
 
 function resolveDir(locale: string, section: string) {
 	const dir = path.join(DOCS_DIR, locale, section);
