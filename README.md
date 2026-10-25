@@ -162,6 +162,22 @@ Modules :
 
 If anything fails (the user cancels, the login took too long, 42 is unreachable, the email belongs to an account linked to another 42 account), the browser goes back to the login page, which says why in the user's language.
 
+### Minor: Support for additional browsers (1 pt)
+
+*Worked on by:* TODO
+
+**Supported browsers:** Google Chrome (required by the subject), Chromium and Firefox, in their current versions. The real minimum comes from Next.js 16 and Tailwind CSS v4: Chrome and Chromium 111+, Firefox 128+.
+
+**How we checked it:** every existing feature was driven in Chromium by an automated browser pass (landing, docs, login, dashboard menus, admin dialogs, and the terminal against a stand-in shell). The checklist in DEV_DOC.md runs the same features by hand in each browser.
+
+**What it fixed:**
+- The light theme used each browser's default font (a broken `--font-sans` variable), so the pages looked different from one browser to another. It now uses Geist Sans everywhere.
+- A failed login emptied the email and password fields.
+
+**Known limitations:**
+- The HTTPS certificate is self-signed, so each browser shows its own warning on the first visit. Chrome and Chromium: Advanced → Proceed to localhost. Firefox: Advanced → Accept the Risk and Continue.
+- In the terminal, the shortcuts browsers keep for themselves (Ctrl+W, Ctrl+T, Ctrl+N, Ctrl+Tab) act on the browser tabs and never reach the shell.
+
 • Individual Contributions:
 ◦ Detailed breakdown of what each team member contributed.
 ◦ Specific features, modules, or components implemented by each person.

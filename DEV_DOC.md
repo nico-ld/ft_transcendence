@@ -84,6 +84,23 @@ Sensitive information must never be stored in frontend source files because file
 - Configure appropriate security headers in Nginx.
 - Avoid inserting untrusted user input directly into the DOM.
 
+### Browser test checklist
+Run it in every supported browser (Chrome, Chromium, Firefox), with an admin and a user account:
+1. Open https://localhost and accept the self-signed certificate: the landing page loads.
+2. The light theme uses Geist Sans; the dark switch turns on the dark theme (mono font).
+3. "Resources" shows the docs links; footer Language → Français translates the page.
+4. Docs: the sidebar, "On this page" and Next/Previous links work; in a narrow window, the "Documentation" menu opens and closes.
+5. Wrong password: the message shows and the email stays filled in.
+6. Password login lands on `/user` with your name; the stats render.
+7. Header menu: dark/light mode, Language → Español (stays on the dashboard), Log out → `/login`, and Back doesn't show the dashboard.
+8. Log in with 42 lands on `/user`; cancelling on the intra shows the "cancelled" message.
+9. Admin: search, sort by email, clicking a user opens the edit panel, the red icon asks for confirmation.
+10. Admin: the green + creates a user (job picked in the dropdown) and the dialog closes.
+11. Admin: the user list scrolls with the mouse wheel.
+12. Workspace: the terminal connects; typing, accents (é, ✓) and resizing the window work.
+13. The landing page, `/login` and `/user` look the same as in Chrome.
+14. No red errors in the console (F12).
+
 ## Backend :
 
 The full API (routes, bodies, responses) is at `/api/docs`.
