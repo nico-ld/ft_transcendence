@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from collections import defaultdict
 
 from aiodocker.containers import DockerContainer
@@ -9,6 +10,7 @@ from aiodocker.volumes import DockerVolume
 from config import settings
 from db import Job
 
+logger = logging.getLogger("uvicorn.error")
 _locks: defaultdict[int, asyncio.Lock] = defaultdict(asyncio.Lock)
 
 
@@ -111,8 +113,14 @@ async def ensure_container(docker: Docker, user_id: int, job: Job) -> DockerCont
         if info["Config"]["Labels"].get("silk_space.job") != job.value:
             await container.delete(force=True)
         elif not info["State"]["Running"]:
-            await container.start()
-            return container
+            try:
+                await container.start()
+                return container
+            except DockerError as e:
+                # broken container case, the files are in the volume,
+                # so we recreate it below instead of failing forever
+                logger.warning("Recreating the container of user %s: %s", user_id, e)
+                await container.delete(force=True)
         else:
             return container
 
