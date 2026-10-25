@@ -145,7 +145,38 @@ choice".
 
 Modules :
 
-blabla
+### Minor: Remote authentication with OAuth 2.0 (1 pt)
+
+*Worked on by:* TODO
+
+**Why:** employees log in with the 42 account they already have, with no new password to create and remember. 42 vouches for the email address, so an account an admin created with that email is linked to the 42 account on its first 42 login.
+
+**How it works:** the OAuth 2.0 authorization code flow, in `srcs/backend/app/routers/oauth42.py` with the authlib library.
+
+1. "Log in with 42" opens `/api/auth/42/login`. The backend redirects the browser to the 42 intra with our `client_id`, the `redirect_uri`, `scope=public` and a random `state`, which it also keeps in a signed `oauth_state` cookie for 10 minutes.
+2. The user accepts on the intra, which sends the browser back to `/api/auth/42/callback` with a `code` and the same `state`.
+3. The backend checks that the `state` matches the cookie, so a login this browser didn't start is refused (CSRF protection). It then trades the `code` and our client secret for an access token, server to server: the secret never reaches the browser.
+4. With that token it reads the profile from `/v2/me` (id, login, email, names, picture), then drops the token. Nothing from 42 is stored besides those fields.
+5. It finds the account: the one with the same 42 id, or else the one with the same email (now linked to this 42 account), or else a new account with the `user` role and no job, so no workspace until an admin assigns one.
+6. It opens a session like a password login does (our own `session` cookie) and sends the browser to its dashboard (`/admin` or `/user`), in the language the user picked.
+
+If anything fails (the user cancels, the login took too long, 42 is unreachable, the email belongs to an account linked to another 42 account), the browser goes back to the login page, which says why in the user's language.
+
+### Minor: Support for additional browsers (1 pt)
+
+*Worked on by:* TODO
+
+**Supported browsers:** Google Chrome (required by the subject), Chromium and Firefox, in their current versions. The real minimum comes from Next.js 16 and Tailwind CSS v4: Chrome and Chromium 111+, Firefox 128+.
+
+**How we checked it:** every existing feature was driven in Chromium by an automated browser pass (landing, docs, login, dashboard menus, admin dialogs, and the terminal against a stand-in shell). The checklist in DEV_DOC.md runs the same features by hand in each browser.
+
+**What it fixed:**
+- The light theme used each browser's default font (a broken `--font-sans` variable), so the pages looked different from one browser to another. It now uses Geist Sans everywhere.
+- A failed login emptied the email and password fields.
+
+**Known limitations:**
+- The HTTPS certificate is self-signed, so each browser shows its own warning on the first visit. Chrome and Chromium: Advanced → Proceed to localhost. Firefox: Advanced → Accept the Risk and Continue.
+- In the terminal, the shortcuts browsers keep for themselves (Ctrl+W, Ctrl+T, Ctrl+N, Ctrl+Tab) act on the browser tabs and never reach the shell.
 
 • Individual Contributions:
 ◦ Detailed breakdown of what each team member contributed.
