@@ -17,6 +17,14 @@ from security import SESSION_COOKIE, user_from_token
 router = APIRouter(prefix="/ws", tags=["websocket"])
 logger = logging.getLogger("uvicorn.error")
 
+# watcher interval
+SESSION_CHECK_SECONDS = 5
+
+# (close code, reason) sent to the client when the terminal ends
+ENDED = (status.WS_1000_NORMAL_CLOSURE, "Session ended")
+FAILED = (status.WS_1011_INTERNAL_ERROR, "Terminal error")
+REVOKED = (4401, "You were logged out, log in again to use the terminal")
+
 
 async def pump_output(ws: WebSocket, stream: Stream):
     while True:
@@ -57,18 +65,31 @@ async def pump_input(ws: WebSocket, stream: Stream, shell: Exec):
                     pass
 
 
-async def run_session(ws: WebSocket, stream: Stream, shell: Exec) -> bool:
-    """Pipe the shell and the socket until one of them ends.
+async def watch_session(token: str | None):
+    # watcher that checks every x seconds the cookie to
+    # gracefully close the terminals after cookie expiry
+    while True:
+        await asyncio.sleep(SESSION_CHECK_SECONDS)
+        if await run_in_threadpool(user_from_token, token) is None:
+            return
+
+
+async def run_session(
+    ws: WebSocket, stream: Stream, shell: Exec, token: str | None
+) -> tuple[int, str]:
+    """Pipe the shell and the socket until one of them or the session ends.
 
     Returns:
-        bool: True if it ended on an error.
+        tuple[int, str]: the close code and reason to send to the client.
     """
+    watcher = asyncio.create_task(watch_session(token))
     tasks = [
         asyncio.create_task(pump_output(ws, stream)),
         asyncio.create_task(pump_input(ws, stream, shell)),
+        watcher,
     ]
     try:
-        await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+        done, _ = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
     finally:
         for task in tasks:
             task.cancel()
@@ -83,7 +104,11 @@ async def run_session(ws: WebSocket, stream: Stream, shell: Exec) -> bool:
         if isinstance(result, BaseException):
             logger.error("Terminal session failed", exc_info=result)
             failed = True
-    return failed
+    if failed:
+        return FAILED
+    if watcher in done:
+        return REVOKED
+    return ENDED
 
 
 async def hangup(container: DockerContainer, pidfile: str):
@@ -124,7 +149,8 @@ async def terminal(ws: WebSocket):
     if ws.headers.get("origin") != settings.frontend_url:
         await ws.close(code=status.WS_1008_POLICY_VIOLATION)
         return
-    user = await run_in_threadpool(user_from_token, ws.cookies.get(SESSION_COOKIE))
+    token = ws.cookies.get(SESSION_COOKIE)
+    user = await run_in_threadpool(user_from_token, token)
     if user is None:
         await ws.close(code=status.WS_1008_POLICY_VIOLATION)
         return
@@ -147,14 +173,11 @@ async def terminal(ws: WebSocket):
             ["sh", "-c", f"echo $$ > {pidfile}; exec bash -l"], stdin=True, tty=True
         )
         async with shell.start() as stream:
-            failed = await run_session(ws, stream, shell)
+            code, reason = await run_session(ws, stream, shell, token)
     except DockerError:
         # the container died (out of memory, del by admin, etc)
         logger.exception("Terminal of user %s failed", user.id)
-        failed = True
+        code, reason = FAILED
     finally:
         await hangup(container, pidfile)
-    if failed:
-        await close(ws, status.WS_1011_INTERNAL_ERROR, "Terminal error")
-    else:
-        await close(ws, reason="Session ended")
+    await close(ws, code, reason)
