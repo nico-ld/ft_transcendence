@@ -104,12 +104,45 @@ class ProfileUpdateIn(CamelModel):
     last_name: Name | None = None
 
 
+class WorkspaceMetrics(CamelModel):
+    user_id: str
+    cpu_usage_percent: float
+    memory_usage_percent: float
+    memory_used_mb: float
+    memory_total_mb: float
+    network_rx_kbps: float | None = None
+    network_tx_kbps: float | None = None
+    uptime_seconds: float | None = None
+
+
 class PasswordChangeIn(CamelModel):
     """The logged in user changes their own password"""
 
     model_config = ConfigDict(extra="forbid")
 
-    # no min length here, like LoginIn: it is only compared with the hash
     current_password: str = Field(min_length=1, max_length=128)
-    # same rules as the password of signup and user creation
     new_password: str = Field(min_length=8, max_length=128)
+
+
+class MemoryOut(CamelModel):
+    """RAM of the workspace in GB"""
+
+    used_gb: float
+    total_gb: float
+    path: str
+
+
+class LogTimeOut(CamelModel):
+    """Time with a terminal open, as "22h12" """
+
+    week: str
+    month: str
+
+
+class StatsOut(CamelModel):
+    """User stats"""
+
+    memory: MemoryOut
+    log_time: LogTimeOut
+    # hours with a terminal open each day of this week
+    daily: list[float]
