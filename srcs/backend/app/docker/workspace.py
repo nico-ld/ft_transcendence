@@ -18,6 +18,10 @@ class ImageNotBuilt(Exception):
     pass
 
 
+# where the home volume is mounted in the containers
+HOME_PATH = "/home/workspace"
+
+
 def container_name(user_id: int) -> str:
     return f"silk-ws-{user_id}"
 
@@ -92,7 +96,7 @@ def container_config(user_id: int, job: Job) -> dict:
                 {
                     "Type": "volume",
                     "Source": volume_name(user_id),
-                    "Target": "/home/workspace",
+                    "Target": HOME_PATH,
                 }
             ],
         },
@@ -142,6 +146,24 @@ async def start_workspace(docker: Docker, user_id: int, job: Job) -> DockerConta
         await ensure_network(docker, user_id, job)
         await ensure_volume(docker, user_id, job)
         return await ensure_container(docker, user_id, job)
+
+
+async def memory_used(docker: Docker, user_id: int) -> int:
+    """Bytes of RAM used by the workspace of a user"""
+    try:
+        # one shot is a single sample directly (by default docker waits for two)
+        stats = await docker._query_json(
+            f"containers/{container_name(user_id)}/stats",
+            params={"stream": "false", "one-shot": "true"},
+        )
+    except DockerError as e:
+        if e.status == 404:
+            return 0
+        raise
+    memory = stats.get("memory_stats") or {}
+    details = memory.get("stats") or {}
+    cache = details.get("inactive_file", details.get("total_inactive_file", 0))
+    return max(memory.get("usage", 0) - cache, 0)
 
 
 async def remove_container(docker: Docker, user_id: int) -> None:

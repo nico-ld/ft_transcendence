@@ -31,6 +31,9 @@ class Settings(BaseSettings):
     workspace_cpus: float = 1.0
     workspace_pids: int = 256
 
+    # timezone for the logtime stats of containers
+    timezone: str = "Europe/Paris"
+
     @property
     def database_url(self) -> URL:
         return URL.create(

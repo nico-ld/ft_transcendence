@@ -122,3 +122,27 @@ class PasswordChangeIn(CamelModel):
 
     current_password: str = Field(min_length=1, max_length=128)
     new_password: str = Field(min_length=8, max_length=128)
+
+
+class MemoryOut(CamelModel):
+    """RAM of the workspace in GB"""
+
+    used_gb: float
+    total_gb: float
+    path: str
+
+
+class LogTimeOut(CamelModel):
+    """Time with a terminal open, as "22h12" """
+
+    week: str
+    month: str
+
+
+class StatsOut(CamelModel):
+    """User stats"""
+
+    memory: MemoryOut
+    log_time: LogTimeOut
+    # hours with a terminal open each day of this week
+    daily: list[float]

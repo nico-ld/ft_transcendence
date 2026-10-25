@@ -6,7 +6,7 @@ from aiodocker import Docker
 from config import settings
 from db import Base, Role, engine, users_db
 from fastapi import FastAPI
-from routers import auth, oauth42, users, websocket, workspace
+from routers import auth, oauth42, stats, users, websocket, workspace
 from security import hash_password
 from starlette.middleware.sessions import SessionMiddleware
 
@@ -62,6 +62,7 @@ app.add_middleware(
 app.include_router(oauth42.router)
 app.include_router(auth.router)
 app.include_router(users.router)
+app.include_router(stats.router)
 app.include_router(websocket.router)
 app.include_router(workspace.router)
 

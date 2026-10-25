@@ -8,6 +8,7 @@ from aiodocker.exceptions import DockerError
 from aiodocker.execs import Exec
 from aiodocker.stream import Stream
 from config import settings
+from db.terminal_sessions import terminal_sessions_db
 from docker.workspace import ImageNotBuilt, start_workspace
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect, status
 from fastapi.concurrency import run_in_threadpool
@@ -65,24 +66,26 @@ async def pump_input(ws: WebSocket, stream: Stream, shell: Exec):
                     pass
 
 
-async def watch_session(token: str | None):
+async def watch_session(token: str | None, terminal_id: int):
     # watcher that checks every x seconds the cookie to
     # gracefully close the terminals after cookie expiry
     while True:
         await asyncio.sleep(SESSION_CHECK_SECONDS)
         if await run_in_threadpool(user_from_token, token) is None:
             return
+        # count log time of the terminal
+        await run_in_threadpool(terminal_sessions_db.touch, terminal_id)
 
 
 async def run_session(
-    ws: WebSocket, stream: Stream, shell: Exec, token: str | None
+    ws: WebSocket, stream: Stream, shell: Exec, token: str | None, terminal_id: int
 ) -> tuple[int, str]:
     """Pipe the shell and the socket until one of them or the session ends.
 
     Returns:
         tuple[int, str]: the close code and reason to send to the client.
     """
-    watcher = asyncio.create_task(watch_session(token))
+    watcher = asyncio.create_task(watch_session(token, terminal_id))
     tasks = [
         asyncio.create_task(pump_output(ws, stream)),
         asyncio.create_task(pump_input(ws, stream, shell)),
@@ -173,7 +176,8 @@ async def terminal(ws: WebSocket):
             ["sh", "-c", f"echo $$ > {pidfile}; exec bash -l"], stdin=True, tty=True
         )
         async with shell.start() as stream:
-            code, reason = await run_session(ws, stream, shell, token)
+            terminal_id = await run_in_threadpool(terminal_sessions_db.open, user.id)
+            code, reason = await run_session(ws, stream, shell, token, terminal_id)
     except DockerError:
         # the container died (out of memory, del by admin, etc)
         logger.exception("Terminal of user %s failed", user.id)
