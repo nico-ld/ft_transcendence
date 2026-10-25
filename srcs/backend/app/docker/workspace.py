@@ -134,3 +134,38 @@ async def start_workspace(docker: Docker, user_id: int, job: Job) -> DockerConta
         await ensure_network(docker, user_id, job)
         await ensure_volume(docker, user_id, job)
         return await ensure_container(docker, user_id, job)
+
+
+async def remove_container(docker: Docker, user_id: int) -> None:
+    # force also kills it + the terminals open in it
+    try:
+        await docker.containers.container(container_name(user_id)).delete(force=True)
+    except DockerError as e:
+        if e.status != 404:
+            raise
+
+
+async def reset_workspace(docker: Docker, user_id: int) -> None:
+    """Delete the container of a user when its job changed or was removed
+
+    Their open terminals end and the home volume stays, so they keep all
+    of their files when their next job is created
+    """
+    async with _locks[user_id]:
+        await remove_container(docker, user_id)
+
+
+async def delete_workspace(docker: Docker, user_id: int) -> None:
+    """Delete everything of a workspace including files"""
+    async with _locks[user_id]:
+        await remove_container(docker, user_id)
+        # only the container used them, so they can go now
+        for resource in (
+            DockerNetwork(docker, network_name(user_id)),
+            DockerVolume(docker, volume_name(user_id)),
+        ):
+            try:
+                await resource.delete()
+            except DockerError as e:
+                if e.status != 404:
+                    raise
