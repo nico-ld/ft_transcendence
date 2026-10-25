@@ -9,7 +9,7 @@ from aiodocker.execs import Exec
 from aiodocker.stream import Stream
 from config import settings
 from docker.workspace import ImageNotBuilt, start_workspace
-from fastapi import APIRouter, WebSocket, status
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect, status
 from fastapi.concurrency import run_in_threadpool
 from fastapi.websockets import WebSocketState
 from security import SESSION_COOKIE, user_from_token
@@ -50,20 +50,73 @@ async def pump_input(ws: WebSocket, stream: Stream, shell: Exec):
                 and cols > 0
                 and rows > 0
             ):
-                await shell.resize(w=cols, h=rows)
+                try:
+                    await shell.resize(w=cols, h=rows)
+                except DockerError:
+                    # the shell exited pump_output ends the session
+                    pass
+
+
+async def run_session(ws: WebSocket, stream: Stream, shell: Exec) -> bool:
+    """Pipe the shell and the socket until one of them ends.
+
+    Returns:
+        bool: True if it ended on an error.
+    """
+    tasks = [
+        asyncio.create_task(pump_output(ws, stream)),
+        asyncio.create_task(pump_input(ws, stream, shell)),
+    ]
+    try:
+        await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+    finally:
+        for task in tasks:
+            task.cancel()
+        # wait for both to really stop and collect their errors so asyncio
+        # doesnt log Task exception was never retrieved
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+    failed = False
+    for result in results:
+        # stopped by us -> the client left while we were sending
+        if isinstance(result, (asyncio.CancelledError, WebSocketDisconnect)):
+            continue
+        if isinstance(result, BaseException):
+            logger.error("Terminal session failed", exc_info=result)
+            failed = True
+    return failed
 
 
 async def hangup(container: DockerContainer, pidfile: str):
     # docker does not kill an exec when the client leaves so we do what a real
     # terminal does on close: SIGHUP the shell, it forwards it to its jobs
-    kill = await container.exec(
-        ["sh", "-c", f'kill -HUP "$(cat {pidfile})"; rm -f {pidfile}'],
-        stdout=True,
-        stderr=True,
-    )
-    async with kill.start() as stream:
-        while await stream.read_out() is not None:
-            pass
+    try:
+        kill = await container.exec(
+            ["sh", "-c", f'kill -HUP "$(cat {pidfile})"; rm -f {pidfile}'],
+            stdout=True,
+            stderr=True,
+        )
+        async with kill.start() as stream:
+            while await stream.read_out() is not None:
+                pass
+    except DockerError as e:
+        # 404 removed, 409 stopped: the shell died with the container
+        if e.status not in (404, 409):
+            logger.warning("Couldn't hang up %s: %s", pidfile, e)
+
+
+async def close(
+    ws: WebSocket, code: int = status.WS_1000_NORMAL_CLOSURE, reason: str = ""
+):
+    # nothing to close if the client left or we already closed
+    if (
+        ws.client_state != WebSocketState.CONNECTED
+        or ws.application_state != WebSocketState.CONNECTED
+    ):
+        return
+    try:
+        await ws.close(code=code, reason=reason)
+    except WebSocketDisconnect:
+        pass  # the client left
 
 
 @router.websocket("/terminal")
@@ -89,19 +142,19 @@ async def terminal(ws: WebSocket):
         await ws.close(code=status.WS_1011_INTERNAL_ERROR)
         return
     pidfile = f"/tmp/.term-{uuid.uuid4().hex}"
-    shell = await container.exec(
-        ["sh", "-c", f"echo $$ > {pidfile}; exec bash -l"], stdin=True, tty=True
-    )
     try:
+        shell = await container.exec(
+            ["sh", "-c", f"echo $$ > {pidfile}; exec bash -l"], stdin=True, tty=True
+        )
         async with shell.start() as stream:
-            tasks = {
-                asyncio.create_task(pump_output(ws, stream)),
-                asyncio.create_task(pump_input(ws, stream, shell)),
-            }
-            _, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
-            for task in pending:
-                task.cancel()
+            failed = await run_session(ws, stream, shell)
+    except DockerError:
+        # the container died (out of memory, del by admin, etc)
+        logger.exception("Terminal of user %s failed", user.id)
+        failed = True
     finally:
         await hangup(container, pidfile)
-    if ws.client_state == WebSocketState.CONNECTED:
-        await ws.close(reason="Session ended")
+    if failed:
+        await close(ws, status.WS_1011_INTERNAL_ERROR, "Terminal error")
+    else:
+        await close(ws, reason="Session ended")
