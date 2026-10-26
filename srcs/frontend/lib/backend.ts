@@ -34,11 +34,8 @@ export async function backendFetch(path: string, init: RequestInit = {}): Promis
 	return fetch(`${BACKEND_URL}${path}`, { ...init, headers, cache: "no-store" });
 }
 
-/**
- * The session cookie the backend put in its answer (POST /auth/login sets it).
- * That answer reaches the Next server, not the browser, so the caller has to
- * hand the cookie over with cookies().set.
- */
+ // The session cookie the backend reaches the Next server,
+ // so the caller has to hand the cookie over with cookies().set.
 export function sessionFromResponse(res: Response): { value: string; maxAge?: number } | null {
 	for (const header of res.headers.getSetCookie()) {
 		const [pair, ...attributes] = header.split(";");
@@ -61,9 +58,8 @@ export async function getCurrentUser(): Promise<BackendUser | null> {
 	return res.ok ? ((await res.json()) as BackendUser) : null;
 }
 
+/** Every account (GET /users), or null if the caller isn't an admin or the backend failed. */
 export async function getUsers(): Promise<BackendUser[] | null> {
-	return null;
 	const res = await backendFetch("/users");
 	return res.ok ? ((await res.json()) as BackendUser[]) : null;
 }
-
