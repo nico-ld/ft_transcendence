@@ -6,9 +6,9 @@ export function LegalFooter() {
 
 	return (
 		<>
-		<Link href="#" className="hover:underline">{t("privacy")}</Link>
+		<Link href="/privacy" className="hover:underline">{t("privacy")}</Link>
 			<span aria-hidden="true"> - </span>
-		<Link href="#" className="hover:underline">{t("terms")}</Link>
+		<Link href="/terms" className="hover:underline">{t("terms")}</Link>
 		</>
 	);
 }

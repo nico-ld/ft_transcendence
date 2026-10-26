@@ -9,7 +9,7 @@ export default async function DocsLayout({children}: {children: React.ReactNode}
 	const sections = getDocNav(await getLocale());
 
 	return (
-		<main className="flex min-h-dvh flex-col justify-between">
+		<main className="flex flex-1 flex-col justify-between">
 			<div className="mx-auto flex w-full max-w-8xl gap-20 px-6 py-12">
 				<aside className="hidden w-56 shrink-0 md:block">
 					<div className="sticky top-12">

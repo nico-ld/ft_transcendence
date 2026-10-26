@@ -5,7 +5,14 @@
   },
   "Legal": {
     "privacy": "Privacy Policy",
-    "terms": "Terms of Service"
+    "terms": "Terms of Service",
+    "lastUpdated": "Last updated: {date}",
+    "noticeLabel": "About this project",
+    "notice": "<strong>{project} is a student project.</strong> It was built by {team}, students at {school} (France), as part of the 42 curriculum. It is not a commercial product, has no customers and is free. It runs only on the team's machines and on school computers, for development and peer evaluation. <strong>Please use test data: don't enter real personal or confidential information.</strong>",
+    "contents": "Contents",
+    "seeAlso": "See also:",
+    "home": "Back to home",
+    "studentProject": "{project}, a student project at {school}"
   },
   "Language": {
     "selectLanguage": "Select the language",

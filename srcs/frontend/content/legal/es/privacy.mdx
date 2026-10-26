@@ -1,0 +1,134 @@
+---
+title: Política de privacidad
+description: Cómo Silk Space recopila, utiliza y protege tus datos personales.
+---
+
+import { ContactEmail, TableWrap } from "@/components/legal/LegalPage";
+import { legalInfo } from "@/components/legal/LegalInfo";
+
+Esta política explica qué datos personales recopila {legalInfo.projectName}, por qué los recopila, quién puede consultarlos, durante cuánto tiempo se conservan y cuáles son tus derechos.
+
+## Quién es responsable de tus datos
+
+El responsable del tratamiento es el equipo del proyecto {legalInfo.projectName}: {new Intl.ListFormat("es").format(legalInfo.team)}, estudiantes de {legalInfo.school}, Francia. El equipo es un grupo de estudiantes, no una empresa.
+
+Si tienes alguna pregunta sobre tus datos o quieres ejercer tus derechos, escribe a <ContactEmail />.
+
+## Qué hace el servicio
+
+{legalInfo.projectName} ayuda a una empresa a gestionar contrataciones, promociones y salidas de empleados. Los usuarios de RR. HH. (los administradores de la aplicación) crean un espacio de trabajo personal para cada empleado: un entorno Linux aislado con las herramientas necesarias para su trabajo (por ejemplo, ingeniería de software, contabilidad, análisis de datos, ingeniería DevOps o redacción técnica). Los empleados inician sesión y utilizan su espacio de trabajo a través de un terminal en su navegador web. Para ello, el servicio necesita tratar algunos datos personales, que se describen a continuación.
+
+## Qué datos recopilamos
+
+### Cuenta y perfil
+
+<TableWrap>
+
+| Dato | Por qué es necesario |
+| --- | --- |
+| Nombre de usuario | El nombre que se muestra para ti en la interfaz. |
+| Nombre y apellidos | Para mostrar quién eres a los usuarios de RR. HH. y en la interfaz. |
+| Dirección de correo electrónico | Para iniciar sesión y contactar contigo sobre tu cuenta. |
+| Contraseña | Para iniciar sesión. Solo se almacena como un hash: nadie, incluido el equipo, puede leerla. Las cuentas que solo inician sesión con 42 no tienen contraseña. |
+| Foto de perfil | Se muestra en la interfaz. Solo la tienen las cuentas que inician sesión con 42: es su foto de perfil de 42. |
+| Puesto (opcional) | Tu puesto de trabajo. Determina qué herramientas se instalan en tu espacio de trabajo. |
+| Tipo de cuenta | Administrador (usuario de RR. HH.) o empleado. Determina qué acciones puedes realizar en la aplicación. |
+| ID de usuario de 42 | Solo si inicias sesión con 42, para reconocer tu cuenta de 42 la próxima vez. |
+| Fecha de creación de la cuenta | Para gestionar las cuentas a lo largo del tiempo (contratación, promoción y salida). |
+
+</TableWrap>
+
+Esta información la introduce el usuario de RR. HH. que crea tu cuenta, procede de tu perfil de 42 si inicias sesión con 42, o la introduces tú cuando editas tu perfil.
+
+### Si inicias sesión con 42
+
+«Iniciar sesión con 42» utiliza la intranet de la escuela 42 para confirmar tu identidad. Cuando lo aceptas, 42 nos envía tu ID de usuario de 42, tu login, tu dirección de correo electrónico, tu nombre y apellidos, y el enlace a tu foto de perfil. Los utilizamos para encontrar tu cuenta, vincularla a tu cuenta de 42 o crear una la primera vez. 42 también nos da una clave de acceso temporal: la usamos una sola vez para leer tu perfil y no la conservamos.
+
+Tu foto de perfil se queda en los servidores de 42: tu navegador la carga desde allí, por lo que 42 puede ver tu dirección IP cuando lo hace. El tratamiento de tus datos por parte de 42 se rige por su propia política de privacidad.
+
+### Tu espacio de trabajo
+
+Los archivos que creas o modificas en tu espacio de trabajo se almacenan en un volumen persistente, por lo que siguen estando disponibles la próxima vez que inicies sesión. Como en cualquier sistema Linux, tu shell también guarda los comandos que escribes en un archivo de historial (`~/.bash_history`) dentro de tu espacio de trabajo. Puedes eliminar ese archivo en cualquier momento.
+
+No registramos lo que escribes en el terminal ni lo que este muestra. Solo registramos cuándo comienza y termina una sesión de terminal.
+
+### Datos técnicos
+
+Cuando utilizas el sitio, nuestro servidor web y la aplicación guardan registros técnicos: tu dirección IP, la fecha y hora, la página o dirección solicitada y el tipo de navegador. En el caso del terminal, registran el inicio y el final de cada sesión, junto con la cuenta y el espacio de trabajo correspondientes. También medimos el procesador y la memoria que utiliza cada contenedor, incluidos los espacios de trabajo, para supervisar el servicio. Estos registros y mediciones solo se utilizan para mantener el servicio en funcionamiento y protegerlo.
+
+### Qué no recopilamos
+
+No utilizamos analítica, publicidad ni cookies de seguimiento. El único servicio externo es la intranet de 42, y solo si inicias sesión con 42. No vendemos, alquilamos ni compartimos tus datos con nadie.
+
+## Por qué utilizamos tus datos
+
+Según el Reglamento General de Protección de Datos (RGPD), cada uso de datos personales debe tener una base jurídica. Las nuestras son:
+
+<TableWrap>
+
+| Finalidad | Base jurídica |
+| --- | --- |
+| Proporcionarte una cuenta, permitirte iniciar sesión (con una contraseña o con 42) y ofrecerte tu espacio de trabajo | Prestación del servicio que utilizas (art. 6(1)(b) del RGPD) |
+| Permitir que los usuarios de RR. HH. gestionen las cuentas y los espacios de trabajo de los empleados | Nuestro interés legítimo en gestionar las funciones de contratación, promoción y salida que constituyen el objetivo de la aplicación (art. 6(1)(f) del RGPD) |
+| Mantener la seguridad del servicio y solucionar problemas mediante los registros técnicos | Nuestro interés legítimo en ofrecer un servicio seguro y fiable (art. 6(1)(f) del RGPD) |
+| Mostrar el proyecto durante su evaluación en 42 | Nuestro interés legítimo en completar nuestro programa académico (art. 6(1)(f) del RGPD) |
+
+</TableWrap>
+
+Nunca utilizamos tus datos para publicidad, elaboración de perfiles ni decisiones automatizadas sobre ti.
+
+## Quién puede consultar tus datos
+
+- **Tú** puedes consultar tu perfil y todo lo que haya en tu espacio de trabajo.
+- **Los usuarios de RR. HH.** pueden ver la información de perfil de los empleados y crear, modificar o eliminar sus cuentas y espacios de trabajo. No pueden abrir tu terminal.
+- **El equipo del proyecto** administra los servidores, por lo que técnicamente puede acceder a todos los datos, incluidos los archivos de los espacios de trabajo. Solo lo hacemos cuando es necesario para mantener el proyecto en funcionamiento, solucionar problemas o evaluarlo.
+- **Los evaluadores:** durante las evaluaciones entre compañeros en 42, otros estudiantes y el personal de la escuela pueden ver la aplicación en funcionamiento y los datos que contiene. Esta es otra razón para utilizar datos de prueba.
+
+Aparte de 42, como se ha descrito, nadie más tiene acceso. Tus datos permanecen en máquinas ubicadas en Francia y nunca se transfieren fuera de la Unión Europea.
+
+## Durante cuánto tiempo los conservamos
+
+- **Cuenta y perfil:** mientras exista tu cuenta. Se eliminan cuando se elimina la cuenta, por ejemplo, cuando un usuario de RR. HH. registra tu salida.
+- **Archivos del espacio de trabajo:** hasta que se elimine tu espacio de trabajo. El volumen de almacenamiento se elimina con él, por lo que después los archivos no se pueden recuperar.
+- **Registros técnicos:** se conservan dentro de los contenedores del servicio y se eliminan cuando se retiran dichos contenedores.
+- **Mediciones de recursos:** se conservan 15 días y después se eliminan automáticamente.
+- **Fin del proyecto:** una vez evaluado el proyecto, se eliminan la base de datos, todos los espacios de trabajo y todos los registros.
+
+## Cookies
+
+Solo guardamos lo que el servicio necesita para funcionar:
+
+- **`session`**: mantiene tu sesión iniciada. Se elimina cuando cierras sesión y caduca a las 24 horas.
+- **`oauth_state`**: solo mientras inicias sesión con 42. Protege ese inicio de sesión contra la falsificación y caduca a los 10 minutos.
+- **`NEXT_LOCALE`**: recuerda el idioma que has elegido.
+- Tu tema claro u oscuro se guarda en el almacenamiento local de tu navegador, no en una cookie.
+
+Todos son necesarios para el servicio o para un ajuste que has elegido, por lo que, según las normas de la CNIL (la autoridad francesa de protección de datos), no requieren tu consentimiento y no hay ningún aviso de cookies. No utilizamos cookies de analítica ni de publicidad.
+
+## Cómo protegemos tus datos
+
+- Todas las conexiones al sitio están cifradas mediante HTTPS.
+- Las contraseñas se almacenan como hashes, nunca en texto sin cifrar.
+- Cada espacio de trabajo se ejecuta en su propio contenedor aislado, con una cuenta sin permisos de administrador, para que un usuario no pueda acceder a los archivos de otro.
+- Cada conexión al terminal de un espacio de trabajo se verifica con tu cuenta.
+
+Ningún sistema es completamente seguro. Si un incidente de seguridad afecta a tus datos, te informaremos lo antes posible.
+
+## Tus derechos
+
+Según el RGPD y la Ley francesa de Protección de Datos (Loi Informatique et Libertés), tienes derecho a:
+
+- acceder a los datos personales que tenemos sobre ti y obtener una copia;
+- rectificar los datos inexactos;
+- solicitar la eliminación de tus datos;
+- limitar el uso de tus datos u oponerte a él;
+- recibir tus datos en un formato común y legible por máquina (portabilidad de los datos);
+- dar instrucciones sobre qué debe ocurrir con tus datos después de tu fallecimiento.
+
+Para ejercer cualquiera de estos derechos, envía un correo electrónico a <ContactEmail />. Responderemos en el plazo de un mes y es posible que primero te pidamos que confirmes tu identidad. Si necesitas una copia de los archivos de tu espacio de trabajo, solicítala antes de que se elimine tu cuenta.
+
+Si crees que no hemos respetado tus derechos, puedes presentar una reclamación ante la CNIL ([www.cnil.fr](https://www.cnil.fr)).
+
+## Cambios en esta política
+
+Si modificamos esta política, actualizaremos la fecha que aparece en la parte superior de esta página. Si los cambios son importantes, también informaremos a los usuarios en la aplicación.
