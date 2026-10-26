@@ -4,7 +4,7 @@ import Link from "next/link";
 export function useMDXComponents(components: MDXComponents): MDXComponents {
 	return {
 		a: ({href = "", children, ...props}) => {
-			const isInternal = href.startsWith("/") || href.statsWith("#");
+			const isInternal = href.startsWith("/") || href.startsWith("#");
 			if (isInternal) {
 				return (
 					<Link href={href} {...props}>
