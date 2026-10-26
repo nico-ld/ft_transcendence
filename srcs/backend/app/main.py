@@ -48,7 +48,7 @@ async def lifespan(app: FastAPI):
         yield
 
 
-app = FastAPI(lifespan=lifespan, root_path="/api")
+app = FastAPI(lifespan=lifespan)
 
 # only holds authlib OAuth state during the 42 redirect, its own cookie name
 # so it doesnt overwrite our session JWT cookie
