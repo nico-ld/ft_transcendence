@@ -7,6 +7,7 @@ from security import (
     authenticate,
     clear_session_cookie,
     hash_password,
+    revoke_other_sessions,
     revoke_session_token,
     set_session_cookie,
 )
@@ -68,7 +69,7 @@ def update_me(body: ProfileUpdateIn, user: CurrentUser) -> UserOut:
 
 
 @router.patch("/me/password", status_code=status.HTTP_204_NO_CONTENT)
-def change_password(body: PasswordChangeIn, user: CurrentUser) -> None:
+def change_password(body: PasswordChangeIn, user: CurrentUser, token: SessionToken) -> None:
     if user.password_hash is None:
         raise HTTPException(
             status.HTTP_400_BAD_REQUEST, "This account logged in using 42, no password to change"
@@ -86,3 +87,4 @@ def change_password(body: PasswordChangeIn, user: CurrentUser) -> None:
     )
     if updated is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "User not found")
+    revoke_other_sessions(token, user.id)

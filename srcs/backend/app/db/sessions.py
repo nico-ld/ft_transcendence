@@ -90,5 +90,14 @@ class SessionRequest:
             sess.execute(delete(UserSession).where(UserSession.id == session_id))
             sess.commit()
 
+    def delete_user_sessions(self, user_id: int, keep: str | None = None) -> None:
+        """Close every session of a user except keep (the current one)"""
+        with Session(self.engine) as sess:
+            stmt = delete(UserSession).where(UserSession.user_id == user_id)
+            if keep is not None:
+                stmt = stmt.where(UserSession.id != keep)
+            sess.execute(stmt)
+            sess.commit()
+
 
 sessions_db: SessionRequest = SessionRequest(engine)
