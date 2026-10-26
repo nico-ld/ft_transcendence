@@ -1,38 +1,30 @@
 ---
 title: Conditions d’utilisation
-description: Découvrez ce qu’est Silk Space et comment commencer
+description: Les règles d’utilisation de Silk Space et de ses espaces de travail.
 ---
 
 import { Link } from "@/i18n/navigation";
 import { ContactEmail } from "@/components/legal/LegalPage";
-import { legalInfo, teamList } from "@/components/legal/LegalInfo";
+import { legalInfo } from "@/components/legal/LegalInfo";
 
-export const title = "Conditions d’utilisation";
-
-export const description = `Les règles d’utilisation de ${legalInfo.projectName} et de ses espaces de travail.`;
-
-export const intro = (
-  <p>
-    Ces conditions définissent les règles d’utilisation de {legalInfo.projectName} : les services proposés, ce que vous pouvez ou ne pouvez pas faire avec votre compte et votre espace de travail, ainsi que les limites de notre responsabilité.
-  </p>
-);
+Ces conditions définissent les règles d’utilisation de {legalInfo.projectName} : ce que propose le service, ce que vous pouvez ou ne pouvez pas faire avec votre compte et votre espace de travail, ainsi que les limites de notre responsabilité.
 
 ## À propos de ces conditions
 
-Ces conditions régissent votre utilisation de {legalInfo.projectName}, une application web développée par {teamList}, étudiants à {legalInfo.school}, dans le cadre du cursus 42. En vous connectant, vous acceptez ces conditions. Si vous ne les acceptez pas, n’utilisez pas le service.
+Ces conditions régissent votre utilisation de {legalInfo.projectName}, une application web développée par {new Intl.ListFormat("fr").format(legalInfo.team)}, étudiants à {legalInfo.school}, dans le cadre du cursus 42. En vous connectant, vous acceptez ces conditions. Si vous ne les acceptez pas, n’utilisez pas le service.
 
 **Éditeur :** l’équipe du projet {legalInfo.projectName} (présentée ci-dessus), un groupe d’étudiants sans activité commerciale. Contact : <ContactEmail />.<br />
 **Hébergement :** les propres machines de l’équipe et les ordinateurs de {legalInfo.school}, en France.
 
 ## Le service
 
-{legalInfo.projectName} permet aux utilisateurs RH de créer, mettre à jour et supprimer des espaces de travail personnels pour les employés. Chaque espace de travail est un environnement Linux isolé, contenant les outils nécessaires au poste de l’employé. Les employés se connectent et utilisent leur espace de travail depuis un terminal dans leur navigateur web. Plusieurs utilisateurs peuvent utiliser le service simultanément.
+{legalInfo.projectName} permet aux utilisateurs RH (les administrateurs de l’application) de créer, mettre à jour et supprimer des espaces de travail personnels pour les employés. Chaque espace de travail est un environnement Linux isolé, contenant les outils nécessaires au poste de l’employé. Les employés se connectent et utilisent leur espace de travail depuis un terminal dans leur navigateur web. Plusieurs utilisateurs peuvent utiliser le service simultanément.
 
 Le service est gratuit. Il s’agit d’un projet de développement et d’évaluation : les fonctionnalités peuvent changer sans préavis et le service peut être arrêté, réinitialisé ou supprimé à tout moment, notamment à la fin du projet.
 
 ## Votre compte
 
-- Les comptes des employés sont créés par un utilisateur RH.
+- Votre compte est créé par un utilisateur RH, ou automatiquement lors de votre première connexion avec 42.
 - Gardez votre mot de passe secret et ne partagez pas votre compte. Vous êtes responsable de ce qui est fait avec celui-ci.
 - Si vous pensez que quelqu’un d’autre a utilisé votre compte, informez-nous immédiatement à l’adresse <ContactEmail />.
 - Les informations que vous ajoutez à votre profil doivent être exactes et ne doivent usurper l’identité de personne.
@@ -69,7 +61,7 @@ Nous pouvons limiter les ressources disponibles pour chaque espace de travail (p
 
 ## Propriété intellectuelle
 
-Le code, le design et la documentation de {legalInfo.projectName} sont réalisés par l’équipe du projet. Le service repose sur des logiciels open source, notamment Next.js, FastAPI, PostgreSQL, nginx, Docker et xterm.js ; les outils présents dans les espaces de travail proviennent de paquets Debian. Chacun de ces éléments reste soumis à sa propre licence.
+Le code, le design et la documentation de {legalInfo.projectName} sont réalisés par l’équipe du projet. Le service repose sur des logiciels open source, notamment Next.js, FastAPI, PostgreSQL, nginx, Docker, xterm.js, Prometheus et cAdvisor ; les outils présents dans les espaces de travail proviennent de paquets Debian. Chacun de ces éléments reste soumis à sa propre licence.
 
 ## Absence de garantie et limitation de responsabilité
 
@@ -79,7 +71,7 @@ Dans les limites autorisées par la loi, l’équipe ne peut être tenue respons
 
 ## Données personnelles
 
-La manière dont nous traitons vos données personnelles est expliquée dans notre <Link href="/legal/privacy">politique de confidentialité</Link>.
+La manière dont nous traitons vos données personnelles est expliquée dans notre <Link href="/privacy">politique de confidentialité</Link>.
 
 ## Modifications de ces conditions
 
@@ -87,4 +79,4 @@ Si nous modifions ces conditions, nous mettrons à jour la date en haut de cette
 
 ## Droit applicable
 
-Ces conditions sont régies par le droit français. En cas de désaccord, veuillez d’abord nous contacter afin que nous essayions de trouver une solution à l’amiable. À défaut, les tribunaux français compétents seront seuls compétents.
+Ces conditions sont régies par le droit français. En cas de désaccord, veuillez d’abord nous contacter afin que nous essayions de trouver une solution à l’amiable. À défaut, les tribunaux français seront seuls compétents.
