@@ -1,12 +1,8 @@
 import { Suspense } from "react";
 import { LoginForm } from "@/components/auth/LoginForm";
 import { ThemeSwitch } from "@/components/layout/ThemeSwicth";
-<<<<<<< HEAD
 import { LegalFooter } from "@/components/legal/LegalFooter";
-=======
-import { LegalFooter } from "@/components/landing/LegalFooter";
 import { oauthLoginError } from "@/types/LoginError";
->>>>>>> master
 
 type LoginPageProps = {
 	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
