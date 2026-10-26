@@ -10,7 +10,7 @@ export type LegalSlug = "privacy" | "terms";
 
 const LEGAL_DIR = path.join(process.cwd(), "content", "legal");
 
-/** A legal page in the given language (English if missing), with its contents list. */
+// legal page in the given language
 export async function getLegalDoc(locale: string, slug: LegalSlug) {
 	const lang = fs.existsSync(path.join(LEGAL_DIR, locale, `${slug}.mdx`)) ? locale : routing.defaultLocale;
 	const mod = await import(`@/content/legal/${lang}/${slug}.mdx`);
