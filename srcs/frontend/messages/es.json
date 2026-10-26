@@ -5,7 +5,14 @@
   },
   "Legal": {
     "privacy": "Política de privacidad",
-    "terms": "Términos del servicio"
+    "terms": "Condiciones de uso",
+    "lastUpdated": "Última actualización: {date}",
+    "noticeLabel": "Sobre este proyecto",
+    "notice": "<strong>{project} es un proyecto estudiantil.</strong> Lo han desarrollado {team}, estudiantes de {school} (Francia), como parte del programa de 42. No es un producto comercial, no tiene clientes y es gratuito. Solo funciona en las máquinas del equipo y en los ordenadores de la escuela, para el desarrollo y la evaluación entre compañeros. <strong>Usa datos de prueba: no introduzcas información personal o confidencial real.</strong>",
+    "contents": "Índice",
+    "seeAlso": "Ver también:",
+    "home": "Volver al inicio",
+    "studentProject": "{project}, un proyecto estudiantil de {school}"
   },
   "Language": {
     "selectLanguage": "Selecciona el idioma",
