@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input";
 import { ModifyUser } from "@/components/users/ModifyUser";
 
 import { NewUserForm } from "@/actions/NewUserForm";
-import { RemoveUser } from "@/actions/RemoveUser";
 
 import { UserBadge } from "../layout/CustomBadge";
 import { useTranslations } from "next-intl";
@@ -88,8 +87,7 @@ function UserList({ users, onSelect }: {users: BackendUser[] | null; onSelect: (
 						<ItemDescription>{person.email}</ItemDescription>
 					</ItemContent>
 					<ItemActions onClick={(e) => e.stopPropagation()}>
-						<UserBadge job={t(`jobList.${person.job}`)} />
-						{/* <RemoveUser user={person} /> */}
+						<UserBadge job={person.job ? t(`jobList.${person.job}`) : t("noJob")} />
 					</ItemActions>
 				</Item>
 			))}
@@ -98,16 +96,18 @@ function UserList({ users, onSelect }: {users: BackendUser[] | null; onSelect: (
 }
 
 function Filter({ sortBy, onSortChange }: { sortBy: SortKey; onSortChange: (k: SortKey) => void }) {
+	const t = useTranslations("Users.sort");
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger render={<Button variant="ghost" className="rounded-full hover:text-primary"><Funnel /></Button>} />
 			<DropdownMenuContent className="w-32">
 				<DropdownMenuGroup>
-					<DropdownMenuLabel>Sort By</DropdownMenuLabel>
+					<DropdownMenuLabel>{t("label")}</DropdownMenuLabel>
 					<DropdownMenuRadioGroup value={sortBy} onValueChange={(v) => onSortChange(v as SortKey)}>
-						<DropdownMenuRadioItem value="date">Date</DropdownMenuRadioItem>
-						<DropdownMenuRadioItem value="username">Name</DropdownMenuRadioItem>
-						<DropdownMenuRadioItem value="email">Email</DropdownMenuRadioItem>
+						<DropdownMenuRadioItem value="date">{t("date")}</DropdownMenuRadioItem>
+						<DropdownMenuRadioItem value="username">{t("username")}</DropdownMenuRadioItem>
+						<DropdownMenuRadioItem value="email">{t("email")}</DropdownMenuRadioItem>
 					</DropdownMenuRadioGroup>
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
@@ -124,6 +124,7 @@ export function UserManagement({ users, viewer }: { users: BackendUser[] | null;
 
 	function handleSelect(user: BackendUser) {
 		setSelectedUser(user);
+		setOpen(true);
 	}
 
 	const visibleUsers = React.useMemo(() => {
