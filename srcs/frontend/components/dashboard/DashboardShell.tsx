@@ -1,13 +1,12 @@
 import { Header } from "@/components/layout/Header";
 import { DashboardShellProps } from "@/types/DashboardShellProps"
-import { LegalFooter } from "../legal/LegalFooter";
 
 
 export function DashboardShell({ role, username, avatarUrl, sidebar, children }: DashboardShellProps) {
 	return (
 		<>
 			<Header role={role} username={username} avatarUrl={avatarUrl} />
-			<section className="flex min-h-dvh flex-col">
+			<section className="flex flex-1 flex-col">
 				<div className="flex flex-1">
 					<section className={`mx-auto grid  w-full max-w-7xl gap-5 px-4 pb-8 pt-20 md:px-6 ${
 						sidebar ? "lg:grid-cols-[360px_1fr]" : ""
@@ -16,10 +15,6 @@ export function DashboardShell({ role, username, avatarUrl, sidebar, children }:
 						<article className="flex min-w-0 flex-row items-center justify-around gap-5">{children}</article>
 					</section>
 				</div>
-
-				<footer className="py-4 text-center text-sm text-muted-foreground">
-					<LegalFooter />
-				</footer>
 			</section>
 		</>
 	);
