@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SelectJob } from "@/components/layout/SelectJob";
-import { 
+import {
 	Avatar,
 	AvatarImage,
 	AvatarFallback
@@ -24,16 +24,15 @@ import { Field } from "@/components/ui/field";
 import type { ModifyUserProps } from "@/types/ModifyUserProps";
 import { useTranslations } from "next-intl";
 
-function ModifyUserForm({user, viewer, onDone}: 
+function ModifyUserForm({user, viewer, onDone}:
 	Omit<ModifyUserProps, "open" | "onOpenChange"> & {onDone: () => void})
 {
 	const t = useTranslations("Users");
 	const c = useTranslations("Common");
 	const uid = React.useId();
 
-	const isSelf = viewer.id === user.id;
 	const isAdmin = viewer.role === "admin";
-	const action = updateUser.bind(null, isSelf ? "me" : user.id);
+	const action = updateUser.bind(null, user.id);
 	const [state, formAction, pending] = React.useActionState(action, null);
 
 	React.useEffect(() => {
@@ -41,10 +40,18 @@ function ModifyUserForm({user, viewer, onDone}:
 			onDone();
 	}, [state, onDone]);
 
-	const initials = (user.firstName[0] + user.lastName[0]).toUpperCase();
+	// Using onSubmit, not <form action>, because React empties the fields
+	// after a form action (as in NewUserForm)
+	function submit(event: React.FormEvent<HTMLFormElement>) {
+		event.preventDefault();
+		const form = new FormData(event.currentTarget);
+		React.startTransition(() => formAction(form));
+	}
+
+	const initials = `${user.firstName[0] ?? ""}${user.lastName[0] ?? ""}`.toUpperCase() || user.username.slice(0, 2).toUpperCase();
 
 	return (
-		<form action={formAction} className="flex flex-col gap-4">
+		<form onSubmit={submit} className="flex flex-col gap-4">
 			<SheetHeader>
 				<SheetTitle>
 					<div className="flex flex-row gap-4 items-center">
@@ -58,26 +65,29 @@ function ModifyUserForm({user, viewer, onDone}:
 				<SheetDescription>{t("editProfil", {username: user.username})}</SheetDescription>
 			</SheetHeader>
 
-			<Field>
-				<Label htmlFor={`${uid}-last`}>{t("userInfo.lastName")}</Label>
-				<Input id={`${uid}-last`} name="lastName" defaultValue={user.lastName} required />
-			</Field>
-			<Field>
-				<Label htmlFor={`${uid}-first`}>{t("userInfo.name")}</Label>
-				<Input id={`${uid}-first`} name="firstName" defaultValue={user.firstName} required />
-			</Field>
-			<Field>
-				<Label htmlFor={`${uid}-username`}>{t("userInfo.userName")}</Label>
-				<Input id={`${uid}-username`} name="username" defaultValue={user.username} required />
-			</Field>
-			{isAdmin && (
+			<div className="flex flex-col gap-4 px-4">
 				<Field>
-					<Label htmlFor={`${uid}-job`}>{t("userInfo.job")}</Label>
-					<SelectJob value={user.job ?? ""} name="job" />
+					<Label htmlFor={`${uid}-last`}>{t("userInfo.lastName")}</Label>
+					<Input id={`${uid}-last`} name="lastName" defaultValue={user.lastName} required />
 				</Field>
-			)}
+				<Field>
+					<Label htmlFor={`${uid}-first`}>{t("userInfo.name")}</Label>
+					<Input id={`${uid}-first`} name="firstName" defaultValue={user.firstName} required />
+				</Field>
+				<Field>
+					<Label htmlFor={`${uid}-username`}>{t("userInfo.userName")}</Label>
+					<Input id={`${uid}-username`} name="username" defaultValue={user.username} required />
+				</Field>
+				{isAdmin && (
+					<Field>
+						<Label htmlFor={`${uid}-job`}>{t("userInfo.job")}</Label>
+						<SelectJob value={user.job} name="job" />
+						<p className="text-xs text-muted-foreground">{t("jobHint")}</p>
+					</Field>
+				)}
 
-			{state?.error && <p className="text-sm text-destructive">{t(`errors.${state.error}`)}</p>}
+				{state?.error && <p role="alert" className="text-sm text-destructive">{t(`errors.${state.error}`)}</p>}
+			</div>
 
 			<SheetFooter>
 				<Button type="submit" disabled={pending}>{c("saveChanges")}</Button>

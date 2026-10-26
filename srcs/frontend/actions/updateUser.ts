@@ -2,30 +2,27 @@
 
 import { revalidatePath } from "next/cache";
 import { backendFetch } from "@/lib/backend";
-import { UpdateUserState } from "@/types/User";
+import { userError, type UpdateUserState } from "@/types/User";
 
+/** Admin edit of any account, their own included (PATCH /users/{id}). */
 export async function updateUser(
-	target: number | "me",
+	userId: number,
 	_prev: UpdateUserState,
 	formData: FormData
 ): Promise<UpdateUserState>
 {
-	const payload: Record<string, unknown> = {
-		firstName: formData.get("firstname"),
-		lastName: formData.get("lastName"),
-		username: formData.get("username")
-	};
-
-	if (formData.has("job"))
-		payload.job = formData.get("job") || null;
-
-	const res = await backendFetch(`/users/${target}`, {
+	const res = await backendFetch(`/users/${userId}`, {
 		method: "PATCH",
-		headers: {"Content-Type": "application/json"},
-		body: JSON.stringify(payload)
+		body: JSON.stringify({
+			firstName: formData.get("firstName"),
+			lastName: formData.get("lastName"),
+			username: formData.get("username"),
+			// "Select a job" = no workspace; the backend only restarts the workspace if the job changed
+			job: formData.get("job") || null
+		})
 	});
 	if (!res.ok)
-		return {ok: false, error: "updateFailed"};
+		return {ok: false, error: userError(res.status)};
 
 	revalidatePath("/", "layout");
 	return {ok: true};
