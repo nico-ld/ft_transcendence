@@ -1,0 +1,82 @@
+---
+title: Conditions d’utilisation
+description: Les règles d’utilisation de Silk Space et de ses espaces de travail.
+---
+
+import { Link } from "@/i18n/navigation";
+import { ContactEmail } from "@/components/legal/LegalPage";
+import { legalInfo } from "@/components/legal/LegalInfo";
+
+Ces conditions définissent les règles d’utilisation de {legalInfo.projectName} : ce que propose le service, ce que vous pouvez ou ne pouvez pas faire avec votre compte et votre espace de travail, ainsi que les limites de notre responsabilité.
+
+## À propos de ces conditions
+
+Ces conditions régissent votre utilisation de {legalInfo.projectName}, une application web développée par {new Intl.ListFormat("fr").format(legalInfo.team)}, étudiants à {legalInfo.school}, dans le cadre du cursus 42. En vous connectant, vous acceptez ces conditions. Si vous ne les acceptez pas, n’utilisez pas le service.
+
+**Éditeur :** l’équipe du projet {legalInfo.projectName} (présentée ci-dessus), un groupe d’étudiants sans activité commerciale. Contact : <ContactEmail />.<br />
+**Hébergement :** les propres machines de l’équipe et les ordinateurs de {legalInfo.school}, en France.
+
+## Le service
+
+{legalInfo.projectName} permet aux utilisateurs RH (les administrateurs de l’application) de créer, mettre à jour et supprimer des espaces de travail personnels pour les employés. Chaque espace de travail est un environnement Linux isolé, contenant les outils nécessaires au poste de l’employé. Les employés se connectent et utilisent leur espace de travail depuis un terminal dans leur navigateur web. Plusieurs utilisateurs peuvent utiliser le service simultanément.
+
+Le service est gratuit. Il s’agit d’un projet de développement et d’évaluation : les fonctionnalités peuvent changer sans préavis et le service peut être arrêté, réinitialisé ou supprimé à tout moment, notamment à la fin du projet.
+
+## Votre compte
+
+- Votre compte est créé par un utilisateur RH, ou automatiquement lors de votre première connexion avec 42.
+- Gardez votre mot de passe secret et ne partagez pas votre compte. Vous êtes responsable de ce qui est fait avec celui-ci.
+- Si vous pensez que quelqu’un d’autre a utilisé votre compte, informez-nous immédiatement à l’adresse <ContactEmail />.
+- Les informations que vous ajoutez à votre profil doivent être exactes et ne doivent usurper l’identité de personne.
+
+## Règles supplémentaires pour les utilisateurs RH
+
+- Ne créez des comptes et des espaces de travail que pour les personnes qui en ont besoin, et renseignez des informations exactes.
+- Utilisez les informations des employés uniquement pour gérer leurs comptes et leurs espaces de travail.
+- Lorsqu’un employé quitte l’entreprise, supprimez son compte et son espace de travail. Prévenez-le au préalable afin qu’il puisse demander une copie de ses fichiers.
+- Pendant le développement et l’évaluation, utilisez des données de test plutôt que les informations de personnes réelles.
+
+## Utilisation acceptable des espaces de travail
+
+Les espaces de travail s’exécutent sur des machines partagées, utilisées simultanément par plusieurs personnes. Pour préserver la sécurité et le bon fonctionnement du service pour tous, vous ne devez pas :
+
+- tenter de sortir de votre espace de travail, d’obtenir des droits d’administrateur ou d’accéder à la machine hôte, à la base de données, aux autres espaces de travail ou à toute autre partie du service ;
+- tenter d’accéder au compte, à l’espace de travail ou aux données d’un autre utilisateur ;
+- surcharger la machine, par exemple avec des fork bombs, du minage de cryptomonnaies, en remplissant le disque ou en exécutant des tâches qui ralentissent les autres utilisateurs ;
+- utiliser votre espace de travail pour attaquer ou analyser d’autres systèmes, ou leur envoyer du spam ;
+- stocker ou partager des contenus illégaux, des logiciels malveillants ou des contenus portant atteinte aux droits d’autrui.
+
+Nous pouvons limiter les ressources disponibles pour chaque espace de travail (processeur, mémoire, disque, nombre de processus) afin de protéger les autres utilisateurs. Si vous découvrez un problème de sécurité, veuillez nous le signaler au lieu de l’exploiter.
+
+## Vos fichiers
+
+- Les fichiers que vous créez dans votre espace de travail restent les vôtres. Nous ne revendiquons aucun droit sur eux, et vous êtes responsable de ce que vous stockez et exécutez.
+- **Il n’existe aucune sauvegarde.** Des fichiers peuvent être perdus à la suite d’un bug, d’une réinitialisation ou de la fin du projet. Conservez votre propre copie de tout fichier important.
+- Lorsque votre espace de travail ou votre compte est supprimé, ses fichiers sont supprimés définitivement. Si vous avez besoin d’une copie, demandez-la avant que cela ne se produise.
+
+## Suspension et suppression
+
+- L’équipe ou un utilisateur RH peut suspendre ou supprimer un compte qui enfreint ces conditions ou met en danger le service ou d’autres utilisateurs. Dans la mesure du possible, nous vous avertirons au préalable.
+- Vous pouvez demander la suppression de votre compte à tout moment en écrivant à <ContactEmail />.
+
+## Propriété intellectuelle
+
+Le code, le design et la documentation de {legalInfo.projectName} sont réalisés par l’équipe du projet. Le service repose sur des logiciels open source, notamment Next.js, FastAPI, PostgreSQL, nginx, Docker, xterm.js, Prometheus et cAdvisor ; les outils présents dans les espaces de travail proviennent de paquets Debian. Chacun de ces éléments reste soumis à sa propre licence.
+
+## Absence de garantie et limitation de responsabilité
+
+{legalInfo.projectName} est fourni gratuitement, en l’état, à des fins pédagogiques. Nous ne garantissons pas que le service sera toujours disponible, exempt d’erreurs ou sécurisé.
+
+Dans les limites autorisées par la loi, l’équipe ne peut être tenue responsable d’une perte de données ni de dommages indirects résultant de l’utilisation du service. Aucune disposition de ces conditions ne limite une responsabilité qui ne peut être limitée en vertu du droit français.
+
+## Données personnelles
+
+La manière dont nous traitons vos données personnelles est expliquée dans notre <Link href="/privacy">politique de confidentialité</Link>.
+
+## Modifications de ces conditions
+
+Si nous modifions ces conditions, nous mettrons à jour la date en haut de cette page et informerons les utilisateurs des changements importants dans l’application. Si vous continuez à utiliser le service après une modification, vous acceptez les nouvelles conditions.
+
+## Droit applicable
+
+Ces conditions sont régies par le droit français. En cas de désaccord, veuillez d’abord nous contacter afin que nous essayions de trouver une solution à l’amiable. À défaut, les tribunaux français seront seuls compétents.

@@ -1,7 +1,9 @@
-export default function AppLayout({ children }: {children: React.ReactNode}) {
-	return (
-		<section className="app-wrapper min-h-screen">
-			{children}
-		</section>
+export default function AppLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+	<main className="app-wrapper flex flex-1 flex-col">
+		{children}
+	</main>
+	</>
 	);
 }

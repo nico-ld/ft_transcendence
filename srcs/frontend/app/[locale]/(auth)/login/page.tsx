@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { LoginForm } from "@/components/auth/LoginForm";
 import { ThemeSwitch } from "@/components/layout/ThemeSwicth";
-import { LegalFooter } from "@/components/landing/LegalFooter";
 import { oauthLoginError } from "@/types/LoginError";
 
 type LoginPageProps = {
@@ -16,7 +15,7 @@ async function LoginFormWithError({ searchParams }: LoginPageProps) {
 
 export default function LoginPage({ searchParams }: LoginPageProps) {
 	return (
-		<main className="relative flex min-h-dvh flex-col overflow-hidden">
+		<main className="relative flex flex-1 flex-col overflow-hidden">
 			<div className="absolute right-4 top-4">
 				<ThemeSwitch />
 			</div>
@@ -25,9 +24,6 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
 					<LoginFormWithError searchParams={searchParams} />
 				</Suspense>
 			</section>
-			<footer className="py-4 text-center text-sm text-muted-foreground">
-				<LegalFooter />
-			</footer>
 		</main>
 	);
 }

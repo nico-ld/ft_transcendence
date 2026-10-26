@@ -4,8 +4,15 @@
     "description": "Ceci est une description"
   },
   "Legal": {
-    "privacy": "Politique de Confidentialité",
-    "terms": "Conditions d'Utilisations"
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "lastUpdated": "Dernière mise à jour : {date}",
+    "noticeLabel": "À propos de ce projet",
+    "notice": "<strong>{project} est un projet étudiant.</strong> Il a été réalisé par {team}, étudiants à {school} (France), dans le cadre du cursus 42. Ce n'est pas un produit commercial : il n'a pas de clients et il est gratuit. Il fonctionne uniquement sur les machines de l'équipe et sur les ordinateurs de l'école, pour le développement et l'évaluation par les pairs. <strong>Utilisez des données de test : n'entrez aucune information personnelle ou confidentielle réelle.</strong>",
+    "contents": "Sommaire",
+    "seeAlso": "Voir aussi :",
+    "home": "Retour à l'accueil",
+    "studentProject": "{project}, un projet étudiant de {school}"
   },
   "Language": { "selectLanguage": "Choisir la langue", "language": "Langue" },
   "Common": {
