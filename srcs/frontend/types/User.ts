@@ -1,13 +1,4 @@
-export type User = {
-	lastname: string;
-	name: string;
-	username: string;
-	avatar: string;
-	email: string;
-	job: string;
-	createdAt: string;
-};
-
+// a user's own fields (BackendUser in lib/backend.ts)
 export type Role = "admin" | "user";
 
 export type SortKey = "date" | "username" | "email";

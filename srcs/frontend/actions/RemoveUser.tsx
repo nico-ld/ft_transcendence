@@ -1,4 +1,4 @@
-import type { User } from "@/types/User";
+import type { BackendUser } from "@/lib/backend";
 import { Button } from "@/components/ui/button";
 import { UserRoundX } from "lucide-react";
 import { 
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { useTranslations } from "next-intl";
 
-export function RemoveUser({ user }: {user: User}) {
+export function RemoveUser({ user }: {user: BackendUser}) {
 	const t = useTranslations("Users");
 	const c = useTranslations("Common");
 

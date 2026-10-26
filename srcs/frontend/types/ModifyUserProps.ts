@@ -1,9 +1,9 @@
-import type { User } from "@/types/User"
 import type { BackendUser } from "@/lib/backend";
+import type { Viewer } from "@/types/Viewer";
 
 export type ModifyUserProps = {
 	user: BackendUser;
-	viewer: Pick<BackendUser, "id" | "role">;
+	viewer: Viewer;
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 }
