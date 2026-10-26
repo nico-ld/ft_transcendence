@@ -10,7 +10,7 @@ export default async function Home() {
 	const locale = await getLocale();
 
 	return (
-	<div className="flex min-h-dvh flex-col">
+	<div className="flex flex-1 flex-col">
 		<LandingHeader tab={<LandingHoverCard sections={getDocNav(locale)} />}/>
 		<main className="flex-1">
 			<Hero />
