@@ -8,9 +8,10 @@ import { routing } from "@/i18n/routing";
 
 const DOCS_DIR = path.join(process.cwd(), "content", "docs");
 
+// their names are Docs.sections in messages/*.json
 export const DOC_SECTIONS = [
-	{id: "users", label: "User guide"},
-	{id: "developers", label: "Developer guide"}
+	{id: "users"},
+	{id: "developers"}
 ] as const;
 
 
@@ -60,10 +61,10 @@ export async function getDoc(locale: string, section: string, slug: string) {
 }
 
 export function getDocNav(locale: string): DocNavSection[] {
-	return DOC_SECTIONS.map(({id, label}) => {
+	return DOC_SECTIONS.map(({id}) => {
 		const {dir} = resolveDir(locale, id);
 		return {
-			id, label,
+			id,
 			items: getDocEntries(locale, id).map(({file, slug}) => {
 				const raw = fs.readFileSync(path.join(dir, `${file}.mdx`), "utf8");
 				const {data} = matter(raw);
