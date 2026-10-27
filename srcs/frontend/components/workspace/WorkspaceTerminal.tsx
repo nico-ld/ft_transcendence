@@ -12,20 +12,18 @@
  *   backend -> page   binary: terminal output, as raw bytes
  * The backend knows who we are from the session cookie (sent automatically,
  * same origin), so no user or workspace id is sent.
- * When the socket closes, its reason is printed in the terminal.
+ * When the socket closes, onState tells the page why (types/Terminal.ts).
  */
 
-import { useEffect, useRef } from "react";
+import { useEffect, useEffectEvent, useRef } from "react";
 import type { ITheme } from "@xterm/xterm";
-// xterm.js's own styles (cursor, selection, scrollbar...)
+import { closedState, type TerminalState } from "@/types/Terminal";
 import "@xterm/xterm/css/xterm.css";
 
 // nginx forwards /api/ws/ to the backend's /ws/ with WebSocket support (nginx.conf)
 const SOCKET_PATH = "/api/ws/terminal";
 
-// Always dark, matching the app's dark theme (globals.css .dark), converted from
-// oklch to hex because xterm.js only understands hex/rgb colors.
-// The 16 ANSI colors are what programs use (ls, git, the prompt...).
+// Always dark, matching the app's dark theme (globals.css .dark)
 const THEME: ITheme = {
 	background: "#0b1015", // --background
 	foreground: "#d6e3ee", // --foreground
@@ -68,36 +66,30 @@ async function monoFont(): Promise<string> {
 	return family;
 }
 
-/** The line printed in the terminal when the connection ends. */
-function closeMessage(event: CloseEvent, wasOpen: boolean): string {
-	// the backend explains itself: "Session ended", "No workspace is assigned...", ...
-	if (event.reason)
-		return event.reason;
-	// refused before opening: not logged in, or the site opened at the wrong address
-	if (!wasOpen)
-		return "Could not connect to your workspace. Are you logged in?";
-	return "Connection to your workspace lost";
-}
-
-/** Terminal connected to the logged-in user's workspace. One shell per page; it ends when the page closes. */
-export function WorkspaceTerminal({ className = "" }: { className?: string }) {
+// Terminal connected to the logged-in user's workspace. One shell per page, ends when the page closes.
+export function WorkspaceTerminal({ className = "", onState }: {
+	className?: string;
+	onState: (state: TerminalState) => void;
+}) {
 	// the <div> xterm.js draws into
 	const hostRef = useRef<HTMLDivElement>(null);
+	// always calls the latest onState
+	const report = useEffectEvent(onState);
 
-	// Everything happens in this effect: it runs in the browser once the page is
-	// shown, and its cleanup (at the end) runs when the page closes or is hidden.
+	// runs in browser once the page is shown,
+	// cleanup runs when the page closes or is hidden.
 	useEffect(() => {
 		const host = hostRef.current;
 		if (!host)
 			return;
-		// set by the cleanup; checked after the awaits below, in case the page
-		// went away while xterm.js and the font were loading
+		// set by cleanup, checked after the awaits below,
+		// in case the page went away while xterm.js and the font were loading
 		let disposed = false;
-		// replaced below, once there is something to clean up
+		// replaced below, if something to clean up
 		let teardown = () => {};
 
 		(async () => {
-			// 1. load xterm.js (it needs the browser, so never during server rendering)
+			// load xterm.js
 			const [{ Terminal }, { FitAddon }, fontFamily] = await Promise.all([
 				import("@xterm/xterm"),
 				import("@xterm/addon-fit"),
@@ -106,7 +98,7 @@ export function WorkspaceTerminal({ className = "" }: { className?: string }) {
 			if (disposed)
 				return;
 
-			// 2. create the terminal and size it to its box
+			// create terminal and size it
 			const term = new Terminal({
 				cursorBlink: true,
 				fontFamily,
@@ -114,22 +106,23 @@ export function WorkspaceTerminal({ className = "" }: { className?: string }) {
 				scrollback: 5000, // lines kept when scrolling up
 				theme: THEME,
 			});
-			// the fit addon computes how many columns/rows fit in the box
+			// computes how many columns/rows fit in the box
 			const fit = new FitAddon();
 			term.loadAddon(fit);
 			term.open(host);
 			fit.fit();
 
-			// 3. connect to the backend (same host as the page, so the cookie is sent)
+			// connect to the backend
 			const scheme = window.location.protocol === "https:" ? "wss" : "ws";
 			const socket = new WebSocket(`${scheme}://${window.location.host}${SOCKET_PATH}`);
-			// receive binary frames as ArrayBuffer (the default is Blob, slower to read)
 			socket.binaryType = "arraybuffer";
-			const encoder = new TextEncoder(); // string -> UTF-8 bytes
+			const encoder = new TextEncoder();
 			let wasOpen = false;
+			let started = false;
+			report("connecting");
 
 			const isOpen = () => socket.readyState === WebSocket.OPEN;
-			// tells the backend the terminal size, so the shell wraps lines correctly
+			// give backend the terminal size
 			const sendSize = () => {
 				if (isOpen())
 					socket.send(JSON.stringify({ type: "resize", cols: term.cols, rows: term.rows }));
@@ -140,40 +133,41 @@ export function WorkspaceTerminal({ className = "" }: { className?: string }) {
 				sendSize();
 				term.focus();
 			};
-			// 4. backend -> terminal: write the shell's output.
-			// bytes, not strings: a frame can end in the middle of a UTF-8 character
-			// (é, emoji...), xterm.js puts it back together only when given a Uint8Array
+			// backend -> terminal: write the shell's output.
 			socket.onmessage = (event) => {
-				if (event.data instanceof ArrayBuffer)
-					term.write(new Uint8Array(event.data));
+				if (!(event.data instanceof ArrayBuffer))
+					return;
+				if (!started) {
+					started = true;
+					report("open");
+				}
+				term.write(new Uint8Array(event.data));
 			};
-			// connection over: print why, and stop accepting input
+			// connection over case: tell the page why, and stop accepting input
 			socket.onclose = (event) => {
-				// \x1b[2m ... \x1b[0m = dim text, then back to normal
-				term.write(`\r\n\x1b[2m[${closeMessage(event, wasOpen)}]\x1b[0m\r\n`);
+				report(closedState(event.code, wasOpen));
 				term.options.disableStdin = true;
 				term.options.cursorBlink = false;
 			};
 
-			// 5. terminal -> backend: what the user types, and size changes
+			// terminal -> backend: what the user types, and size changes
 			const subscriptions = [
-				// typed keys, pasted text, Ctrl-C (sent as the \x03 character)...
+				// typed keys, pasted text, Ctrl-C
 				term.onData((data) => {
 					if (isOpen())
 						socket.send(encoder.encode(data));
 				}),
-				// a few mouse reports (e.g. clicking in vim) are not valid UTF-8,
-				// they go as raw bytes, one byte per character
+				// a few mouse reports are not valid UTF-8,
+				// so they need to go as raw bytes
 				term.onBinary((data) => {
 					if (isOpen())
 						socket.send(Uint8Array.from(data, (c) => c.charCodeAt(0) & 0xff));
 				}),
-				// fires after fit() changed the number of columns/rows
+				// needed to resize after fit() changed the number of columns/rows
 				term.onResize(sendSize),
 			];
 
-			// 6. refit when the box changes size (window resized...). Once per frame
-			// at most, as a resize fires the observer many times
+			// refit when the box changes size
 			let frame = 0;
 			const observer = new ResizeObserver(() => {
 				cancelAnimationFrame(frame);
@@ -181,7 +175,7 @@ export function WorkspaceTerminal({ className = "" }: { className?: string }) {
 			});
 			observer.observe(host);
 
-			// 7. what the cleanup undoes
+			// cleanup logic
 			teardown = () => {
 				cancelAnimationFrame(frame);
 				observer.disconnect();
@@ -192,17 +186,13 @@ export function WorkspaceTerminal({ className = "" }: { className?: string }) {
 			};
 		})();
 
-		// Cleanup: runs when the page closes, and when a navigation hides the page
-		// (Cache Components keeps pages hidden instead of removing them).
-		// In dev, React also runs effects twice on purpose; this handles it.
 		return () => {
 			disposed = true;
 			teardown();
 		};
 	}, []);
 
-	// Outer box: background and padding. The padding is on the outer box and not on
-	// the xterm <div>, otherwise the fit addon counts it as space for text.
+	// Outer box: background and padding.
 	return (
 		<div
 			className={`overflow-hidden rounded-xl border p-2 ${className}`}

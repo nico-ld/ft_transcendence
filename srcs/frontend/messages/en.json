@@ -30,13 +30,13 @@
     "workSpace": "Working Space"
   },
   "Header": {
-    "settings": "Settings",
+    "editProfile": "Edit your profile",
     "logout": "Log out",
     "loggingOut": "Logging out",
     "light": "Light Mode",
     "dark": "Dark Mode",
     "admin": "Admin",
-    "user": "Utilisateur"
+    "user": "User"
   },
   "Login": {
     "title": "Login to your account",
@@ -79,6 +79,47 @@
       }
     }
   },
+  "Workspace": {
+    "title": "{username}'s workspace",
+    "connecting": "Starting your workspace…",
+    "actions": {
+      "reconnect": "Reconnect",
+      "retry": "Try again",
+      "newTerminal": "Open a new terminal",
+      "login": "Log in again",
+      "dashboard": "Back to dashboard"
+    },
+    "states": {
+      "noJob": {
+        "title": "No workspace yet",
+        "description": "An administrator has to assign you a job before you can use a workspace."
+      },
+      "unavailable": {
+        "title": "Workspace unavailable",
+        "description": "The tools for your job aren't installed on the server yet. Try again later or contact an administrator."
+      },
+      "loggedOut": {
+        "title": "You were logged out",
+        "description": "Your session has ended. Log in again to use the terminal."
+      },
+      "ended": {
+        "title": "Terminal closed",
+        "description": "This terminal session has ended."
+      },
+      "error": {
+        "title": "Terminal error",
+        "description": "Something went wrong with your workspace."
+      },
+      "lost": {
+        "title": "Connection lost",
+        "description": "The connection to your workspace was interrupted."
+      },
+      "unreachable": {
+        "title": "Can't connect",
+        "description": "Your workspace can't be reached right now."
+      }
+    }
+  },
   "Docs": {
     "documentation": "Documentation",
     "tocLabel": "On this page",
@@ -114,36 +155,59 @@
       "sun": "S"
     }
   },
+  "Profile": {
+    "title": "Your profile",
+    "description": "Update how your name appears in Silk Space.",
+    "account": "Account",
+    "email": "Email",
+    "role": "Account type",
+    "memberSince": "Member since",
+    "saved": "Your profile has been updated."
+  },
   "Users": {
     "search": "Search",
-    "searchBar": "Search an user",
+    "searchBar": "Search for a user",
     "noUsers": "No users found",
+    "noJob": "No workspace",
+    "jobHint": "Changing the job restarts this person's workspace: their open terminals close, their files are kept.",
+    "sort": {
+      "label": "Sort by",
+      "date": "Date",
+      "username": "Name",
+      "email": "Email"
+    },
+    "errors": {
+      "invalid": "Some fields are invalid. Check them and try again.",
+      "notAllowed": "You are not allowed to do this.",
+      "notFound": "This user no longer exists.",
+      "generic": "Something went wrong. Please try again."
+    },
     "userInfo": {
-      "name": "Name",
-      "lastName": "LastName",
-      "userName": "UserName",
+      "name": "First name",
+      "lastName": "Last name",
+      "userName": "Username",
       "job": "Job",
       "jobs": "Jobs"
     },
     "create": {
-      "label": "Create a Profile",
-      "description": "Enter information about the new user, a new session will be create.",
-      "phName": "Enter the name",
-      "phLastName": "Enter the lastName",
-      "phUserName": "Enter the userName",
+      "label": "Create a profile",
+      "description": "Enter information about the new user, a new session will be created.",
+      "phName": "Enter the first name",
+      "phLastName": "Enter the last name",
+      "phUserName": "Enter the username",
       "phEmail": "Enter the email",
       "phPassword": "Create a password"
     },
     "delete": {
-      "label": "Delete {username}'s profile ?",
-      "description": "This will permanently delete this user and his data. Be sure you save every sensitives data."
+      "label": "Delete {username}'s profile?",
+      "description": "This will permanently delete this user and their data. Make sure you have saved any important data."
     },
     "editProfil": "Edit {username}'s profile",
     "jobList": {
       "placeholder": "Select a job",
       "accountant": "Accountant",
       "data-analyst": "Data Analyst",
-      "devops-engineer": "Devops Engineer",
+      "devops-engineer": "DevOps Engineer",
       "software-engineer": "Software Engineer",
       "technical-writer": "Technical Writer"
     }
