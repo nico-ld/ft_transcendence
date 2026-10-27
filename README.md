@@ -137,7 +137,78 @@ choice".
 ◦ How each module was implemented.
 ◦ Which team member(s) worked on each module.
 
-Modules :
+## Modules :
+
+| Module | Category | Type | Points |
+|---|---|---|---|
+| Use a framework for both the frontend and backend | Web | Major | 2 |
+| Isolated Linux workspaces with a web terminal | Modules of choice | Major | 2 |
+| Use an ORM for the database | Web | Minor | 1 |
+| Server-Side Rendering (SSR) | Web | Minor | 1 |
+| Support for multiple languages | Accessibility and Internationalization | Minor | 1 |
+| Support for additional browsers | Accessibility and Internationalization | Minor | 1 |
+| Remote authentication with OAuth 2.0 | User Management | Minor | 1 |
+| **Total** | | | **9** |
+
+### Major: Use a framework for both the frontend and backend (2 pts)
+
+*Worked on by:* TODO
+
+**Why:** both frameworks give us routing, validation and a structure every member can follow, so the team could split the work between the front and the back end without reinventing the basics. Next.js renders pages on the server (see the SSR module) and has a clear place for everything; FastAPI checks every request against typed schemas and documents the API by itself.
+
+**How it works:**
+- **Frontend: Next.js 16 (React 19)**, in `srcs/frontend`. One folder per page under `app/[locale]/`, server components that read the session and call the backend before sending the page, server actions for the forms (`actions/`), shared components in `components/`.
+- **Backend: FastAPI**, in `srcs/backend/app`. One router per domain in `routers/` (`auth`, `oauth42`, `users`, `stats`, `workspace`, `websocket`), pydantic schemas that refuse any invalid or unexpected field (`schemas.py`), and dependencies that require a valid session or the admin role (`security.py`).
+- **How they talk:** the browser only talks to nginx, which sends `/api/` to FastAPI and the rest to Next.js. On the server, Next.js calls FastAPI on the Docker network with the user's session cookie (`srcs/frontend/lib/backend.ts`).
+
+### Major (module of choice): Isolated Linux workspaces with a web terminal (2 pts)
+
+*Worked on by:* TODO
+
+**Why we chose it:** it is what Silk Space is for. When an HR user gives an employee a job, the employee gets a Linux environment with the tools of that job (software engineer, data analyst, DevOps engineer, accountant or technical writer), which they open in their browser. Changing their job changes their tools and keeps their files; deleting their account deletes everything. No module in the list covers this.
+
+**Technical challenges:**
+- **Driving Docker from the backend.** FastAPI talks to the Docker API through the Docker socket (aiodocker, `srcs/backend/app/docker/workspace.py`). Each user gets their own container, private network and persistent home volume, created on first use from the image of their job (`srcs/workspaces/`: a common base image and one image per job).
+- **Isolation and limits.** The shell runs as a regular user, without any Linux capabilities and unable to gain privileges. Memory, CPU and number of processes are capped per container, and each user's private network keeps the workspaces apart.
+- **Lifecycle.** A job change replaces the container but keeps the home volume, so the files survive. Deleting a user removes their container, network and volume. A broken container is recreated instead of failing forever, and a lock per user stops two requests from creating the same workspace twice.
+- **The terminal.** xterm.js in the browser, a WebSocket through nginx to FastAPI, then a bash with a TTY inside the container (`routers/websocket.py`, `components/workspace/`). Keystrokes and output go as raw bytes in both directions, the terminal size follows the window, and closing the page hangs up the shell like a real terminal.
+- **Security of the connection.** Only our own site may open the WebSocket, it needs a valid session, and the session is checked again every 5 seconds: a logout or a deleted account closes the open terminals.
+- **Every failure explained.** No job yet, image not built, Docker error, session ended, connection lost: each one shows a translated message with a way out (reconnect, log in again, back to the dashboard).
+- **Log time.** Each terminal session is recorded (`db/terminal_sessions.py`) and feeds the user's statistics.
+
+**Value for the project:** without it, Silk Space would only be a list of users. With it, an HR action has a real effect within seconds: an employee is hired, promoted or leaves, and their working environment follows.
+
+**Why it deserves Major status:** it touches every layer of the project (container infrastructure, asynchronous backend, real-time browser terminal and security), and is comparable in size to the listed Major modules such as real-time features with WebSockets or a backend as microservices.
+
+### Minor: Use an ORM for the database (1 pt)
+
+*Worked on by:* TODO
+
+**Why:** the tables are defined once, as typed Python classes, and the queries are written in Python instead of SQL strings: values always travel as parameters, so they can't be used for SQL injection.
+
+**How it works:** SQLAlchemy 2 with PostgreSQL (psycopg). The tables are Python classes in `srcs/backend/app/db/`: users (with a role and a job, and a check that every account has a password or a 42 login), login sessions, and terminal sessions, linked to users by foreign keys. The queries go through `Session` and `select` in `db/requests.py`, and the tables are created when the backend starts.
+
+### Minor: Server-Side Rendering (1 pt)
+
+*Worked on by:* TODO
+
+**Why:** pages arrive with their content already in the HTML. The dashboards come with the user's data in place, without a loading flash, and a visitor who isn't logged in is sent to the login page straight away. The public pages are fast and readable by search engines.
+
+**How it works:** Next.js server components. The dashboards and the profile and workspace pages read the session cookie on the server, call the backend and render at request time (`getCurrentUser` in `srcs/frontend/lib/backend.ts`). With `cacheComponents`, the static part of these pages is prerendered and the user's part is streamed into it. The landing, legal and documentation pages are prerendered at build time in each language (`generateStaticParams`), and the legal and documentation pages have their own titles and descriptions (`generateMetadata`).
+
+### Minor: Support for multiple languages (1 pt)
+
+*Worked on by:* TODO
+
+**Why:** the team and the first users speak French, English is the default, and Spanish makes the third language.
+
+**How it works:** next-intl, in English, French and Spanish.
+- The language is part of the address (`/en`, `/fr`, `/es`, set in `srcs/frontend/i18n/routing.ts`), and visitors arriving on `/` are sent to their browser's language.
+- Every text shown to the user, labels read by screen readers included, lives in `srcs/frontend/messages/{en,fr,es}.json`. The backend's English error messages are never shown as they are: the frontend turns them into translated messages.
+- The language can be changed from the landing page footer and from the user menu. Dates follow the chosen language.
+- The privacy policy and terms of service are written in each language (`srcs/frontend/content/legal/`).
+
+**Still to do:** the documentation pages (`srcs/frontend/content/docs/`) only exist in English for now.
 
 ### Minor: Remote authentication with OAuth 2.0 (1 pt)
 
