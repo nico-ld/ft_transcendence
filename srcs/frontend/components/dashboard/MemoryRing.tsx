@@ -12,7 +12,7 @@ export function MemoryRing({usedGb, totalGb, path}: MemoryRingProps) {
 	return (
 		<div className="flex items-center gap-5">
 			<div className="relative size-32 shrink-0">
-				<svg viewBox="0 0 120 120" className="size-full -rotate-90" role="img" aria-label={`Memory usage ${percent}`}>
+				<svg viewBox="0 0 120 120" className="size-full -rotate-90" role="img" aria-label={t("aria", { percent })}>
 					<circle cx="60" cy="60" r={RADIUS} fill="none" strokeWidth="10" className="stroke-border" />
 					<circle
 						cx="60" cy="60" r={RADIUS}
