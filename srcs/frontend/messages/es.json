@@ -23,13 +23,13 @@
     "close": "Cerrar",
     "save": "Guardar",
     "saveChanges": "Guardar cambios",
-    "create": "crear perfil",
-    "creating": "creación",
-    "delete": "eliminar",
+    "create": "Crear perfil",
+    "creating": "Creando",
+    "delete": "Eliminar",
     "workSpace": "Espacio de trabajo"
   },
   "Header": {
-    "settings": "Configuración",
+    "editProfile": "Modificar tu perfil",
     "logout": "Cerrar sesión",
     "loggingOut": "Cerrando sesión",
     "light": "Modo claro",
@@ -155,10 +155,33 @@
       "sun": "D"
     }
   },
+  "Profile": {
+    "title": "Tu perfil",
+    "description": "Actualiza cómo aparece tu nombre en Silk Space.",
+    "account": "Cuenta",
+    "email": "Correo electrónico",
+    "role": "Tipo de cuenta",
+    "memberSince": "Miembro desde",
+    "saved": "Tu perfil se ha actualizado."
+  },
   "Users": {
     "search": "Buscar",
     "searchBar": "Buscar un usuario",
     "noUsers": "No se encontró ningún usuario",
+    "noJob": "Sin espacio de trabajo",
+    "jobHint": "Cambiar el puesto reinicia el espacio de trabajo de esta persona: sus terminales abiertos se cierran y sus archivos se conservan.",
+    "sort": {
+      "label": "Ordenar por",
+      "date": "Fecha",
+      "username": "Nombre",
+      "email": "Correo electrónico"
+    },
+    "errors": {
+      "invalid": "Algunos campos no son válidos. Revísalos e inténtalo de nuevo.",
+      "notAllowed": "No tienes permiso para hacer esto.",
+      "notFound": "Este usuario ya no existe.",
+      "generic": "Algo ha salido mal. Inténtalo de nuevo."
+    },
     "userInfo": {
       "name": "Nombre",
       "lastName": "Apellido",
