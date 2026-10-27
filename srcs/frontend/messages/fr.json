@@ -26,11 +26,11 @@
     "workSpace": "Espace de travail"
   },
   "Header": {
-    "settings": "Paramètres",
-    "logout": "Se Déconnecter",
+    "editProfile": "Modifier le profil",
+    "logout": "Se déconnecter",
     "loggingOut": "Déconnexion",
-    "light": "Mode Clair",
-    "dark": "Mode Sombre",
+    "light": "Mode clair",
+    "dark": "Mode sombre",
     "admin": "Admin",
     "user": "Utilisateur"
   },
@@ -111,10 +111,33 @@
       "sun": "D"
     }
   },
+  "Profile": {
+    "title": "Votre profil",
+    "description": "Modifiez la façon dont votre nom apparaît dans Silk Space.",
+    "account": "Compte",
+    "email": "Email",
+    "role": "Type de compte",
+    "memberSince": "Membre depuis",
+    "saved": "Votre profil a été mis à jour."
+  },
   "Users": {
-    "search": "Chercher",
-    "searchBar": "Chercher un utilisateur",
+    "search": "Rechercher",
+    "searchBar": "Rechercher un utilisateur",
     "noUsers": "Aucun utilisateur trouvé",
+    "noJob": "Aucun espace de travail",
+    "jobHint": "Changer le poste redémarre l'espace de travail de cette personne : ses terminaux ouverts se ferment, ses fichiers sont conservés.",
+    "sort": {
+      "label": "Trier par",
+      "date": "Date",
+      "username": "Nom",
+      "email": "Email"
+    },
+    "errors": {
+      "invalid": "Certains champs sont invalides. Vérifiez-les et réessayez.",
+      "notAllowed": "Vous n'avez pas le droit de faire cela.",
+      "notFound": "Cet utilisateur n'existe plus.",
+      "generic": "Une erreur s'est produite. Merci de réessayer."
+    },
     "userInfo": {
       "name": "Prénom",
       "lastName": "Nom",
@@ -123,21 +146,21 @@
       "jobs": "Postes"
     },
     "create": {
-      "label": "Créer un Profil",
+      "label": "Créer un profil",
       "description": "Entrez les informations du nouvel utilisateur, une nouvelle session va être créée.",
-      "phName": "Entrez le nom",
-      "phLastName": "Entrez le prénom",
+      "phName": "Entrez le prénom",
+      "phLastName": "Entrez le nom",
       "phUserName": "Entrez le nom d'utilisateur",
       "phEmail": "Entrez l'email",
       "phPassword": "Créez un mot de passe"
     },
     "delete": {
       "label": "Supprimer le profil de {username} ?",
-      "description": "Cette action va effacer de façon permanente l'utilisateur et ses données. Soyez sûr d'avoir enregistré toutes données importantes"
+      "description": "Cette action va effacer de façon permanente l'utilisateur et ses données. Assurez-vous d'avoir sauvegardé toutes les données importantes."
     },
     "editProfil": "Modifier le profil de {username}",
     "jobList": {
-      "placeholder": "Selectionnez un poste",
+      "placeholder": "Sélectionnez un poste",
       "accountant": "Comptable",
       "data-analyst": "Analyste de données",
       "devops-engineer": "Ingénieur DevOps",

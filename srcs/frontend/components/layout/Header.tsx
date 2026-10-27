@@ -1,9 +1,8 @@
 "use client";
 
 import { useTransition } from "react";
-import { Link } from "@/i18n/navigation";
 import { useTheme } from "next-themes";
-import {ChevronDown, LogOut, Moon, Settings, Sun} from "lucide-react";
+import {ChevronDown, LogOut, Moon, UserRoundPen, Sun} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
@@ -21,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Logout } from "@/actions/auth";
 import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { ROLE_HOME } from "@/lib/utils";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
@@ -37,8 +37,10 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 
 	return (
 		<header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b bg-background/80 px-4 backdrop-blur md:px-6">
-			{/* Left: logo */}
-			<SilkSpaceLogo>{role === "admin" && (<AdminBadge />)}</SilkSpaceLogo>
+			{/* Left: logo, back to the dashboard */}
+			<Link href={home} className="rounded-lg">
+				<SilkSpaceLogo>{role === "admin" && (<AdminBadge />)}</SilkSpaceLogo>
+			</Link>
 
 			{/* Right:user menu */}
 			<DropdownMenu>
@@ -69,9 +71,9 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 
 					<DropdownMenuSeparator />
 
-					<DropdownMenuItem render={<Link href={`${home}/settings`} />}>
-						<Settings />
-						{t("settings")}
+					<DropdownMenuItem render={<Link href="/profile" />}>
+						<UserRoundPen />
+						{t("editProfile")}
 					</DropdownMenuItem>
 
 					<LanguageSwitcher variant="submenu" />
