@@ -19,6 +19,7 @@
     "language": "Language"
   },
   "Common": {
+    "loading": "Loading",
     "cancel": "Cancel",
     "close": "Close",
     "save": "Save",
@@ -56,6 +57,7 @@
     }
   },
   "Landing": {
+    "mainNav": "Main",
     "signin": "Sign in",
     "heroCta": "Sign in to Silk Space",
     "resources": "Resources",
@@ -81,7 +83,7 @@
     "documentation": "Documentation",
     "tocLabel": "On this page",
     "loading": "Loading...",
-    "sections": { "users": "User guide", "developers": "Developers guide" },
+    "sections": { "users": "User guide", "developers": "Developer guide" },
     "pager": {
       "label": "Pagination",
       "previous": "Previous",
@@ -96,6 +98,7 @@
     "month": "This month",
     "extra": "Registered users",
     "memory": {
+      "aria": "Memory usage: {percent}%",
       "label": "memory",
       "used": "Used",
       "free": "Free",

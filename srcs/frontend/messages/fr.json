@@ -16,6 +16,7 @@
   },
   "Language": { "selectLanguage": "Choisir la langue", "language": "Langue" },
   "Common": {
+    "loading": "Chargement",
     "cancel": "Annuler",
     "close": "Fermer",
     "save": "Sauvegarder",
@@ -53,6 +54,7 @@
     }
   },
   "Landing": {
+    "mainNav": "Principal",
     "signin": "Se connecter",
     "heroCta": "Se connecter à Silk Space",
     "resources": "Ressources",
@@ -80,7 +82,7 @@
     "loading": "Chargement...",
     "sections": {
       "users": "Guide d'utilisation",
-      "developers": "Guide de developpement"
+      "developers": "Guide de développement"
     },
     "pager": {
       "label": "Pagination",
@@ -96,6 +98,7 @@
     "month": "Ce mois",
     "extra": "Utilisateur inscrit",
     "memory": {
+      "aria": "Utilisation de la mémoire : {percent} %",
       "label": "mémoire",
       "used": "Utilisée",
       "free": "Libre",

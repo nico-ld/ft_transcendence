@@ -19,6 +19,7 @@
     "language": "idioma"
   },
   "Common": {
+    "loading": "Cargando",
     "cancel": "Cancelar",
     "close": "Cerrar",
     "save": "Guardar",
@@ -56,6 +57,7 @@
     }
   },
   "Landing": {
+    "mainNav": "Principal",
     "signin": "Iniciar sesión",
     "heroCta": "Inicia sesión en Silk Space",
     "resources": "Recursos",
@@ -99,6 +101,7 @@
     "month": "este mes",
     "extra": "Usuarios registrados",
     "memory": {
+      "aria": "Uso de memoria: {percent} %",
       "label": "memoria",
       "used": "Usada",
       "free": "Libre",
