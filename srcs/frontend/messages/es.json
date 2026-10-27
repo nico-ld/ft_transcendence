@@ -56,8 +56,8 @@
     }
   },
   "Landing": {
-    "signin": "Iniciar sesión",
-    "heroCta": "Inicia sesión en Silk Space",
+    "signin": "Iniciar sesión", "signup": "inscribirse",
+    "heroCta": "Inscribirse en Silk Space",
     "resources": "Recursos",
     "headline": "Entornos de trabajo listos para usar y de rápida configuración",
     "subtitle": "Una solución integral para tu empresa. Gestiona tus equipos y sesiones de trabajo con solo unos clics, todo desde un único lugar.",

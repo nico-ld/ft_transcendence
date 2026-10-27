@@ -53,8 +53,8 @@
     }
   },
   "Landing": {
-    "signin": "Se connecter",
-    "heroCta": "Se connecter à Silk Space",
+    "signin": "Se connecter", "signup": "S'inscrire",
+    "heroCta": "S'inscrire à Silk Space",
     "resources": "Ressources",
     "headline": "Des environnements de travail prêts à l'emploi, rapidement déployés",
     "subtitle": "Une solution clé en main pour votre entreprise. Gérez vos équipes et vos sessions de travail en quelques clics, le tout depuis un espace centralisé.",
