@@ -25,7 +25,7 @@ export function LandingHeader({tab}: {tab: React.ReactNode}) {
 			<section className="mx-auto flex h-14 w-full items-center justify-between px-4 md:px-6">
 				<article className="flex items-center gap-6">
 					<SilkSpaceLogo />
-					<nav aria-label="Main" className="hidden items-center gap-4 text-sm md:flex">
+					<nav aria-label={t("mainNav")} className="hidden items-center gap-4 text-sm md:flex">
 						{tab}
 					</nav>
 				</article>
