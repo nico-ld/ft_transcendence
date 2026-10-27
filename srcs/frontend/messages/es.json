@@ -77,6 +77,47 @@
       }
     }
   },
+  "Workspace": {
+    "title": "Espacio de trabajo de {username}",
+    "connecting": "Iniciando tu espacio de trabajo…",
+    "actions": {
+      "reconnect": "Reconectar",
+      "retry": "Reintentar",
+      "newTerminal": "Abrir un terminal nuevo",
+      "login": "Iniciar sesión",
+      "dashboard": "Volver al panel"
+    },
+    "states": {
+      "noJob": {
+        "title": "Todavía no tienes espacio de trabajo",
+        "description": "Un administrador tiene que asignarte un puesto antes de que puedas usar un espacio de trabajo."
+      },
+      "unavailable": {
+        "title": "Espacio de trabajo no disponible",
+        "description": "Las herramientas de tu puesto aún no están instaladas en el servidor. Inténtalo más tarde o contacta con un administrador."
+      },
+      "loggedOut": {
+        "title": "Se ha cerrado tu sesión",
+        "description": "Vuelve a iniciar sesión para usar el terminal."
+      },
+      "ended": {
+        "title": "Terminal cerrado",
+        "description": "Esta sesión del terminal ha terminado."
+      },
+      "error": {
+        "title": "Error del terminal",
+        "description": "Algo ha salido mal con tu espacio de trabajo."
+      },
+      "lost": {
+        "title": "Conexión perdida",
+        "description": "La conexión con tu espacio de trabajo se ha interrumpido."
+      },
+      "unreachable": {
+        "title": "No se puede conectar",
+        "description": "Ahora mismo no se puede acceder a tu espacio de trabajo."
+      }
+    }
+  },
   "Docs": {
     "documentation": "Documentación",
     "tocLabel": "En esta página",
