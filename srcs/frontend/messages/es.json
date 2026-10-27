@@ -56,7 +56,7 @@
       "oauthConflict": "Este correo electrónico ya está vinculado a otra cuenta de 42."
     }
   },
-  "SignUp": {
+  "Signup": {
     "title": "Crear una cuenta",
     "description": "Introduce tus datos para comenzar",
     "failedTitle": "Error al crear la cuenta",

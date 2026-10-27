@@ -56,7 +56,7 @@
       "oauthConflict": "This email is already linked to another 42 account."
     }
   },
-  "SignUp": {
+  "Signup": {
     "title": "Create an account",
     "description": "Enter your details to get started",
     "failedTitle": "Sign up failed",

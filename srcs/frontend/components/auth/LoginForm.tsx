@@ -40,7 +40,7 @@ export function LoginForm({oauthError = ""}: {oauthError?: LoginError}) {
 	return (
 		<AuthCard
 			title={t("title")}
-			description={t("desription")}
+			description={t("description")}
 			alert={error ? <AuthError title={t("failedTitle")} message={t(`errors.${error}`)} /> : null}
 			onSubmit={submit}
 			pending={pending}

@@ -32,7 +32,7 @@ export function LandingHeader({tab}: {tab: React.ReactNode}) {
 
 				<article className="flex items-center gap-3">
 					<ThemeSwitch />
-					<Link href="#" className={buttonVariants({variant: 'outline'})}>{t("signup")}</Link>
+					<Link href="/signup" className={buttonVariants({variant: 'outline'})}>{t("signup")}</Link>
 					<Link href="/login" className={buttonVariants({variant: 'default'})}>{t("signin")}</Link>
 				</article>
 			</section>

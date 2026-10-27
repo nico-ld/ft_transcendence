@@ -53,7 +53,7 @@
       "oauthConflict": "Cet email est déjà associé à un autre compte 42."
     }
   },
-  "SignUp": {
+  "Signup": {
     "title": "Créer un compte",
     "description": "Saisissez vos informations pour commencer",
     "failedTitle": "Échec de la création du compte",

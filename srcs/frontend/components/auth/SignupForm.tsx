@@ -65,7 +65,7 @@ export function SignupForm() {
 			onSubmit={submit}
 			pending={pending}
 			submitLabel={t("signUp")}
-			pendingLabel={t("sigingUp")}
+			pendingLabel={t("signingUp")}
 			with42Label={t("with42")}
 			switchLink={
 				<Link href="/login" className="text-sm text-muted-foreground hover:underline">
