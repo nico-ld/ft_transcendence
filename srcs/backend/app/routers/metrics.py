@@ -1,6 +1,6 @@
-from app.schemas import WorkspaceMetrics
 from fastapi import APIRouter, HTTPException
 from httpx import AsyncClient
+from schemas import WorkspaceMetrics
 
 router = APIRouter(prefix="/api/prometheus", tags=["monitoring"])
 
@@ -27,7 +27,7 @@ async def prom_query(query: str) -> float:
 
         except HTTPException as e:
             raise HTTPException(
-                status_code=500,
+                status_code=404,
                 detail=f"Prometheus query failed: {e!s}"
             )
 
