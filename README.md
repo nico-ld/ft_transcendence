@@ -3,7 +3,7 @@
 ## Description :
 
 This project, ft_silk_space, is about easing the hiring, promotion and departure processes of employees inside of a company.
-Thanks to an easy-to-use interface, even a non-technical can now easily create a new work session for an employee, and modify or delete said session when needed.
+Thanks to an easy-to-use interface, even a non-technical user can now easily create a new work session for an employee, and modify or delete said session when needed.
 To understand how we achieve this, please read the rest of this document.
 
 ## Instructions :
@@ -21,7 +21,7 @@ Thanks to the use of Docker, we handle all the prerequisites for you. Said prere
 - FastAPI
 - Docker
 
-## Ressources :
+## Resources :
 
 ### On NextJS:
   https://nextjs.org/
@@ -40,7 +40,7 @@ Thanks to the use of Docker, we handle all the prerequisites for you. Said prere
   https://hub.docker.com/
   
 ### On AI:
-  AI was use in this project to help for researches, perform code audits, and overall trouble-shoot for ft_silk_space healthy running.
+  AI was used in this project to help with research, perform code audits, and troubleshoot problems to keep ft_silk_space running smoothly.
 
 • Team Information:
 For each team member mentioned at the top of the README.md, you must pro-
@@ -54,31 +54,29 @@ vide:
 
 As the product owner for ft_silk_space, *jdessoli* supervised the core project idea, features, and the selection of a coherent technical stack regarding the goal.  
 
-### Project manager (PM) : *tseche*, *nile-dai* and *jdessoli*
+### Project manager (PM) : *nile-dai*
 
-As project managers for ft_silk_space, *tseche*, *nile-dai* and *jdessoli* worked together to ensure the completion of the project within a previously set up deadline.
+As the project manager for ft_silk_space, *nile-dai* worked to ensure the completion of the project within a previously set up deadline.
 
-*jdessoli* created a Trello, to facilitate work division.
+*nile-dai* created a GitHub repository as well as a Discord server.
 
-*nile-dai* created a github repository as well as a Discord server.
+*jdessoli* and *tseche* also helped with project management: *jdessoli* created a Trello to facilitate work division, and *tseche* helped ensure the communication flow kept running smoothly, so the tools reflected the real state of the project at each stage.
 
-*tseche* helped ensure the communication flow kept running smoothly, so the tools reflected the real state of the project at each stage.
+### Tech lead : *mmansier*
 
-### Teach lead : mmansier and amartel
+As the tech lead, *mmansier* chose the technical stack for both the front and the back end with the team, proposed FastAPI, trained the team on the back-end, and performed code review on every part of the project.
 
-As tech leads, *mmansier* and *amartel* helped choose the proper technical stack for both the front and the back end.
+*amartel* also took part in the technical choices: he proposed Next.js, trained the team on the front-end, and set up automations to facilitate a proper workflow.
 
-*mmansier* proposed Fast-API, trained the team on the back-end, and performed code review on every part of the project.
+### Developers : *amartel* and *tseche*
 
-*amartel* proposed NextJS, trained the team on the front-end, and set up automatizations to facilitate a proper workflow.
-
-### Developers : *nile-dai*, *amartel*, *mmansier*, *tseche* and *jdessoli*
+As the subject asks, every member of the team also worked as a developer:
 
 *nile-dai* mostly worked alongside *amartel* on the front-end side of the project, spending a lot of time on the design choices and implementation.
 
-*amartel* piloted the front-end developement.
+*amartel* piloted the front-end development.
 
-*mmansier* piloted the back-end developement.
+*mmansier* piloted the back-end development.
 
 *tseche* mostly worked alongside *mmansier* on the back-end. 
 
@@ -86,9 +84,9 @@ As tech leads, *mmansier* and *amartel* helped choose the proper technical stack
 
 ## Project Management :
 
-  The initial project conception, roles and tasks distribution was done by *jdessoli*.
+  The initial project conception, roles and task distribution were done by *jdessoli*.
   
-  The reunions were organized by *nile-dai*. They helped having the whole team up to date with the evolving states of each parts of the project.
+  The meetings were organized by *nile-dai*. They kept the whole team up to date with the state of each part of the project.
 
   The communication was mostly done through the Discord thanks to *nile-dai*, the Github thanks to *amartel* and *mmansier*, and the updated Trello thanks to *tseche*.
 
@@ -113,7 +111,7 @@ As tech leads, *mmansier* and *amartel* helped choose the proper technical stack
 
 ### Database system
 
-* PostGre, whom was choose because of its popularity in the industry
+* PostgreSQL, chosen because of its popularity in the industry
 
 /*** STILL LEFT TO DO ***/
 
@@ -124,16 +122,12 @@ As tech leads, *mmansier* and *amartel* helped choose the proper technical stack
 
 ## Database Schema :
 
-blabla
-
 • Features List:
 ◦ Complete list of implemented features.
 ◦ Which team member(s) worked on each feature.
 ◦ Brief description of each feature’s functionality.
 
 Features list :
-
-blabla
 
 • Modules:
 ◦ List of all chosen modules (Major and Minor).
@@ -186,5 +180,3 @@ Any other useful or relevant information is welcome (usage documentation, known
 limitations, license, credits, etc.).
 
 Individual contributions :
-
-blabla
