@@ -5,6 +5,7 @@ import { redirect } from "@/i18n/navigation";
 import { Role } from "@/types/User";
 import { LoginPayload } from "@/types/LoginPayload";
 import { backendFetch, SESSION_COOKIE, sessionFromResponse } from "@/lib/backend";
+import { BACKEND_SIGNUP_ERRORS, type SignupError } from "@/types/SignupErrors";
 
 export async function Logout(locale: string) {
 	// end the session on the backend first. If the backend can't be reached,
@@ -40,4 +41,28 @@ export async function Login(payload: LoginPayload): Promise<{role: Role }| null>
 
 	const user = await res.json();
 	return { role: user.role };
+}
+
+export async function Signup(input: {
+	email : string;
+	username: string;
+	password: string;
+}) : Promise<SignupError> {
+	let res: Response;
+	try {
+		res = await backendFetch("/auth/register", {
+			method: "POST",
+			headers: {"Content-Type": "application/json"},
+			body: JSON.stringify(input)
+		});
+	} catch {
+		return "generic";
+	}
+
+	if (res.status === 201)
+		return "";
+
+	const body = await res.json().catch(() => null);
+	const code = body?.code;
+	return BACKEND_SIGNUP_ERRORS.includes(code) ? code : "generic";
 }
