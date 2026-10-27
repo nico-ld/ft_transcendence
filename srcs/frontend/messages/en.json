@@ -46,6 +46,7 @@
     "loggingIn": "Logging In",
     "with42": "Log in with 42",
     "failedTitle": "Connection Failed",
+    "noAccount": "No account yet ? Sign up here !",
     "errors": {
       "invalidCredentials": "Invalid email or password.",
       "generic": "Something went wrong. Please try again.",
@@ -53,6 +54,28 @@
       "oauthExpired": "The login with 42 has expired. Please try again.",
       "oauthUnavailable": "Logging in with 42 is unavailable right now. Please try again later or log in with your email.",
       "oauthConflict": "This email is already linked to another 42 account."
+    }
+  },
+  "SignUp": {
+    "title": "Create an account",
+    "description": "Enter your details to get started",
+    "failedTitle": "Sign up failed",
+    "email": "Email",
+    "username": "Username",
+    "usernameHint": "3 to 20 characters: letters, numbers and underscores",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "signUp": "Sign up",
+    "signingUp": "Creating account...",
+    "with42": "Sign up with 42",
+    "haveAccount": "Already have an account? Log in",
+    "errors": {
+      "emailTaken": "This email is already used.",
+      "usernameTaken": "This username is already taken.",
+      "weakPassword": "Password must be at least 8 characters.",
+      "passwordMismatch": "Passwords do not match.",
+      "invalidInput": "Some of the information you entered is invalid.",
+      "generic": "Something went wrong. Please try again."
     }
   },
   "Landing": {

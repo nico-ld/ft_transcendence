@@ -46,6 +46,7 @@
     "loggingIn": "Iniciando sesión",
     "with42": "Iniciar sesión con 42",
     "failedTitle": "Error de conexión",
+    "noAccount": "¿Aún no tienes cuenta? ¡Regístrate aquí!",
     "errors": {
       "invalidCredentials": "Correo electrónico o contraseña incorrectos.",
       "generic": "Algo ha salido mal. Inténtalo de nuevo.",
@@ -53,6 +54,28 @@
       "oauthExpired": "El inicio de sesión con 42 ha caducado. Inténtalo de nuevo.",
       "oauthUnavailable": "El inicio de sesión con 42 no está disponible en este momento. Inténtalo más tarde o inicia sesión con tu correo electrónico.",
       "oauthConflict": "Este correo electrónico ya está vinculado a otra cuenta de 42."
+    }
+  },
+  "SignUp": {
+    "title": "Crear una cuenta",
+    "description": "Introduce tus datos para comenzar",
+    "failedTitle": "Error al crear la cuenta",
+    "email": "Correo electrónico",
+    "username": "Nombre de usuario",
+    "usernameHint": "De 3 a 20 caracteres: letras, números y guiones bajos",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "signUp": "Registrarse",
+    "signingUp": "Creando cuenta...",
+    "with42": "Registrarse con 42",
+    "haveAccount": "¿Ya tienes una cuenta? Inicia sesión",
+    "errors": {
+      "emailTaken": "Este correo electrónico ya está en uso.",
+      "usernameTaken": "Este nombre de usuario ya está en uso.",
+      "weakPassword": "La contraseña debe tener al menos 8 caracteres.",
+      "passwordMismatch": "Las contraseñas no coinciden.",
+      "invalidInput": "Algunos de los datos introducidos no son válidos.",
+      "generic": "Algo ha salido mal. Inténtalo de nuevo."
     }
   },
   "Landing": {

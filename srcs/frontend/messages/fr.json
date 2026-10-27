@@ -43,6 +43,7 @@
     "loggingIn": "Connexion",
     "with42": "Se connecter avec 42",
     "failedTitle": "Connexion impossible",
+    "noAccount": "Pas de compte ? Inscrivez-vous ici !",
     "errors": {
       "invalidCredentials": "Email ou mot de passe invalid",
       "generic": "Une erreur s'est produite. Merci de réessayer.",
@@ -50,6 +51,28 @@
       "oauthExpired": "La connexion avec 42 a expiré. Merci de réessayer.",
       "oauthUnavailable": "La connexion avec 42 est indisponible pour le moment. Merci de réessayer plus tard ou de vous connecter avec votre email.",
       "oauthConflict": "Cet email est déjà associé à un autre compte 42."
+    }
+  },
+  "SignUp": {
+    "title": "Créer un compte",
+    "description": "Saisissez vos informations pour commencer",
+    "failedTitle": "Échec de la création du compte",
+    "email": "Adresse e-mail",
+    "username": "Nom d'utilisateur",
+    "usernameHint": "De 3 à 20 caractères : lettres, chiffres et tirets bas",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "signUp": "S'inscrire",
+    "signingUp": "Création du compte...",
+    "with42": "S'inscrire avec 42",
+    "haveAccount": "Vous avez déjà un compte ? Se connecter",
+    "errors": {
+      "emailTaken": "Cette adresse e-mail est déjà utilisée.",
+      "usernameTaken": "Ce nom d'utilisateur est déjà pris.",
+      "weakPassword": "Le mot de passe doit contenir au moins 8 caractères.",
+      "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "invalidInput": "Certaines des informations saisies sont invalides.",
+      "generic": "Une erreur s'est produite. Veuillez réessayer."
     }
   },
   "Landing": {
