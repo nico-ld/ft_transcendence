@@ -74,6 +74,47 @@
       }
     }
   },
+  "Workspace": {
+    "title": "Espace de travail de {username}",
+    "connecting": "Démarrage de votre espace de travail…",
+    "actions": {
+      "reconnect": "Se reconnecter",
+      "retry": "Réessayer",
+      "newTerminal": "Ouvrir un nouveau terminal",
+      "login": "Se connecter",
+      "dashboard": "Retour au tableau de bord"
+    },
+    "states": {
+      "noJob": {
+        "title": "Pas encore d'espace de travail",
+        "description": "Un administrateur doit vous attribuer un poste avant que vous puissiez utiliser un espace de travail."
+      },
+      "unavailable": {
+        "title": "Espace de travail indisponible",
+        "description": "Les outils de votre poste ne sont pas encore installés sur le serveur. Réessayez plus tard ou contactez un administrateur."
+      },
+      "loggedOut": {
+        "title": "Session expirée",
+        "description": "Connectez-vous à nouveau pour utiliser le terminal."
+      },
+      "ended": {
+        "title": "Terminal fermé",
+        "description": "Cette session du terminal est terminée."
+      },
+      "error": {
+        "title": "Erreur du terminal",
+        "description": "Un problème est survenu avec votre espace de travail."
+      },
+      "lost": {
+        "title": "Connexion perdue",
+        "description": "La connexion à votre espace de travail a été interrompue."
+      },
+      "unreachable": {
+        "title": "Connexion impossible",
+        "description": "Votre espace de travail est injoignable pour le moment."
+      }
+    }
+  },
   "Docs": {
     "documentation": "Documentation",
     "tocLabel": "Sur cette page",

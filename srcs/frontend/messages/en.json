@@ -77,6 +77,47 @@
       }
     }
   },
+  "Workspace": {
+    "title": "{username}'s workspace",
+    "connecting": "Starting your workspace…",
+    "actions": {
+      "reconnect": "Reconnect",
+      "retry": "Try again",
+      "newTerminal": "Open a new terminal",
+      "login": "Log in again",
+      "dashboard": "Back to dashboard"
+    },
+    "states": {
+      "noJob": {
+        "title": "No workspace yet",
+        "description": "An administrator has to assign you a job before you can use a workspace."
+      },
+      "unavailable": {
+        "title": "Workspace unavailable",
+        "description": "The tools for your job aren't installed on the server yet. Try again later or contact an administrator."
+      },
+      "loggedOut": {
+        "title": "You were logged out",
+        "description": "Your session has ended. Log in again to use the terminal."
+      },
+      "ended": {
+        "title": "Terminal closed",
+        "description": "This terminal session has ended."
+      },
+      "error": {
+        "title": "Terminal error",
+        "description": "Something went wrong with your workspace."
+      },
+      "lost": {
+        "title": "Connection lost",
+        "description": "The connection to your workspace was interrupted."
+      },
+      "unreachable": {
+        "title": "Can't connect",
+        "description": "Your workspace can't be reached right now."
+      }
+    }
+  },
   "Docs": {
     "documentation": "Documentation",
     "tocLabel": "On this page",
