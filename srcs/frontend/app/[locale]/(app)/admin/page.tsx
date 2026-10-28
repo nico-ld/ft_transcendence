@@ -4,6 +4,7 @@ import { redirect } from "@/i18n/navigation";
 import { DashboardShell } from "@/components/dashboard/DashboardShell";
 import { StatsPanel } from "@/components/dashboard/StatsPanel";
 import { UserManagement } from "@/components/admin/UserManagement";
+import { GrafanaModal } from "@/components/dashboard/GrafanaModal";
 import { getCurrentUser, getUsers } from "@/lib/backend";
 import { getSystemStats } from "@/lib/stats";
 import { ROLE_HOME } from "@/lib/utils";
@@ -38,6 +39,7 @@ async function AdminDashboard() {
 				extras={[{ label: t("extra"), value: users ? String(users.length) : "-" }]}
 			/>
 			<UserManagement users={users} viewer={viewer} />
+			<GrafanaModal userId={viewer.id} role={"admin"} />
 		</DashboardShell>
 	);
 }

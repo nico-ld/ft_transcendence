@@ -1,7 +1,7 @@
 {
   "id": null,
   "uid": "user-metrics",
-  "title": "User Metrics",
+  "title": "User Workspace Metrics",
   "tags": ["user", "containers"],
   "timezone": "browser",
   "schemaVersion": 37,

@@ -38,7 +38,7 @@ async function UserDashboard() {
      	>
       	<StatsPanel stats={stats} />
        	<WorkspaceLink href="/workspace" label={t("workSpace")} />
-        <GrafanaModal userId={user.id} /> {/* <-- Add this line */}
+			<GrafanaModal userId={user.id} role={"user"} />
       	</DashboardShell>
    	);
 }

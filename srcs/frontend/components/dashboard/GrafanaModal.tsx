@@ -9,12 +9,19 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 
-export function GrafanaModal({ userId }: { userId: number }) {
+export function GrafanaModal({ userId, role}: { userId: number, role:string}) {
   const [open, setOpen] = useState(false);
 
   // Replace with your Grafana dashboard UID
-  const DASHBOARD_UID = "user-metrics";
+	const DASHBOARD_UID_USER = "user-metrics";
+	const DASHBOARD_UID_ADMIN = "admin-metrics"
 
+  var link;
+	if (role == "user")
+		link = `http://${window.location.hostname}:3000/d/${DASHBOARD_UID_USER}?var-user_id=${userId}&kiosk`;
+	else if (role == "admin")
+		link = `http://${window.location.hostname}:3000/d/${DASHBOARD_UID_ADMIN}?var-user_id=${userId}&kiosk`
+	
   return (
     <>
       <Button
@@ -31,7 +38,7 @@ export function GrafanaModal({ userId }: { userId: number }) {
             <DialogTitle>Live User Metrics</DialogTitle>
           </DialogHeader>
           <iframe
-            src={`http://${window.location.hostname}:3000/d/${DASHBOARD_UID}?var-user_id=${userId}&kiosk`}
+            src={link}
             className="w-full h-[calc(80vh-100px)] border-0"
             allowFullScreen
           />
