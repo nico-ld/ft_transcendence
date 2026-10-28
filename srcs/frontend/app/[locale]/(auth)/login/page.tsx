@@ -20,7 +20,7 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
 				<ThemeSwitch />
 			</div>
 			<section className="flex flex-1 items-center justify-center">
-				<Suspense fallback={<LoginForm />}>
+				<Suspense fallback={null}>
 					<LoginFormWithError searchParams={searchParams} />
 				</Suspense>
 			</section>
