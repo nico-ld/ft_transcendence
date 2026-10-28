@@ -4,6 +4,7 @@ import httpx2
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from config import settings
 from db import Role, User, users_db
+from db.sessions import sessions_db
 from fastapi import APIRouter, HTTPException, Request, status
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import RedirectResponse
@@ -77,6 +78,8 @@ def get_or_create_42_user(profile: FtProfile) -> User:
             )
         linked = users_db.link_ft_id(user.id, profile.id)
         if linked is not None:
+            # and the browsers already logged in with that password are logged out
+            sessions_db.delete_user_sessions(linked.id)
             return linked
 
     try:
