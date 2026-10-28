@@ -20,6 +20,8 @@ export type BackendUser = {
 	job: string | null;
 	role: Role;
 	createdAt: string;
+	// false for accounts that only log in with 42
+	hasPassword: boolean;
 };
 
 /** fetch() to the backend, with the browser's session cookie and a JSON body. */

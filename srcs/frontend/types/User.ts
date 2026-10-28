@@ -21,3 +21,11 @@ export type UpdateUserState = {
 	ok: boolean;
 	error?: UserError;
 } | null;
+
+/** Why changing the password failed: a key of Profile.password.errors in messages/*.json */
+export type PasswordError = "wrongCurrent" | "same" | "mismatch" | "invalid" | "notAllowed" | "generic";
+
+export type ChangePasswordState = {
+	ok: boolean;
+	error?: PasswordError;
+} | null;
