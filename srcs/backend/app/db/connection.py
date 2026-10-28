@@ -18,6 +18,7 @@ class Role(enum.Enum):
 
     ADMIN = "admin"
     USER = "user"
+    GUEST = "guest"
 
 
 class Job(enum.Enum):

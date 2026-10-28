@@ -1,5 +1,12 @@
 // a user's own fields (BackendUser in lib/backend.ts)
-export type Role = "admin" | "user";
+export enum Role {
+	ADMIN = "admin",
+	USER = "user",
+	GUEST = "guest",
+}
+
+/** Every role, in the order the role picker and the role filter show them */
+export const ROLES: Role[] = [Role.USER, Role.GUEST, Role.ADMIN];
 
 export type SortKey = "date" | "username" | "email";
 

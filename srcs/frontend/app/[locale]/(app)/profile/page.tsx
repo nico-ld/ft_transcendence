@@ -6,6 +6,7 @@ import { PasswordForm } from "@/components/users/PasswordForm";
 import { ProfileForm } from "@/components/users/ProfileForm";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getCurrentUser } from "@/lib/backend";
+import { Role } from "@/types/User";
 
 export default function ProfilePage() {
 	return (
@@ -31,7 +32,7 @@ async function Profile() {
 	const account = [
 		{ label: t("email"), value: user.email },
 		{ label: t("role"), value: h(user.role) },
-		{ label: u("userInfo.job"), value: user.isGuest && user.role !== "admin" ? u("guest") : (user.job ? u(`jobList.${user.job}`) : u("noJob")) },
+		{ label: u("userInfo.job"), value: user.role === Role.GUEST ? u("guest") : (user.job ? u(`jobList.${user.job}`) : u("noJob")) },
 		{
 			label: t("memberSince"),
 			value: new Intl.DateTimeFormat(locale, { dateStyle: "long", timeZone: "UTC" }).format(new Date(user.createdAt))

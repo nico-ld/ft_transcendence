@@ -1,8 +1,9 @@
 import { Role } from "@/types/User";
 
 export const ROLE_HOME: Record<Role, string> = {
-	admin: "/admin",
-	user: "/user"
+	[Role.ADMIN]: "/admin",
+	[Role.USER]: "/user",
+	[Role.GUEST]: "/user"
 };
 
 export { cn } from "cn"

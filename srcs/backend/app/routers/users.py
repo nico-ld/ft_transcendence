@@ -17,13 +17,17 @@ router = APIRouter(
 
 @router.post("", status_code=status.HTTP_201_CREATED)
 def create_user(body: UserCreateIn) -> UserOut:
+    # Ensure GUEST role for users without a job (unless they're ADMIN)
+    role = body.role
+    if body.job is None and role != Role.ADMIN:
+        role = Role.GUEST
     try:
         user = users_db.add_user(
             body.username,
             body.first_name,
             body.last_name,
             body.email,
-            body.role,
+            role,
             job=body.job,
             password_hash=hash_password(body.password),
         )
@@ -40,6 +44,10 @@ def get_user(user_id: int) -> UserOut:
     user = users_db.get_user(user_id)
     if user is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "User not found")
+    # Enforce: non-admin users without a job should be GUEST
+    if user.job is None and user.role != Role.ADMIN:
+        user.role = Role.GUEST
+        users_db.update_user(user.id, {"role": Role.GUEST})
     return UserOut.model_validate(user)
 
 
@@ -67,7 +75,13 @@ async def delete_user(request: Request, user_id: int, admin: AdminUser) -> None:
 
 @router.get("", status_code=status.HTTP_200_OK)
 def list_users() -> list[UserOut]:
-    return [UserOut.model_validate(user) for user in users_db.list_users()]
+    users = users_db.list_users()
+    # Enforce: non-admin users without a job should be GUEST
+    for user in users:
+        if user.job is None and user.role != Role.ADMIN:
+            user.role = Role.GUEST
+            users_db.update_user(user.id, {"role": Role.GUEST})
+    return [UserOut.model_validate(user) for user in users]
 
 
 @router.patch("/{user_id}")
@@ -83,6 +97,12 @@ async def update_user(
     before = await run_in_threadpool(users_db.get_user, user_id)
     if before is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "User not found")
+    # Auto-promote from GUEST to USER when assigning a job
+    if "job" in changes and changes["job"] is not None and before.role == Role.GUEST:
+        changes["role"] = Role.USER
+    # Auto-demote to GUEST when job is removed (unless user is ADMIN)
+    if "job" in changes and changes["job"] is None and before.role != Role.ADMIN:
+        changes["role"] = Role.GUEST
     user = await run_in_threadpool(users_db.update_user, user_id, changes)
     if user is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "User not found")

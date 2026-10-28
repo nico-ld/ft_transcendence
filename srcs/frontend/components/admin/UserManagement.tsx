@@ -39,7 +39,8 @@ import {
 	DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 
-import type { SortKey } from "@/types/User"
+import { JOBS } from "@/types/jobs";
+import { ROLES, Role, type SortKey} from "@/types/User"
 import type { BackendUser } from "@/lib/backend";
 import type { Viewer } from "@/types/Viewer";
 
@@ -86,13 +87,13 @@ function UserList({ users, viewerId, onSelect }: {users: BackendUser[] | null; v
 					<ItemContent className="gap-1">
 						<ItemTitle>
 							{person.username}
-							{person.role === "admin" && <AdminBadge />}
-							{person.isGuest && person.role !== "admin" && <GuestBadge />}
+							{person.role === Role.ADMIN && <AdminBadge />}
+							{person.role === Role.GUEST && <GuestBadge />}
 						</ItemTitle>
 						<ItemDescription>{person.email}</ItemDescription>
 					</ItemContent>
 					<ItemActions onClick={(e) => e.stopPropagation()}>
-						{person.isGuest && person.role !== "admin" ? <GuestBadge /> : <UserBadge job={person.job ? t(`jobList.${person.job}`) : t("noJob")} />}
+						{person.role === Role.GUEST ? <GuestBadge /> : <UserBadge job={person.job ? t(`jobList.${person.job}`) : t("noJob")} />}
 						{/* the backend refuses to delete the admin's own account */}
 						{person.id !== viewerId && <RemoveUser user={person} />}
 					</ItemActions>

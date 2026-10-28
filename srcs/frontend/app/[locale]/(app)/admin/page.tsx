@@ -8,6 +8,7 @@ import { GrafanaModal } from "@/components/dashboard/GrafanaModal";
 import { getCurrentUser, getUsers } from "@/lib/backend";
 import { getSystemStats } from "@/lib/stats";
 import { ROLE_HOME } from "@/lib/utils";
+import { Role } from "@/types/User";
 
 export default function AdminPage() {
 	return (
@@ -29,7 +30,7 @@ async function AdminDashboard() {
 
 	if (!viewer)
 		return redirect({ href: "/login", locale });
-	if (viewer.role !== "admin")
+	if (viewer.role !== Role.ADMIN)
 		return redirect({ href: ROLE_HOME[viewer.role], locale });
 
 	// only accounts with a job have a workspace, so metrics in grafana

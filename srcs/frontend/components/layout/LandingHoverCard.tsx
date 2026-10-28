@@ -5,21 +5,6 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
 import { ChevronDown } from "lucide-react";
 import { DocNavSection } from "@/types/Doc";
 
-function DocElem({title, href}: {title: string; href: string}) {
-	return (
-		<Link
-			href={href}
-			className="relative w-fit font-semibold
-						after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:bg-current
-						after:origin-right hover:after:origin-left after:scale-x-0
-						after:transition-transform after:duration-300 after:ease-out
-						hover:after:scale-x-100 focus-visible:after:scale-x-100"
-		>
-			{title}
-		</Link>
-	);
-}
-
 export function LandingHoverCard({sections}: {sections: DocNavSection[]}) {
 	const t = useTranslations("Landing");
 	const d = useTranslations("Docs.sections");
@@ -39,7 +24,19 @@ export function LandingHoverCard({sections}: {sections: DocNavSection[]}) {
 							{d(section.id)}
 						</div>
 						{section.items.map((item) => (
-							<DocElem key={item.href} title={item.title} href={item.href} />
+							<Link key={item.href} href={item.href} className="group w-full font-semibold">
+								<span
+									className="relative inline-block
+										after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:bg-current
+										after:origin-right after:scale-x-0
+										after:transition-transform after:duration-300 after:ease-out
+										group-hover:after:origin-left group-hover:after:scale-x-100
+										group-focus-visible:after:origin-left group-focus-visible:after:scale-x-100
+										motion-reduce:after:transition-none"
+								>
+									{item.title}
+								</span>
+							</Link>
 						))}
 					</article>
 				))}

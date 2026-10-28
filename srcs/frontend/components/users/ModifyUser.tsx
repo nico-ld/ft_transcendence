@@ -25,6 +25,7 @@ import { Field } from "@/components/ui/field";
 import { toast } from "@/components/ui/toast";
 import type { ModifyUserProps } from "@/types/ModifyUserProps";
 import type { UpdateUserState } from "@/types/User";
+import { Role } from "@/types/User";
 import { useTranslations } from "next-intl";
 
 function ModifyUserForm({user, viewer, onDone}:
@@ -35,7 +36,7 @@ function ModifyUserForm({user, viewer, onDone}:
 	const n = useTranslations("Toast");
 	const uid = React.useId();
 
-	const isAdmin = viewer.role === "admin";
+	const isAdmin = viewer.role === Role.ADMIN;
 	const isSelf = user.id === viewer.id;
 	// toast here and not in the effect below: the effect runs again on every render
 	const [state, formAction, pending] = React.useActionState(
