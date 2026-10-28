@@ -121,6 +121,27 @@ The full API (routes, bodies, responses) is at `/api/docs`.
 | DELETE | `/api/users/{user_id}` | admin |
 | WS | `/api/ws/terminal` | logged in |
 
+### Sign up :
+
+* `POST /api/auth/signup`, in `routers/auth.py`. The body is checked by `SignupIn` in `schemas.py`:
+
+| Field | Rule |
+|---|---|
+| `email` | a valid email, saved in lowercase, not used by another account |
+| `username` | 3 to 20 letters, digits, `_` or `-` (spaces around it are removed). Two accounts can have the same one: it's a display name, the email is what identifies an account |
+| `firstName`, `lastName` | 1 to 100 characters |
+| `password` | 8 to 128 characters, saved as an argon2 hash |
+
+* Any other field (`role`, `id`...) is refused. A new account is always a `user` with no job, so it has no workspace until an admin assigns one.
+
+| Answer | When |
+|---|---|
+| `201` with a session cookie | the account was created, and the user is logged in |
+| `409` | the email is already used. The database checks it, so two sign-ups at the same moment can't both get it |
+| `422` | a field breaks a rule above, or an unknown field was sent |
+
+* The same username rule applies when an admin creates or edits a user (`/api/users`) and on the profile page (`PATCH /api/auth/me`).
+
 ### Log in with 42 (OAuth 2.0) :
 
 * `routers/oauth42.py`, with the authlib library. `/api/auth/42/login` sends the browser to the 42 intra, which sends it back to `/api/auth/42/callback`. The callback logs the user in and redirects to `/admin` or `/user` without a locale: next-intl adds the one the user picked. The full flow is explained in the README, Modules section.
@@ -141,6 +162,8 @@ The full API (routes, bodies, responses) is at `/api/docs`.
   * `$host` has no port, so this only works on 443. To publish on another port, use `$http_host` in nginx.conf and register the redirect URI with that port on the intra.
 
 * If every 42 login suddenly ends with `oauth_unavailable`, check the app on the intra: its secret may have been replaced or have expired.
+
+* An account found by its email (created by an admin, or through sign up) is linked to the 42 account on its first 42 login. Its password is then removed and every browser logged in to it is logged out: 42 has proven that the email belongs to this person, while anyone can sign up with any email. From then on, that account logs in with 42 only.
 
 ## Nginx :
 
