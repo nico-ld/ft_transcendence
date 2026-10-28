@@ -160,15 +160,15 @@
   },
   "Stats": {
     "title": "Resumen del sistema",
-    "weekLabel": "Tiempo de registro diario",
-    "week": "esta semana",
-    "month": "este mes",
+    "weekLabel": "Tiempo de conexión diario",
+    "week": "Esta semana",
+    "month": "Este mes",
     "extra": "Usuarios registrados",
     "grafana": "Ver las métricas en Grafana",
-    "grafanaTitle": "Métricas de los workspaces",
-    "grafanaUser": "Workspace",
+    "grafanaTitle": "Métricas de los espacios de trabajo",
+    "grafanaUser": "Espacio de trabajo",
     "grafanaNewTab": "Abrir en Grafana",
-    "grafanaEmpty": "Ningún usuario tiene un workspace todavía",
+    "grafanaEmpty": "Ningún usuario tiene todavía un espacio de trabajo",
     "memory": {
       "aria": "Uso de memoria: {percent} %",
       "label": "memoria",
@@ -223,7 +223,26 @@
       "label": "Ordenar por",
       "date": "Fecha",
       "username": "Nombre",
-      "email": "Correo electrónico"
+      "email": "Correo electrónico",
+      "order": "Orden",
+      "asc": "Ascendente",
+      "desc": "Descendente"
+    },
+    "filter": {
+      "label": "Ordenar y filtrar",
+      "title": "Filtrar",
+      "role": "Rol",
+      "job": "Puesto",
+      "all": "Todos",
+      "clear": "Borrar los filtros"
+    },
+    "noMatch": "Ningún usuario coincide con la búsqueda y los filtros.",
+    "page": {
+      "label": "Páginas",
+      "previous": "Página anterior",
+      "next": "Página siguiente",
+      "status": "Página {page} de {pages}",
+      "total": "{count, plural, =0 {Ningún usuario} one {# usuario} other {# usuarios}}"
     },
     "errors": {
       "invalid": "Algunos campos no son válidos. Revísalos e inténtalo de nuevo.",

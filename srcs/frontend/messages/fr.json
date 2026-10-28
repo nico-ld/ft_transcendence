@@ -156,16 +156,16 @@
     }
   },
   "Stats": {
-    "title": "Apperçu Système",
+    "title": "Aperçu du système",
     "weekLabel": "Temps de connexion quotidien",
     "week": "Cette semaine",
     "month": "Ce mois",
-    "extra": "Utilisateur inscrit",
+    "extra": "Utilisateurs inscrits",
     "grafana": "Voir les métriques dans Grafana",
-    "grafanaTitle": "Métriques des workspaces",
-    "grafanaUser": "Workspace",
+    "grafanaTitle": "Métriques des espaces de travail",
+    "grafanaUser": "Espace de travail",
     "grafanaNewTab": "Ouvrir dans Grafana",
-    "grafanaEmpty": "Aucun utilisateur n'a encore de workspace",
+    "grafanaEmpty": "Aucun utilisateur n'a encore d'espace de travail",
     "memory": {
       "aria": "Utilisation de la mémoire : {percent} %",
       "label": "mémoire",
@@ -220,7 +220,26 @@
       "label": "Trier par",
       "date": "Date",
       "username": "Nom",
-      "email": "Email"
+      "email": "Email",
+      "order": "Ordre",
+      "asc": "Croissant",
+      "desc": "Décroissant"
+    },
+    "filter": {
+      "label": "Trier et filtrer",
+      "title": "Filtrer",
+      "role": "Rôle",
+      "job": "Poste",
+      "all": "Tous",
+      "clear": "Effacer les filtres"
+    },
+    "noMatch": "Aucun utilisateur ne correspond à la recherche et aux filtres.",
+    "page": {
+      "label": "Pages",
+      "previous": "Page précédente",
+      "next": "Page suivante",
+      "status": "Page {page} sur {pages}",
+      "total": "{count, plural, =0 {Aucun utilisateur} one {# utilisateur} other {# utilisateurs}}"
     },
     "errors": {
       "invalid": "Certains champs sont invalides. Vérifiez-les et réessayez.",
