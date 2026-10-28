@@ -285,7 +285,7 @@ export function UserManagement({ users, viewer }: { users: BackendUser[] | null;
 	const pageUsers = visibleUsers?.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE) ?? null;
 
 	return (
-		<div className="flex h-150 w-full max-w-125 flex-col rounded-xl border bg-card p-2 shadow-glow">
+		<div className="flex h-150 w-full max-w-125 flex-col rounded-xl border bg-card p-2">
 			<ItemGroup className="bg-card">
 				<Item variant="muted">
 					<ItemContent>
