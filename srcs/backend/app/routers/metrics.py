@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from httpx import AsyncClient, HTTPError
 from schemas import WorkspaceMetrics
-from security import require_admin
+from security import AdminUser, require_admin
 
 router = APIRouter(
     prefix="/prometheus", tags=["monitoring"], dependencies=[Depends(require_admin)]
@@ -27,6 +27,13 @@ async def prom_query(query: str) -> float:
         if not result:
             raise HTTPException(status.HTTP_404_NOT_FOUND, "No metrics data found")
         return float(result[0]["value"][1])
+
+
+@router.get("/grafana-auth", status_code=status.HTTP_204_NO_CONTENT)
+def grafana_auth(user: AdminUser, response: Response) -> None:
+    """nginx auth_request for /grafana/"""
+    # grafana (auth proxy) logs in the account with this email
+    response.headers["X-WEBAUTH-USER"] = user.email
 
 
 @router.get("/workspace/{user_id}", response_model=WorkspaceMetrics)
