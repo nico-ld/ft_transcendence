@@ -191,6 +191,18 @@
     "role": "Account type",
     "memberSince": "Member since",
     "saved": "Your profile has been updated.",
+    "avatar": {
+      "change": "Change avatar",
+      "hint": "Click or drop an image. PNG, JPEG or WebP, 5 MB max.",
+      "saved": "Your avatar has been updated.",
+      "removed": "Your avatar has been removed.",
+      "remove": "Remove",
+      "errors": {
+        "type": "Only PNG, JPEG and WebP images are accepted.",
+        "size": "This image is larger than 5 MB.",
+        "generic": "Something went wrong. Please try again."
+      }
+    },
     "password": {
       "title": "Password",
       "description": "Change the password you log in with.",

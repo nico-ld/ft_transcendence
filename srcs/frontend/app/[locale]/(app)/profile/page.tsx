@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { DashboardShell } from "@/components/dashboard/DashboardShell";
+import { AvatarForm } from "@/components/users/AvatarForm";
 import { PasswordForm } from "@/components/users/PasswordForm";
 import { ProfileForm } from "@/components/users/ProfileForm";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -46,7 +47,8 @@ async function Profile() {
 						<CardTitle>{t("title")}</CardTitle>
 						<CardDescription>{t("description")}</CardDescription>
 					</CardHeader>
-					<CardContent>
+					<CardContent className="flex flex-col gap-6">
+						<AvatarForm avatar={user.avatar} username={user.username} />
 						<ProfileForm user={user} />
 					</CardContent>
 				</Card>

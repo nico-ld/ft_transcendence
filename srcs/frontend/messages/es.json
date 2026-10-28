@@ -194,6 +194,18 @@
     "role": "Tipo de cuenta",
     "memberSince": "Miembro desde",
     "saved": "Tu perfil se ha actualizado.",
+    "avatar": {
+      "change": "Cambiar avatar",
+      "hint": "Haz clic o suelta una imagen. PNG, JPEG o WebP, 5 MB máx.",
+      "saved": "Tu avatar se ha actualizado.",
+      "removed": "Tu avatar se ha eliminado.",
+      "remove": "Eliminar",
+      "errors": {
+        "type": "Solo se aceptan imágenes PNG, JPEG y WebP.",
+        "size": "Esta imagen supera los 5 MB.",
+        "generic": "Algo salió mal. Inténtalo de nuevo."
+      }
+    },
     "password": {
       "title": "Contraseña",
       "description": "Cambia la contraseña con la que inicias sesión.",
