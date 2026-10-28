@@ -74,8 +74,6 @@
     "haveAccount": "¿Ya tienes una cuenta? Inicia sesión",
     "errors": {
       "emailTaken": "Este correo electrónico ya está en uso.",
-      "usernameTaken": "Este nombre de usuario ya está en uso.",
-      "weakPassword": "La contraseña debe tener al menos 8 caracteres.",
       "passwordMismatch": "Las contraseñas no coinciden.",
       "invalidInput": "Algunos de los datos introducidos no son válidos.",
       "generic": "Algo ha salido mal. Inténtalo de nuevo."

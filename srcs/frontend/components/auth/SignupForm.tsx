@@ -2,8 +2,8 @@
 
 import { Link, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { useActionState, useTransition } from "react";
-import { Login, Signup } from "@/actions/auth";
+import { useActionState } from "react";
+import { Signup } from "@/actions/auth";
 import { ROLE_HOME } from "@/lib/utils";
 import { AuthCard } from "./AuthCard";
 import { AuthError } from "./AuthError";
@@ -12,15 +12,12 @@ import { useFormSubmit } from "@/actions/useFormSubmit";
 
 import type { SignupError } from "@/types/SignupErrors";
 import type { FieldName } from "@/types/FormFieldProps";
-import { cp } from "fs";
 
 const PASSWORD_MIN_LENGTH = 8;
 const USERNAME_PATTERN = "[a-zA-Z0-9_]{3,20}";
 
 const ERROR_FIELD: Partial<Record<Exclude<SignupError, "">, FieldName>> = {
 	emailTaken: "email",
-	usernameTaken: "username",
-	weakPassword: "password",
 	passwordMismatch: "confirmPassword"
 };
 
@@ -33,19 +30,18 @@ export function SignupForm() {
 			const email = String(formData.get("email"));
 			const username = String(formData.get("username"));
 			const password = String(formData.get("password"));
+			const firstName = String(formData.get("firstName"));
+			const lastName = String(formData.get("lastName"));
 
 			if (password !== String(formData.get("confirmPassword")))
 				return "passwordMismatch";
 
 			try {
-				const signupError = await Signup({email, username, password});
+				const signupError = await Signup({email, username, password, firstName, lastName});
 				if (signupError)
 					return signupError;
 
-				const result = await Login({email, password});
-				if (!result)
-					return "generic";
-				router.replace(ROLE_HOME[result.role]);
+				router.replace(ROLE_HOME.user);
 				return "";
 			} catch {
 				return "generic";
@@ -76,14 +72,14 @@ export function SignupForm() {
 			<FormField
 				label={t("lastName")}
 				name="lastName"
-				autoComplete="lastName"
+				autoComplete="family-name"
 				error={fieldError("lastName")}
 				required
 			/>
 			<FormField
 				label={t("firstName")}
 				name="firstName"
-				autoComplete="firstName"
+				autoComplete="given-name"
 				error={fieldError("firstName")}
 				required
 			/>
