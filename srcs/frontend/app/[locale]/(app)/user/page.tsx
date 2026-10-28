@@ -29,7 +29,7 @@ async function UserDashboard() {
 	//I swear, those multi-lines returns are going to make me cry
 	return (
 		<DashboardShell role={user.role} username={user.username} avatarUrl={user.avatar ?? undefined}>
-			<StatsPanel stats={stats} />
+			{stats && <StatsPanel stats={stats} />}
 			<WorkspaceLink href="/workspace" label={t("workSpace")}/>
 		</DashboardShell>
 	);
