@@ -50,7 +50,7 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 						<Button 
 							variant="ghost"
 							className="h-10 gap-2 px-1.5"
-							aria-label="Open user menu"
+							aria-label={t("userMenu")}
 						/>
 					}
 				>
