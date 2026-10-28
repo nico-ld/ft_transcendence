@@ -185,7 +185,25 @@
     "email": "Email",
     "role": "Account type",
     "memberSince": "Member since",
-    "saved": "Your profile has been updated."
+    "saved": "Your profile has been updated.",
+    "password": {
+      "title": "Password",
+      "description": "Change the password you log in with.",
+      "current": "Current password",
+      "new": "New password",
+      "confirm": "Confirm the new password",
+      "submit": "Change password",
+      "saved": "Your password has been changed. Your other browsers have been logged out.",
+      "noPassword": "You log in with 42, so this account has no password.",
+      "errors": {
+        "wrongCurrent": "This password is incorrect.",
+        "same": "The new password must be different from the current one.",
+        "mismatch": "The passwords do not match.",
+        "invalid": "The new password must be 8 to 128 characters long.",
+        "notAllowed": "Your session has ended. Log in again.",
+        "generic": "Something went wrong. Please try again."
+      }
+    }
   },
   "Users": {
     "search": "Search",
