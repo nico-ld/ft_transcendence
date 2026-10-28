@@ -44,6 +44,7 @@
     "loggingIn": "Connexion",
     "with42": "Se connecter avec 42",
     "failedTitle": "Connexion impossible",
+    "noAccount": "Pas de compte ? Inscrivez-vous ici !",
     "errors": {
       "invalidCredentials": "Email ou mot de passe invalid",
       "generic": "Une erreur s'est produite. Merci de réessayer.",
@@ -53,10 +54,32 @@
       "oauthConflict": "Cet email est déjà associé à un autre compte 42."
     }
   },
+  "Signup": {
+    "title": "Créer un compte",
+    "description": "Saisissez vos informations pour commencer",
+    "failedTitle": "Échec de la création du compte",
+    "email": "Adresse e-mail",
+    "username": "Nom d'utilisateur",
+	"lastName": "Nom",
+	"firstName": "Prénom",
+    "usernameHint": "De 3 à 20 caractères : lettres, chiffres et tirets bas",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "signUp": "S'inscrire",
+    "signingUp": "Création du compte...",
+    "with42": "S'inscrire avec 42",
+    "haveAccount": "Vous avez déjà un compte ? Se connecter",
+    "errors": {
+      "emailTaken": "Cette adresse e-mail est déjà utilisée.",
+      "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "invalidInput": "Certaines des informations saisies sont invalides.",
+      "generic": "Une erreur s'est produite. Veuillez réessayer."
+    }
+  },
   "Landing": {
     "mainNav": "Principal",
-    "signin": "Se connecter",
-    "heroCta": "Se connecter à Silk Space",
+    "signin": "Se connecter", "signup": "S'inscrire",
+    "heroCta": "S'inscrire à Silk Space",
     "resources": "Ressources",
     "headline": "Des environnements de travail prêts à l'emploi, rapidement déployés",
     "subtitle": "Une solution clé en main pour votre entreprise. Gérez vos équipes et vos sessions de travail en quelques clics, le tout depuis un espace centralisé.",
