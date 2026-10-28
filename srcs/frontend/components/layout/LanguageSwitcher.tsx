@@ -33,7 +33,6 @@ function LanguageOptions() {
 
 	return (
 		<DropdownMenuGroup>
-			<DropdownMenuLabel>{t("selectLanguage")}</DropdownMenuLabel>
 			<DropdownMenuRadioGroup
 				value={locale}
 				onValueChange={(next) => router.replace(pathname, {locale: next as Locale})}

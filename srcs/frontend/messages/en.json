@@ -12,7 +12,7 @@
     "contents": "Contents",
     "seeAlso": "See also:",
     "home": "Back to home",
-    "studentProject": "{project}, a student project at {school}"
+    "studentProject": "{project}"
   },
   "Language": {
     "selectLanguage": "Select the language",
@@ -33,8 +33,11 @@
     "editProfile": "Edit your profile",
     "logout": "Log out",
     "loggingOut": "Logging out",
-    "light": "Light Mode",
-    "dark": "Dark Mode",
+    "current": {"light": "Light Mode", "dark": "Dark Mode", "system": "System Mode"},
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "theme": "Theme",
     "admin": "Admin",
     "user": "User"
   },
