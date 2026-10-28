@@ -8,11 +8,15 @@ import { ROLE_HOME } from "@/lib/utils";
 import { AuthError } from "./AuthError";
 import { FormField } from "../layout/FormField";
 import { useFormSubmit } from "@/actions/useFormSubmit";
+import { Button, buttonVariants } from "../ui/button";
+import { Spinner } from "../ui/spinner";
 
 import type { SignupError } from "@/types/SignupErrors";
 import type { FieldName } from "@/types/FormFieldProps";
 
 const PASSWORD_MIN_LENGTH = 8;
+
+const FT_LOGIN_URL = "/api/auth/42/login";
 
 const ERROR_FIELD: Partial<Record<Exclude<SignupError, "">, FieldName>> = {
 	emailTaken: "email",
@@ -26,7 +30,7 @@ function SignFields() {
 	const [error, formAction, pending] = useActionState<SignupError, FormData>(
 		async (_prev, formData) => {
 			const email = String(formData.get("email"));
-			const username = String(formData.get("username"));
+			const username = email.split("@")[0];
 			const password = String(formData.get("password"));
 			const firstName = String(formData.get("firstName"));
 			const lastName = String(formData.get("lastName"));
@@ -51,25 +55,76 @@ function SignFields() {
 	const fieldError = (name: FieldName) => errorField === name && error ? t(`errors.${error}`) : undefined;
 
 	return (
-		<section className="flex flex-row gap-5">
+		<form className="flex flex-col gap-6" onSubmit={submit}>
+			<section className="flex flex-col gap-5">
+				<article className="flex flex-row gap-5">
+						<FormField
+							label={t("lastName")}
+							name="lastName"
+							autoComplete="lastName"
+							error={fieldError("lastName")}
+							required
+						/>
+						<FormField
+							label={t("firstName")}
+							name="firstName"
+							autoComplete="firstName"
+							error={fieldError("firstName")}
+							required
+						/>
+				</article>
 				<FormField
-					label={t("lastName")}
-					name="lastName"
-					autoComplete="lastName"
-					error={fieldError("lastName")}
+					label={t("email")}
+					name="email"
+					type="email"
+					autoComplete="email"
+					error={fieldError("email")}
 					required
 				/>
 				<FormField
-					label={t("firstName")}
-					name="firstName"
-					autoComplete="firstName"
-					error={fieldError("firstName")}
+					label={t("password")}
+					name="password"
+					type="password"
+					autoComplete="new-password"
+					minLength={PASSWORD_MIN_LENGTH}
+					error={fieldError("password")}
 					required
 				/>
-		</section>
+				<FormField
+					label={t("confirmPassword")}
+					name="confirmPassword"
+					type="password"
+					autoComplete="new-password"
+					error={fieldError("confirmPassword")}
+					required
+				/>
+			</section>
+			<section className="flex flex-col items-center">
+				<Button type="submit" className="w-3/4 h-10" disabled={pending}>
+					{pending ? t("signingUp") : t("signUp")}
+					{pending && <Spinner />}
+				</Button>
+			</section>
+		</form>
 	);
 }
 
 export function SignupForm() {
+	const t = useTranslations("Signup");
 
+	return (
+		<main className="flex flex-col gap-5">
+			<section className="text-center mb-2">
+				<h1 className="font-bold text-2xl">Sign up to Silk Space</h1>
+			</section>
+			<SignFields />
+			<hr />
+			<section className="flex flex-col items-center gap-4">
+				<Link href={FT_LOGIN_URL} className={buttonVariants({variant: "outline", className: "w-3/4 h-10"})}>
+					{t("with42")}
+				</Link>
+				<Link href="/login" className="text-xs hover:underline">{t("haveAccount")}</Link>
+			</section>
+		</main>
+	);
 }
