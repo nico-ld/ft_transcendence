@@ -2,12 +2,11 @@
 
 import { Link, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
 import Image from "next/image";
 
 import { Login } from "@/actions/auth";
 import { ROLE_HOME } from "@/lib/utils";
-import { AuthCard } from "./AuthCard";
 import { AuthError } from "./AuthError";
 import { FormField } from "../layout/FormField";
 import { useFormSubmit } from "@/actions/useFormSubmit";
@@ -21,6 +20,14 @@ const FT_LOGIN_URL = "/api/auth/42/login";
 function LoginFields({oauthError = ""}: {oauthError?: LoginError}) {
 	const router = useRouter();
 	const t = useTranslations("Login");
+	const passwordRef = useRef<HTMLInputElement>(null);
+
+	function resetPassword() {
+		if (!passwordRef.current)
+			return ;
+		passwordRef.current.value = "";
+		passwordRef.current.focus();
+	}
 
 	const [error, formAction, pending] = useActionState<LoginError, FormData>(
 		async (_prev, formData) => {
@@ -29,11 +36,14 @@ function LoginFields({oauthError = ""}: {oauthError?: LoginError}) {
 					email: String(formData.get("email")),
 					password: String(formData.get("password"))
 				});
-				if (!result)
+				if (!result) {
+					resetPassword();
 					return "invalidCredentials";
+				}
 				router.replace(ROLE_HOME[result.role]);
 				return "";
 			} catch {
+				resetPassword();
 				return "generic";
 			}
 		},
@@ -43,7 +53,8 @@ function LoginFields({oauthError = ""}: {oauthError?: LoginError}) {
 	const submit = useFormSubmit(formAction);
 
 	return (
-		<form className="flex flex-col gap-6" onSubmit={submit}>
+		<form className="flex flex-col gap-6 min-w-sm" onSubmit={submit}>
+			{error && <AuthError title={t("failedTitle")} message={t(`errors.${error}`)}/>}
 			<section className="flex flex-col gap-5">
 				<FormField
 					label={t("email")}
@@ -53,10 +64,10 @@ function LoginFields({oauthError = ""}: {oauthError?: LoginError}) {
 					required
 				/>
 				<FormField
+					ref={passwordRef}
 					label={t("password")}
 					name="password"
 					type="password"
-					autoComplete="current-password"
 					required
 				/>
 			</section>
@@ -81,13 +92,13 @@ export function LoginForm() {
 			<hr />
 			<LoginFields />
 			<section className="flex flex-col items-center gap-4">
-				<Link href={FT_LOGIN_URL} className={buttonVariants({variant: "outline", className: "w-3/4 h-10 gap-3 font-semibold"})}>
+				<a href={FT_LOGIN_URL} className={buttonVariants({variant: "outline", className: "w-3/4 h-10 gap-3"})}>
+					<Image src="/42_logo.svg" alt="" width={50} height={50} unoptimized className="size-5 invert dark:invert-0"/>
 					{t("with42")}
-					<Image src="/42_logo.svg" alt="42" width={50} height={50} unoptimized className="size-5 text-primary invert dark:invert-0"/>
-				</Link>
+				</a>
 			</section>
 			<hr />
-			<Link href="/signup" className="text-xs hover:underline">{t("noAccount")}</Link>
+			<Link href="/signup" className="text-xs text-center hover:underline">{t("noAccount")}</Link>
 		</main>
 	);
 }

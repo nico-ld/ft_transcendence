@@ -57,6 +57,7 @@ function SignupFields() {
 
 	return (
 		<form className="flex flex-col gap-6" onSubmit={submit}>
+			{error && <AuthError title={t("failedTitle")} message={t(`errors.${error}`)}/>}
 			<section className="flex flex-col gap-5">
 				<article className="flex flex-row gap-5">
 						<FormField
@@ -121,10 +122,10 @@ export function SignupForm() {
 			<hr />
 			<SignupFields />
 			<section className="flex flex-col items-center gap-4">
-				<Link href={FT_LOGIN_URL} className={buttonVariants({variant: "outline", className: "w-3/4 h-10 gap-3 font-semibold"})}>
+				<a href={FT_LOGIN_URL} className={buttonVariants({variant: "outline", className: "w-3/4 h-10 gap-4"})}>
+					<Image src="/42_logo.svg" alt="" width={50} height={50} unoptimized className="size-5 invert dark:invert-0"/>
 					{t("with42")}
-					<Image src="/42_logo.svg" alt="42" width={50} height={50} unoptimized className="size-5 text-primary invert dark:invert-0"/>
-				</Link>
+				</a>
 			</section>
 			<hr />
 			<Link href="/login" className="text-xs text-center hover:underline">{t("haveAccount")}</Link>

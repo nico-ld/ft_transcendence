@@ -45,7 +45,7 @@
     "password": "Password",
     "login": "Log in",
     "loggingIn": "Logging In",
-    "with42": "Log in with",
+    "with42": "Log in with 42",
     "failedTitle": "Connection Failed",
     "noAccount": "No account yet ? Sign up here !",
     "errors": {
@@ -70,7 +70,7 @@
     "confirmPassword": "Confirm password",
     "signUp": "Sign up",
     "signingUp": "Creating account...",
-    "with42": "Sign up with",
+    "with42": "Sign up with 42",
     "haveAccount": "Already have an account ? Log in",
     "errors": {
       "emailTaken": "This email is already used.",
