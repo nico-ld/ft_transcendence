@@ -26,7 +26,7 @@ export function AuthCard({
 	children
 }: AuthProps) {
 	return (
-		<div className="w-80 h-auto flex flex-col gap-2">
+		<div className="min-w-80 h-auto flex flex-col gap-2">
 			<div className="mb-4" aria-live="polite">
 				{alert}
 			</div>
