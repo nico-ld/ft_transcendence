@@ -47,8 +47,8 @@ services:
     image: prom/prometheus:v3.15.1
     container_name: prometheus
     restart: unless-stopped
-    expose:
-      - "9090"
+    ports:
+      - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus
@@ -74,9 +74,28 @@ services:
     networks:
       - ft_silk_space
 
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    depends_on:
+      - prometheus       # change this
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+    networks:
+      - ft_silk_space   
+
 volumes:
   postgres_data:
   prometheus-data:
+  grafana-data:
 
 networks:
   ft_silk_space:
