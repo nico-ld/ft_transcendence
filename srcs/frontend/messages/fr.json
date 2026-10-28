@@ -41,7 +41,7 @@
     "title": "Connexion à votre compte",
     "description": "Entrer votre email ci-dessous pour vous connecter à votre compte",
     "email": "Email",
-    "password": "Mot de Passe",
+    "password": "Mot de passe",
     "login": "Se connecter",
     "loggingIn": "Connexion",
     "with42": "Se connecter avec 42",
@@ -158,11 +158,16 @@
     }
   },
   "Stats": {
-    "title": "Apperçu Système",
+    "title": "Aperçu du système",
     "weekLabel": "Temps de connexion quotidien",
     "week": "Cette semaine",
     "month": "Ce mois",
-    "extra": "Utilisateur inscrit",
+    "extra": "Utilisateurs inscrits",
+    "grafana": "Voir les métriques dans Grafana",
+    "grafanaTitle": "Métriques des espaces de travail",
+    "grafanaUser": "Espace de travail",
+    "grafanaNewTab": "Ouvrir dans Grafana",
+    "grafanaEmpty": "Aucun utilisateur n'a encore d'espace de travail",
     "memory": {
       "aria": "Utilisation de la mémoire : {percent} %",
       "label": "mémoire",
@@ -188,6 +193,18 @@
     "role": "Type de compte",
     "memberSince": "Membre depuis",
     "saved": "Votre profil a été mis à jour.",
+    "avatar": {
+      "change": "Changer d'avatar",
+      "hint": "Cliquez ou déposez une image. PNG, JPEG ou WebP, 5 Mo max.",
+      "saved": "Votre avatar a été mis à jour.",
+      "removed": "Votre avatar a été supprimé.",
+      "remove": "Supprimer",
+      "errors": {
+        "type": "Seules les images PNG, JPEG et WebP sont acceptées.",
+        "size": "Cette image dépasse 5 Mo.",
+        "generic": "Une erreur est survenue. Veuillez réessayer."
+      }
+    },
     "password": {
       "title": "Mot de passe",
       "description": "Modifiez le mot de passe avec lequel vous vous connectez.",
@@ -217,12 +234,33 @@
       "label": "Trier par",
       "date": "Date",
       "username": "Nom",
-      "email": "Email"
+      "email": "Email",
+      "order": "Ordre",
+      "asc": "Croissant",
+      "desc": "Décroissant"
+    },
+    "filter": {
+      "label": "Trier et filtrer",
+      "title": "Filtrer",
+      "role": "Rôle",
+      "job": "Poste",
+      "all": "Tous",
+      "clear": "Effacer les filtres"
+    },
+    "noMatch": "Aucun utilisateur ne correspond à la recherche et aux filtres.",
+    "page": {
+      "label": "Pages",
+      "previous": "Page précédente",
+      "next": "Page suivante",
+      "status": "Page {page} sur {pages}",
+      "total": "{count, plural, =0 {Aucun utilisateur} one {# utilisateur} other {# utilisateurs}}"
     },
     "errors": {
       "invalid": "Certains champs sont invalides. Vérifiez-les et réessayez.",
       "notAllowed": "Vous n'avez pas le droit de faire cela.",
       "notFound": "Cet utilisateur n'existe plus.",
+      "emailTaken": "Cette adresse e-mail est déjà utilisée.",
+      "workspace": "Son espace de travail n'a pas pu être supprimé, l'utilisateur a donc été conservé. Merci de réessayer.",
       "generic": "Une erreur s'est produite. Merci de réessayer."
     },
     "userInfo": {
@@ -230,11 +268,12 @@
       "lastName": "Nom",
       "userName": "Nom d'utilisateur",
       "job": "Poste",
-      "jobs": "Postes"
+      "jobs": "Postes",
+      "role": "Rôle"
     },
     "create": {
       "label": "Créer un profil",
-      "description": "Entrez les informations du nouvel utilisateur, une nouvelle session va être créée.",
+      "description": "Entrez les informations du nouvel utilisateur : il se connectera avec cette adresse e-mail et ce mot de passe.",
       "phName": "Entrez le prénom",
       "phLastName": "Entrez le nom",
       "phUserName": "Entrez le nom d'utilisateur",
@@ -243,9 +282,11 @@
     },
     "delete": {
       "label": "Supprimer le profil de {username} ?",
+      "trigger": "Supprimer {username}",
       "description": "Cette action va effacer de façon permanente l'utilisateur et ses données. Assurez-vous d'avoir sauvegardé toutes les données importantes."
     },
     "editProfil": "Modifier le profil de {username}",
+    "roleHint": "Vous ne pouvez pas retirer votre propre rôle d'admin.",
     "jobList": {
       "placeholder": "Sélectionnez un poste",
       "accountant": "Comptable",
@@ -259,6 +300,7 @@
     "loggedIn": "Connecté",
     "accountCreated": "Compte créé",
     "userCreated": "Utilisateur créé",
-    "userUpdated": "Utilisateur modifié"
+    "userUpdated": "Utilisateur modifié",
+    "userDeleted": "Utilisateur supprimé"
   }
 }

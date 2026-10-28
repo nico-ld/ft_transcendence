@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { DashboardShell } from "@/components/dashboard/DashboardShell";
+import { AvatarForm } from "@/components/users/AvatarForm";
 import { PasswordForm } from "@/components/users/PasswordForm";
 import { ProfileForm } from "@/components/users/ProfileForm";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -41,18 +42,19 @@ async function Profile() {
 	return (
 		<DashboardShell role={user.role} username={user.username} avatarUrl={user.avatar ?? undefined}>
 			<div className="flex w-full max-w-3xl flex-col gap-5 md:flex-row md:items-start">
-				<Card className="flex-1 shadow-glow ring-border">
+				<Card className="flex-1 ring-border">
 					<CardHeader>
 						<CardTitle>{t("title")}</CardTitle>
 						<CardDescription>{t("description")}</CardDescription>
 					</CardHeader>
-					<CardContent>
+					<CardContent className="flex flex-col gap-6">
+						<AvatarForm avatar={user.avatar} username={user.username} />
 						<ProfileForm user={user} />
 					</CardContent>
 				</Card>
 
 				<div className="flex flex-1 flex-col gap-5">
-					<Card className="shadow-glow ring-border">
+					<Card className="ring-border">
 						<CardHeader>
 							<CardTitle>{t("account")}</CardTitle>
 						</CardHeader>
@@ -68,7 +70,7 @@ async function Profile() {
 						</CardContent>
 					</Card>
 
-					<Card className="shadow-glow ring-border">
+					<Card className="ring-border">
 						<CardHeader>
 							<CardTitle>{t("password.title")}</CardTitle>
 							{user.hasPassword && <CardDescription>{t("password.description")}</CardDescription>}

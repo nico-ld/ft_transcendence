@@ -164,6 +164,11 @@
     "week": "This week",
     "month": "This month",
     "extra": "Registered users",
+    "grafana": "Show metrics in Grafana",
+    "grafanaTitle": "Workspace metrics",
+    "grafanaUser": "Workspace",
+    "grafanaNewTab": "Open in Grafana",
+    "grafanaEmpty": "No user has a workspace yet",
     "memory": {
       "aria": "Memory usage: {percent}%",
       "label": "memory",
@@ -189,6 +194,18 @@
     "role": "Account type",
     "memberSince": "Member since",
     "saved": "Your profile has been updated.",
+    "avatar": {
+      "change": "Change avatar",
+      "hint": "Click or drop an image. PNG, JPEG or WebP, 5 MB max.",
+      "saved": "Your avatar has been updated.",
+      "removed": "Your avatar has been removed.",
+      "remove": "Remove",
+      "errors": {
+        "type": "Only PNG, JPEG and WebP images are accepted.",
+        "size": "This image is larger than 5 MB.",
+        "generic": "Something went wrong. Please try again."
+      }
+    },
     "password": {
       "title": "Password",
       "description": "Change the password you log in with.",
@@ -218,12 +235,33 @@
       "label": "Sort by",
       "date": "Date",
       "username": "Name",
-      "email": "Email"
+      "email": "Email",
+      "order": "Order",
+      "asc": "Ascending",
+      "desc": "Descending"
+    },
+    "filter": {
+      "label": "Sort and filter",
+      "title": "Filter",
+      "role": "Role",
+      "job": "Job",
+      "all": "All",
+      "clear": "Clear filters"
+    },
+    "noMatch": "No users match the search and filters.",
+    "page": {
+      "label": "Pages",
+      "previous": "Previous page",
+      "next": "Next page",
+      "status": "Page {page} of {pages}",
+      "total": "{count, plural, =0 {No users} one {# user} other {# users}}"
     },
     "errors": {
       "invalid": "Some fields are invalid. Check them and try again.",
       "notAllowed": "You are not allowed to do this.",
       "notFound": "This user no longer exists.",
+      "emailTaken": "This email is already used.",
+      "workspace": "Their workspace couldn't be deleted, so the user was kept. Please try again.",
       "generic": "Something went wrong. Please try again."
     },
     "userInfo": {
@@ -231,11 +269,12 @@
       "lastName": "Last name",
       "userName": "Username",
       "job": "Job",
-      "jobs": "Jobs"
+      "jobs": "Jobs",
+      "role": "Role"
     },
     "create": {
       "label": "Create a profile",
-      "description": "Enter information about the new user, a new session will be created.",
+      "description": "Enter the new user's details. They will log in with this email and password.",
       "phName": "Enter the first name",
       "phLastName": "Enter the last name",
       "phUserName": "Enter the username",
@@ -244,9 +283,11 @@
     },
     "delete": {
       "label": "Delete {username}'s profile?",
+      "trigger": "Delete {username}",
       "description": "This will permanently delete this user and their data. Make sure you have saved any important data."
     },
     "editProfil": "Edit {username}'s profile",
+    "roleHint": "You can't remove your own admin role.",
     "jobList": {
       "placeholder": "Select a job",
       "accountant": "Accountant",
@@ -260,6 +301,7 @@
     "loggedIn": "Logged in",
     "accountCreated": "Account created",
     "userCreated": "User created",
-    "userUpdated": "User updated"
+    "userUpdated": "User updated",
+    "userDeleted": "User deleted"
   }
 }

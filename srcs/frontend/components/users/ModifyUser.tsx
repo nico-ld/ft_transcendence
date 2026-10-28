@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SelectJob } from "@/components/layout/SelectJob";
+import { SelectRole } from "@/components/layout/SelectRole";
 import {
 	Avatar,
 	AvatarImage,
@@ -35,6 +36,7 @@ function ModifyUserForm({user, viewer, onDone}:
 	const uid = React.useId();
 
 	const isAdmin = viewer.role === "admin";
+	const isSelf = user.id === viewer.id;
 	// toast here and not in the effect below: the effect runs again on every render
 	const [state, formAction, pending] = React.useActionState(
 		async (prev: UpdateUserState, form: FormData) => {
@@ -94,6 +96,13 @@ function ModifyUserForm({user, viewer, onDone}:
 						<Label htmlFor={`${uid}-job`}>{t("userInfo.job")}</Label>
 						<SelectJob value={user.job} name="job" />
 						<p className="text-xs text-muted-foreground">{t("jobHint")}</p>
+					</Field>
+				)}
+				{isAdmin && (
+					<Field>
+						<Label htmlFor={`${uid}-role`}>{t("userInfo.role")}</Label>
+						<SelectRole id={`${uid}-role`} name="role" value={user.role} disabled={isSelf} />
+						{isSelf && <p className="text-xs text-muted-foreground">{t("roleHint")}</p>}
 					</Field>
 				)}
 

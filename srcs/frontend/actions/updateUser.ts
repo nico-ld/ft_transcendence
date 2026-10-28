@@ -18,7 +18,9 @@ export async function updateUser(
 			lastName: formData.get("lastName"),
 			username: formData.get("username"),
 			// "Select a job" = no workspace; the backend only restarts the workspace if the job changed
-			job: formData.get("job") || null
+			job: formData.get("job") || null,
+			// not sent for the admin's own account, whose role can't be changed
+			role: formData.get("role") ?? undefined
 		})
 	});
 	if (!res.ok)

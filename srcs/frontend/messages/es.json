@@ -162,10 +162,15 @@
   },
   "Stats": {
     "title": "Resumen del sistema",
-    "weekLabel": "Tiempo de registro diario",
-    "week": "esta semana",
-    "month": "este mes",
+    "weekLabel": "Tiempo de conexión diario",
+    "week": "Esta semana",
+    "month": "Este mes",
     "extra": "Usuarios registrados",
+    "grafana": "Ver las métricas en Grafana",
+    "grafanaTitle": "Métricas de los espacios de trabajo",
+    "grafanaUser": "Espacio de trabajo",
+    "grafanaNewTab": "Abrir en Grafana",
+    "grafanaEmpty": "Ningún usuario tiene todavía un espacio de trabajo",
     "memory": {
       "aria": "Uso de memoria: {percent} %",
       "label": "memoria",
@@ -191,6 +196,18 @@
     "role": "Tipo de cuenta",
     "memberSince": "Miembro desde",
     "saved": "Tu perfil se ha actualizado.",
+    "avatar": {
+      "change": "Cambiar avatar",
+      "hint": "Haz clic o suelta una imagen. PNG, JPEG o WebP, 5 MB máx.",
+      "saved": "Tu avatar se ha actualizado.",
+      "removed": "Tu avatar se ha eliminado.",
+      "remove": "Eliminar",
+      "errors": {
+        "type": "Solo se aceptan imágenes PNG, JPEG y WebP.",
+        "size": "Esta imagen supera los 5 MB.",
+        "generic": "Algo salió mal. Inténtalo de nuevo."
+      }
+    },
     "password": {
       "title": "Contraseña",
       "description": "Cambia la contraseña con la que inicias sesión.",
@@ -220,12 +237,33 @@
       "label": "Ordenar por",
       "date": "Fecha",
       "username": "Nombre",
-      "email": "Correo electrónico"
+      "email": "Correo electrónico",
+      "order": "Orden",
+      "asc": "Ascendente",
+      "desc": "Descendente"
+    },
+    "filter": {
+      "label": "Ordenar y filtrar",
+      "title": "Filtrar",
+      "role": "Rol",
+      "job": "Puesto",
+      "all": "Todos",
+      "clear": "Borrar los filtros"
+    },
+    "noMatch": "Ningún usuario coincide con la búsqueda y los filtros.",
+    "page": {
+      "label": "Páginas",
+      "previous": "Página anterior",
+      "next": "Página siguiente",
+      "status": "Página {page} de {pages}",
+      "total": "{count, plural, =0 {Ningún usuario} one {# usuario} other {# usuarios}}"
     },
     "errors": {
       "invalid": "Algunos campos no son válidos. Revísalos e inténtalo de nuevo.",
       "notAllowed": "No tienes permiso para hacer esto.",
       "notFound": "Este usuario ya no existe.",
+      "emailTaken": "Este correo electrónico ya está en uso.",
+      "workspace": "No se ha podido eliminar su espacio de trabajo, así que se ha conservado el usuario. Inténtalo de nuevo.",
       "generic": "Algo ha salido mal. Inténtalo de nuevo."
     },
     "userInfo": {
@@ -233,11 +271,12 @@
       "lastName": "Apellido",
       "userName": "Nombre de usuario",
       "job": "Puesto",
-      "jobs": "Puestos"
+      "jobs": "Puestos",
+      "role": "Rol"
     },
     "create": {
       "label": "Crear un perfil",
-      "description": "Introduce los datos del nuevo usuario. Se creará una nueva sesión.",
+      "description": "Introduce los datos del nuevo usuario. Iniciará sesión con este correo electrónico y esta contraseña.",
       "phName": "Introduce el nombre",
       "phLastName": "Introduce el apellido",
       "phUserName": "Introduce el nombre de usuario",
@@ -246,9 +285,11 @@
     },
     "delete": {
       "label": "¿Eliminar el perfil de {username}?",
+      "trigger": "Eliminar a {username}",
       "description": "Esta acción eliminará permanentemente al usuario y sus datos. Asegúrate de haber guardado todos los datos importantes."
     },
     "editProfil": "Modificar el perfil de {username}",
+    "roleHint": "No puedes quitarte tu propio rol de admin.",
     "jobList": {
       "placeholder": "Selecciona un puesto",
       "accountant": "Contable",
@@ -262,6 +303,7 @@
     "loggedIn": "Sesión iniciada",
     "accountCreated": "Cuenta creada",
     "userCreated": "Usuario creado",
-    "userUpdated": "Usuario actualizado"
+    "userUpdated": "Usuario actualizado",
+    "userDeleted": "Usuario eliminado"
   }
 }

@@ -143,12 +143,14 @@ choice".
 |---|---|---|---|
 | Use a framework for both the frontend and backend | Web | Major | 2 |
 | Isolated Linux workspaces with a web terminal | Modules of choice | Major | 2 |
+| Advanced permissions system | User Management | Major | 2 |
 | Use an ORM for the database | Web | Minor | 1 |
 | Server-Side Rendering (SSR) | Web | Minor | 1 |
+| Advanced search with filters, sorting and pagination | Web | Minor | 1 |
 | Support for multiple languages | Accessibility and Internationalization | Minor | 1 |
 | Support for additional browsers | Accessibility and Internationalization | Minor | 1 |
 | Remote authentication with OAuth 2.0 | User Management | Minor | 1 |
-| **Total** | | | **9** |
+| **Total** | | | **12** |
 
 ### Major: Use a framework for both the frontend and backend (2 pts)
 
@@ -180,6 +182,22 @@ choice".
 
 **Why it deserves Major status:** it touches every layer of the project (container infrastructure, asynchronous backend, real-time browser terminal and security), and is comparable in size to the listed Major modules such as real-time features with WebSockets or a backend as microservices.
 
+### Major: Advanced permissions system (2 pts)
+
+*Worked on by:* TODO
+
+**Why:** Silk Space is run by HR admins. They create the accounts, give each employee a job (and with it a workspace) and delete the accounts of the people who leave. Employees only see and change their own account.
+
+**Roles:**
+- **Admin:** the admin dashboard, with the system overview and every account. An admin can create users and other admins, change anyone's names, username, job and role, and delete accounts.
+- **User:** their own dashboard and statistics, their workspace, and their profile, where they can change their names, username and password, but not their job or role.
+
+**How it works:**
+- **Checked by the backend on every request.** Every `/users` route requires the admin role (`require_admin` in `srcs/backend/app/security.py`), and anyone else gets a 403. The role is read from the database each time, so a promotion or a demotion takes effect on the user's next request.
+- **CRUD on users** (`srcs/backend/app/routers/users.py`): list, read, create with a role, edit (names, username, job, role) and delete. Deleting an account also deletes its workspace (container, network and volume) and its sessions, so it is logged out everywhere. If Docker can't remove the workspace, the account is kept and the admin can try again.
+- **Always one admin left.** An admin can't remove their own admin role or delete their own account. The sign-up form and the profile page refuse any role or job sent to them.
+- **Different views per role.** The server sends each role to its own dashboard (`/admin` or `/user`) and away from the other one. In the admin panel (`srcs/frontend/components/admin/`), admins have an Admin badge in the list, the create and edit forms have a role choice, and every account but the admin's own has a delete button with a confirmation.
+
 ### Minor: Use an ORM for the database (1 pt)
 
 *Worked on by:* TODO
@@ -195,6 +213,19 @@ choice".
 **Why:** pages arrive with their content already in the HTML. The dashboards come with the user's data in place, without a loading flash, and a visitor who isn't logged in is sent to the login page straight away. The public pages are fast and readable by search engines.
 
 **How it works:** Next.js server components. The dashboards and the profile and workspace pages read the session cookie on the server, call the backend and render at request time (`getCurrentUser` in `srcs/frontend/lib/backend.ts`). With `cacheComponents`, the static part of these pages is prerendered and the user's part is streamed into it. The landing, legal and documentation pages are prerendered at build time in each language (`generateStaticParams`), and the legal and documentation pages have their own titles and descriptions (`generateMetadata`).
+
+### Minor: Advanced search with filters, sorting and pagination (1 pt)
+
+*Worked on by:* TODO
+
+**Why:** admins run every account from one list. Search, filters and pages keep it usable as the company grows, and find anyone in a few keystrokes.
+
+**How it works:** in the admin panel (`srcs/frontend/components/admin/`), on the list of accounts the server sends with the page.
+- **Search:** username, email, and first and last name in either order, ignoring case and accents ("elodie" finds "Élodie").
+- **Filters:** by role and by job, "no workspace" included, from the funnel menu. Each choice shows how many users it would leave given the search and the other filter, and a dot on the funnel shows that a filter is on.
+- **Sorting:** by creation date, username or email, ascending or descending.
+- **Pagination:** 10 users per page, with the number of results. A new search, filter or sort starts again from the first page.
+- The roles come from one list (`ROLES` in `srcs/frontend/types/User.ts`), shared by the role filter and the role picker, so a new role shows up in both.
 
 ### Minor: Support for multiple languages (1 pt)
 
