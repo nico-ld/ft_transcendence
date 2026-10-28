@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { DashboardShell } from "@/components/dashboard/DashboardShell";
+import { PasswordForm } from "@/components/users/PasswordForm";
 import { ProfileForm } from "@/components/users/ProfileForm";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getCurrentUser } from "@/lib/backend";
@@ -50,21 +51,35 @@ async function Profile() {
 					</CardContent>
 				</Card>
 
-				<Card className="flex-1 shadow-glow ring-border">
-					<CardHeader>
-						<CardTitle>{t("account")}</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<dl className="space-y-2 text-sm">
-							{account.map((item) => (
-								<div key={item.label} className="flex justify-between gap-4">
-									<dt className="text-muted-foreground">{item.label}</dt>
-									<dd className="min-w-0 break-all text-right font-medium">{item.value}</dd>
-								</div>
-							))}
-						</dl>
-					</CardContent>
-				</Card>
+				<div className="flex flex-1 flex-col gap-5">
+					<Card className="shadow-glow ring-border">
+						<CardHeader>
+							<CardTitle>{t("account")}</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<dl className="space-y-2 text-sm">
+								{account.map((item) => (
+									<div key={item.label} className="flex justify-between gap-4">
+										<dt className="text-muted-foreground">{item.label}</dt>
+										<dd className="min-w-0 break-all text-right font-medium">{item.value}</dd>
+									</div>
+								))}
+							</dl>
+						</CardContent>
+					</Card>
+
+					<Card className="shadow-glow ring-border">
+						<CardHeader>
+							<CardTitle>{t("password.title")}</CardTitle>
+							{user.hasPassword && <CardDescription>{t("password.description")}</CardDescription>}
+						</CardHeader>
+						<CardContent>
+							{user.hasPassword
+								? <PasswordForm />
+								: <p className="text-sm text-muted-foreground">{t("password.noPassword")}</p>}
+						</CardContent>
+					</Card>
+				</div>
 			</div>
 		</DashboardShell>
 	);
