@@ -45,7 +45,7 @@
     "password": "Contraseña",
     "login": "Iniciar sesión",
     "loggingIn": "Iniciando sesión",
-    "with42": "Iniciar sesión con 42",
+    "with42": "Iniciar sesión con",
     "failedTitle": "Error de conexión",
     "noAccount": "¿Aún no tienes cuenta? ¡Regístrate aquí!",
     "errors": {
@@ -70,7 +70,7 @@
     "confirmPassword": "Confirmar contraseña",
     "signUp": "Registrarse",
     "signingUp": "Creando cuenta...",
-    "with42": "Registrarse con 42",
+    "with42": "Registrarse con",
     "haveAccount": "¿Ya tienes una cuenta? Inicia sesión",
     "errors": {
       "emailTaken": "Este correo electrónico ya está en uso.",

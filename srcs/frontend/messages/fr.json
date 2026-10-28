@@ -42,7 +42,7 @@
     "password": "Mot de Passe",
     "login": "Se connecter",
     "loggingIn": "Connexion",
-    "with42": "Se connecter avec 42",
+    "with42": "Se connecter avec",
     "failedTitle": "Connexion impossible",
     "noAccount": "Pas de compte ? Inscrivez-vous ici !",
     "errors": {
@@ -67,7 +67,7 @@
     "confirmPassword": "Confirmer le mot de passe",
     "signUp": "S'inscrire",
     "signingUp": "Création du compte...",
-    "with42": "S'inscrire avec 42",
+    "with42": "S'inscrire avec",
     "haveAccount": "Vous avez déjà un compte ? Se connecter",
     "errors": {
       "emailTaken": "Cette adresse e-mail est déjà utilisée.",

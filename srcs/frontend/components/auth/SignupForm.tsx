@@ -13,6 +13,7 @@ import { Spinner } from "../ui/spinner";
 
 import type { SignupError } from "@/types/SignupErrors";
 import type { FieldName } from "@/types/FormFieldProps";
+import Image from "next/image";
 
 const PASSWORD_MIN_LENGTH = 8;
 
@@ -23,7 +24,7 @@ const ERROR_FIELD: Partial<Record<Exclude<SignupError, "">, FieldName>> = {
 	passwordMismatch: "confirmPassword"
 };
 
-function SignFields() {
+function SignupFields() {
 	const router = useRouter();
 	const t = useTranslations("Signup");
 
@@ -115,16 +116,18 @@ export function SignupForm() {
 	return (
 		<main className="flex flex-col gap-5">
 			<section className="text-center mb-2">
-				<h1 className="font-bold text-2xl">Sign up to Silk Space</h1>
+				<h1 className="font-bold text-2xl">{t("title")}</h1>
 			</section>
-			<SignFields />
 			<hr />
+			<SignupFields />
 			<section className="flex flex-col items-center gap-4">
-				<Link href={FT_LOGIN_URL} className={buttonVariants({variant: "outline", className: "w-3/4 h-10"})}>
+				<Link href={FT_LOGIN_URL} className={buttonVariants({variant: "outline", className: "w-3/4 h-10 gap-3 font-semibold"})}>
 					{t("with42")}
+					<Image src="/42_logo.svg" alt="42" width={50} height={50} unoptimized className="size-5 text-primary invert dark:invert-0"/>
 				</Link>
-				<Link href="/login" className="text-xs hover:underline">{t("haveAccount")}</Link>
 			</section>
+			<hr />
+			<Link href="/login" className="text-xs text-center hover:underline">{t("haveAccount")}</Link>
 		</main>
 	);
 }
