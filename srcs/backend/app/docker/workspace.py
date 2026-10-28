@@ -13,6 +13,10 @@ from db import Job
 logger = logging.getLogger("uvicorn.error")
 _locks: defaultdict[int, asyncio.Lock] = defaultdict(asyncio.Lock)
 
+HANGUP_ALL = (
+    'for f in /tmp/.term-*; do [ -f "$f" ] && kill -HUP "$(cat "$f")"; done; sleep 1'
+)
+
 
 class ImageNotBuilt(Exception):
     pass
@@ -146,6 +150,22 @@ async def start_workspace(docker: Docker, user_id: int, job: Job) -> DockerConta
         await ensure_network(docker, user_id, job)
         await ensure_volume(docker, user_id, job)
         return await ensure_container(docker, user_id, job)
+
+
+async def stop_workspace(docker: Docker, user_id: int) -> None:
+    async with _locks[user_id]:
+        container = docker.containers.container(container_name(user_id))
+        try:
+            kill = await container.exec(
+                ["sh", "-c", HANGUP_ALL], stdout=True, stderr=True
+            )
+            async with kill.start() as stream:
+                while await stream.read_out() is not None:
+                    pass
+                await container.stop()
+        except DockerError as e:
+            if e.status not in (404, 409):
+                raise
 
 
 async def memory_used(docker: Docker, user_id: int) -> int:
