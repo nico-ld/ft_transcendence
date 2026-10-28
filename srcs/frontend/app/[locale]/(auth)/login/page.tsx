@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { LoginForm } from "@/components/auth/LoginForm";
-import { ThemeSwitch } from "@/components/layout/ThemeSwicth";
 import { oauthLoginError } from "@/types/LoginError";
 
 type LoginPageProps = {
@@ -16,7 +15,8 @@ async function LoginFormWithError({ searchParams }: LoginPageProps) {
 export default function LoginPage({ searchParams }: LoginPageProps) {
 	return (
 		<section className="flex flex-1 items-center justify-center">
-			<Suspense fallback={<LoginForm />}>
+			{/* not <LoginForm /> as fallback: rendered twice, its ids would be duplicated */}
+			<Suspense fallback={null}>
 				<LoginFormWithError searchParams={searchParams} />
 			</Suspense>
 		</section>
