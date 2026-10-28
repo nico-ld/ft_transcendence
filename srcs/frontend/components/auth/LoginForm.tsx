@@ -12,6 +12,7 @@ import { FormField } from "../layout/FormField";
 import { useFormSubmit } from "@/actions/useFormSubmit";
 import { Button, buttonVariants } from "../ui/button";
 import { Spinner } from "../ui/spinner";
+import { toast } from "../ui/toast";
 
 import type { LoginError } from "@/types/LoginError";
 
@@ -28,6 +29,7 @@ function LoginFields({oauthError = ""}: {oauthError?: LoginError}) {
 		passwordRef.current.value = "";
 		passwordRef.current.focus();
 	}
+	const n = useTranslations("Toast");
 
 	const [error, formAction, pending] = useActionState<LoginError, FormData>(
 		async (_prev, formData) => {
@@ -40,6 +42,7 @@ function LoginFields({oauthError = ""}: {oauthError?: LoginError}) {
 					resetPassword();
 					return "invalidCredentials";
 				}
+				toast.add({ type: "success", title: n("loggedIn") });
 				router.replace(ROLE_HOME[result.role]);
 				return "";
 			} catch {

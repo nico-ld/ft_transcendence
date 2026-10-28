@@ -29,6 +29,10 @@ Email = Annotated[EmailStr, AfterValidator(str.lower)]
 Name = Annotated[
     str, StringConstraints(strip_whitespace=True, min_length=1, max_length=100)
 ]
+# same rule as the sign up form; "-" because 42 logins have it and become usernames
+Username = Annotated[
+    str, StringConstraints(strip_whitespace=True, pattern=r"^[a-zA-Z0-9_-]{3,20}$")
+]
 
 
 class UserOut(CamelModel):
@@ -41,12 +45,13 @@ class UserOut(CamelModel):
     job: Job | None
     role: Role
     created_at: datetime
+    has_password: bool
 
 
 class UserCreateIn(CamelModel):
     model_config = ConfigDict(extra="forbid")
 
-    username: Name
+    username: Username
     first_name: Name
     last_name: Name
     email: Email
@@ -56,10 +61,10 @@ class UserCreateIn(CamelModel):
 
 
 class SignupIn(CamelModel):
-    # unknown keys (role, id, ...) are denied with a 422 instead of being ignored
+    # unknown keys (role, id, ...) are denied with a 422
     model_config = ConfigDict(extra="forbid")
 
-    username: Name
+    username: Username
     first_name: Name
     last_name: Name
     email: Email
@@ -80,7 +85,7 @@ class UserUpdateIn(CamelModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    username: Name | None = None
+    username: Username | None = None
     first_name: Name | None = None
     last_name: Name | None = None
     job: Job | None = None
@@ -99,7 +104,7 @@ class ProfileUpdateIn(CamelModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    username: Name | None = None
+    username: Username | None = None
     first_name: Name | None = None
     last_name: Name | None = None
 
