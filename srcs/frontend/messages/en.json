@@ -33,7 +33,7 @@
     "editProfile": "Edit your profile",
     "logout": "Log out",
     "loggingOut": "Logging out",
-    "current": {"light": "Light Mode", "dark": "Dark Mode", "system": "system"},
+    "current": {"light": "Light Mode", "dark": "Dark Mode", "system": "System Mode"},
     "light": "Light",
     "dark": "Dark",
     "system": "System",

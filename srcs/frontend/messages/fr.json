@@ -30,6 +30,7 @@
     "editProfile": "Modifier le profil",
     "logout": "Se déconnecter",
     "loggingOut": "Déconnexion",
+    "current": {"light": "Mode clair", "dark": "Mode sombre", "system": "Mode système"},
     "light": "Mode clair",
     "dark": "Mode sombre",
     "system": "Mode Système",
