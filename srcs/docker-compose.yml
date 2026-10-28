@@ -44,7 +44,7 @@ services:
       - ft_silk_space
 
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:v3.15.1
     container_name: prometheus
     restart: unless-stopped
     expose:
@@ -58,14 +58,16 @@ services:
       - cadvisor
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:latest
+    image: gcr.io/cadvisor/cadvisor:v0.55.1
     container_name: cadvisor
     restart: unless-stopped
+    pid: host
+    command: ["--enable_metrics=cpu,memory,network"]
     volumes:
-      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock:ro  # Docker API
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro                # (CPU, mem, ...)
-      - /var/lib/docker/:/var/lib/docker:ro            # Container filesystem
-      - /proc:/host/proc:ro                              # Process info
+      - /:/rootfs:ro
+      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock:ro
+      - ${XDG_RUNTIME_DIR}/docker/containerd/containerd.sock:/run/containerd/containerd.sock:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
     # prometheus scrapes it through ft_silk_space, no need to publish it
     expose:
       - "8080"

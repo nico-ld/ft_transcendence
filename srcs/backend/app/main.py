@@ -6,7 +6,7 @@ from aiodocker import Docker
 from config import settings
 from db import Base, Role, engine, users_db
 from fastapi import FastAPI
-from routers import auth, oauth42, stats, users, websocket, workspace
+from routers import auth, metrics, oauth42, stats, users, websocket, workspace
 from security import hash_password
 from starlette.middleware.sessions import SessionMiddleware
 
@@ -48,7 +48,7 @@ async def lifespan(app: FastAPI):
         yield
 
 
-app = FastAPI(lifespan=lifespan, root_path="/api")
+app = FastAPI(lifespan=lifespan)
 
 # only holds authlib OAuth state during the 42 redirect, its own cookie name
 # so it doesnt overwrite our session JWT cookie
@@ -65,6 +65,7 @@ app.include_router(users.router)
 app.include_router(stats.router)
 app.include_router(websocket.router)
 app.include_router(workspace.router)
+app.include_router(metrics.router)
 
 
 @app.get("/")

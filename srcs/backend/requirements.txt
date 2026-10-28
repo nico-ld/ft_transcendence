@@ -1,15 +1,16 @@
-fastapi[standard]
-uvicorn
-pydantic
-authlib
-httpx
-pydantic-settings
-httpx2
-sqlalchemy[asyncio]
-asyncpg
-alembic
-psycopg
-itsdangerous
-pwdlib[argon2]
-pyjwt
-aiodocker
+fastapi[standard]==0.162.0
+uvicorn==0.54.0
+pydantic==2.14.1
+pydantic-settings==2.16.1
+sqlalchemy==2.1.6
+psycopg==3.3.6
+authlib==1.9.1
+# authlib uses it for the 42 requests
+httpx2==2.16.0
+# routers/metrics (prometheus)
+httpx==0.28.1
+# starlette's SessionMiddleware (42 oauth state)
+itsdangerous==2.2.0
+pwdlib[argon2]==0.3.1
+pyjwt==2.15.1
+aiodocker==0.27.0

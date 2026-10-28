@@ -74,8 +74,6 @@
     "haveAccount": "Already have an account ? Log in",
     "errors": {
       "emailTaken": "This email is already used.",
-      "usernameTaken": "This username is already taken.",
-      "weakPassword": "Password must be at least 8 characters.",
       "passwordMismatch": "Passwords do not match.",
       "invalidInput": "Some of the information you entered is invalid.",
       "generic": "Something went wrong. Please try again."

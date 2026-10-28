@@ -105,7 +105,7 @@ class ProfileUpdateIn(CamelModel):
 
 
 class WorkspaceMetrics(CamelModel):
-    user_id: str
+    user_id: int
     cpu_usage_percent: float
     memory_usage_percent: float
     memory_used_mb: float

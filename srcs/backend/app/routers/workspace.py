@@ -1,7 +1,7 @@
 import logging
 
 from aiodocker.exceptions import DockerError
-from docker.workspace import ImageNotBuilt, start_workspace
+from docker.workspace import ImageNotBuilt, start_workspace, stop_workspace
 from fastapi import APIRouter
 from fastapi.exceptions import HTTPException
 from fastapi.requests import Request
@@ -28,3 +28,15 @@ async def start(request: Request, user: CurrentUser):
             status.HTTP_502_BAD_GATEWAY, "Couldn't start the workspace"
         ) from None
     return {"status": "running"}
+
+
+@router.post("/stop")
+async def stop(request: Request, user: CurrentUser):
+    try:
+        await stop_workspace(request.app.state.docker, user.id)
+    except DockerError:
+        logger.exception("Couldn't stop workspace for user %s", user.id)
+        raise HTTPException(
+            status.HTTP_502_BAD_GATEWAY, "Couldn't stop the workspace"
+        ) from None
+    return {"status": "stopped"}
