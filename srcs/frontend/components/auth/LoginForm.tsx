@@ -84,7 +84,8 @@ function LoginFields({oauthError = ""}: {oauthError?: LoginError}) {
 	);
 }
 
-export function LoginForm() {
+// oauthError: why the 42 login failed, from ?error= (login/page.tsx)
+export function LoginForm({oauthError = ""}: {oauthError?: LoginError}) {
 	const t = useTranslations("Login");
 
 	return (
@@ -93,7 +94,7 @@ export function LoginForm() {
 				<h1 className="font-bold text-2xl">{t("title")}</h1>
 			</section>
 			<hr />
-			<LoginFields />
+			<LoginFields oauthError={oauthError} />
 			<section className="flex flex-col items-center gap-4">
 				<a href={FT_LOGIN_URL} className={buttonVariants({variant: "outline", className: "w-3/4 h-10 gap-3"})}>
 					<Image src="/42_logo.svg" alt="" width={50} height={50} unoptimized className="size-5 invert dark:invert-0"/>
