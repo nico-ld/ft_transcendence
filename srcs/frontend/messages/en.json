@@ -214,7 +214,8 @@
       "new": "New password",
       "confirm": "Confirm the new password",
       "submit": "Change password",
-      "saved": "Your password has been changed. Your other browsers have been logged out.",
+      "saved": "Your password has been changed.",
+      "loggedOut": "Your other browsers have been logged out.",
       "noPassword": "You log in with 42, so this account has no password.",
       "errors": {
         "wrongCurrent": "This password is incorrect.",
