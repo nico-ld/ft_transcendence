@@ -76,5 +76,9 @@ class User(Base):
     def __repr__(self) -> str:
         return f"ID: {self.id}, User: {self.first_name}, Role: {self.role!r}"
 
+    @property
+    def has_password(self) -> bool:
+        return self.password_hash is not None
+
 
 engine = create_engine(settings.database_url)
