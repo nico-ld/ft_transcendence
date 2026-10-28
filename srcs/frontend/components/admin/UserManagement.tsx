@@ -11,6 +11,7 @@ import { ModifyUser } from "@/components/users/ModifyUser";
 
 import { NewUserForm } from "@/actions/NewUserForm";
 import { RemoveUser } from "@/actions/RemoveUser";
+import { UserPagination } from "./UserPagination";
 
 import { AdminBadge, UserBadge } from "../layout/CustomBadge";
 import { useTranslations } from "next-intl";
@@ -53,6 +54,7 @@ type Filters = { query: string; role: RoleFilter; job: JobFilter };
 type Sort = { key: SortKey; order: SortOrder };
 
 const NO_FILTERS: Filters = { query: "", role: "all", job: "all" };
+const PAGE_SIZE = 10;
 // the direction each sort starts with: newest accounts first, names from A to Z
 const DEFAULT_ORDER: Record<SortKey, SortOrder> = { date: "desc", username: "asc", email: "asc" };
 
@@ -246,6 +248,7 @@ export function UserManagement({ users, viewer }: { users: BackendUser[] | null;
 	const f = useTranslations("Users.filter");
 	const [filters, setFilters] = React.useState<Filters>(NO_FILTERS);
 	const [sort, setSort] = React.useState<Sort>({ key: "username", order: "asc" });
+	const [page, setPage] = React.useState(1);
 	const [selectedUser, setSelectedUser] = React.useState<BackendUser | null>(null);
 	const [open, setOpen] = React.useState(false);
 
@@ -254,8 +257,15 @@ export function UserManagement({ users, viewer }: { users: BackendUser[] | null;
 		setOpen(true);
 	}
 
+	// a new search, filter or sort starts again from the first page
 	function changeFilters(change: Partial<Filters>) {
 		setFilters((current) => ({ ...current, ...change }));
+		setPage(1);
+	}
+
+	function changeSort(next: Sort) {
+		setSort(next);
+		setPage(1);
 	}
 
 	// how many users a filter choice would show, with the other filters kept
@@ -268,6 +278,11 @@ export function UserManagement({ users, viewer }: { users: BackendUser[] | null;
 		return sortUsers(users.filter((user) => matches(user, filters)), sort);
 	}, [users, filters, sort]);
 	const nothingMatches = users != null && users.length > 0 && visibleUsers?.length === 0;
+	const total = visibleUsers?.length ?? 0;
+	const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+	// after a deletion empties the last page, the one before is shown
+	const current = Math.min(page, pages);
+	const pageUsers = visibleUsers?.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE) ?? null;
 
 	return (
 		<div className="flex h-150 w-full max-w-125 flex-col rounded-xl border bg-card p-2 shadow-glow">
@@ -279,7 +294,7 @@ export function UserManagement({ users, viewer }: { users: BackendUser[] | null;
 								<Field orientation="horizontal">
 									<Filter
 										sort={sort}
-										onSortChange={setSort}
+										onSortChange={changeSort}
 										filters={filters}
 										onFiltersChange={changeFilters}
 										count={count}
@@ -303,16 +318,18 @@ export function UserManagement({ users, viewer }: { users: BackendUser[] | null;
 				<ItemSeparator className="my-0 mb-2" />
 			</ItemGroup>
 
-			<ScrollArea className="min-h-0 flex-1">
+			{/* keyed by page: a new page starts at the top of the list */}
+			<ScrollArea key={current} className="min-h-0 flex-1">
 				{nothingMatches ? (
 					<div className="flex flex-col items-center gap-3 p-4 text-center text-sm text-muted-foreground">
 						<p>{t("noMatch")}</p>
-						<Button variant="outline" size="sm" onClick={() => setFilters(NO_FILTERS)}>{f("clear")}</Button>
+						<Button variant="outline" size="sm" onClick={() => changeFilters(NO_FILTERS)}>{f("clear")}</Button>
 					</div>
 				) : (
-					<UserList users={visibleUsers} viewerId={viewer.id} onSelect={handleSelect}/>
+					<UserList users={pageUsers} viewerId={viewer.id} onSelect={handleSelect}/>
 				)}
 			</ScrollArea>
+			{total > 0 && <UserPagination page={current} pages={pages} total={total} onPageChange={setPage} />}
 
 			{selectedUser && (
 				<ModifyUser
