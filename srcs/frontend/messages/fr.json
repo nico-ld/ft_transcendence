@@ -59,6 +59,8 @@
     "failedTitle": "Échec de la création du compte",
     "email": "Adresse e-mail",
     "username": "Nom d'utilisateur",
+	"lastName": "Nom",
+	"firstName": "Prénom",
     "usernameHint": "De 3 à 20 caractères : lettres, chiffres et tirets bas",
     "password": "Mot de passe",
     "confirmPassword": "Confirmer le mot de passe",

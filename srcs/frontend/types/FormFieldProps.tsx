@@ -3,4 +3,4 @@ export type FormFieldProps = React.ComponentProps<"input"> & {
 	error?: string;
 }
 
-export type FieldName = "email" | "username" | "password" | "confirmPassword";
+export type FieldName = "email" | "username" | "password" | "confirmPassword" | "lastName" | "firstName";

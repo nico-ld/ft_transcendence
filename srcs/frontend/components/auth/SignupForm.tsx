@@ -74,11 +74,17 @@ export function SignupForm() {
 			}
 		>
 			<FormField
-				label={t("email")}
-				name="email"
-				type="email"
-				autoComplete="email"
-				error={fieldError("email")}
+				label={t("lastName")}
+				name="lastName"
+				autoComplete="lastName"
+				error={fieldError("lastName")}
+				required
+			/>
+			<FormField
+				label={t("firstName")}
+				name="firstName"
+				autoComplete="firstName"
+				error={fieldError("firstName")}
 				required
 			/>
 			<FormField
@@ -88,6 +94,14 @@ export function SignupForm() {
 				pattern={USERNAME_PATTERN}
 				title={t("usernameHint")}
 				error={fieldError("username")}
+				required
+			/>
+			<FormField
+				label={t("email")}
+				name="email"
+				type="email"
+				autoComplete="email"
+				error={fieldError("email")}
 				required
 			/>
 			<FormField
