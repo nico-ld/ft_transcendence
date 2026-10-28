@@ -161,6 +161,11 @@
     "week": "Cette semaine",
     "month": "Ce mois",
     "extra": "Utilisateur inscrit",
+    "grafana": "Voir les métriques dans Grafana",
+    "grafanaTitle": "Métriques des workspaces",
+    "grafanaUser": "Workspace",
+    "grafanaNewTab": "Ouvrir dans Grafana",
+    "grafanaEmpty": "Aucun utilisateur n'a encore de workspace",
     "memory": {
       "aria": "Utilisation de la mémoire : {percent} %",
       "label": "mémoire",

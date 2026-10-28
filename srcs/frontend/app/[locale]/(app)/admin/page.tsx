@@ -32,14 +32,21 @@ async function AdminDashboard() {
 	if (viewer.role !== "admin")
 		return redirect({ href: ROLE_HOME[viewer.role], locale });
 
+	// only accounts with a job have a workspace, so metrics in grafana
+	const workspaceUsers = (users ?? [])
+		.filter((user) => user.job)
+		.map(({ id, username }) => ({ id, username }));
+
 	return (
 		<DashboardShell role={viewer.role} username={viewer.username} avatarUrl={viewer.avatar ?? undefined}>
-			<StatsPanel
-				stats={stats}
-				extras={[{ label: t("extra"), value: users ? String(users.length) : "-" }]}
-			/>
+			<div className="flex flex-col gap-5">
+				<StatsPanel
+					stats={stats}
+					extras={[{ label: t("extra"), value: users ? String(users.length) : "-" }]}
+				/>
+				<GrafanaModal users={workspaceUsers} />
+			</div>
 			<UserManagement users={users} viewer={viewer} />
-			<GrafanaModal userId={viewer.id} role={"admin"} />
 		</DashboardShell>
 	);
 }

@@ -1,49 +1,83 @@
-'use client';
+"use client";
 
 import { useState } from "react";
-import { Button } from "../ui/button";
+import { useTranslations } from "next-intl";
+import { ChartLine, ExternalLink } from "lucide-react";
+import { Button, buttonVariants } from "../ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
 } from "../ui/dialog";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue
+} from "../ui/select";
 
-export function GrafanaModal({ userId, role}: { userId: number, role:string}) {
-  const [open, setOpen] = useState(false);
+// uid in srcs/grafana/provisioning/dashboards/admin-metrics.json
+const DASHBOARD_UID = "admin-metrics";
 
-  // Replace with your Grafana dashboard UID
-	const DASHBOARD_UID_USER = "user-metrics";
-	const DASHBOARD_UID_ADMIN = "admin-metrics"
+type WorkspaceUser = { id: number; username: string };
 
-  var link;
-	if (role == "user")
-		link = `http://${window.location.hostname}:3000/d/${DASHBOARD_UID_USER}?var-user_id=${userId}&kiosk`;
-	else if (role == "admin")
-		link = `http://${window.location.hostname}:3000/d/${DASHBOARD_UID_ADMIN}?var-user_id=${userId}&kiosk`
-	
-  return (
-    <>
-      <Button
-        variant="outline"
-        className="mt-4"
-        onClick={() => setOpen(true)}
-      >
-        Show Metrics in Grafana
-      </Button>
+// users -> the accounts that have a workspace (a job) picked in the dialog
+export function GrafanaModal({ users }: { users: WorkspaceUser[] }) {
+	const t = useTranslations("Stats");
+	const [open, setOpen] = useState(false);
+	const [userId, setUserId] = useState<number | null>(users[0]?.id ?? null);
+	const dashboard = `/grafana/d/${DASHBOARD_UID}?var-user_id=${userId ?? ""}`;
+	const items = users.map((user) => ({ value: user.id, label: user.username }));
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="w-[90vw] max-w-4xl h-[80vh]">
-          <DialogHeader>
-            <DialogTitle>Live User Metrics</DialogTitle>
-          </DialogHeader>
-          <iframe
-            src={link}
-            className="w-full h-[calc(80vh-100px)] border-0"
-            allowFullScreen
-          />
-        </DialogContent>
-      </Dialog>
-    </>
-  );
+	return (
+		<>
+			<Button variant="outline" className="h-11 w-full" onClick={() => setOpen(true)}>
+				<ChartLine />
+				{t("grafana")}
+			</Button>
+
+			<Dialog open={open} onOpenChange={setOpen}>
+				<DialogContent className="flex h-[90vh] w-[95vw] flex-col sm:max-w-6xl">
+					<DialogHeader className="flex-row flex-wrap items-center gap-3 pr-10">
+						<DialogTitle className="mr-auto">{t("grafanaTitle")}</DialogTitle>
+						{users.length > 0 && (
+							<Select items={items} value={userId} onValueChange={(value) => setUserId(value)}>
+								<SelectTrigger aria-label={t("grafanaUser")} className="w-48">
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent>
+									{items.map((item) => (
+										<SelectItem key={item.value} value={item.value}>
+											{item.label}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						)}
+						<a
+							href={dashboard}
+							target="_blank"
+							rel="noopener noreferrer"
+							className={buttonVariants({ variant: "ghost", size: "sm" })}
+						>
+							{t("grafanaNewTab")}
+							<ExternalLink />
+						</a>
+					</DialogHeader>
+
+					{users.length > 0 ? (
+						<iframe
+							src={`${dashboard}&kiosk`}
+							title={t("grafanaTitle")}
+							className="min-h-0 w-full flex-1 rounded-lg border"
+						/>
+					) : (
+						<p className="m-auto text-muted-foreground">{t("grafanaEmpty")}</p>
+					)}
+				</DialogContent>
+			</Dialog>
+		</>
+	);
 }

@@ -6,6 +6,7 @@ services:
     depends_on:
       - frontend
       - backend
+      - grafana
     networks:
       - ft_silk_space
 
@@ -47,8 +48,8 @@ services:
     image: prom/prometheus:v3.15.1
     container_name: prometheus
     restart: unless-stopped
-    ports:
-      - "9090:9090"
+    expose:
+      - "9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus
@@ -68,29 +69,40 @@ services:
       - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock:ro
       - ${XDG_RUNTIME_DIR}/docker/containerd/containerd.sock:/run/containerd/containerd.sock:ro
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    # prometheus scrapes it through ft_silk_space, no need to publish it
     expose:
       - "8080"
     networks:
       - ft_silk_space
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:13.2.5
     container_name: grafana
     restart: unless-stopped
     depends_on:
-      - prometheus       # change this
+      - prometheus
     volumes:
       - grafana-data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
-    ports:
-      - "3000:3000"
+    expose:
+      - "3000"
     environment:
+      - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+      # the admin dash shows it in an iframe
       - GF_SECURITY_ALLOW_EMBEDDING=true
-      - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      # nginx asks the backend if the session is admin via auth_request then
+      # names the account in X-WEBAUTH-USER, grafana trusts it, it's only reachable
+      # via nginx
+      - GF_AUTH_PROXY_ENABLED=true
+      - GF_AUTH_PROXY_HEADER_NAME=X-WEBAUTH-USER
+      - GF_AUTH_PROXY_HEADER_PROPERTY=email
+      - GF_AUTH_PROXY_AUTO_SIGN_UP=true
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+      - GF_USERS_AUTO_ASSIGN_ORG_ROLE=Viewer
+      # grafana admin account not used to log in but not left as admin/admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:?set GRAFANA_ADMIN_PASSWORD in srcs/.env}
     networks:
-      - ft_silk_space   
+      - ft_silk_space
 
 volumes:
   postgres_data:
