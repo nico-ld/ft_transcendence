@@ -91,7 +91,7 @@ services:
       # the admin dash shows it in an iframe
       - GF_SECURITY_ALLOW_EMBEDDING=true
       # nginx asks the backend if the session is admin via auth_request then
-      # names the account in X-WEBAUTH-USER, grafana trusts it, it's only reachable
+      # names the account in X-WEBAUTH-USER grafana trusts it and it's only reachable
       # via nginx
       - GF_AUTH_PROXY_ENABLED=true
       - GF_AUTH_PROXY_HEADER_NAME=X-WEBAUTH-USER
