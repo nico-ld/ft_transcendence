@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { LegalFooter } from "@/components/legal/LegalFooter";
+import { Toaster } from "@/components/ui/toast";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -42,6 +43,7 @@ export default async function RootLayout({ children }: {children: React.ReactNod
 						<footer className="py-4 text-center text-sm text-muted-foreground">
 							<LegalFooter />
 						</footer>
+						<Toaster />
 					</ThemeProvider>
 				</NextIntlClientProvider>
 			</body>

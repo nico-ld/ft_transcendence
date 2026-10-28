@@ -234,5 +234,11 @@
       "software-engineer": "Software Engineer",
       "technical-writer": "Technical Writer"
     }
+  },
+  "Toast": {
+    "loggedIn": "Logged in",
+    "accountCreated": "Account created",
+    "userCreated": "User created",
+    "userUpdated": "User updated"
   }
 }

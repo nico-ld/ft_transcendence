@@ -234,5 +234,11 @@
       "software-engineer": "Ingénieur logiciel",
       "technical-writer": "Rédacteur technique"
     }
+  },
+  "Toast": {
+    "loggedIn": "Connecté",
+    "accountCreated": "Compte créé",
+    "userCreated": "Utilisateur créé",
+    "userUpdated": "Utilisateur modifié"
   }
 }

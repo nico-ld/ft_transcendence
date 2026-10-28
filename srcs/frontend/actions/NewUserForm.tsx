@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import { useTranslations } from "next-intl";
 import { Spinner } from "@/components/ui/spinner";
+import { toast } from "@/components/ui/toast";
 
 const NOTHING_YET: ActionResult = { error: "", done: false };
 
@@ -28,6 +29,7 @@ export function NewUserForm() {
 	const t = useTranslations("Users");
 	const c = useTranslations("Common");
 	const l = useTranslations("Login");
+	const n = useTranslations("Toast");
 
 	const router = useRouter();
 	// controlled, so the dialog can close itself once the user is created
@@ -37,6 +39,7 @@ export function NewUserForm() {
 			const result = await CreateUser(previous, form);
 			if (result.done) {
 				setOpen(false);
+				toast.add({ type: "success", title: n("userCreated") });
 				// reload the page's server data (the user list, from backend)
 				router.refresh();
 			}
