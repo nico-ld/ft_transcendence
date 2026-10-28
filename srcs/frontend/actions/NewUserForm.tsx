@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UserRoundPlus } from "lucide-react";
 import { SelectJob } from "@/components/layout/SelectJob";
+import { SelectRole } from "@/components/layout/SelectRole";
 import { CreateUser, type ActionResult } from "./users";
 import {
 	Dialog,
@@ -59,7 +60,7 @@ export function NewUserForm() {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger render={<Button variant="ghost" className="text-green-500"><UserRoundPlus /></Button>} />
-			<DialogContent className="sm:max-w-sm">
+			<DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-sm">
 				{/* the <form> is inside the dialog: the dialog is rendered elsewhere in the
 				    page (a portal), so a <form> around it wouldn't contain the fields */}
 				<form onSubmit={submit} className="grid gap-4">
@@ -93,15 +94,19 @@ export function NewUserForm() {
 							<Label htmlFor="job-1">{t("userInfo.job")}</Label>
 							<SelectJob name="job" />
 						</Field>
+						<Field>
+							<Label htmlFor="role-1">{t("userInfo.role")}</Label>
+							<SelectRole id="role-1" name="role" />
+						</Field>
 					</FieldGroup>
 					{/* why the backend refused (email already used, ...) */}
 					{state.error && (
-						<p role="alert" className="text-sm text-destructive">{state.error}</p>
+						<p role="alert" className="text-sm text-destructive">{t(`errors.${state.error}`)}</p>
 					)}
 					<DialogFooter>
 						<DialogClose render={<Button variant="outline">{c("cancel")}</Button>} />
 						<Button type="submit" disabled={pending}>
-							{pending ? "Creating..." : c("create")}
+							{pending ? c("creating") : c("create")}
 							{pending && <Spinner />}
 						</Button>
 					</DialogFooter>
