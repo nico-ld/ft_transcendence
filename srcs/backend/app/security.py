@@ -132,10 +132,20 @@ SessionToken = Annotated[str | None, Depends(session_cookie)]
 
 CurrentUser = Annotated[User, Depends(get_current_user)]
 
+
 def require_admin(user: CurrentUser) -> User:
     """FastAPI dependency that returns the logged in admin, 401 if not logged in, 403 if not admin"""
     if user.role != Role.ADMIN:
         raise HTTPException(status.HTTP_403_FORBIDDEN, "Forbidden")
     return user
 
+
 AdminUser = Annotated[User, Depends(require_admin)]
+
+
+def revoke_other_sessions(token: str | None, user_id: int) -> None:
+    """Log out every other browser of the user except this one"""
+    if token is None:
+        return
+    payload = jwt.decode(token, settings.session_secret, algorithms=[JWT_ALGORITHM])
+    sessions_db.delete_user_sessions(user_id, keep=payload["sid"])

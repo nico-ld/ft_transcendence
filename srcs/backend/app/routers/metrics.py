@@ -1,38 +1,36 @@
-from app.schemas import WorkspaceMetrics
-from fastapi import APIRouter, HTTPException
-from httpx import AsyncClient
+from fastapi import APIRouter, Depends, HTTPException, status
+from httpx import AsyncClient, HTTPError
+from schemas import WorkspaceMetrics
+from security import require_admin
 
-router = APIRouter(prefix="/api/prometheus", tags=["monitoring"])
+router = APIRouter(
+    prefix="/prometheus", tags=["monitoring"], dependencies=[Depends(require_admin)]
+)
 
 PROMETHEUS_URL = "http://prometheus:9090"
+
 
 async def prom_query(query: str) -> float:
     """Execute Prometheus query and return the numeric value."""
     async with AsyncClient() as client:
         try:
             response = await client.get(
-                f"{PROMETHEUS_URL}/api/v1/query",
-                params={"query": query}
+                f"{PROMETHEUS_URL}/api/v1/query", params={"query": query}
             )
             response.raise_for_status()
-            data = response.json()
-
-            # Handle empty results
-            if not data.get("data", {}).get("result"):
-                raise HTTPException(status_code=404, detail="No metrics data found")
-
-            # Extract the value (second element of the [timestamp, value] pair)
-            value = data["data"]["result"][0]["value"][1]
-            return float(value)
-
-        except HTTPException as e:
+        except HTTPError:
             raise HTTPException(
-                status_code=500,
-                detail=f"Prometheus query failed: {e!s}"
-            )
+                status.HTTP_502_BAD_GATEWAY, "Prometheus unreachable"
+            ) from None
+
+        result = response.json()["data"]["result"]
+        if not result:
+            raise HTTPException(status.HTTP_404_NOT_FOUND, "No metrics data found")
+        return float(result[0]["value"][1])
+
 
 @router.get("/workspace/{user_id}", response_model=WorkspaceMetrics)
-async def get_workspace_metrics(user_id: str):
+async def get_workspace_metrics(user_id: int):
     try:
         # CPU: rate over 1 minute * 100 = percentage
         cpu = await prom_query(
@@ -71,12 +69,9 @@ async def get_workspace_metrics(user_id: str):
             memory_total_mb=round(memory_total_mb, 2),
             network_rx_kbps=round(network_rx, 2),
             network_tx_kbps=round(network_tx, 2),
-            uptime_seconds=round(uptime, 2)
+            uptime_seconds=round(uptime, 2),
         )
-    except HTTPException:
-        raise
     except ZeroDivisionError:
         raise HTTPException(
-            status_code=500,
-            detail="Invalid memory limit (division by zero)"
+            status_code=500, detail="Invalid memory limit (division by zero)"
         )
