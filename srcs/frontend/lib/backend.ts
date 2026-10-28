@@ -22,6 +22,8 @@ export type BackendUser = {
 	createdAt: string;
 	// false for accounts that only log in with 42
 	hasPassword: boolean;
+	// true when the user has no job assigned (guest state)
+	isGuest: boolean;
 };
 
 /** fetch() to the backend, with the browser's session cookie and a JSON body. */

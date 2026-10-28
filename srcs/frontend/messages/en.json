@@ -215,6 +215,8 @@
     "searchBar": "Search for a user",
     "noUsers": "No users found",
     "noJob": "No workspace",
+    "guest": "Guest",
+    "guestMessage": "You are currently in guest mode. Please contact an administrator to assign you a workspace.",
     "jobHint": "Changing the job restarts this person's workspace: their open terminals close, their files are kept.",
     "sort": {
       "label": "Sort by",

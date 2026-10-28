@@ -1,5 +1,5 @@
 import { Badge } from "../ui/badge";
-import { Sword } from "lucide-react";
+import { Sword, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function AdminBadge() {
@@ -9,6 +9,17 @@ export function AdminBadge() {
 		<Badge className="bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
 			<Sword />
 			{t("admin")}
+		</Badge>
+	);
+}
+
+export function GuestBadge() {
+	const t = useTranslations("Users");
+
+	return (
+		<Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+			<User />
+			{t("guest")}
 		</Badge>
 	);
 }

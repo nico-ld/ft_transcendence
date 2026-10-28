@@ -46,6 +46,7 @@ class UserOut(CamelModel):
     role: Role
     created_at: datetime
     has_password: bool
+    is_guest: bool
 
 
 class UserCreateIn(CamelModel):

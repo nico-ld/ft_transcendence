@@ -80,5 +80,10 @@ class User(Base):
     def has_password(self) -> bool:
         return self.password_hash is not None
 
+    @property
+    def is_guest(self) -> bool:
+        """Whether the user is in guest state (connected with no job assigned)."""
+        return self.job is None
+
 
 engine = create_engine(settings.database_url)

@@ -31,7 +31,7 @@ async function Profile() {
 	const account = [
 		{ label: t("email"), value: user.email },
 		{ label: t("role"), value: h(user.role) },
-		{ label: u("userInfo.job"), value: user.job ? u(`jobList.${user.job}`) : u("noJob") },
+		{ label: u("userInfo.job"), value: user.isGuest && user.role !== "admin" ? u("guest") : (user.job ? u(`jobList.${user.job}`) : u("noJob")) },
 		{
 			label: t("memberSince"),
 			value: new Intl.DateTimeFormat(locale, { dateStyle: "long", timeZone: "UTC" }).format(new Date(user.createdAt))

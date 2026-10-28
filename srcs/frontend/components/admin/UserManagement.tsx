@@ -12,7 +12,7 @@ import { ModifyUser } from "@/components/users/ModifyUser";
 import { NewUserForm } from "@/actions/NewUserForm";
 import { RemoveUser } from "@/actions/RemoveUser";
 
-import { AdminBadge, UserBadge } from "../layout/CustomBadge";
+import { AdminBadge, GuestBadge, UserBadge } from "../layout/CustomBadge";
 import { useTranslations } from "next-intl";
 import {
 	Avatar,
@@ -87,11 +87,12 @@ function UserList({ users, viewerId, onSelect }: {users: BackendUser[] | null; v
 						<ItemTitle>
 							{person.username}
 							{person.role === "admin" && <AdminBadge />}
+							{person.isGuest && person.role !== "admin" && <GuestBadge />}
 						</ItemTitle>
 						<ItemDescription>{person.email}</ItemDescription>
 					</ItemContent>
 					<ItemActions onClick={(e) => e.stopPropagation()}>
-						<UserBadge job={person.job ? t(`jobList.${person.job}`) : t("noJob")} />
+						{person.isGuest && person.role !== "admin" ? <GuestBadge /> : <UserBadge job={person.job ? t(`jobList.${person.job}`) : t("noJob")} />}
 						{/* the backend refuses to delete the admin's own account */}
 						{person.id !== viewerId && <RemoveUser user={person} />}
 					</ItemActions>
