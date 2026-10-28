@@ -94,7 +94,7 @@ function UserList({ users, viewerId, onSelect }: {users: BackendUser[] | null; v
 	}
 
 	return (
-		<ItemGroup className="max-w-md">
+		<ItemGroup>
 			{users.map((person) => (
 				<Item
 					key={person.id}
@@ -286,7 +286,7 @@ export function UserManagement({ users, viewer }: { users: BackendUser[] | null;
 
 	return (
 		<div className="flex h-150 w-full max-w-125 flex-col rounded-xl border bg-card p-2 shadow-glow">
-			<ItemGroup className="max-w-md bg-card">
+			<ItemGroup className="bg-card">
 				<Item variant="muted">
 					<ItemContent>
 						<ItemTitle>
