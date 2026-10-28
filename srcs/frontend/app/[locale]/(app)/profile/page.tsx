@@ -42,7 +42,7 @@ async function Profile() {
 	return (
 		<DashboardShell role={user.role} username={user.username} avatarUrl={user.avatar ?? undefined}>
 			<div className="flex w-full max-w-3xl flex-col gap-5 md:flex-row md:items-start">
-				<Card className="flex-1 shadow-glow ring-border">
+				<Card className="flex-1 ring-border">
 					<CardHeader>
 						<CardTitle>{t("title")}</CardTitle>
 						<CardDescription>{t("description")}</CardDescription>
@@ -54,7 +54,7 @@ async function Profile() {
 				</Card>
 
 				<div className="flex flex-1 flex-col gap-5">
-					<Card className="shadow-glow ring-border">
+					<Card className="ring-border">
 						<CardHeader>
 							<CardTitle>{t("account")}</CardTitle>
 						</CardHeader>
@@ -70,7 +70,7 @@ async function Profile() {
 						</CardContent>
 					</Card>
 
-					<Card className="shadow-glow ring-border">
+					<Card className="ring-border">
 						<CardHeader>
 							<CardTitle>{t("password.title")}</CardTitle>
 							{user.hasPassword && <CardDescription>{t("password.description")}</CardDescription>}

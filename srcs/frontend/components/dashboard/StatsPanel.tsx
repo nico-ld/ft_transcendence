@@ -17,7 +17,7 @@ export function StatsPanel({stats, extras = []}: StatsPanelProps) {
 	const t = useTranslations("Stats");
 
 	return (
-		<Card className="shadow-glow ring-border">
+		<Card className="ring-border">
 			<CardHeader>
 				<CardTitle>{t("title")}</CardTitle>
 			</CardHeader>
