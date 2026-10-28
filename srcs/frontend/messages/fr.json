@@ -12,7 +12,7 @@
     "contents": "Sommaire",
     "seeAlso": "Voir aussi :",
     "home": "Retour à l'accueil",
-    "studentProject": "{project}, un projet étudiant de {school}"
+    "studentProject": "{project}"
   },
   "Language": { "selectLanguage": "Choisir la langue", "language": "Langue" },
   "Common": {
