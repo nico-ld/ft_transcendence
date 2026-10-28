@@ -224,6 +224,8 @@
       "invalid": "Algunos campos no son válidos. Revísalos e inténtalo de nuevo.",
       "notAllowed": "No tienes permiso para hacer esto.",
       "notFound": "Este usuario ya no existe.",
+      "emailTaken": "Este correo electrónico ya está en uso.",
+      "workspace": "No se ha podido eliminar su espacio de trabajo, así que se ha conservado el usuario. Inténtalo de nuevo.",
       "generic": "Algo ha salido mal. Inténtalo de nuevo."
     },
     "userInfo": {
@@ -231,11 +233,12 @@
       "lastName": "Apellido",
       "userName": "Nombre de usuario",
       "job": "Puesto",
-      "jobs": "Puestos"
+      "jobs": "Puestos",
+      "role": "Rol"
     },
     "create": {
       "label": "Crear un perfil",
-      "description": "Introduce los datos del nuevo usuario. Se creará una nueva sesión.",
+      "description": "Introduce los datos del nuevo usuario. Iniciará sesión con este correo electrónico y esta contraseña.",
       "phName": "Introduce el nombre",
       "phLastName": "Introduce el apellido",
       "phUserName": "Introduce el nombre de usuario",
@@ -244,9 +247,11 @@
     },
     "delete": {
       "label": "¿Eliminar el perfil de {username}?",
+      "trigger": "Eliminar a {username}",
       "description": "Esta acción eliminará permanentemente al usuario y sus datos. Asegúrate de haber guardado todos los datos importantes."
     },
     "editProfil": "Modificar el perfil de {username}",
+    "roleHint": "No puedes quitarte tu propio rol de admin.",
     "jobList": {
       "placeholder": "Selecciona un puesto",
       "accountant": "Contable",
@@ -260,6 +265,7 @@
     "loggedIn": "Sesión iniciada",
     "accountCreated": "Cuenta creada",
     "userCreated": "Usuario creado",
-    "userUpdated": "Usuario actualizado"
+    "userUpdated": "Usuario actualizado",
+    "userDeleted": "Usuario eliminado"
   }
 }
