@@ -15,15 +15,10 @@ async function LoginFormWithError({ searchParams }: LoginPageProps) {
 
 export default function LoginPage({ searchParams }: LoginPageProps) {
 	return (
-		<main className="relative flex flex-1 flex-col overflow-hidden">
-			<div className="absolute right-4 top-4">
-				<ThemeSwitch />
-			</div>
-			<section className="flex flex-1 items-center justify-center">
-				<Suspense fallback={null}>
-					<LoginFormWithError searchParams={searchParams} />
-				</Suspense>
-			</section>
-		</main>
+		<section className="flex flex-1 items-center justify-center">
+			<Suspense fallback={<LoginForm />}>
+				<LoginFormWithError searchParams={searchParams} />
+			</Suspense>
+		</section>
 	);
 }
