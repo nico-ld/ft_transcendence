@@ -114,6 +114,7 @@ The full API (routes, bodies, responses) is at `/api/docs`.
 | GET | `/api/auth/42/callback` | 42 (sends the browser back here) |
 | GET | `/api/auth/me` | logged in |
 | PATCH | `/api/auth/me` | logged in |
+| PATCH | `/api/auth/me/password` | logged in, with a password (not 42-only) |
 | GET | `/api/users` | admin |
 | POST | `/api/users` | admin |
 | GET | `/api/users/{user_id}` | admin |

@@ -45,6 +45,7 @@ class UserOut(CamelModel):
     job: Job | None
     role: Role
     created_at: datetime
+    has_password: bool
 
 
 class UserCreateIn(CamelModel):

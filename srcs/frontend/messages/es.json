@@ -188,7 +188,25 @@
     "email": "Correo electrónico",
     "role": "Tipo de cuenta",
     "memberSince": "Miembro desde",
-    "saved": "Tu perfil se ha actualizado."
+    "saved": "Tu perfil se ha actualizado.",
+    "password": {
+      "title": "Contraseña",
+      "description": "Cambia la contraseña con la que inicias sesión.",
+      "current": "Contraseña actual",
+      "new": "Nueva contraseña",
+      "confirm": "Confirma la nueva contraseña",
+      "submit": "Cambiar la contraseña",
+      "saved": "Tu contraseña se ha cambiado. Se ha cerrado la sesión en tus otros navegadores.",
+      "noPassword": "Inicias sesión con 42, así que esta cuenta no tiene contraseña.",
+      "errors": {
+        "wrongCurrent": "Esta contraseña no es correcta.",
+        "same": "La nueva contraseña debe ser distinta de la actual.",
+        "mismatch": "Las contraseñas no coinciden.",
+        "invalid": "La nueva contraseña debe tener entre 8 y 128 caracteres.",
+        "notAllowed": "Tu sesión ha terminado. Vuelve a iniciar sesión.",
+        "generic": "Algo ha salido mal. Inténtalo de nuevo."
+      }
+    }
   },
   "Users": {
     "search": "Buscar",
