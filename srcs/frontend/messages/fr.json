@@ -213,7 +213,8 @@
       "new": "Nouveau mot de passe",
       "confirm": "Confirmez le nouveau mot de passe",
       "submit": "Changer le mot de passe",
-      "saved": "Votre mot de passe a été modifié. Vos autres navigateurs ont été déconnectés.",
+      "saved": "Votre mot de passe a été modifié.",
+      "loggedOut": "Vos autres navigateurs ont été déconnectés.",
       "noPassword": "Vous vous connectez avec 42, ce compte n'a donc pas de mot de passe.",
       "errors": {
         "wrongCurrent": "Ce mot de passe est incorrect.",
