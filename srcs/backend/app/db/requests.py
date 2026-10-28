@@ -54,7 +54,9 @@ class SQLRequest:
             return sess.scalar(stmt)
 
     def link_ft_id(self, user_id: int, ft_id: int) -> User | None:
-        """Link a 42 account to an existing user.
+        """Link a 42 account to an existing user, and remove its password.
+
+        42 proved the email is theirs, while anyone can sign up with any email.
 
         Args:
             user_id (int): the user id.
@@ -71,6 +73,7 @@ class SQLRequest:
             if user is None:
                 return None
             user.ft_id = ft_id
+            user.password_hash = None
             sess.commit()
             sess.refresh(user)
         return user

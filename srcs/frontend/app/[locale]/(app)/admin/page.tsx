@@ -40,10 +40,12 @@ async function AdminDashboard() {
 	return (
 		<DashboardShell role={viewer.role} username={viewer.username} avatarUrl={viewer.avatar ?? undefined}>
 			<div className="flex flex-col gap-5">
-				<StatsPanel
-					stats={stats}
-					extras={[{ label: t("extra"), value: users ? String(users.length) : "-" }]}
-				/>
+				{stats && (
+					<StatsPanel
+						stats={stats}
+						extras={[{ label: t("extra"), value: users ? String(users.length) : "-" }]}
+					/>
+				)}
 				<GrafanaModal users={workspaceUsers} />
 			</div>
 			<UserManagement users={users} viewer={viewer} />

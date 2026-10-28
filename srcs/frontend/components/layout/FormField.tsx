@@ -15,6 +15,7 @@ export function FormField({label, error, ...props}: FormFieldProps) {
 				id={id}
 				aria-invalid={!!error}
 				aria-describedby={error ? errorId : undefined}
+				className="bg-card"
 				{...props}
 			/>
 			{error && (

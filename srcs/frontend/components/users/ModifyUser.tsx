@@ -21,7 +21,9 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { Field } from "@/components/ui/field";
+import { toast } from "@/components/ui/toast";
 import type { ModifyUserProps } from "@/types/ModifyUserProps";
+import type { UpdateUserState } from "@/types/User";
 import { useTranslations } from "next-intl";
 
 function ModifyUserForm({user, viewer, onDone}:
@@ -29,11 +31,20 @@ function ModifyUserForm({user, viewer, onDone}:
 {
 	const t = useTranslations("Users");
 	const c = useTranslations("Common");
+	const n = useTranslations("Toast");
 	const uid = React.useId();
 
 	const isAdmin = viewer.role === "admin";
-	const action = updateUser.bind(null, user.id);
-	const [state, formAction, pending] = React.useActionState(action, null);
+	// toast here and not in the effect below: the effect runs again on every render
+	const [state, formAction, pending] = React.useActionState(
+		async (prev: UpdateUserState, form: FormData) => {
+			const result = await updateUser(user.id, prev, form);
+			if (result?.ok)
+				toast.add({ type: "success", title: n("userUpdated") });
+			return result;
+		},
+		null
+	);
 
 	React.useEffect(() => {
 		if (state?.ok)
