@@ -33,10 +33,12 @@ async function AdminDashboard() {
 
 	return (
 		<DashboardShell role={viewer.role} username={viewer.username} avatarUrl={viewer.avatar ?? undefined}>
-			<StatsPanel
-				stats={stats}
-				extras={[{ label: t("extra"), value: users ? String(users.length) : "-" }]}
-			/>
+			{stats && (
+				<StatsPanel
+					stats={stats}
+					extras={[{ label: t("extra"), value: users ? String(users.length) : "-" }]}
+				/>
+			)}
 			<UserManagement users={users} viewer={viewer} />
 		</DashboardShell>
 	);
