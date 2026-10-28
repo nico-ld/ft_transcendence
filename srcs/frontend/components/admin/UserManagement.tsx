@@ -10,15 +10,16 @@ import { Input } from "@/components/ui/input";
 import { ModifyUser } from "@/components/users/ModifyUser";
 
 import { NewUserForm } from "@/actions/NewUserForm";
+import { RemoveUser } from "@/actions/RemoveUser";
 
-import { UserBadge } from "../layout/CustomBadge";
+import { AdminBadge, UserBadge } from "../layout/CustomBadge";
 import { useTranslations } from "next-intl";
-import { 
+import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage
  } from "@/components/ui/avatar";
-import { 
+import {
 	Item,
 	ItemActions,
 	ItemContent,
@@ -50,7 +51,7 @@ function sortUsers(list: BackendUser[], key: SortKey) {
 	);
 }
 
-function UserList({ users, onSelect }: {users: BackendUser[] | null; onSelect: (user: BackendUser) => void }) {
+function UserList({ users, viewerId, onSelect }: {users: BackendUser[] | null; viewerId: number; onSelect: (user: BackendUser) => void }) {
 	const t = useTranslations("Users");
 
 	if (users == null || users.length === 0) {
@@ -60,9 +61,9 @@ function UserList({ users, onSelect }: {users: BackendUser[] | null; onSelect: (
 	return (
 		<ItemGroup className="max-w-md">
 			{users.map((person) => (
-				<Item 
-					key={person.id} 
-					className="bg-muted/50 transition hover:bg-popover" 
+				<Item
+					key={person.id}
+					className="bg-muted/50 transition hover:bg-popover"
 					variant="outline"
 					role="button"
 					tabIndex={0}
@@ -83,11 +84,16 @@ function UserList({ users, onSelect }: {users: BackendUser[] | null; onSelect: (
 						</Avatar>
 					</ItemMedia>
 					<ItemContent className="gap-1">
-						<ItemTitle>{person.username}</ItemTitle>
+						<ItemTitle>
+							{person.username}
+							{person.role === "admin" && <AdminBadge />}
+						</ItemTitle>
 						<ItemDescription>{person.email}</ItemDescription>
 					</ItemContent>
 					<ItemActions onClick={(e) => e.stopPropagation()}>
 						<UserBadge job={person.job ? t(`jobList.${person.job}`) : t("noJob")} />
+						{/* the backend refuses to delete the admin's own account */}
+						{person.id !== viewerId && <RemoveUser user={person} />}
 					</ItemActions>
 				</Item>
 			))}
@@ -166,7 +172,7 @@ export function UserManagement({ users, viewer }: { users: BackendUser[] | null;
 			</ItemGroup>
 
 			<ScrollArea className="min-h-0 flex-1">
-				<UserList users={visibleUsers} onSelect={handleSelect}/>
+				<UserList users={visibleUsers} viewerId={viewer.id} onSelect={handleSelect}/>
 			</ScrollArea>
 
 			{selectedUser && (

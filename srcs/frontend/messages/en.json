@@ -226,6 +226,8 @@
       "invalid": "Some fields are invalid. Check them and try again.",
       "notAllowed": "You are not allowed to do this.",
       "notFound": "This user no longer exists.",
+      "emailTaken": "This email is already used.",
+      "workspace": "Their workspace couldn't be deleted, so the user was kept. Please try again.",
       "generic": "Something went wrong. Please try again."
     },
     "userInfo": {
@@ -233,11 +235,12 @@
       "lastName": "Last name",
       "userName": "Username",
       "job": "Job",
-      "jobs": "Jobs"
+      "jobs": "Jobs",
+      "role": "Role"
     },
     "create": {
       "label": "Create a profile",
-      "description": "Enter information about the new user, a new session will be created.",
+      "description": "Enter the new user's details. They will log in with this email and password.",
       "phName": "Enter the first name",
       "phLastName": "Enter the last name",
       "phUserName": "Enter the username",
@@ -246,9 +249,11 @@
     },
     "delete": {
       "label": "Delete {username}'s profile?",
+      "trigger": "Delete {username}",
       "description": "This will permanently delete this user and their data. Make sure you have saved any important data."
     },
     "editProfil": "Edit {username}'s profile",
+    "roleHint": "You can't remove your own admin role.",
     "jobList": {
       "placeholder": "Select a job",
       "accountant": "Accountant",
@@ -262,6 +267,7 @@
     "loggedIn": "Logged in",
     "accountCreated": "Account created",
     "userCreated": "User created",
-    "userUpdated": "User updated"
+    "userUpdated": "User updated",
+    "userDeleted": "User deleted"
   }
 }

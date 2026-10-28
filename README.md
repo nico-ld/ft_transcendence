@@ -143,12 +143,13 @@ choice".
 |---|---|---|---|
 | Use a framework for both the frontend and backend | Web | Major | 2 |
 | Isolated Linux workspaces with a web terminal | Modules of choice | Major | 2 |
+| Advanced permissions system | User Management | Major | 2 |
 | Use an ORM for the database | Web | Minor | 1 |
 | Server-Side Rendering (SSR) | Web | Minor | 1 |
 | Support for multiple languages | Accessibility and Internationalization | Minor | 1 |
 | Support for additional browsers | Accessibility and Internationalization | Minor | 1 |
 | Remote authentication with OAuth 2.0 | User Management | Minor | 1 |
-| **Total** | | | **9** |
+| **Total** | | | **11** |
 
 ### Major: Use a framework for both the frontend and backend (2 pts)
 
@@ -179,6 +180,22 @@ choice".
 **Value for the project:** without it, Silk Space would only be a list of users. With it, an HR action has a real effect within seconds: an employee is hired, promoted or leaves, and their working environment follows.
 
 **Why it deserves Major status:** it touches every layer of the project (container infrastructure, asynchronous backend, real-time browser terminal and security), and is comparable in size to the listed Major modules such as real-time features with WebSockets or a backend as microservices.
+
+### Major: Advanced permissions system (2 pts)
+
+*Worked on by:* TODO
+
+**Why:** Silk Space is run by HR admins. They create the accounts, give each employee a job (and with it a workspace) and delete the accounts of the people who leave. Employees only see and change their own account.
+
+**Roles:**
+- **Admin:** the admin dashboard, with the system overview and every account. An admin can create users and other admins, change anyone's names, username, job and role, and delete accounts.
+- **User:** their own dashboard and statistics, their workspace, and their profile, where they can change their names, username and password, but not their job or role.
+
+**How it works:**
+- **Checked by the backend on every request.** Every `/users` route requires the admin role (`require_admin` in `srcs/backend/app/security.py`), and anyone else gets a 403. The role is read from the database each time, so a promotion or a demotion takes effect on the user's next request.
+- **CRUD on users** (`srcs/backend/app/routers/users.py`): list, read, create with a role, edit (names, username, job, role) and delete. Deleting an account also deletes its workspace (container, network and volume) and its sessions, so it is logged out everywhere. If Docker can't remove the workspace, the account is kept and the admin can try again.
+- **Always one admin left.** An admin can't remove their own admin role or delete their own account. The sign-up form and the profile page refuse any role or job sent to them.
+- **Different views per role.** The server sends each role to its own dashboard (`/admin` or `/user`) and away from the other one. In the admin panel (`srcs/frontend/components/admin/`), admins have an Admin badge in the list, the create and edit forms have a role choice, and every account but the admin's own has a delete button with a confirmation.
 
 ### Minor: Use an ORM for the database (1 pt)
 

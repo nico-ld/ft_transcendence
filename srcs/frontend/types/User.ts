@@ -4,7 +4,7 @@ export type Role = "admin" | "user";
 export type SortKey = "date" | "username" | "email";
 
 /** Why saving a user failed: a key of Users.errors in messages/*.json */
-export type UserError = "invalid" | "notAllowed" | "notFound" | "generic";
+export type UserError = "invalid" | "notAllowed" | "notFound" | "emailTaken" | "workspace" | "generic";
 
 /** The UserError for a backend answer's HTTP status */
 export function userError(status: number): UserError {
@@ -14,6 +14,8 @@ export function userError(status: number): UserError {
 		return "notAllowed";
 	if (status === 404)
 		return "notFound";
+	if (status === 409)
+		return "emailTaken";
 	return "generic";
 }
 

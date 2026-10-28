@@ -39,7 +39,7 @@
     "title": "Connexion à votre compte",
     "description": "Entrer votre email ci-dessous pour vous connecter à votre compte",
     "email": "Email",
-    "password": "Mot de Passe",
+    "password": "Mot de passe",
     "login": "Se connecter",
     "loggingIn": "Connexion",
     "with42": "Se connecter avec 42",
@@ -226,6 +226,8 @@
       "invalid": "Certains champs sont invalides. Vérifiez-les et réessayez.",
       "notAllowed": "Vous n'avez pas le droit de faire cela.",
       "notFound": "Cet utilisateur n'existe plus.",
+      "emailTaken": "Cette adresse e-mail est déjà utilisée.",
+      "workspace": "Son espace de travail n'a pas pu être supprimé, l'utilisateur a donc été conservé. Merci de réessayer.",
       "generic": "Une erreur s'est produite. Merci de réessayer."
     },
     "userInfo": {
@@ -233,11 +235,12 @@
       "lastName": "Nom",
       "userName": "Nom d'utilisateur",
       "job": "Poste",
-      "jobs": "Postes"
+      "jobs": "Postes",
+      "role": "Rôle"
     },
     "create": {
       "label": "Créer un profil",
-      "description": "Entrez les informations du nouvel utilisateur, une nouvelle session va être créée.",
+      "description": "Entrez les informations du nouvel utilisateur : il se connectera avec cette adresse e-mail et ce mot de passe.",
       "phName": "Entrez le prénom",
       "phLastName": "Entrez le nom",
       "phUserName": "Entrez le nom d'utilisateur",
@@ -246,9 +249,11 @@
     },
     "delete": {
       "label": "Supprimer le profil de {username} ?",
+      "trigger": "Supprimer {username}",
       "description": "Cette action va effacer de façon permanente l'utilisateur et ses données. Assurez-vous d'avoir sauvegardé toutes les données importantes."
     },
     "editProfil": "Modifier le profil de {username}",
+    "roleHint": "Vous ne pouvez pas retirer votre propre rôle d'admin.",
     "jobList": {
       "placeholder": "Sélectionnez un poste",
       "accountant": "Comptable",
@@ -262,6 +267,7 @@
     "loggedIn": "Connecté",
     "accountCreated": "Compte créé",
     "userCreated": "Utilisateur créé",
-    "userUpdated": "Utilisateur modifié"
+    "userUpdated": "Utilisateur modifié",
+    "userDeleted": "Utilisateur supprimé"
   }
 }
