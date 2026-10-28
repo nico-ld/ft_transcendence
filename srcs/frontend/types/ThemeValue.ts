@@ -1,3 +1,5 @@
+import { Sun, Moon, Monitor } from "lucide-react";
+
 export const THEMES = [
 	{value: "light", icon: Sun},
 	{value: "dark", icon: Moon},

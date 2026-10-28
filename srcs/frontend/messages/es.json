@@ -35,6 +35,8 @@
     "loggingOut": "Cerrando sesión",
     "light": "Modo claro",
     "dark": "Modo oscuro",
+    "system": "Modo del sistema",
+    "theme": "Tema",
     "admin": "Admin",
     "user": "Usuario"
   },

@@ -32,6 +32,8 @@
     "loggingOut": "Déconnexion",
     "light": "Mode clair",
     "dark": "Mode sombre",
+    "system": "Mode Système",
+    "theme": "Thème",
     "admin": "Admin",
     "user": "Utilisateur"
   },

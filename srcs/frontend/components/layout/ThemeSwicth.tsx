@@ -3,7 +3,6 @@
 import { useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
-import { Moon, Sun, Monitor } from "lucide-react";
 import {
 	Select,
 	SelectContent,
@@ -43,7 +42,7 @@ export function ThemeSwitch({variant = "select"}: {variant?: "select" | "submenu
 			<DropdownMenuSub>
 				<DropdownMenuSubTrigger>
 					<CurrentIcon />
-					{t("current.value")}
+					{t(`current.${current.value}`)}
 				</DropdownMenuSubTrigger>
 				<DropdownMenuSubContent>
 					<DropdownMenuRadioGroup value={current.value} onValueChange={handleChange}>
