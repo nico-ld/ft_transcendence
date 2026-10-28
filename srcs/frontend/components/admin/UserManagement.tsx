@@ -11,7 +11,7 @@ import { ModifyUser } from "@/components/users/ModifyUser";
 
 import { NewUserForm } from "@/actions/NewUserForm";
 
-import { UserBadge } from "../layout/CustomBadge";
+import { AdminBadge, UserBadge } from "../layout/CustomBadge";
 import { useTranslations } from "next-intl";
 import { 
 	Avatar,
@@ -83,7 +83,10 @@ function UserList({ users, onSelect }: {users: BackendUser[] | null; onSelect: (
 						</Avatar>
 					</ItemMedia>
 					<ItemContent className="gap-1">
-						<ItemTitle>{person.username}</ItemTitle>
+						<ItemTitle>
+							{person.username}
+							{person.role === "admin" && <AdminBadge />}
+						</ItemTitle>
 						<ItemDescription>{person.email}</ItemDescription>
 					</ItemContent>
 					<ItemActions onClick={(e) => e.stopPropagation()}>
