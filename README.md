@@ -145,12 +145,13 @@ choice".
 | Isolated Linux workspaces with a web terminal | Modules of choice | Major | 2 |
 | Advanced permissions system | User Management | Major | 2 |
 | Use an ORM for the database | Web | Minor | 1 |
+| A complete notification system | Web | Minor | 1 |
 | Server-Side Rendering (SSR) | Web | Minor | 1 |
 | Advanced search with filters, sorting and pagination | Web | Minor | 1 |
 | Support for multiple languages | Accessibility and Internationalization | Minor | 1 |
 | Support for additional browsers | Accessibility and Internationalization | Minor | 1 |
 | Remote authentication with OAuth 2.0 | User Management | Minor | 1 |
-| **Total** | | | **12** |
+| **Total** | | | **13** |
 
 ### Major: Use a framework for both the frontend and backend (2 pts)
 
@@ -205,6 +206,18 @@ choice".
 **Why:** the tables are defined once, as typed Python classes, and the queries are written in Python instead of SQL strings: values always travel as parameters, so they can't be used for SQL injection.
 
 **How it works:** SQLAlchemy 2 with PostgreSQL (psycopg). The tables are Python classes in `srcs/backend/app/db/`: users (with a role and a job, and a check that every account has a password or a 42 login), login sessions, and terminal sessions, linked to users by foreign keys. The queries go through `Session` and `select` in `db/requests.py`, and the tables are created when the backend starts.
+
+### Minor: A complete notification system (1 pt)
+
+*Worked on by:* TODO
+
+**Why:** every action that creates, changes or deletes something gets a clear confirmation, so nobody wonders whether a click worked.
+
+**How it works:** toasts from the Base UI toast manager (`srcs/frontend/components/ui/toast.tsx`), shown on every page by the `<Toaster />` of the root layout, in the user's language (`Toast` and the forms' texts in `messages/*.json`).
+- **Creation:** a new account after sign-up, and a new user from the admin panel.
+- **Update:** the profile, the avatar and the password, and a user edited from the admin panel.
+- **Deletion:** a user deleted from the admin panel, and an avatar removed from the profile.
+- A toast only appears once the server has confirmed the action. Errors stay next to the field or the form they concern.
 
 ### Minor: Server-Side Rendering (1 pt)
 
