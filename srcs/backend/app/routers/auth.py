@@ -48,8 +48,7 @@ def login(body: LoginIn, response: Response) -> UserOut:
 
 @router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
 def logout(response: Response, token: SessionToken) -> None:
-    # invalidate the session on the server first: deleting the cookie only
-    # cleans this browser, a copy of it would still work
+    # invalidate the session on the server first
     revoke_session_token(token)
     clear_session_cookie(response)
 

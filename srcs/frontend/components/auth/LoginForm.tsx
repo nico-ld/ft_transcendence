@@ -10,12 +10,14 @@ import { AuthCard } from "./AuthCard";
 import { AuthError } from "./AuthError";
 import { FormField } from "../layout/FormField";
 import { useFormSubmit } from "@/actions/useFormSubmit";
+import { toast } from "../ui/toast";
 
 import type { LoginError } from "@/types/LoginError";
 
 export function LoginForm({oauthError = ""}: {oauthError?: LoginError}) {
 	const router = useRouter();
 	const t = useTranslations("Login");
+	const n = useTranslations("Toast");
 
 	const [error, formAction, pending] = useActionState<LoginError, FormData>(
 		async (_prev, formData) => {
@@ -26,6 +28,7 @@ export function LoginForm({oauthError = ""}: {oauthError?: LoginError}) {
 				});
 				if (!result)
 					return "invalidCredentials";
+				toast.add({ type: "success", title: n("loggedIn") });
 				router.replace(ROLE_HOME[result.role]);
 				return "";
 			} catch {

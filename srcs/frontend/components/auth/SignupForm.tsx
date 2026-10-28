@@ -9,6 +9,7 @@ import { AuthCard } from "./AuthCard";
 import { AuthError } from "./AuthError";
 import { FormField } from "../layout/FormField";
 import { useFormSubmit } from "@/actions/useFormSubmit";
+import { toast } from "../ui/toast";
 
 import type { SignupError } from "@/types/SignupErrors";
 import type { FieldName } from "@/types/FormFieldProps";
@@ -24,6 +25,7 @@ const ERROR_FIELD: Partial<Record<Exclude<SignupError, "">, FieldName>> = {
 export function SignupForm() {
 	const router = useRouter();
 	const t = useTranslations("Signup");
+	const n = useTranslations("Toast");
 
 	const [error, formAction, pending] = useActionState<SignupError, FormData>(
 		async (_prev, formData) => {
@@ -41,6 +43,7 @@ export function SignupForm() {
 				if (signupError)
 					return signupError;
 
+				toast.add({ type: "success", title: n("accountCreated") });
 				router.replace(ROLE_HOME.user);
 				return "";
 			} catch {
