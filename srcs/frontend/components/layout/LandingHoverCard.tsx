@@ -22,6 +22,7 @@ function DocElem({title, href}: {title: string; href: string}) {
 
 export function LandingHoverCard({sections}: {sections: DocNavSection[]}) {
 	const t = useTranslations("Landing");
+	const d = useTranslations("Docs.sections");
 
 	return (
 		<HoverCard>
@@ -35,7 +36,7 @@ export function LandingHoverCard({sections}: {sections: DocNavSection[]}) {
 				{sections.map((section) => (
 					<article key={section.id} className="flex min-w-32 flex-col gap-3">
 						<div className="uppercase text-muted-foreground">
-							{section.label}
+							{d(section.id)}
 						</div>
 						{section.items.map((item) => (
 							<DocElem key={item.href} title={item.title} href={item.href} />

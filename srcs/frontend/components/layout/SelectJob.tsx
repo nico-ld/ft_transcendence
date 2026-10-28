@@ -12,6 +12,7 @@ import { JOBS } from "@/types/jobs";
 
 export function SelectJob({value, name}: {value?: string | null; name?: string;}) {
 	const t = useTranslations("Users.jobList");
+	const u = useTranslations("Users.userInfo");
 
 	const items = [
 		{value: null, label: t("placeholder")},
@@ -30,7 +31,7 @@ export function SelectJob({value, name}: {value?: string | null; name?: string;}
 			</SelectTrigger>
 			<SelectContent>
 				<SelectGroup>
-					<SelectLabel>Jobs</SelectLabel>
+					<SelectLabel>{u("jobs")}</SelectLabel>
 					{items.map((item) => (
 						<SelectItem key={item.value ?? "none"} value={item.value}>
 							{item.label}

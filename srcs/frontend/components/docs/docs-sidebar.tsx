@@ -1,13 +1,14 @@
 import { Suspense } from "react";
 import { getDocNav } from "@/lib/docs";
 import { DocsNav } from "./docs-nav";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export async function DocsSidebar() {
-	const sections = getDocNav(await getLocale());
+	const [locale, t] = await Promise.all([getLocale(), getTranslations("Docs")]);
+	const sections = getDocNav(locale);
 
 	return (
-		<nav aria-label="Documentation">
+		<nav aria-label={t("documentation")}>
 			<Suspense fallback={null}>
 				<DocsNav sections={sections} />
 			</Suspense>
