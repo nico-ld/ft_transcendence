@@ -23,6 +23,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { ROLE_HOME } from "@/lib/utils";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { ThemeSwitch } from "./ThemeSwicth";
 
 
 export function Header({ role, username, avatarUrl }: HeaderProps) {
@@ -78,13 +79,7 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 
 					<LanguageSwitcher variant="submenu" />
 
-					<DropdownMenuItem
-						closeOnClick={false}
-						onClick={() => setTheme(isDark ? "light" : "dark")}
-					>
-						{isDark ? <Sun /> : <Moon />}
-						{isDark ? t("light") : t("dark")}
-					</DropdownMenuItem>
+					<ThemeSwitch variant="submenu" />
 
 					<DropdownMenuSeparator />
 

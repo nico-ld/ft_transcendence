@@ -40,9 +40,6 @@ export default async function RootLayout({ children }: {children: React.ReactNod
 				<NextIntlClientProvider>
 					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 						{children}
-						<footer className="py-4 text-center text-sm text-muted-foreground">
-							<LegalFooter />
-						</footer>
 						<Toaster />
 					</ThemeProvider>
 				</NextIntlClientProvider>
