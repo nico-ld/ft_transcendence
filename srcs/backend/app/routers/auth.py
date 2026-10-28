@@ -69,7 +69,11 @@ def me(user: CurrentUser) -> UserOut:
 @router.patch("/me")
 def update_me(body: ProfileUpdateIn, user: CurrentUser) -> UserOut:
     # none of these cols can be null so a null = no change
-    updated = users_db.update_user(user.id, body.model_dump(exclude_none=True))
+    changes = body.model_dump(exclude_none=True)
+    if "avatar" in body.model_fields_set and body.avatar is None:
+        changes["avatar"] = None
+    updated = users_db.update_user(user.id, changes)
+    # avatar is the only col that can back to null
     if updated is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "User not found")
     return UserOut.model_validate(updated)
