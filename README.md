@@ -3,7 +3,7 @@
 ## Description :
 
 This project, ft_silk_space, is about easing the hiring, promotion and departure processes of employees inside of a company.
-Thanks to an easy-to-use interface, even a non-technical can now easily create a new work session for an employee, and modify or delete said session when needed.
+Thanks to an easy-to-use interface, even a non-technical user can now easily create a new work session for an employee, and modify or delete said session when needed.
 To understand how we achieve this, please read the rest of this document.
 
 ## Instructions :
@@ -21,7 +21,7 @@ Thanks to the use of Docker, we handle all the prerequisites for you. Said prere
 - FastAPI
 - Docker
 
-## Ressources :
+## Resources :
 
 ### On NextJS:
   https://nextjs.org/
@@ -40,7 +40,7 @@ Thanks to the use of Docker, we handle all the prerequisites for you. Said prere
   https://hub.docker.com/
   
 ### On AI:
-  AI was use in this project to help for researches, perform code audits, and overall trouble-shoot for ft_silk_space healthy running.
+  AI was used in this project to help with research, perform code audits, and troubleshoot problems to keep ft_silk_space running smoothly.
 
 • Team Information:
 For each team member mentioned at the top of the README.md, you must pro-
@@ -54,31 +54,29 @@ vide:
 
 As the product owner for ft_silk_space, *jdessoli* supervised the core project idea, features, and the selection of a coherent technical stack regarding the goal.  
 
-### Project manager (PM) : *tseche*, *nile-dai* and *jdessoli*
+### Project manager (PM) : *nile-dai*
 
-As project managers for ft_silk_space, *tseche*, *nile-dai* and *jdessoli* worked together to ensure the completion of the project within a previously set up deadline.
+As the project manager for ft_silk_space, *nile-dai* worked to ensure the completion of the project within a previously set up deadline.
 
-*jdessoli* created a Trello, to facilitate work division.
+*nile-dai* created a GitHub repository as well as a Discord server.
 
-*nile-dai* created a github repository as well as a Discord server.
+*jdessoli* and *tseche* also helped with project management: *jdessoli* created a Trello to facilitate work division, and *tseche* helped ensure the communication flow kept running smoothly, so the tools reflected the real state of the project at each stage.
 
-*tseche* helped ensure the communication flow kept running smoothly, so the tools reflected the real state of the project at each stage.
+### Tech lead : *mmansier*
 
-### Teach lead : mmansier and amartel
+As the tech lead, *mmansier* chose the technical stack for both the front and the back end with the team, proposed FastAPI, trained the team on the back-end, and performed code review on every part of the project.
 
-As tech leads, *mmansier* and *amartel* helped choose the proper technical stack for both the front and the back end.
+*amartel* also took part in the technical choices: he proposed Next.js, trained the team on the front-end, and set up automations to facilitate a proper workflow.
 
-*mmansier* proposed Fast-API, trained the team on the back-end, and performed code review on every part of the project.
+### Developers : *amartel* and *tseche*
 
-*amartel* proposed NextJS, trained the team on the front-end, and set up automatizations to facilitate a proper workflow.
-
-### Developers : *nile-dai*, *amartel*, *mmansier*, *tseche* and *jdessoli*
+As the subject asks, every member of the team also worked as a developer:
 
 *nile-dai* mostly worked alongside *amartel* on the front-end side of the project, spending a lot of time on the design choices and implementation.
 
-*amartel* piloted the front-end developement.
+*amartel* piloted the front-end development.
 
-*mmansier* piloted the back-end developement.
+*mmansier* piloted the back-end development.
 
 *tseche* mostly worked alongside *mmansier* on the back-end. 
 
@@ -86,9 +84,9 @@ As tech leads, *mmansier* and *amartel* helped choose the proper technical stack
 
 ## Project Management :
 
-  The initial project conception, roles and tasks distribution was done by *jdessoli*.
+  The initial project conception, roles and task distribution were done by *jdessoli*.
   
-  The reunions were organized by *nile-dai*. They helped having the whole team up to date with the evolving states of each parts of the project.
+  The meetings were organized by *nile-dai*. They kept the whole team up to date with the state of each part of the project.
 
   The communication was mostly done through the Discord thanks to *nile-dai*, the Github thanks to *amartel* and *mmansier*, and the updated Trello thanks to *tseche*.
 
@@ -113,7 +111,7 @@ As tech leads, *mmansier* and *amartel* helped choose the proper technical stack
 
 ### Database system
 
-* PostGre, whom was choose because of its popularity in the industry
+* PostgreSQL, chosen because of its popularity in the industry
 
 /*** STILL LEFT TO DO ***/
 
@@ -124,16 +122,12 @@ As tech leads, *mmansier* and *amartel* helped choose the proper technical stack
 
 ## Database Schema :
 
-blabla
-
 • Features List:
 ◦ Complete list of implemented features.
 ◦ Which team member(s) worked on each feature.
 ◦ Brief description of each feature’s functionality.
 
 Features list :
-
-blabla
 
 • Modules:
 ◦ List of all chosen modules (Major and Minor).
@@ -143,7 +137,78 @@ choice".
 ◦ How each module was implemented.
 ◦ Which team member(s) worked on each module.
 
-Modules :
+## Modules :
+
+| Module | Category | Type | Points |
+|---|---|---|---|
+| Use a framework for both the frontend and backend | Web | Major | 2 |
+| Isolated Linux workspaces with a web terminal | Modules of choice | Major | 2 |
+| Use an ORM for the database | Web | Minor | 1 |
+| Server-Side Rendering (SSR) | Web | Minor | 1 |
+| Support for multiple languages | Accessibility and Internationalization | Minor | 1 |
+| Support for additional browsers | Accessibility and Internationalization | Minor | 1 |
+| Remote authentication with OAuth 2.0 | User Management | Minor | 1 |
+| **Total** | | | **9** |
+
+### Major: Use a framework for both the frontend and backend (2 pts)
+
+*Worked on by:* TODO
+
+**Why:** both frameworks give us routing, validation and a structure every member can follow, so the team could split the work between the front and the back end without reinventing the basics. Next.js renders pages on the server (see the SSR module) and has a clear place for everything; FastAPI checks every request against typed schemas and documents the API by itself.
+
+**How it works:**
+- **Frontend: Next.js 16 (React 19)**, in `srcs/frontend`. One folder per page under `app/[locale]/`, server components that read the session and call the backend before sending the page, server actions for the forms (`actions/`), shared components in `components/`.
+- **Backend: FastAPI**, in `srcs/backend/app`. One router per domain in `routers/` (`auth`, `oauth42`, `users`, `stats`, `workspace`, `websocket`), pydantic schemas that refuse any invalid or unexpected field (`schemas.py`), and dependencies that require a valid session or the admin role (`security.py`).
+- **How they talk:** the browser only talks to nginx, which sends `/api/` to FastAPI and the rest to Next.js. On the server, Next.js calls FastAPI on the Docker network with the user's session cookie (`srcs/frontend/lib/backend.ts`).
+
+### Major (module of choice): Isolated Linux workspaces with a web terminal (2 pts)
+
+*Worked on by:* TODO
+
+**Why we chose it:** it is what Silk Space is for. When an HR user gives an employee a job, the employee gets a Linux environment with the tools of that job (software engineer, data analyst, DevOps engineer, accountant or technical writer), which they open in their browser. Changing their job changes their tools and keeps their files; deleting their account deletes everything. No module in the list covers this.
+
+**Technical challenges:**
+- **Driving Docker from the backend.** FastAPI talks to the Docker API through the Docker socket (aiodocker, `srcs/backend/app/docker/workspace.py`). Each user gets their own container, private network and persistent home volume, created on first use from the image of their job (`srcs/workspaces/`: a common base image and one image per job).
+- **Isolation and limits.** The shell runs as a regular user, without any Linux capabilities and unable to gain privileges. Memory, CPU and number of processes are capped per container, and each user's private network keeps the workspaces apart.
+- **Lifecycle.** A job change replaces the container but keeps the home volume, so the files survive. Deleting a user removes their container, network and volume. A broken container is recreated instead of failing forever, and a lock per user stops two requests from creating the same workspace twice.
+- **The terminal.** xterm.js in the browser, a WebSocket through nginx to FastAPI, then a bash with a TTY inside the container (`routers/websocket.py`, `components/workspace/`). Keystrokes and output go as raw bytes in both directions, the terminal size follows the window, and closing the page hangs up the shell like a real terminal.
+- **Security of the connection.** Only our own site may open the WebSocket, it needs a valid session, and the session is checked again every 5 seconds: a logout or a deleted account closes the open terminals.
+- **Every failure explained.** No job yet, image not built, Docker error, session ended, connection lost: each one shows a translated message with a way out (reconnect, log in again, back to the dashboard).
+- **Log time.** Each terminal session is recorded (`db/terminal_sessions.py`) and feeds the user's statistics.
+
+**Value for the project:** without it, Silk Space would only be a list of users. With it, an HR action has a real effect within seconds: an employee is hired, promoted or leaves, and their working environment follows.
+
+**Why it deserves Major status:** it touches every layer of the project (container infrastructure, asynchronous backend, real-time browser terminal and security), and is comparable in size to the listed Major modules such as real-time features with WebSockets or a backend as microservices.
+
+### Minor: Use an ORM for the database (1 pt)
+
+*Worked on by:* TODO
+
+**Why:** the tables are defined once, as typed Python classes, and the queries are written in Python instead of SQL strings: values always travel as parameters, so they can't be used for SQL injection.
+
+**How it works:** SQLAlchemy 2 with PostgreSQL (psycopg). The tables are Python classes in `srcs/backend/app/db/`: users (with a role and a job, and a check that every account has a password or a 42 login), login sessions, and terminal sessions, linked to users by foreign keys. The queries go through `Session` and `select` in `db/requests.py`, and the tables are created when the backend starts.
+
+### Minor: Server-Side Rendering (1 pt)
+
+*Worked on by:* TODO
+
+**Why:** pages arrive with their content already in the HTML. The dashboards come with the user's data in place, without a loading flash, and a visitor who isn't logged in is sent to the login page straight away. The public pages are fast and readable by search engines.
+
+**How it works:** Next.js server components. The dashboards and the profile and workspace pages read the session cookie on the server, call the backend and render at request time (`getCurrentUser` in `srcs/frontend/lib/backend.ts`). With `cacheComponents`, the static part of these pages is prerendered and the user's part is streamed into it. The landing, legal and documentation pages are prerendered at build time in each language (`generateStaticParams`), and the legal and documentation pages have their own titles and descriptions (`generateMetadata`).
+
+### Minor: Support for multiple languages (1 pt)
+
+*Worked on by:* TODO
+
+**Why:** the team and the first users speak French, English is the default, and Spanish makes the third language.
+
+**How it works:** next-intl, in English, French and Spanish.
+- The language is part of the address (`/en`, `/fr`, `/es`, set in `srcs/frontend/i18n/routing.ts`), and visitors arriving on `/` are sent to their browser's language.
+- Every text shown to the user, labels read by screen readers included, lives in `srcs/frontend/messages/{en,fr,es}.json`. The backend's English error messages are never shown as they are: the frontend turns them into translated messages.
+- The language can be changed from the landing page footer and from the user menu. Dates follow the chosen language.
+- The privacy policy and terms of service are written in each language (`srcs/frontend/content/legal/`).
+
+**Still to do:** the documentation pages (`srcs/frontend/content/docs/`) only exist in English for now.
 
 ### Minor: Remote authentication with OAuth 2.0 (1 pt)
 
@@ -186,5 +251,3 @@ Any other useful or relevant information is welcome (usage documentation, known
 limitations, license, credits, etc.).
 
 Individual contributions :
-
-blabla

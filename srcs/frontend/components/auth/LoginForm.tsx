@@ -1,41 +1,19 @@
 "use client";
 
-import { useRouter } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import type { LoginError } from "@/types/LoginError";
-import { startTransition, useActionState } from "react";
+import { useActionState } from "react";
+
 import { Login } from "@/actions/auth";
-import { Button, buttonVariants } from "../ui/button";
 import { ROLE_HOME } from "@/lib/utils";
-import { Spinner } from "../ui/spinner";
-import { Label } from "../ui/label";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { TriangleAlert } from "lucide-react";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle
-} from "../ui/card";
+import { AuthCard } from "./AuthCard";
+import { AuthError } from "./AuthError";
+import { FormField } from "../layout/FormField";
+import { useFormSubmit } from "@/actions/useFormSubmit";
 
-const FT_LOGIN_URL = "/api/auth/42/login";
+import type { LoginError } from "@/types/LoginError";
 
-function ConnectionFailed({ error }: {error: Exclude<LoginError, "">}) {
-	const t = useTranslations("Login");
-
-	return (
-		<Alert variant="destructive" className="max-w-wd bg-muted/50">
-			<TriangleAlert />
-			<AlertTitle>{t("failedTitle")}</AlertTitle>
-			<AlertDescription>{t(`errors.${error}`)}</AlertDescription>
-		</Alert>
-	);
-}
-
-// oauthError: why the last 42 login failed, shown until the form is submitted
-export function LoginForm({ oauthError = "" }: { oauthError?: LoginError }) {
+export function LoginForm({oauthError = ""}: {oauthError?: LoginError}) {
 	const router = useRouter();
 	const t = useTranslations("Login");
 
@@ -57,63 +35,38 @@ export function LoginForm({ oauthError = "" }: { oauthError?: LoginError }) {
 		oauthError
 	);
 
-	// onSubmit format instead of <form action>, since React empties the fields after a form action (as in NewUserForm)
-	function submit(event: React.FormEvent<HTMLFormElement>) {
-		event.preventDefault();
-		const form = new FormData(event.currentTarget);
-		startTransition(() => formAction(form));
-	}
+	const submit = useFormSubmit(formAction);
 
 	return (
-		<div className="w-80 h-auto flex flex-col gap-2">
-		<div className="mb-4" aria-live="polite">
-			{error && <ConnectionFailed error={error} />}
-		</div>
-
-		<Card className="w-full max-w-sm">
-			<CardHeader>
-				<CardTitle>{t("title")}</CardTitle>
-				<CardDescription>{t("description")}</CardDescription>
-			</CardHeader>
-			<form onSubmit={submit}>
-				<CardContent className="mb-3">
-						<div className="flex flex-col gap-6">
-							<div className="grid gap-2">
-								<Label htmlFor="email">{t("email")}</Label>
-								<input
-									className="w-full p-0.5 bg-gray-100 rounded-2xl dark:text-zinc-900 text-center text-base"
-									name="email"
-									type="email"
-									placeholder={t("email")}
-									autoComplete="email"
-									required
-								/>
-							</div>
-							<div className="grid gap-2">
-								<Label htmlFor="password">{t("password")}</Label>
-								<input
-									className="w-full p-0.5 bg-gray-100 rounded-2xl dark:text-zinc-900 text-center text-base"
-									name="password"
-									type="password"
-									placeholder={t("password")}
-									autoComplete="current-password"
-									required
-								/>
-							</div>
-						</div>
-				</CardContent>
-
-				<CardFooter className="flex-col gap-2">
-					<Button type="submit" className="w-full" disabled={pending}>
-						{pending ? t("loggingIn") : t("login")}
-						{pending && <Spinner />}
-					</Button>
-					<a href={FT_LOGIN_URL} className={buttonVariants({ variant: "outline", className: "w-full" })}>
-						{t("with42")}
-					</a>
-				</CardFooter>
-			</form>
-		</Card>
-		</div>
+		<AuthCard
+			title={t("title")}
+			description={t("description")}
+			alert={error ? <AuthError title={t("failedTitle")} message={t(`errors.${error}`)} /> : null}
+			onSubmit={submit}
+			pending={pending}
+			submitLabel={t("login")}
+			pendingLabel={t("loggingIn")}
+			with42Label={t("with42")}
+			switchLink={
+				<Link href="/signup" className="text-sm text-muted-foreground hover:underline">
+					{t("noAccount")}
+				</Link>
+			}
+		>
+			<FormField
+				label={t("email")}
+				name="email"
+				type="email"
+				autoComplete="email"
+				required
+			/>
+			<FormField
+				label={t("password")}
+				name="password"
+				type="password"
+				autoComplete="current-password"
+				required
+			/>
+		</AuthCard>
 	);
 }

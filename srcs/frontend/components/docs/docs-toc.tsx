@@ -28,7 +28,7 @@ export function DocsToc({items}: {items: TocItem[]}) {
 	}, [items]);
 
 	return (
-		<nav aria-label="On this page">
+		<nav aria-label={t("tocLabel")}>
 			<h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
 				{t("tocLabel")}
 			</h2>

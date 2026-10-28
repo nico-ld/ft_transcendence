@@ -11,4 +11,4 @@ RUN apk add --no-cache openssl \
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 443
+EXPOSE 6767

@@ -18,7 +18,7 @@ export function Hero() {
 				</p>
 
 				<div className="flex w-full max-w-md flex-col justify-center gap-2 sm:flex-row">
-					<Link href="/login" className={`w-3/4 h-10 text-[1.1rem] ${buttonVariants()}`}>{t("heroCta")}</Link>
+					<Link href="/signup" className={`w-3/4 h-10 text-[1.1rem] ${buttonVariants()}`}>{t("heroCta")}</Link>
 				</div>
 			</article>
 		</section>

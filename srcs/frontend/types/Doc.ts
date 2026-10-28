@@ -20,7 +20,6 @@ export type DocNavItem = {
 
 export type DocNavSection = {
 	id: string;
-	label: string;
 	items: DocNavItem[];
 };
 
