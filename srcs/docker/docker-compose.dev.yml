@@ -1,13 +1,6 @@
+# only what dev changes, everything else comes from docker-compose.yml
 services:
   nginx:
-    build: ./nginx
-    ports:
-      - "6767:6767"
-    depends_on:
-      - frontend
-      - backend
-    networks:
-      - ft_silk_space
     volumes:
       # shared so editing the config only needs `make dev-reload-nginx`,
       # not an image rebuild. nginx never re-reads it on its own.
@@ -17,10 +10,6 @@ services:
     build:
       context: ../frontend
       dockerfile: ../docker/frontend/dev/Dockerfile
-    expose:
-      - "3000"
-    networks:
-      - ft_silk_space
     volumes:
       # sources shared with the container, next dev recompiles on change
       - ../frontend:/app
@@ -30,16 +19,7 @@ services:
       - /app/.next
 
   backend:
-    build: ../backend
-    expose:
-      - "8080"
-    depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - ft_silk_space
     volumes:
-      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
       # sources shared with the container, --reload restarts uvicorn on change
       - ../backend/app:/app
     # overrides the image CMD, which has no --reload. compose replaces command
@@ -47,47 +27,3 @@ services:
     command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080",
               "--proxy-headers", "--forwarded-allow-ips", "*",
               "--root-path", "/api", "--reload"]
-
-  db:
-    build: ./postgres
-    expose:
-      - "5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - ft_silk_space
-
-  prometheus:
-    image: prom/prometheus:latest
-    restart: unless-stopped
-    expose:
-      - "9090"
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus-data:/prometheus
-    networks:
-      - ft_silk_space
-    depends_on:
-      - cadvisor
-
-  cadvisor:
-    image: gcr.io/cadvisor/cadvisor:latest
-    restart: unless-stopped
-    volumes:
-      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock:ro  # Docker API
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro                # (CPU, mem, ...)
-      - /var/lib/docker/:/var/lib/docker:ro            # Container filesystem
-      - /proc:/host/proc:ro                              # Process info
-    # prometheus scrapes it through ft_silk_space, no need to publish it
-    expose:
-      - "8080"
-    networks:
-      - ft_silk_space
-
-volumes:
-  postgres_data:
-  prometheus-data:
-
-networks:
-  ft_silk_space:
-    driver: bridge

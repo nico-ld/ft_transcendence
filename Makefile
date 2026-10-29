@@ -1,17 +1,16 @@
 # ft_transcendence
 #
-# The stack is described in srcs/docker by one base file plus one overlay per
-# environment:
+# The stack is described in srcs/docker by one base file plus a dev overlay:
 #   dev  : docker-compose.yml + docker-compose.dev.yml   (sources mounted, hot reload)
-#   prod : docker-compose.yml + docker-compose.prod.yml  (baked images, restart policies)
+#   prod : docker-compose.yml alone                      (baked images)
 #
 # compose resolves every relative path in every -f file against the base file's
-# directory, not against the file that contains the path. all three files live
-# in srcs/docker so that the two rules coincide, don't move the overlays into
-# subdirectories or their paths will silently shift up a level.
+# directory, not against the file that contains the path. both files live
+# in srcs/docker so that the two rules coincide, don't move the overlay into
+# a subdirectory or its paths will silently shift up a level.
 #
 # Both environments use a distinct compose project, so they have their own
-# containers, networks and volumes and can run side by side.
+# containers, networks and volumes.
 
 DOCKER  := docker
 COMPOSE := $(DOCKER) compose
@@ -19,7 +18,6 @@ COMPOSE := $(DOCKER) compose
 DOCKER_DIR := srcs/docker
 BASE_FILE  := $(DOCKER_DIR)/docker-compose.yml
 DEV_FILE   := $(DOCKER_DIR)/docker-compose.dev.yml
-PROD_FILE  := $(DOCKER_DIR)/docker-compose.prod.yml
 
 # values interpolated into the compose files themselves (GRAFANA_ADMIN_PASSWORD,
 # DOCKER_SOCKET). without --env-file compose would read $(DOCKER_DIR)/.env, since
@@ -27,7 +25,7 @@ PROD_FILE  := $(DOCKER_DIR)/docker-compose.prod.yml
 ENV_FILE := srcs/.env
 
 COMPOSE_DEV  := $(COMPOSE) -p ft_silk_dev  --env-file $(ENV_FILE) -f $(BASE_FILE) -f $(DEV_FILE)
-COMPOSE_PROD := $(COMPOSE) -p ft_silk_prod --env-file $(ENV_FILE) -f $(BASE_FILE) -f $(PROD_FILE)
+COMPOSE_PROD := $(COMPOSE) -p ft_silk_prod --env-file $(ENV_FILE) -f $(BASE_FILE)
 
 # compose never builds the workspace images, the backend starts them on demand
 WORKSPACES := $(MAKE) -C $(DOCKER_DIR)/workspaces

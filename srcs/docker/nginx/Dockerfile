@@ -11,10 +11,4 @@ RUN apk add --no-cache openssl \
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# the entrypoint substitutes every environment variable matching this regex in
-# the templates. Restricted to NODE_UPSTREAM so that nothing else in the
-# environment can eat an nginx $variable.
-ENV NGINX_ENVSUBST_FILTER="^NODE_UPSTREAM$" \
-    NODE_UPSTREAM="frontend:3000"
-
 EXPOSE 6767

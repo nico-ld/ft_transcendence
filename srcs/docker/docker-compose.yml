@@ -63,6 +63,7 @@ services:
     volumes:
       - /:/rootfs:ro
       - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock:ro
+      - ${XDG_RUNTIME_DIR}/docker/containerd/containerd.sock:/run/containerd/containerd.sock:ro
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     expose:
       - "8080"
