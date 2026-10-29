@@ -19,7 +19,7 @@ export function UserToolBar(props: UserFilterProps) {
 		<ItemGroup className="bg-card">
 			<Item variant={"muted"}>
 				<ItemContent>
-					<ItemTitle>
+					<ItemTitle className=" w-auto">
 						<Field orientation="horizontal">
 							<UserFilter {...props} />
 							<Input

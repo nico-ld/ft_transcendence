@@ -13,7 +13,6 @@ import { useUserList } from "@/lib/useUserList";
 
 import type { BackendUser } from "@/lib/backend";
 import type { Viewer } from "@/types/Viewer";
-import { Liter } from "next/font/google";
 
 export function UserManagement({users, viewer}: {
 	users: BackendUser[] | null;
@@ -30,7 +29,7 @@ export function UserManagement({users, viewer}: {
 	}
 
 	return (
-		<div className="flex h-full flex-col rounded-xl border bg-card p-2">
+		<div className="flex h-[75dvh] w-full lg:w-2/5 min-w-0 flex-col rounded-xl border bg-card p-2">
 			<UserToolBar
 				sort={list.sort}
 				onSortChange={list.changeSort}

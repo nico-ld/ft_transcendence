@@ -40,15 +40,17 @@ async function AdminDashboard() {
 		.map(({ id, username }) => ({ id, username }));
 
 	return (
-		<main className="flex min-h-0 flex-1 flex-col">
-			<Header role={viewer.role} username={viewer.username} />
-			<section className="flex min-h-0 flex-row">
-				{/* Dashboard place */}
-				<article className="min-h-0 flex-1 border" />
-				<article className="min-h-0 flex-1">
-					<UserManagement users={users} viewer={viewer} />
-				</article>
-			</section>
-		</main>
+		<DashboardShell role={viewer.role} username={viewer.username} avatarUrl={viewer.avatar ?? undefined}>
+			<div className="flex flex-col gap-5">
+				{stats && (
+					<StatsPanel
+						stats={stats}
+						extras={[{ label: t("extra"), value: users ? String(users.length) : "-" }]}
+					/>
+				)}
+				<GrafanaModal users={workspaceUsers} />
+			</div>
+			<UserManagement users={users} viewer={viewer} />
+		</DashboardShell>
 	);
 }
