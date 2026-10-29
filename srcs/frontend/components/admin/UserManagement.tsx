@@ -13,7 +13,7 @@ import { NewUserForm } from "@/actions/NewUserForm";
 import { RemoveUser } from "@/actions/RemoveUser";
 import { UserPagination } from "./UserPagination";
 
-import { AdminBadge, UserBadge } from "../layout/CustomBadge";
+import { AdminBadge, GuestBadge, UserBadge } from "../layout/CustomBadge";
 import { useTranslations } from "next-intl";
 import {
 	Avatar,
@@ -46,7 +46,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { JOBS } from "@/types/jobs";
-import { ROLES, type JobFilter, type RoleFilter, type SortKey, type SortOrder } from "@/types/User"
+import { ROLES, Role, type SortKey} from "@/types/User"
 import type { BackendUser } from "@/lib/backend";
 import type { Viewer } from "@/types/Viewer";
 
@@ -121,12 +121,13 @@ function UserList({ users, viewerId, onSelect }: {users: BackendUser[] | null; v
 					<ItemContent className="gap-1">
 						<ItemTitle>
 							{person.username}
-							{person.role === "admin" && <AdminBadge />}
+							{person.role === Role.ADMIN && <AdminBadge />}
+							{person.role === Role.GUEST && <GuestBadge />}
 						</ItemTitle>
 						<ItemDescription>{person.email}</ItemDescription>
 					</ItemContent>
 					<ItemActions onClick={(e) => e.stopPropagation()}>
-						<UserBadge job={person.job ? t(`jobList.${person.job}`) : t("noJob")} />
+						{person.role === Role.GUEST ? <GuestBadge /> : <UserBadge job={person.job ? t(`jobList.${person.job}`) : t("noJob")} />}
 						{/* the backend refuses to delete the admin's own account */}
 						{person.id !== viewerId && <RemoveUser user={person} />}
 					</ItemActions>

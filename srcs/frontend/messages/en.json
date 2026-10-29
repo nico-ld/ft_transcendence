@@ -40,7 +40,8 @@
     "system": "System",
     "theme": "Theme",
     "admin": "Admin",
-    "user": "User"
+    "user": "User",
+    "guest": "Guest"
   },
   "Login": {
     "title": "Login to your account",
@@ -232,6 +233,9 @@
     "searchBar": "Search for a user",
     "noUsers": "No users found",
     "noJob": "No workspace",
+    "guest": "Guest",
+    "guestTitle": "No Job Assigned",
+    "guestMessage": "You have not been assigned a job yet. Please contact an administrator to get access to a workspace.",
     "jobHint": "Changing the job restarts this person's workspace: their open terminals close, their files are kept.",
     "sort": {
       "label": "Sort by",

@@ -6,9 +6,9 @@ import {
 	SelectValue
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
-import { ROLES, type Role } from "@/types/User";
+import { ROLES, Role } from "@/types/User";
 
-export function SelectRole({value = "user", name, id, disabled}: {value?: Role; name?: string; id?: string; disabled?: boolean;}) {
+export function SelectRole({value = Role.USER, name, id, disabled}: {value?: Role; name?: string; id?: string; disabled?: boolean;}) {
 	const t = useTranslations("Header");
 
 	const items = ROLES.map((role) => ({value: role, label: t(role)}));

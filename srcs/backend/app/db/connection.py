@@ -18,6 +18,7 @@ class Role(enum.Enum):
 
     ADMIN = "admin"
     USER = "user"
+    GUEST = "guest"
 
 
 class Job(enum.Enum):
@@ -79,6 +80,11 @@ class User(Base):
     @property
     def has_password(self) -> bool:
         return self.password_hash is not None
+
+    @property
+    def is_guest(self) -> bool:
+        """Whether the user is in guest state (connected with no job assigned)."""
+        return self.job is None
 
 
 engine = create_engine(settings.database_url)

@@ -37,7 +37,8 @@
     "system": "Mode système",
     "theme": "Thème",
     "admin": "Admin",
-    "user": "Utilisateur"
+    "user": "Utilisateur",
+    "guest": "Invité"
   },
   "Login": {
     "title": "Connexion à votre compte",
@@ -232,6 +233,9 @@
     "searchBar": "Rechercher un utilisateur",
     "noUsers": "Aucun utilisateur trouvé",
     "noJob": "Aucun espace de travail",
+    "guest": "Invité",
+    "guestTitle": "Aucun poste attribué",
+    "guestMessage": "Aucun poste ne vous a encore été attribué. Veuillez contacter un administrateur pour obtenir l'accès à un espace de travail.",
     "jobHint": "Changer le poste redémarre l'espace de travail de cette personne : ses terminaux ouverts se ferment, ses fichiers sont conservés.",
     "sort": {
       "label": "Trier par",

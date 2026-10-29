@@ -40,7 +40,8 @@
     "system": "Modo del sistema",
     "theme": "Tema",
     "admin": "Admin",
-    "user": "Usuario"
+    "user": "Usuario",
+    "guest": "Invitado"
   },
   "Login": {
     "title": "Inicia sesión en tu cuenta",
@@ -235,6 +236,9 @@
     "searchBar": "Buscar un usuario",
     "noUsers": "No se encontró ningún usuario",
     "noJob": "Sin espacio de trabajo",
+    "guest": "Invitado",
+    "guestTitle": "Ningún puesto asignado",
+    "guestMessage": "No se te ha asignado ningún puesto todavía. Ponte en contacto con un administrador para obtener acceso a un espacio de trabajo.",
     "jobHint": "Cambiar el puesto reinicia el espacio de trabajo de esta persona: sus terminales abiertos se cierran y sus archivos se conservan.",
     "sort": {
       "label": "Ordenar por",
