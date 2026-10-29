@@ -1,6 +1,6 @@
 import { Funnel } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,

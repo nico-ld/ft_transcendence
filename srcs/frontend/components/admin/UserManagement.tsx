@@ -2,13 +2,13 @@
 
 import * as React from "react";
 import { useTranslations } from "next-intl";
-import { Button } from "../ui/button";
-import { ScrollArea } from "../ui/scroll-area";
-import { ModifyUser } from "../users/ModifyUser";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { ModifyUser } from "@/components/users/ModifyUser";
 import { NO_FILTERS } from "@/types/UserList";
-import { UserPagination } from "./UserPagination";
-import { UserList } from "./UserList";
-import { UserToolBar } from "./UserToolBar";
+import { UserPagination } from "@/components/admin/UserPagination";
+import { UserList } from "@/components/admin/UserList";
+import { UserToolBar } from "@/components/admin/UserToolBar";
 import { useUserList } from "@/lib/useUserList";
 
 import type { BackendUser } from "@/lib/backend";

@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
-import { ItemGroup } from "../ui/item";
-import { UserRow } from "./UserRow";
+import { ItemGroup } from "@/components/ui/item";
+import { UserRow } from "@/components/admin/UserRow";
 import type { UserListProps } from "@/types/UserList";
 
 export function UserList({users, viewerId, onSelect}: UserListProps) {
