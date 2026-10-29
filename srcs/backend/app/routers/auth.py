@@ -24,7 +24,7 @@ def signup(body: SignupIn, response: Response) -> UserOut:
             body.first_name,
             body.last_name,
             body.email,
-            Role.USER,
+            Role.GUEST,
             password_hash=hash_password(body.password),
         )
     except IntegrityError:
@@ -42,6 +42,10 @@ def login(body: LoginIn, response: Response) -> UserOut:
     if user is None:
         # same message for unknown email and wrong password to not reveal accs
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid email or password")
+    # Enforce: non-admin users without a job should be GUEST
+    if user.job is None and user.role != Role.ADMIN:
+        user.role = Role.GUEST
+        users_db.update_user(user.id, {"role": Role.GUEST})
     set_session_cookie(response, user.id)
     return UserOut.model_validate(user)
 
@@ -55,6 +59,10 @@ def logout(response: Response, token: SessionToken) -> None:
 
 @router.get("/me")
 def me(user: CurrentUser) -> UserOut:
+    # Enforce: non-admin users without a job should be GUEST
+    if user.job is None and user.role != Role.ADMIN:
+        user.role = Role.GUEST
+        users_db.update_user(user.id, {"role": Role.GUEST})
     return UserOut.model_validate(user)
 
 

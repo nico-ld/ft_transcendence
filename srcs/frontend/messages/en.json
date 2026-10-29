@@ -34,13 +34,15 @@
     "editProfile": "Edit your profile",
     "logout": "Log out",
     "loggingOut": "Logging out",
+    "userMenu": "Open the user menu",
     "current": {"light": "Light Mode", "dark": "Dark Mode", "system": "System Mode"},
     "light": "Light",
     "dark": "Dark",
     "system": "System",
     "theme": "Theme",
     "admin": "Admin",
-    "user": "User"
+    "user": "User",
+    "guest": "Guest"
   },
   "Login": {
     "title": "Login to your account",
@@ -214,7 +216,8 @@
       "new": "New password",
       "confirm": "Confirm the new password",
       "submit": "Change password",
-      "saved": "Your password has been changed. Your other browsers have been logged out.",
+      "saved": "Your password has been changed.",
+      "loggedOut": "Your other browsers have been logged out.",
       "noPassword": "You log in with 42, so this account has no password.",
       "errors": {
         "wrongCurrent": "This password is incorrect.",
@@ -232,7 +235,8 @@
     "noUsers": "No users found",
     "noJob": "No workspace",
     "guest": "Guest",
-    "guestMessage": "You are currently in guest mode. Please contact an administrator to assign you a workspace.",
+    "guestTitle": "No Job Assigned",
+    "guestMessage": "You have not been assigned a job yet. Please contact an administrator to get access to a workspace.",
     "jobHint": "Changing the job restarts this person's workspace: their open terminals close, their files are kept.",
     "sort": {
       "label": "Sort by",

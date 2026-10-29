@@ -145,12 +145,13 @@ choice".
 | Isolated Linux workspaces with a web terminal | Modules of choice | Major | 2 |
 | Advanced permissions system | User Management | Major | 2 |
 | Use an ORM for the database | Web | Minor | 1 |
+| A complete notification system | Web | Minor | 1 |
 | Server-Side Rendering (SSR) | Web | Minor | 1 |
 | Advanced search with filters, sorting and pagination | Web | Minor | 1 |
 | Support for multiple languages | Accessibility and Internationalization | Minor | 1 |
 | Support for additional browsers | Accessibility and Internationalization | Minor | 1 |
 | Remote authentication with OAuth 2.0 | User Management | Minor | 1 |
-| **Total** | | | **12** |
+| **Total** | | | **13** |
 
 ### Major: Use a framework for both the frontend and backend (2 pts)
 
@@ -206,6 +207,18 @@ choice".
 
 **How it works:** SQLAlchemy 2 with PostgreSQL (psycopg). The tables are Python classes in `srcs/backend/app/db/`: users (with a role and a job, and a check that every account has a password or a 42 login), login sessions, and terminal sessions, linked to users by foreign keys. The queries go through `Session` and `select` in `db/requests.py`, and the tables are created when the backend starts.
 
+### Minor: A complete notification system (1 pt)
+
+*Worked on by:* TODO
+
+**Why:** every action that creates, changes or deletes something gets a clear confirmation, so nobody wonders whether a click worked.
+
+**How it works:** toasts from the Base UI toast manager (`srcs/frontend/components/ui/toast.tsx`), shown on every page by the `<Toaster />` of the root layout, in the user's language (`Toast` and the forms' texts in `messages/*.json`).
+- **Creation:** a new account after sign-up, and a new user from the admin panel.
+- **Update:** the profile, the avatar and the password, and a user edited from the admin panel.
+- **Deletion:** a user deleted from the admin panel, and an avatar removed from the profile.
+- A toast only appears once the server has confirmed the action. Errors stay next to the field or the form they concern.
+
 ### Minor: Server-Side Rendering (1 pt)
 
 *Worked on by:* TODO
@@ -237,9 +250,7 @@ choice".
 - The language is part of the address (`/en`, `/fr`, `/es`, set in `srcs/frontend/i18n/routing.ts`), and visitors arriving on `/` are sent to their browser's language.
 - Every text shown to the user, labels read by screen readers included, lives in `srcs/frontend/messages/{en,fr,es}.json`. The backend's English error messages are never shown as they are: the frontend turns them into translated messages.
 - The language can be changed from the landing page footer and from the user menu. Dates follow the chosen language.
-- The privacy policy and terms of service are written in each language (`srcs/frontend/content/legal/`).
-
-**Still to do:** the documentation pages (`srcs/frontend/content/docs/`) only exist in English for now.
+- The privacy policy, the terms of service and the documentation are written in each language (`srcs/frontend/content/legal/` and `srcs/frontend/content/docs/`), and a page keeps its address from one language to another.
 
 ### Minor: Remote authentication with OAuth 2.0 (1 pt)
 

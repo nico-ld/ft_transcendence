@@ -31,13 +31,15 @@
     "editProfile": "Modifier le profil",
     "logout": "Se déconnecter",
     "loggingOut": "Déconnexion",
+    "userMenu": "Ouvrir le menu utilisateur",
     "current": {"light": "Mode clair", "dark": "Mode sombre", "system": "Mode système"},
     "light": "Mode clair",
     "dark": "Mode sombre",
-    "system": "Mode Système",
+    "system": "Mode système",
     "theme": "Thème",
     "admin": "Admin",
-    "user": "Utilisateur"
+    "user": "Utilisateur",
+    "guest": "Invité"
   },
   "Login": {
     "title": "Connexion à votre compte",
@@ -214,7 +216,8 @@
       "new": "Nouveau mot de passe",
       "confirm": "Confirmez le nouveau mot de passe",
       "submit": "Changer le mot de passe",
-      "saved": "Votre mot de passe a été modifié. Vos autres navigateurs ont été déconnectés.",
+      "saved": "Votre mot de passe a été modifié.",
+      "loggedOut": "Vos autres navigateurs ont été déconnectés.",
       "noPassword": "Vous vous connectez avec 42, ce compte n'a donc pas de mot de passe.",
       "errors": {
         "wrongCurrent": "Ce mot de passe est incorrect.",
@@ -232,7 +235,8 @@
     "noUsers": "Aucun utilisateur trouvé",
     "noJob": "Aucun espace de travail",
     "guest": "Invité",
-    "guestMessage": "Vous êtes actuellement en mode invité. Veuillez contacter un administrateur pour qu'il vous attribue un espace de travail.",
+    "guestTitle": "Aucun poste attribué",
+    "guestMessage": "Aucun poste ne vous a encore été attribué. Veuillez contacter un administrateur pour obtenir l'accès à un espace de travail.",
     "jobHint": "Changer le poste redémarre l'espace de travail de cette personne : ses terminaux ouverts se ferment, ses fichiers sont conservés.",
     "sort": {
       "label": "Trier par",

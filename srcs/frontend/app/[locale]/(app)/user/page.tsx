@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { getCurrentUser } from "@/lib/backend";
 import { getSystemStats } from "@/lib/stats";
 import { ROLE_HOME } from "@/lib/utils";
+import { Role } from "@/types/User";
 import { getLocale, getTranslations } from "next-intl/server";
 
 export default function UserPage() {
@@ -25,31 +26,21 @@ async function UserDashboard() {
 
 	if (!user)
 		return redirect({ href: "/login", locale });
-	// distinguishing since an admin has their own dashboard
-	if (user.role !== "user")
+	// Guests go to their own page, admins to admin dashboard
+	if (user.role === Role.GUEST)
+		return redirect({ href: "/guest", locale });
+	if (user.role !== Role.USER)
 		return redirect({ href: ROLE_HOME[user.role], locale });
 
 	//I swear, those multi-lines returns are going to make me cry
 	return (
 		<DashboardShell role={user.role} username={user.username} avatarUrl={user.avatar ?? undefined}>
-			{user.isGuest ? (
-				<Card className="shadow-glow ring-border p-6">
-					<div className="space-y-4">
-						<h2 className="flex items-center gap-3 text-2xl font-semibold">
-							<GuestBadge />
-							{u("guest")}
-						</h2>
-						<p className="text-sm text-muted-foreground">
-							{u("guestMessage")}
-						</p>
-					</div>
-				</Card>
-			) : (
+			{
 				<>
 					{stats && <StatsPanel stats={stats} />}
 					<WorkspaceLink href="/workspace" label={t("workSpace")}/>
 				</>
-			)}
+			}
 		</DashboardShell>
 	);
 }
