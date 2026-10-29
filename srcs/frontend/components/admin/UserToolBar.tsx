@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/item";
 import type { UserFilterProps } from "@/types/UserList";
 
-export function UsreToolBar(props: UserFilterProps) {
+export function UserToolBar(props: UserFilterProps) {
 	const t = useTranslations("Users");
 	const {filters, onFiltersChange} = props;
 
