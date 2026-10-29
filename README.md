@@ -154,11 +154,13 @@ choice".
 | Module | Category | Type | Points |
 |---|---|---|---|
 | [Use a framework for both the frontend and backend](#major-use-a-framework-for-both-the-frontend-and-backend-2-pts) | Web | Major | 2 |
-|[ Isolated Linux workspaces with a web terminal](#major-module-of-choice-isolated-linux-workspaces-with-a-web-terminal-2-pts)| Modules of choice | Major | 2 |
+|[ Implement real-time features using WebSockets](#major-implement-real-time-features-using-websockets-or-similar-technology-2-pts)| Web | Major | 2 |
+|[ Setup with xterm.js web terminal](#major-module-of-choice-setup-with-xtermjs-web-terminal-2-pts)| Modules of choice | Major | 2 |
 |[ Advanced permissions system](#major-advanced-permissions-system-2-pts)| User Management | Major | 2 |
 |[ Standard user management and authentication](#major-standard-user-management-and-authentication-2-pts)| User Management | Major | 2 |
 |[ Monitoring system with Prometheus and Grafana](#major-monitoring-system-with-prometheus-and-grafana-2-pts)| Devops | Major | 2 |
 |[ Use an ORM for the database](#minor-use-an-orm-for-the-database-1-pt)| Web | Minor | 1 |
+|[ CI/CD with conventional commits and PR reviews](#minor-module-of-choice-cicd-with-conventional-commits-and-pr-reviews-1-pt)| Modules of choice | Minor | 1 |
 |[ Server-Side Rendering](#minor-server-side-rendering-1-pt)(SSR) | Web | Minor | 1 |
 |[ Custom-made design system with reusable components](#minor-custom-made-design-system-with-reusable-components-1-pt)| Web | Minor | 1 |
 |[ Advanced search with filters, sorting and pagination](#minor-advanced-search-with-filters-sorting-and-pagination-1-pt) | Web | Minor | 1 |
@@ -167,7 +169,7 @@ choice".
 |[ Remote authentication with OAuth](#minor-remote-authentication-with-oauth-20-1-pt)2.0 | User Management | Minor | 1 |
 |[ User activity analytics and insights dashboard](#minor)| User Management | Minor | 1 |
 |[A complete notification system](#minor-a-complete-notification-system-1-pt)| Web | Minor | 1 |
-| **Total** | | | **21** |
+| **Total** | | | **24** |
 
 ### Major: Use a framework for both the frontend and backend (2 pts)
 
@@ -180,24 +182,49 @@ choice".
 - **Backend: FastAPI**, in `srcs/backend/app`. One router per domain in `routers/` (`auth`, `oauth42`, `users`, `stats`, `workspace`, `websocket`), pydantic schemas that refuse any invalid or unexpected field (`schemas.py`), and dependencies that require a valid session or the admin role (`security.py`).
 - **How they talk:** the browser only talks to nginx, which sends `/api/` to FastAPI and the rest to Next.js. On the server, Next.js calls FastAPI on the Docker network with the user's session cookie (`srcs/frontend/lib/backend.ts`).
 
-### Major (module of choice): Isolated Linux workspaces with a web terminal (2 pts)
+### Major: Implement real-time features using WebSockets or similar technology (2 pts)
 
-*Worked on by:* the whole team
+*Worked on by:* mmansier
 
-**Why we chose it:** it is what Silk Space is for. When an HR user gives an employee a job, the employee gets a Linux environment with the tools of that job (software engineer, data analyst, DevOps engineer, accountant or technical writer), which they open in their browser. Changing their job changes their tools and keeps their files; deleting their account deletes everything. No module in the list covers this.
+**Why:** real-time communication is essential for the terminal experience and any feature requiring instant updates across clients. WebSockets provide full-duplex, low-latency communication channels that enable responsive user experiences.
 
-**Technical challenges:**
-- **Driving Docker from the backend.** FastAPI talks to the Docker API through the Docker socket (aiodocker, `srcs/backend/app/docker/workspace.py`). Each user gets their own container, private network and persistent home volume, created on first use from the image of their job (`srcs/workspaces/`: a common base image and one image per job).
-- **Isolation and limits.** The shell runs as a regular user, without any Linux capabilities and unable to gain privileges. Memory, CPU and number of processes are capped per container, and each user's private network keeps the workspaces apart.
-- **Lifecycle.** A job change replaces the container but keeps the home volume, so the files survive. Deleting a user removes their container, network and volume. A broken container is recreated instead of failing forever, and a lock per user stops two requests from creating the same workspace twice.
-- **The terminal.** xterm.js in the browser, a WebSocket through nginx to FastAPI, then a bash with a TTY inside the container (`routers/websocket.py`, `components/workspace/`). Keystrokes and output go as raw bytes in both directions, the terminal size follows the window, and closing the page hangs up the shell like a real terminal.
-- **Security of the connection.** Only our own site may open the WebSocket, it needs a valid session, and the session is checked again every 5 seconds: a logout or a deleted account closes the open terminals.
-- **Every failure explained.** No job yet, image not built, Docker error, session ended, connection lost: each one shows a translated message with a way out (reconnect, log in again, back to the dashboard).
-- **Log time.** Each terminal session is recorded (`db/terminal_sessions.py`) and feeds the user's statistics.
+**How it works:**
+- **Real-time updates across clients:** WebSocket connections allow the server to push updates to all connected clients instantly, enabling features like terminal output streaming and live collaboration indicators.
+- **Handle connection/disconnection gracefully:** the backend tracks all active WebSocket connections and manages their lifecycle. When a client disconnects (intentionally or due to network issues), the server cleans up resources and notifies other clients if needed. Reconnection logic ensures users can resume their sessions seamlessly.
+- **Efficient message broadcasting:** messages can be broadcast to all connected clients, specific users, or user groups. The system uses connection pooling and optimized data serialization to handle multiple concurrent connections efficiently.
+- **Implementation:** built with FastAPI's WebSocket support (`routers/websocket.py`), with nginx as a reverse proxy handling WebSocket protocol upgrades. The frontend uses the native WebSocket API with xterm.js for the terminal interface.
 
-**Value for the project:** without it, Silk Space would only be a list of users. With it, an HR action has a real effect within seconds: an employee is hired, promoted or leaves, and their working environment follows.
+### Major (module of choice): Setup with xterm.js web terminal (2 pts)
 
-**Why it deserves Major status:** it touches every layer of the project (container infrastructure, asynchronous backend, real-time browser terminal and security), and is comparable in size to the listed Major modules such as real-time features with WebSockets or a backend as microservices.
+*Worked on by:* jdessoli, mmansier
+
+**Why we chose it:** xterm.js provides a fully-featured terminal emulator in the browser, enabling users to interact with their Linux workspaces through a real-time, responsive terminal interface. This was essential to deliver the core feature of Silk Space: browser-based access to isolated Linux environments.
+
+**Technical implementation:**
+- **xterm.js integration:** the terminal runs in the browser using xterm.js (`srcs/frontend/components/workspace/`), providing a feature-rich terminal experience with support for themes, fonts, and terminal customization.
+- **WebSocket connection:** the terminal connects through nginx to FastAPI via WebSocket (`routers/websocket.py`), establishing a persistent, bidirectional connection for real-time terminal I/O.
+- **TTY allocation:** each terminal session gets its own TTY inside the container, ensuring proper terminal behavior including line editing, history, and signal handling.
+- **Terminal features:** support for resizing (terminal size follows window), copy/paste, keyboard shortcuts, and proper handling of control characters.
+- **Session management:** terminal sessions are tracked (`db/terminal_sessions.py`) with start/end times and activity logging for user analytics.
+- **Security:** WebSocket connections require valid authentication, are bound to the user's session, and are re-validated every 5 seconds to ensure only authorized users maintain access.
+
+**Value for the project:** xterm.js was the key component that enabled the browser-based terminal experience, making Linux workspace access seamless and intuitive for end users.
+
+**Why it deserves Major status:** implementing a production-grade web terminal required deep integration of frontend (xterm.js), backend (WebSocket routing), and container infrastructure (TTY allocation), comparable in complexity to other Major modules.
+
+### Minor (module of choice): CI/CD with conventional commits and PR reviews (1 pt)
+
+*Worked on by:* jdessoli, amartel
+
+**Why we chose it:** maintaining code quality and consistency across a team requires automated workflows and clear commit conventions. This module ensures every change is reviewed and follows established patterns.
+
+**How it works:**
+- **Conventional commits:** all commits follow the conventional commit specification (feat, fix, docs, refactor, etc.) with scope and breaking change indicators when needed. This enables automated changelog generation and semantic versioning.
+- **PR workflow:** every feature branch must open a Pull Request on GitHub. PRs require at least one approval from another team member before merging.
+- **Automated checks:** GitHub Actions run on every PR: linting (ESLint, Ruff), type checking (TypeScript), unit tests, and build verification.
+- **Commitlint:** a commitlint configuration (`commitlint.config.js`) enforces conventional commit message format, rejecting pushes with non-compliant messages via Husky git hooks.
+- **Branch protection:** the main branch is protected, preventing direct pushes and requiring status checks to pass before merging.
+- **Code review culture:** team members systematically review each other's work, providing feedback on implementation, style, and adherence to project standards.
 
 ### Major: Standard user management and authentication (2 pts)
 
