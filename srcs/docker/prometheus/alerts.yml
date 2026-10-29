@@ -1,0 +1,23 @@
+# Alerting rules loaded by prometheus.yml (rule_files)
+# Grafana lists them with their state in Alerting > Alert rules
+
+groups:
+  - name: silk-space
+    rules:
+      # cAdvisor or prometheus itself cant be reached
+      - alert: TargetDown
+        expr: up == 0
+        for: 1m
+        annotations:
+          summary: "Prometheus can't reach {{ $labels.job }}"
+
+      # a workspace close to its memory limit (WORKSPACE_MEMORY_MB)
+      # to test it from a workspace terminal: { head -c 850M /dev/zero; sleep 300; } | tail > /dev/null
+      - alert: WorkspaceMemoryHigh
+        expr: |
+          container_memory_working_set_bytes{container_label_silk_space_user_id!=""}
+            / container_spec_memory_limit_bytes{container_label_silk_space_user_id!=""}
+          > 0.8
+        for: 1m
+        annotations:
+          summary: "The workspace of user {{ $labels.container_label_silk_space_user_id }} uses more than 80% of its memory"

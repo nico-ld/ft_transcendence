@@ -1,7 +1,41 @@
 {
   "Metadata": {
     "title": "Silk Space",
-    "description": "Esta es una descripción"
+    "description": "Silk Space da a cada empleado un espacio de trabajo Linux listo para usar, con las herramientas de su puesto, que RR. HH. crea, cambia y elimina en unos pocos clics.",
+    "pages": {
+      "login": {
+        "title": "Iniciar sesión",
+        "description": "Inicia sesión en Silk Space con tu correo electrónico y tu contraseña, o con tu cuenta de 42."
+      },
+      "signup": {
+        "title": "Registrarse",
+        "description": "Crea tu cuenta de Silk Space. Después, un administrador te asigna un puesto y, con él, tu espacio de trabajo."
+      },
+      "user": {
+        "title": "Panel",
+        "description": "La memoria de tu espacio de trabajo, y el tiempo que has pasado en él esta semana y este mes."
+      },
+      "admin": {
+        "title": "Panel de administración",
+        "description": "Todas las cuentas con su puesto y su rol, y las métricas de los espacios de trabajo."
+      },
+      "guest": {
+        "title": "Todavía sin puesto",
+        "description": "Un administrador tiene que asignarte un puesto antes de que puedas usar un espacio de trabajo."
+      },
+      "profile": {
+        "title": "Tu perfil",
+        "description": "Tu nombre y apellido, tu nombre de usuario, tu avatar y tu contraseña."
+      },
+      "workspace": {
+        "title": "Espacio de trabajo",
+        "description": "La terminal de tu espacio de trabajo Linux, con las herramientas de tu puesto."
+      },
+      "friends": {
+        "title": "Amigos",
+        "description": "Encuentra a tus compañeros, responde a las solicitudes de amistad y mira quién está conectado."
+      }
+    }
   },
   "Legal": {
     "privacy": "Política de privacidad",
@@ -30,9 +64,11 @@
     "workSpace": "Espacio de trabajo"
   },
   "Header": {
+    "friends": "Amigos",
     "editProfile": "Modificar tu perfil",
     "logout": "Cerrar sesión",
     "loggingOut": "Cerrando sesión",
+    "userMenu": "Abrir el menú de usuario",
     "current": {"light": "Modo claro", "dark": "Modo oscuro", "system": "Modo del sistema"},
     "light": "Modo claro",
     "dark": "Modo oscuro",
@@ -84,10 +120,8 @@
     }
   },
   "Landing": {
-    "mainNav": "Principal",
     "signin": "Iniciar sesión", "signup": "inscribirse",
     "heroCta": "Inscribirse en Silk Space",
-    "resources": "Recursos",
     "headline": "Entornos de trabajo listos para usar y de rápida configuración",
     "subtitle": "Una solución integral para tu empresa. Gestiona tus equipos y sesiones de trabajo con solo unos clics, todo desde un único lugar.",
     "features": {
@@ -147,32 +181,17 @@
       }
     }
   },
-  "Docs": {
-    "documentation": "Documentación",
-    "tocLabel": "En esta página",
-    "loading": "Cargando...",
-    "sections": {
-      "users": "Guía del usuario",
-      "developers": "Guía para desarrolladores"
-    },
-    "pager": {
-      "label": "Paginación",
-      "previous": "Anterior",
-      "next": "Siguiente",
-      "home": "Inicio"
-    }
-  },
   "Stats": {
     "title": "Resumen del sistema",
-    "weekLabel": "Tiempo de registro diario",
-    "week": "esta semana",
-    "month": "este mes",
+    "weekLabel": "Tiempo de conexión diario",
+    "week": "Esta semana",
+    "month": "Este mes",
     "extra": "Usuarios registrados",
     "grafana": "Ver las métricas en Grafana",
-    "grafanaTitle": "Métricas de los workspaces",
-    "grafanaUser": "Workspace",
+    "grafanaTitle": "Métricas de los espacios de trabajo",
+    "grafanaUser": "Espacio de trabajo",
     "grafanaNewTab": "Abrir en Grafana",
-    "grafanaEmpty": "Ningún usuario tiene un workspace todavía",
+    "grafanaEmpty": "Ningún usuario tiene todavía un espacio de trabajo",
     "memory": {
       "aria": "Uso de memoria: {percent} %",
       "label": "memoria",
@@ -198,6 +217,18 @@
     "role": "Tipo de cuenta",
     "memberSince": "Miembro desde",
     "saved": "Tu perfil se ha actualizado.",
+    "avatar": {
+      "change": "Cambiar avatar",
+      "hint": "Haz clic o suelta una imagen. PNG, JPEG o WebP, 5 MB máx.",
+      "saved": "Tu avatar se ha actualizado.",
+      "removed": "Tu avatar se ha eliminado.",
+      "remove": "Eliminar",
+      "errors": {
+        "type": "Solo se aceptan imágenes PNG, JPEG y WebP.",
+        "size": "Esta imagen supera los 5 MB.",
+        "generic": "Algo salió mal. Inténtalo de nuevo."
+      }
+    },
     "password": {
       "title": "Contraseña",
       "description": "Cambia la contraseña con la que inicias sesión.",
@@ -205,7 +236,8 @@
       "new": "Nueva contraseña",
       "confirm": "Confirma la nueva contraseña",
       "submit": "Cambiar la contraseña",
-      "saved": "Tu contraseña se ha cambiado. Se ha cerrado la sesión en tus otros navegadores.",
+      "saved": "Tu contraseña se ha cambiado.",
+      "loggedOut": "Se ha cerrado la sesión en tus otros navegadores.",
       "noPassword": "Inicias sesión con 42, así que esta cuenta no tiene contraseña.",
       "errors": {
         "wrongCurrent": "Esta contraseña no es correcta.",
@@ -230,7 +262,26 @@
       "label": "Ordenar por",
       "date": "Fecha",
       "username": "Nombre",
-      "email": "Correo electrónico"
+      "email": "Correo electrónico",
+      "order": "Orden",
+      "asc": "Ascendente",
+      "desc": "Descendente"
+    },
+    "filter": {
+      "label": "Ordenar y filtrar",
+      "title": "Filtrar",
+      "role": "Rol",
+      "job": "Puesto",
+      "all": "Todos",
+      "clear": "Borrar los filtros"
+    },
+    "noMatch": "Ningún usuario coincide con la búsqueda y los filtros.",
+    "page": {
+      "label": "Páginas",
+      "previous": "Página anterior",
+      "next": "Página siguiente",
+      "status": "Página {page} de {pages}",
+      "total": "{count, plural, =0 {Ningún usuario} one {# usuario} other {# usuarios}}"
     },
     "errors": {
       "invalid": "Algunos campos no son válidos. Revísalos e inténtalo de nuevo.",
@@ -273,11 +324,40 @@
       "technical-writer": "Redactor técnico"
     }
   },
+  "Friends": {
+    "title": "Amigos",
+    "description": "Encuentra amigos",
+    "searchPlaceholder": "Buscar por nombre de usuario",
+    "search": "Buscar",
+    "noResults": "No se encontró ningún usuario",
+    "requests": "Solicitudes de amistad",
+    "friends": "Tus amigos",
+    "noFriends": "Actualmente no tienes amigos",
+    "sent": "Solicitudes enviadas",
+    "add": "Añadir",
+    "accept": "Aceptar",
+    "decline": "Rechazar",
+    "remove": "Eliminar",
+    "removed": "{username} eliminado de tus amigos",
+    "cancel": "Cancelar",
+    "pending": "Solicitud enviada",
+    "isFriend": "Amigo",
+    "online": "En línea",
+    "offline": "Desconectado",
+    "error": "Algo salió mal, inténtalo de nuevo"
+  },
   "Toast": {
     "loggedIn": "Sesión iniciada",
     "accountCreated": "Cuenta creada",
     "userCreated": "Usuario creado",
     "userUpdated": "Usuario actualizado",
-    "userDeleted": "Usuario eliminado"
+    "userDeleted": "Usuario eliminado",
+    "friendRequest": "{username} quiere ser tu amigo",
+    "friendAccepted": "{username} aceptó tu solicitud de amistad",
+    "loggedOut": "Se ha cerrado tu sesión"
+  },
+  "Validation": {
+    "username": "De 3 a 20 caracteres: letras, números, _ o -",
+    "email": "Una dirección de correo como nombre@ejemplo.com"
   }
 }

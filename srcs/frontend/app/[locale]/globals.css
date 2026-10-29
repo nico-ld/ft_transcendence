@@ -50,10 +50,8 @@
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
 
-    /* Custom tokens from the mock -> usable as bg-highlight, text-highlight, border-highlight, shadow-glow */
     --color-highlight: var(--highlight);
     --color-highlight-foreground: var(--highlight-foreground);
-    --shadow-glow: var(--glow);
     --bg-card: var(--card);
 }
 

@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
-import { LanguageSwitcher } from "../layout/LanguageSwitcher";
-import { legalInfo } from "../legal/LegalInfo";
-import { LegalFooter } from "../legal/LegalFooter";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import { legalInfo } from "@/components/legal/LegalInfo";
+import { LegalFooter } from "@/components/legal/LegalFooter";
 
 export function LandingFooter() {
 	const t = useTranslations("Legal");

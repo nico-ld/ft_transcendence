@@ -4,19 +4,29 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useActionState } from "react";
 import { Signup } from "@/actions/auth";
-import { ROLE_HOME } from "@/lib/utils";
-import { AuthError } from "./AuthError";
-import { FormField } from "../layout/FormField";
+import { EMAIL_PATTERN, NAME_MAX_LENGTH, ROLE_HOME } from "@/lib/utils";
+import { AuthError } from "@/components/auth/AuthError";
+import { FormField } from "@/components/layout/FormField";
 import { useFormSubmit } from "@/actions/useFormSubmit";
-import { Button, buttonVariants } from "../ui/button";
-import { Spinner } from "../ui/spinner";
-import { toast } from "../ui/toast";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "@/components/ui/toast";
 
 import type { SignupError } from "@/types/SignupErrors";
 import type { FieldName } from "@/types/FormFieldProps";
 import Image from "next/image";
 
 const PASSWORD_MIN_LENGTH = 8;
+const USERNAME_MIN_LENGTH = 3;
+const USERNAME_MAX_LENGTH = 20;
+
+// the backend wants ^[a-zA-Z0-9_-]{3,20}$, the user can change it later from their profile
+function usernameFromEmail(email: string): string {
+	let username = email.split("@")[0].replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, USERNAME_MAX_LENGTH);
+	while (username.length < USERNAME_MIN_LENGTH)
+		username += Math.floor(Math.random() * 10);
+	return username;
+}
 
 const FT_LOGIN_URL = "/api/auth/42/login";
 
@@ -29,11 +39,12 @@ function SignupFields() {
 	const router = useRouter();
 	const t = useTranslations("Signup");
 	const n = useTranslations("Toast");
+	const v = useTranslations("Validation");
 
 	const [error, formAction, pending] = useActionState<SignupError, FormData>(
 		async (_prev, formData) => {
 			const email = String(formData.get("email"));
-			const username = email.split("@")[0];
+			const username = usernameFromEmail(email);
 			const password = String(formData.get("password"));
 			const firstName = String(formData.get("firstName"));
 			const lastName = String(formData.get("lastName"));
@@ -68,6 +79,7 @@ function SignupFields() {
 							name="lastName"
 							autoComplete="lastName"
 							error={fieldError("lastName")}
+							maxLength={NAME_MAX_LENGTH}
 							required
 						/>
 						<FormField
@@ -75,6 +87,7 @@ function SignupFields() {
 							name="firstName"
 							autoComplete="firstName"
 							error={fieldError("firstName")}
+							maxLength={NAME_MAX_LENGTH}
 							required
 						/>
 				</article>
@@ -84,6 +97,8 @@ function SignupFields() {
 					type="email"
 					autoComplete="email"
 					error={fieldError("email")}
+					pattern={EMAIL_PATTERN}
+					title={v("email")}
 					required
 				/>
 				<FormField

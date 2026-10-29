@@ -42,10 +42,6 @@ def login(body: LoginIn, response: Response) -> UserOut:
     if user is None:
         # same message for unknown email and wrong password to not reveal accs
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid email or password")
-    # Enforce: non-admin users without a job should be GUEST
-    if user.job is None and user.role != Role.ADMIN:
-        user.role = Role.GUEST
-        users_db.update_user(user.id, {"role": Role.GUEST})
     set_session_cookie(response, user.id)
     return UserOut.model_validate(user)
 
@@ -59,17 +55,17 @@ def logout(response: Response, token: SessionToken) -> None:
 
 @router.get("/me")
 def me(user: CurrentUser) -> UserOut:
-    # Enforce: non-admin users without a job should be GUEST
-    if user.job is None and user.role != Role.ADMIN:
-        user.role = Role.GUEST
-        users_db.update_user(user.id, {"role": Role.GUEST})
     return UserOut.model_validate(user)
 
 
 @router.patch("/me")
 def update_me(body: ProfileUpdateIn, user: CurrentUser) -> UserOut:
     # none of these cols can be null so a null = no change
-    updated = users_db.update_user(user.id, body.model_dump(exclude_none=True))
+    changes = body.model_dump(exclude_none=True)
+    if "avatar" in body.model_fields_set and body.avatar is None:
+        changes["avatar"] = None
+    updated = users_db.update_user(user.id, changes)
+    # avatar is the only col that can back to null
     if updated is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "User not found")
     return UserOut.model_validate(updated)

@@ -1,5 +1,5 @@
-import { Badge } from "../ui/badge";
-import { Pin, Sword, User } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Sword, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function AdminBadge() {
@@ -18,7 +18,6 @@ export function GuestBadge() {
 
 	return (
 		<Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
-			<Pin className="size-3" />
 			<User />
 			{t("guest")}
 		</Badge>

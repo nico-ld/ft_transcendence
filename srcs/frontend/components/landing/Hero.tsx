@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { buttonVariants } from "../ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 export function Hero() {
 	const t = useTranslations("Landing");
