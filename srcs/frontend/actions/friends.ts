@@ -12,12 +12,10 @@ async function friendRequest(userId: number, method: "POST" | "DELETE"): Promise
 	return res.ok;
 }
 
-/** Send a friend request, or accept theirs (POST /friends/{id}) */
 export async function addFriend(userId: number): Promise<boolean> {
 	return friendRequest(userId, "POST");
 }
 
-/** Remove a friend, decline their request or cancel yours (DELETE /friends/{id}) */
 export async function removeFriend(userId: number): Promise<boolean> {
 	return friendRequest(userId, "DELETE");
 }
