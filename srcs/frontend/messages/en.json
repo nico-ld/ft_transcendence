@@ -1,7 +1,41 @@
 {
   "Metadata": {
     "title": "Silk Space",
-    "description": "Silk Space gives every employee a ready-to-use Linux workspace with the tools of their job, created, changed and removed by HR in a few clicks."
+    "description": "Silk Space gives every employee a ready-to-use Linux workspace with the tools of their job, created, changed and removed by HR in a few clicks.",
+    "pages": {
+      "login": {
+        "title": "Log in",
+        "description": "Log in to Silk Space with your email and password, or with your 42 account."
+      },
+      "signup": {
+        "title": "Sign up",
+        "description": "Create your Silk Space account. An administrator then gives you a job, and with it your workspace."
+      },
+      "user": {
+        "title": "Dashboard",
+        "description": "Your workspace's memory, and the time you spent in it this week and this month."
+      },
+      "admin": {
+        "title": "Admin dashboard",
+        "description": "Every account with its job and role, and the metrics of the workspaces."
+      },
+      "guest": {
+        "title": "No job yet",
+        "description": "An administrator has to give you a job before you can use a workspace."
+      },
+      "profile": {
+        "title": "Your profile",
+        "description": "Your names, username, avatar and password."
+      },
+      "workspace": {
+        "title": "Workspace",
+        "description": "The terminal of your Linux workspace, with the tools of your job."
+      },
+      "friends": {
+        "title": "Friends",
+        "description": "Find your colleagues, answer friend requests and see who is online."
+      }
+    }
   },
   "Legal": {
     "privacy": "Privacy Policy",

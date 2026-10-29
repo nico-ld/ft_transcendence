@@ -1,7 +1,41 @@
 {
   "Metadata": {
     "title": "Silk Space",
-    "description": "Silk Space donne à chaque employé un espace de travail Linux prêt à l'emploi, avec les outils de son poste, que les RH créent, modifient et suppriment en quelques clics."
+    "description": "Silk Space donne à chaque employé un espace de travail Linux prêt à l'emploi, avec les outils de son poste, que les RH créent, modifient et suppriment en quelques clics.",
+    "pages": {
+      "login": {
+        "title": "Connexion",
+        "description": "Connectez-vous à Silk Space avec votre adresse e-mail et votre mot de passe, ou avec votre compte 42."
+      },
+      "signup": {
+        "title": "Inscription",
+        "description": "Créez votre compte Silk Space. Un administrateur vous attribue ensuite un poste, et avec lui votre espace de travail."
+      },
+      "user": {
+        "title": "Tableau de bord",
+        "description": "La mémoire de votre espace de travail, et le temps que vous y avez passé cette semaine et ce mois-ci."
+      },
+      "admin": {
+        "title": "Tableau de bord admin",
+        "description": "Tous les comptes avec leur poste et leur rôle, et les métriques des espaces de travail."
+      },
+      "guest": {
+        "title": "Pas encore de poste",
+        "description": "Un administrateur doit vous attribuer un poste avant que vous puissiez utiliser un espace de travail."
+      },
+      "profile": {
+        "title": "Votre profil",
+        "description": "Vos nom et prénom, votre nom d'utilisateur, votre avatar et votre mot de passe."
+      },
+      "workspace": {
+        "title": "Espace de travail",
+        "description": "Le terminal de votre espace de travail Linux, avec les outils de votre poste."
+      },
+      "friends": {
+        "title": "Amis",
+        "description": "Trouvez vos collègues, répondez aux demandes d'ami et voyez qui est en ligne."
+      }
+    }
   },
   "Legal": {
     "privacy": "Politique de confidentialité",

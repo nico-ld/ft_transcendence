@@ -10,6 +10,11 @@ import { getSystemStats } from "@/lib/stats";
 import { ROLE_HOME } from "@/lib/utils";
 import { Role } from "@/types/User";
 import { getLocale, getTranslations } from "next-intl/server";
+import { pageMetadata } from "@/lib/metadata";
+
+export function generateMetadata() {
+	return pageMetadata("user");
+}
 
 export default function UserPage() {
 	return (

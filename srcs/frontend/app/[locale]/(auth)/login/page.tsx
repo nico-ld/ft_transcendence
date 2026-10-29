@@ -1,6 +1,11 @@
 import { Suspense } from "react";
 import { LoginForm } from "@/components/auth/LoginForm";
 import { oauthLoginError } from "@/types/LoginError";
+import { pageMetadata } from "@/lib/metadata";
+
+export function generateMetadata() {
+	return pageMetadata("login");
+}
 
 type LoginPageProps = {
 	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;

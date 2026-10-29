@@ -11,6 +11,11 @@ import { ItemGroup } from "@/components/ui/item";
 import { getCurrentUser } from "@/lib/backend";
 import { getFriends, searchUsers } from "@/lib/friends";
 import type { UserSearchResult } from "@/types/Friends";
+import { pageMetadata } from "@/lib/metadata";
+
+export function generateMetadata() {
+	return pageMetadata("friends");
+}
 
 type FriendsPageProps = {
 	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
