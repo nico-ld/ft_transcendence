@@ -47,7 +47,6 @@ def create_initial_admin() -> None:
     )
     logger.info("Created the initial admin account %s", email)
 
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # all models are imported through db so it creates every table
