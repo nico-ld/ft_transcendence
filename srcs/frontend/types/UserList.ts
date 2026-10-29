@@ -11,6 +11,23 @@ export type Sort = {
 	order: SortOrder;
 };
 
+export type UserFilterProps = {
+	sort: Sort;
+	onSortChange: (sort: Sort) => void;
+	filters: Filters;
+	onFiltersChange: (change: Partial<Filters>) => void;
+	count: (change: Partial<Filters>) => number;
+};
+
+export type FilterSubProps<T extends string> = {
+	label: string;
+	value: T;
+	options: readonly T[];
+	labelOf: (option: T) => string;
+	countOf: (option: T) => number;
+	onChange: (option: T) => void;
+};
+
 export const NO_FILTERS: Filters = {
 	query: "",
 	role: "all",
