@@ -1,0 +1,74 @@
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "6767:6767"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - ft_silk_space
+    environment:
+      - NODE_UPSTREAM=frontend:3000
+
+  frontend:
+    build: ../frontend
+    expose:
+      - "3000"
+    networks:
+      - ft_silk_space
+
+  backend:
+    build: ../backend
+    expose:
+      - "8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - ft_silk_space
+    volumes:
+      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
+
+  db:
+    build: ./postgres
+    expose:
+      - "5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ft_silk_space
+
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    expose:
+      - "9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    networks:
+      - ft_silk_space
+    depends_on:
+      - cadvisor
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock:ro  # Docker API
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro                # (CPU, mem, ...)
+      - /var/lib/docker/:/var/lib/docker:ro            # Container filesystem
+      - /proc:/host/proc:ro                              # Process info
+    expose:
+      - "8080"
+    networks:
+      - ft_silk_space
+
+volumes:
+  postgres_data:
+  prometheus-data:
+
+networks:
+  ft_silk_space:
+    driver: bridge

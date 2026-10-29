@@ -11,18 +11,16 @@ services:
       - ft_silk_space
 
   frontend:
-    build: ./frontend
+    build: ../frontend
     expose:
       - "3000"
     networks:
       - ft_silk_space
 
   backend:
-    build:
-       context: .
-       dockerfile: ./backend/Dockerfile
+    build: ../backend
     env_file:
-        - ./backend/.env
+        - ../backend/.env
         - ./postgres/.env
     expose:
       - "8080"
@@ -46,7 +44,6 @@ services:
 
   prometheus:
     image: prom/prometheus:v3.15.1
-    container_name: prometheus
     restart: unless-stopped
     expose:
       - "9090"
@@ -60,14 +57,12 @@ services:
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.55.1
-    container_name: cadvisor
     restart: unless-stopped
     pid: host
     command: ["--enable_metrics=cpu,memory,network"]
     volumes:
       - /:/rootfs:ro
       - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock:ro
-      - ${XDG_RUNTIME_DIR}/docker/containerd/containerd.sock:/run/containerd/containerd.sock:ro
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     expose:
       - "8080"
@@ -76,7 +71,6 @@ services:
 
   grafana:
     image: grafana/grafana:13.2.5
-    container_name: grafana
     restart: unless-stopped
     depends_on:
       - prometheus
