@@ -1,9 +1,10 @@
+from collections.abc import Iterable
 from typing import Any
 
 from sqlalchemy import Engine, select
 from sqlalchemy.orm import Session
 
-from .connection import Job, Role, User, engine
+from .connection import Job, Role, User, engine, role_for
 
 
 class SQLRequest:
@@ -100,7 +101,8 @@ class SQLRequest:
             first_name (str): the user first name.
             last_name (str): the user last name.
             email (str): the user email
-            role (Role): what the account is allowed to do.
+            role (Role): what the account is allowed to do, a non admin is
+                stored as guest without a job and as user with one.
             avatar (str | None): the string path to the avatar, None if no
                 avatar provided. Defaults to None.
             job (Job | None): the workspace the user gets, None for no
@@ -120,7 +122,7 @@ class SQLRequest:
                 first_name=first_name,
                 last_name=last_name,
                 email=email,
-                role=role,
+                role=role_for(role, job),
                 avatar=avatar,
                 job=job,
                 password_hash=password_hash,
@@ -160,8 +162,37 @@ class SQLRequest:
             stmt = select(User).order_by(User.id)
             return list(sess.scalars(stmt))
 
+    def get_users(self, user_ids: Iterable[int]) -> list[User]:
+        """Users with these ids, sorted by username"""
+        with Session(self.engine) as sess:
+            stmt = select(User).where(User.id.in_(user_ids)).order_by(User.username)
+            return list(sess.scalars(stmt))
+
+    def search_users(self, query: str, exclude_id: int, limit: int) -> list[User]:
+        """Users whose username contains query (case insensitive)
+
+        Args:
+            query (str): part of a username, % and _ are matched as is
+            exclude_id (int): left out of the results, the user who searches
+            limit (int): the maximum number of users returned
+
+        Returns:
+            list[User]: sorted by username
+        """
+        with Session(self.engine) as sess:
+            stmt = (
+                select(User)
+                .where(
+                    User.username.icontains(query, autoescape=True),
+                    User.id != exclude_id,
+                )
+                .order_by(User.username)
+                .limit(limit)
+            )
+            return list(sess.scalars(stmt))
+
     def update_user(self, user_id: int, changes: dict[str, Any]) -> User | None:
-        """Update some columns of a user"""
+        """Update some columns of a user, the role follows the job (see add_user)"""
 
         with Session(self.engine) as sess:
             user: User | None = sess.get(User, user_id)
@@ -169,6 +200,7 @@ class SQLRequest:
                 return None
             for column, value in changes.items():
                 setattr(user, column, value)
+            user.role = role_for(user.role, user.job)
             sess.commit()
             sess.refresh(user)
         return user

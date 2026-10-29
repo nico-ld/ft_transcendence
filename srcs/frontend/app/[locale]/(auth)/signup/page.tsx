@@ -1,4 +1,9 @@
 import { SignupForm } from "@/components/auth/SignupForm";
+import { pageMetadata } from "@/lib/metadata";
+
+export function generateMetadata() {
+	return pageMetadata("signup", "/signup");
+}
 
 export default function SignupPage() {
 	return (

@@ -9,6 +9,11 @@ import { getCurrentUser, getUsers } from "@/lib/backend";
 import { getSystemStats } from "@/lib/stats";
 import { ROLE_HOME } from "@/lib/utils";
 import { Role } from "@/types/User";
+import { pageMetadata } from "@/lib/metadata";
+
+export function generateMetadata() {
+	return pageMetadata("admin");
+}
 
 export default function AdminPage() {
 	return (

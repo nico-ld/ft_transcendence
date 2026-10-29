@@ -42,12 +42,6 @@ Thanks to the use of Docker, we handle all the prerequisites for you. Said prere
 ### On AI:
   AI was used in this project to help with research, perform code audits, and troubleshoot problems to keep ft_silk_space running smoothly.
 
-• Team Information:
-For each team member mentioned at the top of the README.md, you must pro-
-vide:
-◦ Assigned role(s): PO, PM, Tech Lead, Developers, etc.
-◦ Brief description of their responsibilities.
-
 ## Team information :
 
 ### Product owner (PO) : *jdessoli*
@@ -90,13 +84,6 @@ As the subject asks, every member of the team also worked as a developer:
 
   The communication was mostly done through the Discord thanks to *nile-dai*, the Github thanks to *amartel* and *mmansier*, and the updated Trello thanks to *tseche*.
 
-• Technical Stack:
-◦ Frontend technologies and frameworks used.
-◦ Backend technologies and frameworks used.
-◦ Database system and why it was chosen.
-◦ Any other significant technologies or libraries.
-◦ Justification for major technical choices.
-
 ## Technical Stack :
 
 ### Frontend technologies :
@@ -126,6 +113,7 @@ As the subject asks, every member of the team also worked as a developer:
 | `users` | User accounts with authentication info | id, email, password_hash, ft_id, username, first_name, last_name, avatar, role, job, created_at | Parent table |
 | `sessions` | Login/browser sessions | id, user_id, created_at, expires_at | Child of users (ON DELETE CASCADE) |
 | `terminal_sessions` | Terminal usage tracking | id, user_id, started_at, last_seen_at | Child of users (ON DELETE CASCADE) |
+| `friend_requests` | Friend requests, a pair asked both ways is a friendship | user_id, friend_id (primary key: the pair) | Both columns are children of users (ON DELETE CASCADE) |
 
 ### Key Features
 
@@ -139,35 +127,27 @@ As the subject asks, every member of the team also worked as a developer:
 - Which team member(s) worked on each feature.
 - Brief description of each feature’s functionality.
 
-Features list :
-
-• Modules:
-◦ List of all chosen modules (Major and Minor).
-◦ Point calculation (Major = 2pts, Minor = 1pt).
-◦ Justification for each module choice, especially for custom "Modules of
-choice".
-◦ How each module was implemented.
-◦ Which team member(s) worked on each module.
-
 ## Modules :
 
 | Module | Category | Type | Points |
 |---|---|---|---|
+| Module | Category | Type | Points |
+|---|---|---|---|
 | [Use a framework for both the frontend and backend](#major-use-a-framework-for-both-the-frontend-and-backend-2-pts) | Web | Major | 2 |
-|[ Isolated Linux workspaces with a web terminal](#major-module-of-choice-isolated-linux-workspaces-with-a-web-terminal-2-pts)| Modules of choice | Major | 2 |
-|[ Advanced permissions system](#major-advanced-permissions-system-2-pts)| User Management | Major | 2 |
-|[ Standard user management and authentication](#major-standard-user-management-and-authentication-2-pts)| User Management | Major | 2 |
-|[ Monitoring system with Prometheus and Grafana](#major-monitoring-system-with-prometheus-and-grafana-2-pts)| Devops | Major | 2 |
-|[ Use an ORM for the database](#minor-use-an-orm-for-the-database-1-pt)| Web | Minor | 1 |
-|[ Server-Side Rendering](#minor-server-side-rendering-1-pt)(SSR) | Web | Minor | 1 |
-|[ Custom-made design system with reusable components](#minor-custom-made-design-system-with-reusable-components-1-pt)| Web | Minor | 1 |
-|[ Advanced search with filters, sorting and pagination](#minor-advanced-search-with-filters-sorting-and-pagination-1-pt) | Web | Minor | 1 |
-|[ Support for multiple languages](#minor-support-for-multiple-languages-1-pt)| Accessibility and Internationalization | Minor | 1 |
-|[ Support for additional browsers](#minor-support-for-additional-browsers-1-pt)| Accessibility and Internationalization | Minor | 1 |
-|[ Remote authentication with OAuth](#minor-remote-authentication-with-oauth-20-1-pt)2.0 | User Management | Minor | 1 |
-|[ User activity analytics and insights dashboard](#minor)| User Management | Minor | 1 |
-|[A complete notification system](#minor-a-complete-notification-system-1-pt)| Web | Minor | 1 |
-| **Total** | | | **21** |
+| [Isolated Linux workspaces with a web terminal](#major-module-of-choice-isolated-linux-workspaces-with-a-web-terminal-2-pts) | Modules of choice | Major | 2 |
+| [Advanced permissions system](#major-advanced-permissions-system-2-pts) | User Management | Major | 2 |
+| [Standard user management and authentication](#major-standard-user-management-and-authentication-2-pts) | User Management | Major | 2 |
+| [Monitoring system with Prometheus and Grafana](#major-monitoring-system-with-prometheus-and-grafana-2-pts) | DevOps | Major | 2 |
+| [Use an ORM for the database](#minor-use-an-orm-for-the-database-1-pt) | Web | Minor | 1 |
+| [Server-Side Rendering (SSR)](#minor-server-side-rendering-1-pt) | Web | Minor | 1 |
+| [Custom-made design system with reusable components](#minor-custom-made-design-system-with-reusable-components-1-pt) | Web | Minor | 1 |
+| [Advanced search with filters, sorting and pagination](#minor-advanced-search-with-filters-sorting-and-pagination-1-pt) | Web | Minor | 1 |
+| [Support for multiple languages](#minor-support-for-multiple-languages-1-pt) | Accessibility and Internationalization | Minor | 1 |
+| [Support for additional browsers](#minor-support-for-additional-browsers-1-pt) | Accessibility and Internationalization | Minor | 1 |
+| [Remote authentication with OAuth 2.0](#minor-remote-authentication-with-oauth-20-1-pt) | User Management | Minor | 1 |
+| [User activity analytics and insights dashboard](#major-advanced-analytics-dashboard-with-data-visualization-2-pts) | User Management | Minor | 1 |
+| [A complete notification system](#minor-a-complete-notification-system-1-pt) | Web | Minor | 1 |
+| **Total** | | | **19** |
 
 ### Major: Use a framework for both the frontend and backend (2 pts)
 
@@ -182,7 +162,7 @@ choice".
 
 ### Major (module of choice): Isolated Linux workspaces with a web terminal (2 pts)
 
-*Worked on by:* the whole team
+*Worked on by:* jdessoli, mmansier
 
 **Why we chose it:** it is what Silk Space is for. When an HR user gives an employee a job, the employee gets a Linux environment with the tools of that job (software engineer, data analyst, DevOps engineer, accountant or technical writer), which they open in their browser. Changing their job changes their tools and keeps their files; deleting their account deletes everything. No module in the list covers this.
 
@@ -214,7 +194,7 @@ choice".
 
 ### Major: Advanced permissions system (2 pts)
 
-*Worked on by:* mmansier, tseche
+*Worked on by:* jdessoli, mmansier, tseche
 
 **Why:** Silk Space is run by HR admins. They create the accounts, give each employee a job (and with it a workspace) and delete the accounts of the people who leave. Employees only see and change their own account.
 
@@ -230,7 +210,7 @@ choice".
 
 ### Major: Monitoring system with Prometheus and Grafana (2 pts)
 
-*Worked on by:* tesche, mmansier
+*Worked on by:* tseche, mmansier
 
 **Why:** system health and performance need to be visible at a glance. Monitoring helps catch issues early, track resource usage, and ensure the platform runs smoothly for all users.
 
@@ -289,9 +269,17 @@ choice".
 
 *Worked on by:* nile-dai, amartel
 
-**Why:** pages arrive with their content already in the HTML. The dashboards come with the user's data in place, without a loading flash, and a visitor who isn't logged in is sent to the login page straight away. The public pages are fast and readable by search engines.
+**Why:** pages arrive with their content already in the HTML. The dashboards come with the user's data in place, without a loading flash, and a visitor who isn't logged in is sent to the login page straight away. The public pages are fast, and search engines get everything from the HTML: the content, a title and description in the page's language, the same page in the other languages, and the list of public pages.
 
-**How it works:** Next.js server components. The dashboards and the profile and workspace pages read the session cookie on the server, call the backend and render at request time (`getCurrentUser` in `srcs/frontend/lib/backend.ts`). With `cacheComponents`, the static part of these pages is prerendered and the user's part is streamed into it. The landing, legal and documentation pages are prerendered at build time in each language (`generateStaticParams`), and the legal and documentation pages have their own titles and descriptions (`generateMetadata`).
+**How it works:** Next.js server components, and the metadata Next.js puts in each page's `<head>`.
+- **Rendering:** the dashboards and the profile, workspace and friends pages read the session cookie on the server, call the backend and render at request time (`getCurrentUser` in `srcs/frontend/lib/backend.ts`). With `cacheComponents`, the static part of these pages is prerendered and the user's part is streamed into it. The landing, sign-up, legal and documentation pages are prerendered at build time in each language (`generateStaticParams`).
+- **Titles and descriptions:** every page has its own, in its language (`generateMetadata`, with the texts in `Metadata` in `srcs/frontend/messages/*.json` and `pageMetadata` in `srcs/frontend/lib/metadata.ts`). The root layout gives the site's description and a template that adds the site's name after each title: "Log in · Silk Space". The language comes from the route (`next/root-params`), not from the request, so the metadata doesn't stop a page from being prerendered.
+- **Languages:** each public page (landing, login, sign-up, legal, docs) has a canonical link to itself and `hreflang` links to the same page in English, French and Spanish. `x-default` points to the address without a language, which sends visitors to their browser's language.
+- **Private pages:** the pages behind a login are marked `noindex, nofollow` (the `(app)` layout) and disallowed in `/robots.txt`, in every language.
+- **`/sitemap.xml` and `/robots.txt`:** the sitemap lists every public page in every language, with its language links (`srcs/frontend/app/sitemap.ts`), and robots.txt points to it (`srcs/frontend/app/robots.ts`). Both are built at build time.
+- The absolute links use `SITE_URL`, read at build time, which defaults to `https://localhost:6767`, where nginx serves the site.
+
+**How to check it:** view a page's source (Ctrl+U): its text is in the HTML before any script runs, and its `<head>` has the page's title, description, canonical and language links. https://localhost:6767/sitemap.xml and https://localhost:6767/robots.txt list the public and private pages.
 
 ### Minor: Advanced search with filters, sorting and pagination (1 pt)
 
@@ -316,9 +304,7 @@ choice".
 - The language is part of the address (`/en`, `/fr`, `/es`, set in `srcs/frontend/i18n/routing.ts`), and visitors arriving on `/` are sent to their browser's language.
 - Every text shown to the user, labels read by screen readers included, lives in `srcs/frontend/messages/{en,fr,es}.json`. The backend's English error messages are never shown as they are: the frontend turns them into translated messages.
 - The language can be changed from the landing page footer and from the user menu. Dates follow the chosen language.
-- The privacy policy and terms of service are written in each language (`srcs/frontend/content/legal/`).
-
-**Still to do:** the documentation pages (`srcs/frontend/content/docs/`) only exist in English for now.
+- The privacy policy, the terms of service and the documentation are written in each language (`srcs/frontend/content/legal/` and `srcs/frontend/content/docs/`), and a page keeps its address from one language to another.
 
 ### Minor: Remote authentication with OAuth 2.0 (1 pt)
 

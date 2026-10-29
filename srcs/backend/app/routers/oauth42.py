@@ -27,7 +27,7 @@ oauth.register(
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 # where each role lands after logging in with 42
-ROLE_HOME = {Role.ADMIN: "/admin", Role.USER: "/user"}
+ROLE_HOME = {Role.ADMIN: "/admin", Role.USER: "/user", Role.GUEST: "/guest"}
 
 #each match an oauth error situation, like cancelled = the user clicked "Cancel" on the 42 page
 class FtLoginError(StrEnum):
@@ -88,7 +88,7 @@ def get_or_create_42_user(profile: FtProfile) -> User:
             profile.first_name,
             profile.last_name,
             profile.email,
-            Role.USER,
+            Role.GUEST,
             avatar=profile.image.link if profile.image else None,
             ft_id=profile.id,
         )

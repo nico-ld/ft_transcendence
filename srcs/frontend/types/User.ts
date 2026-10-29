@@ -1,3 +1,5 @@
+import type { Job } from "@/types/jobs";
+
 // a user's own fields (BackendUser in lib/backend.ts)
 export enum Role {
 	ADMIN = "admin",
@@ -9,6 +11,11 @@ export enum Role {
 export const ROLES: Role[] = [Role.USER, Role.GUEST, Role.ADMIN];
 
 export type SortKey = "date" | "username" | "email";
+export type SortOrder = "asc" | "desc";
+
+/** The admin list's filters: one value or "all"; for the job, "none" = no workspace */
+export type RoleFilter = Role | "all";
+export type JobFilter = Job | "none" | "all";
 
 /** Why saving a user failed: a key of Users.errors in messages/*.json */
 export type UserError = "invalid" | "notAllowed" | "notFound" | "emailTaken" | "workspace" | "generic";

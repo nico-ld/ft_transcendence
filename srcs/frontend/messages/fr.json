@@ -1,7 +1,41 @@
 {
   "Metadata": {
     "title": "Silk Space",
-    "description": "Ceci est une description"
+    "description": "Silk Space donne à chaque employé un espace de travail Linux prêt à l'emploi, avec les outils de son poste, que les RH créent, modifient et suppriment en quelques clics.",
+    "pages": {
+      "login": {
+        "title": "Connexion",
+        "description": "Connectez-vous à Silk Space avec votre adresse e-mail et votre mot de passe, ou avec votre compte 42."
+      },
+      "signup": {
+        "title": "Inscription",
+        "description": "Créez votre compte Silk Space. Un administrateur vous attribue ensuite un poste, et avec lui votre espace de travail."
+      },
+      "user": {
+        "title": "Tableau de bord",
+        "description": "La mémoire de votre espace de travail, et le temps que vous y avez passé cette semaine et ce mois-ci."
+      },
+      "admin": {
+        "title": "Tableau de bord admin",
+        "description": "Tous les comptes avec leur poste et leur rôle, et les métriques des espaces de travail."
+      },
+      "guest": {
+        "title": "Pas encore de poste",
+        "description": "Un administrateur doit vous attribuer un poste avant que vous puissiez utiliser un espace de travail."
+      },
+      "profile": {
+        "title": "Votre profil",
+        "description": "Vos nom et prénom, votre nom d'utilisateur, votre avatar et votre mot de passe."
+      },
+      "workspace": {
+        "title": "Espace de travail",
+        "description": "Le terminal de votre espace de travail Linux, avec les outils de votre poste."
+      },
+      "friends": {
+        "title": "Amis",
+        "description": "Trouvez vos collègues, répondez aux demandes d'ami et voyez qui est en ligne."
+      }
+    }
   },
   "Legal": {
     "privacy": "Politique de confidentialité",
@@ -27,13 +61,15 @@
     "workSpace": "Espace de travail"
   },
   "Header": {
+    "friends": "Amis",
     "editProfile": "Modifier le profil",
     "logout": "Se déconnecter",
     "loggingOut": "Déconnexion",
+    "userMenu": "Ouvrir le menu utilisateur",
     "current": {"light": "Mode clair", "dark": "Mode sombre", "system": "Mode système"},
     "light": "Mode clair",
     "dark": "Mode sombre",
-    "system": "Mode Système",
+    "system": "Mode système",
     "theme": "Thème",
     "admin": "Admin",
     "user": "Utilisateur",
@@ -160,16 +196,16 @@
     }
   },
   "Stats": {
-    "title": "Apperçu Système",
+    "title": "Aperçu du système",
     "weekLabel": "Temps de connexion quotidien",
     "week": "Cette semaine",
     "month": "Ce mois",
-    "extra": "Utilisateur inscrit",
+    "extra": "Utilisateurs inscrits",
     "grafana": "Voir les métriques dans Grafana",
-    "grafanaTitle": "Métriques des workspaces",
-    "grafanaUser": "Workspace",
+    "grafanaTitle": "Métriques des espaces de travail",
+    "grafanaUser": "Espace de travail",
     "grafanaNewTab": "Ouvrir dans Grafana",
-    "grafanaEmpty": "Aucun utilisateur n'a encore de workspace",
+    "grafanaEmpty": "Aucun utilisateur n'a encore d'espace de travail",
     "memory": {
       "aria": "Utilisation de la mémoire : {percent} %",
       "label": "mémoire",
@@ -195,6 +231,18 @@
     "role": "Type de compte",
     "memberSince": "Membre depuis",
     "saved": "Votre profil a été mis à jour.",
+    "avatar": {
+      "change": "Changer d'avatar",
+      "hint": "Cliquez ou déposez une image. PNG, JPEG ou WebP, 5 Mo max.",
+      "saved": "Votre avatar a été mis à jour.",
+      "removed": "Votre avatar a été supprimé.",
+      "remove": "Supprimer",
+      "errors": {
+        "type": "Seules les images PNG, JPEG et WebP sont acceptées.",
+        "size": "Cette image dépasse 5 Mo.",
+        "generic": "Une erreur est survenue. Veuillez réessayer."
+      }
+    },
     "password": {
       "title": "Mot de passe",
       "description": "Modifiez le mot de passe avec lequel vous vous connectez.",
@@ -202,7 +250,8 @@
       "new": "Nouveau mot de passe",
       "confirm": "Confirmez le nouveau mot de passe",
       "submit": "Changer le mot de passe",
-      "saved": "Votre mot de passe a été modifié. Vos autres navigateurs ont été déconnectés.",
+      "saved": "Votre mot de passe a été modifié.",
+      "loggedOut": "Vos autres navigateurs ont été déconnectés.",
       "noPassword": "Vous vous connectez avec 42, ce compte n'a donc pas de mot de passe.",
       "errors": {
         "wrongCurrent": "Ce mot de passe est incorrect.",
@@ -227,7 +276,26 @@
       "label": "Trier par",
       "date": "Date",
       "username": "Nom",
-      "email": "Email"
+      "email": "Email",
+      "order": "Ordre",
+      "asc": "Croissant",
+      "desc": "Décroissant"
+    },
+    "filter": {
+      "label": "Trier et filtrer",
+      "title": "Filtrer",
+      "role": "Rôle",
+      "job": "Poste",
+      "all": "Tous",
+      "clear": "Effacer les filtres"
+    },
+    "noMatch": "Aucun utilisateur ne correspond à la recherche et aux filtres.",
+    "page": {
+      "label": "Pages",
+      "previous": "Page précédente",
+      "next": "Page suivante",
+      "status": "Page {page} sur {pages}",
+      "total": "{count, plural, =0 {Aucun utilisateur} one {# utilisateur} other {# utilisateurs}}"
     },
     "errors": {
       "invalid": "Certains champs sont invalides. Vérifiez-les et réessayez.",
@@ -270,11 +338,36 @@
       "technical-writer": "Rédacteur technique"
     }
   },
+  "Friends": {
+    "title": "Amis",
+    "description": "Trouvez des amis",
+    "searchPlaceholder": "Rechercher par nom d'utilisateur",
+    "search": "Rechercher",
+    "noResults": "Aucun utilisateur trouvé",
+    "requests": "Demandes d'ami",
+    "friends": "Vos amis",
+    "noFriends": "Vous n'avez actuellement aucun ami",
+    "sent": "Demandes envoyées",
+    "add": "Ajouter",
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "remove": "Retirer",
+    "removed": "{username} a été retiré de vos amis",
+    "cancel": "Annuler",
+    "pending": "Demande envoyée",
+    "isFriend": "Ami",
+    "online": "En ligne",
+    "offline": "Hors ligne",
+    "error": "Une erreur est survenue, réessayez"
+  },
   "Toast": {
     "loggedIn": "Connecté",
     "accountCreated": "Compte créé",
     "userCreated": "Utilisateur créé",
     "userUpdated": "Utilisateur modifié",
-    "userDeleted": "Utilisateur supprimé"
+    "userDeleted": "Utilisateur supprimé",
+    "friendRequest": "{username} veut être votre ami",
+    "friendAccepted": "{username} a accepté votre demande d'ami",
+    "loggedOut": "Vous avez été déconnecté"
   }
 }

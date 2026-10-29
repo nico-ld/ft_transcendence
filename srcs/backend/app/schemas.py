@@ -1,5 +1,8 @@
+import base64
+import binascii
+import re
 from datetime import datetime
-from typing import Annotated, Self
+from typing import Annotated, Literal, Self
 
 from db import Job, Role
 from pydantic import (
@@ -33,6 +36,21 @@ Name = Annotated[
 Username = Annotated[
     str, StringConstraints(strip_whitespace=True, pattern=r"^[a-zA-Z0-9_-]{3,20}$")
 ]
+# what the profile page sends: the image resized to 256px by a canvas, in base64
+AVATAR_DATA_URL = re.compile(
+    r"data:image/(png|jpeg|webp);base64,([A-Za-z0-9+/]+={0,2})"
+)
+# ~110 KB once decoded, the front sends ~30 KB
+AVATAR_MAX_LENGTH = 150_000
+
+
+def is_image(kind: str, data: bytes) -> bool:
+    """Checks the first bytes, so a file that only claims to be an image is refused"""
+    if kind == "png":
+        return data.startswith(b"\x89PNG\r\n\x1a\n")
+    if kind == "jpeg":
+        return data.startswith(b"\xff\xd8\xff")
+    return data[:4] == b"RIFF" and data[8:12] == b"WEBP"
 
 
 class UserOut(CamelModel):
@@ -108,6 +126,24 @@ class ProfileUpdateIn(CamelModel):
     username: Username | None = None
     first_name: Name | None = None
     last_name: Name | None = None
+    avatar: str | None = Field(default=None, max_length=AVATAR_MAX_LENGTH)
+
+    @model_validator(mode="after")
+    def avatar_verification(self) -> Self:
+        # not sent, or null to go back to the default avatar
+        if self.avatar is None:
+            return self
+        match = AVATAR_DATA_URL.fullmatch(self.avatar)
+        if match is None:
+            raise ValueError("avatar must be a png, jpeg or webp data URL")
+        kind, payload = match.groups()
+        try:
+            data = base64.b64decode(payload, validate=True)
+        except binascii.Error:
+            raise ValueError("avatar is not valid base64") from None
+        if not is_image(kind, data):
+            raise ValueError(f"avatar is not a {kind} image")
+        return self
 
 
 class WorkspaceMetrics(CamelModel):
@@ -152,3 +188,30 @@ class StatsOut(CamelModel):
     log_time: LogTimeOut
     # hours with a terminal open each day of this week
     daily: list[float]
+
+
+# what a friendship or request is for the logged in user
+Relation = Literal["friend", "incoming", "outgoing"]
+
+
+class PublicUserOut(CamelModel):
+    """What other users see of an account"""
+
+    id: int
+    username: str
+    avatar: str | None
+
+
+class FriendsOut(CamelModel):
+    friends: list[PublicUserOut]
+    incoming: list[PublicUserOut]
+    outgoing: list[PublicUserOut]
+
+
+class UserSearchOut(PublicUserOut):
+    # None: not friends and no request between them
+    relation: Relation | None
+
+
+class RelationOut(CamelModel):
+    relation: Relation

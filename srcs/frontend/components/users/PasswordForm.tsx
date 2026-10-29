@@ -7,7 +7,8 @@ import { useFormSubmit } from "@/actions/useFormSubmit";
 import { FormField } from "@/components/layout/FormField";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import type { PasswordError } from "@/types/User";
+import { toast } from "@/components/ui/toast";
+import type { ChangePasswordState, PasswordError } from "@/types/User";
 
 type PasswordField = "currentPassword" | "newPassword" | "confirmPassword";
 
@@ -22,7 +23,16 @@ const ERROR_FIELD: Partial<Record<PasswordError, PasswordField>> = {
 export function PasswordForm() {
 	const t = useTranslations("Profile.password");
 	const formRef = React.useRef<HTMLFormElement>(null);
-	const [state, formAction, pending] = React.useActionState(changePassword, null);
+	// toast here and not in the effect below, which can run more than once
+	const [state, formAction, pending] = React.useActionState(
+		async (prev: ChangePasswordState, form: FormData) => {
+			const result = await changePassword(prev, form);
+			if (result?.ok)
+				toast.add({ type: "success", title: t("saved"), description: t("loggedOut") });
+			return result;
+		},
+		null
+	);
 	const submit = useFormSubmit(formAction);
 	const errorField = state?.error ? ERROR_FIELD[state.error] : undefined;
 
@@ -68,7 +78,6 @@ export function PasswordForm() {
 			/>
 
 			<div aria-live="polite" className="text-sm">
-				{state?.ok && <p className="text-muted-foreground">{t("saved")}</p>}
 				{state?.error && !errorField && <p role="alert" className="text-destructive">{t(`errors.${state.error}`)}</p>}
 			</div>
 
