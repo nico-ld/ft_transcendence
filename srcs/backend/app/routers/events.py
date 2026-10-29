@@ -23,7 +23,7 @@ async def close_on_logout(ws: WebSocket, token: str | None):
 
 @router.websocket("/events")
 async def events(ws: WebSocket):
-    """Who is online and friend requests, open on every page (events in DEV_DOC)"""
+    """Who is online and friend requests, open on every page"""
     if ws.headers.get("origin") != settings.frontend_url:
         await ws.close(code=status.WS_1008_POLICY_VIOLATION)
         return
