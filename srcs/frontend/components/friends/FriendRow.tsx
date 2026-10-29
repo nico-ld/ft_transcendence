@@ -6,7 +6,8 @@ import { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from "@/components/u
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item";
 import type { PublicUser } from "@/types/Friends";
 
-// One user in a list, with the buttons as children. showOnline: friends only.
+// One user in a list with the buttons as children
+// showOnline: friends only
 export function FriendRow({ user, showOnline = false, children }: {
 	user: PublicUser;
 	showOnline?: boolean;

@@ -7,12 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "@/components/ui/toast";
 
-// "add" sends a request or accepts one, "remove" removes, declines or cancels
 export function FriendButton({ userId, action, variant = "outline", success, children }: {
 	userId: number;
 	action: "add" | "remove";
 	variant?: "default" | "outline" | "ghost";
-	// toast shown when it worked, none if not given
+	// toast shown when it worked none if not given
 	success?: string;
 	children: React.ReactNode;
 }) {

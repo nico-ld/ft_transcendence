@@ -5,7 +5,7 @@ import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-// puts the search in the URL (/friends?q=bob), the page reads it and searches
+// puts the search in the URL (/friends?q=bob) and the page reads it and searches
 export function FriendSearch({ defaultValue }: { defaultValue: string }) {
 	const router = useRouter();
 	const t = useTranslations("Friends");
@@ -27,7 +27,6 @@ export function FriendSearch({ defaultValue }: { defaultValue: string }) {
 				minLength={2}
 				maxLength={20}
 			/>
-			{/* h-auto: stretches to the input's height (the button is h-8 by default) */}
 			<Button type="submit" className="h-auto px-4">{t("search")}</Button>
 		</form>
 	);
