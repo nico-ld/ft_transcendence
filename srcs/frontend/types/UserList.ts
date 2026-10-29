@@ -35,6 +35,12 @@ export type UserRowProps = {
 	onSelect: (user: BackendUser) => void;
 };
 
+export type UserListProps = {
+	users: BackendUser[] | null;
+	viewerId: number;
+	onSelect: (user: BackendUser) => void;
+};
+
 export const NO_FILTERS: Filters = {
 	query: "",
 	role: "all",
