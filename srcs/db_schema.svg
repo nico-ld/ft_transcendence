@@ -36,30 +36,39 @@
   <text x="120" y="330" class="cell">job</text>
   <text x="120" y="350" class="cell">created_at</text>
 
-  <!-- UserSession Table -->
-  <rect x="400" y="100" width="170" height="120" rx="8" ry="8" class="session"/>
-  <text x="450" y="125" class="table-header">UserSession</text>
+  <!-- Friend Table -->
+  <rect x="400" y="30" width="170" height="80" rx="8" ry="8" class="session"/>
+  <text x="450" y="55" class="table-header">Friend</text>
 
-  <text x="420" y="150" class="cell">id</text>
-  <text x="420" y="170" class="cell">user_id</text>
-  <text x="420" y="190" class="cell">created_at</text>
-  <text x="420" y="210" class="cell">expires_at</text>
+  <text x="420" y="80" class="cell">user_id</text>
+  <text x="420" y="100" class="cell">friend_id</text>
+
+  <!-- UserSession Table -->
+  <rect x="400" y="130" width="170" height="120" rx="8" ry="8" class="session"/>
+  <text x="450" y="155" class="table-header">UserSession</text>
+
+  <text x="420" y="180" class="cell">id</text>
+  <text x="420" y="200" class="cell">user_id</text>
+  <text x="420" y="220" class="cell">created_at</text>
+  <text x="420" y="240" class="cell">expires_at</text>
 
   <!-- TerminalSession Table -->
-  <rect x="400" y="250" width="170" height="120" rx="8" ry="8" class="terminal"/>
-  <text x="435" y="275" class="table-header">TerminalSession</text>
+  <rect x="400" y="280" width="170" height="120" rx="8" ry="8" class="terminal"/>
+  <text x="435" y="305" class="table-header">TerminalSession</text>
 
-  <text x="420" y="300" class="cell">id</text>
-  <text x="420" y="320" class="cell">user_id</text>
-  <text x="420" y="340" class="cell">started_at</text>
-  <text x="420" y="360" class="cell">last_seen_at</text>
+  <text x="420" y="330" class="cell">id</text>
+  <text x="420" y="350" class="cell">user_id</text>
+  <text x="420" y="370" class="cell">started_at</text>
+  <text x="420" y="390" class="cell">last_seen_at</text>
 
   <!-- Relationships -->
-  <line x1="200" y1="205" x2="400" y2="145" class="line"/>
-  <line x1="200" y1="150" x2="400" y2="165" class="line"/>
-  <line x1="200" y1="150" x2="400" y2="310" class="line"/>
+  <line x1="200" y1="150" x2="400" y2="80" class="line"/>
+  <line x1="200" y1="150" x2="400" y2="100" class="line"/>
+  <line x1="200" y1="205" x2="400" y2="180" class="line"/>
+  <line x1="200" y1="150" x2="400" y2="200" class="line"/>
+  <line x1="200" y1="150" x2="400" y2="350" class="line"/>
 
-  <line x1="200" y1="205" x2="400" y2="295" class="line"/>
+  <line x1="200" y1="205" x2="400" y2="330" class="line"/>
 
   <!-- Constraint -->
   <text x="100" y="400" class="constraint">* password_hash is null if connected with 42</text>
