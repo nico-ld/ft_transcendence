@@ -4,7 +4,7 @@ from typing import Any
 from sqlalchemy import Engine, select
 from sqlalchemy.orm import Session
 
-from .connection import Job, Role, User, engine
+from .connection import Job, Role, User, engine, role_for
 
 
 class SQLRequest:
@@ -101,7 +101,8 @@ class SQLRequest:
             first_name (str): the user first name.
             last_name (str): the user last name.
             email (str): the user email
-            role (Role): what the account is allowed to do.
+            role (Role): what the account is allowed to do, a non admin is
+                stored as guest without a job and as user with one.
             avatar (str | None): the string path to the avatar, None if no
                 avatar provided. Defaults to None.
             job (Job | None): the workspace the user gets, None for no
@@ -121,7 +122,7 @@ class SQLRequest:
                 first_name=first_name,
                 last_name=last_name,
                 email=email,
-                role=role,
+                role=role_for(role, job),
                 avatar=avatar,
                 job=job,
                 password_hash=password_hash,
@@ -191,7 +192,7 @@ class SQLRequest:
             return list(sess.scalars(stmt))
 
     def update_user(self, user_id: int, changes: dict[str, Any]) -> User | None:
-        """Update some columns of a user"""
+        """Update some columns of a user, the role follows the job (see add_user)"""
 
         with Session(self.engine) as sess:
             user: User | None = sess.get(User, user_id)
@@ -199,6 +200,7 @@ class SQLRequest:
                 return None
             for column, value in changes.items():
                 setattr(user, column, value)
+            user.role = role_for(user.role, user.job)
             sess.commit()
             sess.refresh(user)
         return user
