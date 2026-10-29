@@ -4,7 +4,7 @@ import { oauthLoginError } from "@/types/LoginError";
 import { pageMetadata } from "@/lib/metadata";
 
 export function generateMetadata() {
-	return pageMetadata("login");
+	return pageMetadata("login", "/login");
 }
 
 type LoginPageProps = {

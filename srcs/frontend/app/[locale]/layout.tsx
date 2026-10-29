@@ -6,6 +6,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { LegalFooter } from "@/components/legal/LegalFooter";
 import { Toaster } from "@/components/ui/toast";
+import { SITE_URL } from "@/lib/metadata";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,11 +20,13 @@ const geistMono = Geist_Mono({
 });
 
 // in the page's language (Metadata in messages/*.json). Pages give their own
-// title, and the template adds the site's name after it
+// title, and the template adds the site's name after it. The pages' relative
+// links (canonical, languages) are made absolute from metadataBase
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations("Metadata");
 
 	return {
+		metadataBase: SITE_URL,
 		title: { template: `%s · ${t("title")}`, default: t("title") },
 		description: t("description")
 	};
