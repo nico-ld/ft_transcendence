@@ -10,9 +10,6 @@ export enum Role {
 /** Every role, in the order the role picker and the role filter show them */
 export const ROLES: Role[] = [Role.USER, Role.GUEST, Role.ADMIN];
 
-/** Every role, in the order the role picker and the role filter show them */
-export const ROLES: Role[] = ["user", "admin"];
-
 export type SortKey = "date" | "username" | "email";
 export type SortOrder = "asc" | "desc";
 
