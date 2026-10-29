@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { getDocNav } from "@/lib/docs";
-import { DocsNav } from "./docs-nav";
+import { DocsNav } from "@/components/docs/docs-nav";
 import { getLocale, getTranslations } from "next-intl/server";
 
 export async function DocsSidebar() {

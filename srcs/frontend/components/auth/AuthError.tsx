@@ -1,5 +1,5 @@
 import { TriangleAlert } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export function AuthError({title, message}: {title: string; message: string}) {
 	return (

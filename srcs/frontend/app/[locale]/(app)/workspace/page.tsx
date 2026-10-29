@@ -3,6 +3,11 @@ import { getLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { WorkspaceView } from "@/components/workspace/WorkspaceView";
 import { getCurrentUser } from "@/lib/backend";
+import { pageMetadata } from "@/lib/metadata";
+
+export function generateMetadata() {
+	return pageMetadata("workspace");
+}
 
 // /workspace: the page the "Working space" button of /user links to
 // (components/dashboard/WorkspaceLink.tsx).

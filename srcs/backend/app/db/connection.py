@@ -35,6 +35,13 @@ class Job(enum.Enum):
     TECH_WRITER = "technical-writer"
 
 
+def role_for(role: Role, job: Job | None) -> Role:
+    """The role to store admins stay admins and the others are guests until they get a job"""
+    if role == Role.ADMIN:
+        return role
+    return Role.GUEST if job is None else Role.USER
+
+
 class Base(DeclarativeBase):
     pass
 

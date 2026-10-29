@@ -3,7 +3,7 @@ import {
 	Tooltip, 
 	TooltipContent,
 	TooltipTrigger
-} from "../ui/tooltip";
+} from "@/components/ui/tooltip";
 
 const DAYS = ["mon", "tue", "wen", "thu", "fri", "sat",  "sun"];
 

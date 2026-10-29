@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { StatsPanelProps } from "@/lib/stats";
-import { MemoryRing } from "./MemoryRing";
-import { WeekChart } from "./WeekChart";
+import { MemoryRing } from "@/components/dashboard/MemoryRing";
+import { WeekChart } from "@/components/dashboard/WeekChart";
 import { useTranslations } from "next-intl";
 
 function StatBlock({label, value}: {label: string; value: string}) {
