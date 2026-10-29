@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     ft_client_secret: str
     session_secret: str = Field(min_length=32)
     jwt_expire_minutes: int = 60 * 24
-    frontend_url: str = "https://localhost"
+    frontend_url: str = "https://localhost:6767"
 
     # first admin account, created at startup if it doesn't exist yet
     admin_email: EmailStr | None = None

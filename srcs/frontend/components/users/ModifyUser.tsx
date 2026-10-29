@@ -26,6 +26,7 @@ import { toast } from "@/components/ui/toast";
 import type { ModifyUserProps } from "@/types/ModifyUserProps";
 import type { UpdateUserState } from "@/types/User";
 import { Role } from "@/types/User";
+import { NAME_MAX_LENGTH, USERNAME_PATTERN } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
 function ModifyUserForm({user, viewer, onDone}:
@@ -34,6 +35,7 @@ function ModifyUserForm({user, viewer, onDone}:
 	const t = useTranslations("Users");
 	const c = useTranslations("Common");
 	const n = useTranslations("Toast");
+	const v = useTranslations("Validation");
 	const uid = React.useId();
 
 	const isAdmin = viewer.role === Role.ADMIN;
@@ -82,15 +84,15 @@ function ModifyUserForm({user, viewer, onDone}:
 			<div className="flex flex-col gap-4 px-4">
 				<Field>
 					<Label htmlFor={`${uid}-last`}>{t("userInfo.lastName")}</Label>
-					<Input id={`${uid}-last`} name="lastName" defaultValue={user.lastName} required />
+					<Input id={`${uid}-last`} name="lastName" defaultValue={user.lastName} maxLength={NAME_MAX_LENGTH} required />
 				</Field>
 				<Field>
 					<Label htmlFor={`${uid}-first`}>{t("userInfo.name")}</Label>
-					<Input id={`${uid}-first`} name="firstName" defaultValue={user.firstName} required />
+					<Input id={`${uid}-first`} name="firstName" defaultValue={user.firstName} maxLength={NAME_MAX_LENGTH} required />
 				</Field>
 				<Field>
 					<Label htmlFor={`${uid}-username`}>{t("userInfo.userName")}</Label>
-					<Input id={`${uid}-username`} name="username" defaultValue={user.username} required />
+					<Input id={`${uid}-username`} name="username" defaultValue={user.username} pattern={USERNAME_PATTERN} title={v("username")} required />
 				</Field>
 				{isAdmin && (
 					<Field>

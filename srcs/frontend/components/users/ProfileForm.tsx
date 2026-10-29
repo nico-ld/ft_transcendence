@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "@/components/ui/toast";
+import { NAME_MAX_LENGTH, USERNAME_PATTERN } from "@/lib/utils";
 import type { BackendUser } from "@/lib/backend";
 import type { UpdateUserState } from "@/types/User";
 
@@ -20,6 +21,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
 	const t = useTranslations("Users");
 	const p = useTranslations("Profile");
 	const c = useTranslations("Common");
+	const v = useTranslations("Validation");
 	const uid = React.useId();
 	const [state, formAction, pending] = React.useActionState(
 		async (prev: UpdateUserState, form: FormData) => {
@@ -41,15 +43,15 @@ export function ProfileForm({ user }: ProfileFormProps) {
 		<form onSubmit={submit} className="flex flex-col gap-4">
 			<Field>
 				<Label htmlFor={`${uid}-last`}>{t("userInfo.lastName")}</Label>
-				<Input id={`${uid}-last`} name="lastName" defaultValue={user.lastName} autoComplete="family-name" required />
+				<Input id={`${uid}-last`} name="lastName" defaultValue={user.lastName} autoComplete="family-name" maxLength={NAME_MAX_LENGTH} required />
 			</Field>
 			<Field>
 				<Label htmlFor={`${uid}-first`}>{t("userInfo.name")}</Label>
-				<Input id={`${uid}-first`} name="firstName" defaultValue={user.firstName} autoComplete="given-name" required />
+				<Input id={`${uid}-first`} name="firstName" defaultValue={user.firstName} autoComplete="given-name" maxLength={NAME_MAX_LENGTH} required />
 			</Field>
 			<Field>
 				<Label htmlFor={`${uid}-username`}>{t("userInfo.userName")}</Label>
-				<Input id={`${uid}-username`} name="username" defaultValue={user.username} autoComplete="username" required />
+				<Input id={`${uid}-username`} name="username" defaultValue={user.username} autoComplete="username" pattern={USERNAME_PATTERN} title={v("username")} required />
 			</Field>
 
 			{state?.error && <p role="alert" className="text-sm text-destructive">{t(`errors.${state.error}`)}</p>}

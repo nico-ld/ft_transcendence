@@ -120,10 +120,8 @@
     }
   },
   "Landing": {
-    "mainNav": "Principal",
     "signin": "Iniciar sesión", "signup": "inscribirse",
     "heroCta": "Inscribirse en Silk Space",
-    "resources": "Recursos",
     "headline": "Entornos de trabajo listos para usar y de rápida configuración",
     "subtitle": "Una solución integral para tu empresa. Gestiona tus equipos y sesiones de trabajo con solo unos clics, todo desde un único lugar.",
     "features": {
@@ -181,21 +179,6 @@
         "title": "No se puede conectar",
         "description": "Ahora mismo no se puede acceder a tu espacio de trabajo."
       }
-    }
-  },
-  "Docs": {
-    "documentation": "Documentación",
-    "tocLabel": "En esta página",
-    "loading": "Cargando...",
-    "sections": {
-      "users": "Guía del usuario",
-      "developers": "Guía para desarrolladores"
-    },
-    "pager": {
-      "label": "Paginación",
-      "previous": "Anterior",
-      "next": "Siguiente",
-      "home": "Inicio"
     }
   },
   "Stats": {
@@ -372,5 +355,9 @@
     "friendRequest": "{username} quiere ser tu amigo",
     "friendAccepted": "{username} aceptó tu solicitud de amistad",
     "loggedOut": "Se ha cerrado tu sesión"
+  },
+  "Validation": {
+    "username": "De 3 a 20 caracteres: letras, números, _ o -",
+    "email": "Una dirección de correo como nombre@ejemplo.com"
   }
 }
