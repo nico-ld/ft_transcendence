@@ -353,10 +353,3 @@ If anything fails (the user cancels, the login took too long, 42 is unreachable,
 - The HTTPS certificate is self-signed, so each browser shows its own warning on the first visit. Chrome and Chromium: Advanced → Proceed to localhost. Firefox: Advanced → Accept the Risk and Continue.
 - In the terminal, the shortcuts browsers keep for themselves (Ctrl+W, Ctrl+T, Ctrl+N, Ctrl+Tab) act on the browser tabs and never reach the shell.
 
-• Individual Contributions:
-◦ Detailed breakdown of what each team member contributed.
-◦ Specific features, modules, or components implemented by each person.
-◦ Any challenges faced and how they were overcome.
-Any other useful or relevant information is welcome (usage documentation, known
-limitations, license, credits, etc.).
-
