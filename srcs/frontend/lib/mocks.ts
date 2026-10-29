@@ -4,7 +4,7 @@ import type { SystemStats } from "./stats";
 
 export const mockAdmin: BackendUser = {
 	id: 2, email: "admin@email.com", username: "Le Roux",
-	firstName: "Ada", lastName: "Admin", avatar: null, job: "sofware-engineer",
+	firstName: "Ada", lastName: "Admin", avatar: null, job: "software-engineer",
 	role: Role.ADMIN, createdAt: "2026-01-01T00:00:00.000Z",
 	hasPassword: true, isGuest: true
 };
