@@ -120,7 +120,12 @@ The full API (routes, bodies, responses) is at `/api/docs`.
 | GET | `/api/users/{user_id}` | admin |
 | PATCH | `/api/users/{user_id}` | admin |
 | DELETE | `/api/users/{user_id}` | admin |
+| GET | `/api/friends` | logged in |
+| GET | `/api/friends/search?q=` | logged in |
+| POST | `/api/friends/{user_id}` | logged in |
+| DELETE | `/api/friends/{user_id}` | logged in |
 | WS | `/api/ws/terminal` | logged in |
+| WS | `/api/ws/events` | logged in |
 
 ### Sign up :
 
@@ -163,6 +168,21 @@ The full API (routes, bodies, responses) is at `/api/docs`.
   * `$host` has no port, so this only works on 443. To publish on another port, use `$http_host` in nginx.conf and register the redirect URI with that port on the intra.
 
 * If every 42 login suddenly ends with `oauth_unavailable`, check the app on the intra: its secret may have been replaced or have expired.
+
+### Live events :
+
+* `/api/ws/events`, in `routers/events.py` and `realtime.py`. The front opens it once and keeps it open on every page. A user is online while at least one of their tabs is connected. The socket closes with `4401` when the session ends (logout, account deleted).
+
+* The browser sends nothing, the server sends JSON:
+
+| Event | Sent to | When |
+|---|---|---|
+| `{"type": "presence", "online": [1, 2]}` | the tab that connects | on connect: everyone online right now |
+| `{"type": "online", "userId": 1}` | everyone | a user opened their first tab |
+| `{"type": "offline", "userId": 1}` | everyone | a user closed their last tab |
+| `{"type": "friend_request", "userId": 1, "username": "alice"}` | the user asked | `POST /api/friends/{user_id}`, a new request |
+| `{"type": "friend_accepted", "userId": 1, "username": "alice"}` | the user who asked | `POST /api/friends/{user_id}`, the request was accepted |
+| `{"type": "friend_removed", "userId": 1}` | the other user | `DELETE /api/friends/{user_id}` |
 
 * An account found by its email (created by an admin, or through sign up) is linked to the 42 account on its first 42 login. Its password is then removed and every browser logged in to it is logged out: 42 has proven that the email belongs to this person, while anyone can sign up with any email. From then on, that account logs in with 42 only.
 

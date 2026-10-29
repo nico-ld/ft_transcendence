@@ -2,7 +2,7 @@ import base64
 import binascii
 import re
 from datetime import datetime
-from typing import Annotated, Self
+from typing import Annotated, Literal, Self
 
 from db import Job, Role
 from pydantic import (
@@ -188,3 +188,30 @@ class StatsOut(CamelModel):
     log_time: LogTimeOut
     # hours with a terminal open each day of this week
     daily: list[float]
+
+
+# what a friendship or request is for the logged in user
+Relation = Literal["friend", "incoming", "outgoing"]
+
+
+class PublicUserOut(CamelModel):
+    """What other users see of an account"""
+
+    id: int
+    username: str
+    avatar: str | None
+
+
+class FriendsOut(CamelModel):
+    friends: list[PublicUserOut]
+    incoming: list[PublicUserOut]
+    outgoing: list[PublicUserOut]
+
+
+class UserSearchOut(PublicUserOut):
+    # None: not friends and no request between them
+    relation: Relation | None
+
+
+class RelationOut(CamelModel):
+    relation: Relation

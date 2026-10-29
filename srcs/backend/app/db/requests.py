@@ -1,3 +1,4 @@
+from collections.abc import Iterable
 from typing import Any
 
 from sqlalchemy import Engine, select
@@ -158,6 +159,35 @@ class SQLRequest:
         """
         with Session(self.engine) as sess:
             stmt = select(User).order_by(User.id)
+            return list(sess.scalars(stmt))
+
+    def get_users(self, user_ids: Iterable[int]) -> list[User]:
+        """Users with these ids, sorted by username"""
+        with Session(self.engine) as sess:
+            stmt = select(User).where(User.id.in_(user_ids)).order_by(User.username)
+            return list(sess.scalars(stmt))
+
+    def search_users(self, query: str, exclude_id: int, limit: int) -> list[User]:
+        """Users whose username contains query (case insensitive)
+
+        Args:
+            query (str): part of a username, % and _ are matched as is
+            exclude_id (int): left out of the results, the user who searches
+            limit (int): the maximum number of users returned
+
+        Returns:
+            list[User]: sorted by username
+        """
+        with Session(self.engine) as sess:
+            stmt = (
+                select(User)
+                .where(
+                    User.username.icontains(query, autoescape=True),
+                    User.id != exclude_id,
+                )
+                .order_by(User.username)
+                .limit(limit)
+            )
             return list(sess.scalars(stmt))
 
     def update_user(self, user_id: int, changes: dict[str, Any]) -> User | None:
