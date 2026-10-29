@@ -4,20 +4,19 @@ import { useLocale, useTranslations } from "next-intl";
 import { Languages, ChevronUp } from "lucide-react";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import type { Locale } from "@/types/Locale";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuGroup,
-	DropdownMenuLabel,
 	DropdownMenuRadioGroup,
 	DropdownMenuRadioItem,
 	DropdownMenuSub,
 	DropdownMenuSubContent,
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger
-} from "../ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 
 const LANGUAGE_NAMES: Record<Locale, string> = {
 	en: "English",

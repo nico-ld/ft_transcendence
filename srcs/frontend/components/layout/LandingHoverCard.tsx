@@ -1,7 +1,7 @@
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { Button } from "../ui/button";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
+import { Button } from "@/components/ui/button";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { ChevronDown } from "lucide-react";
 import { DocNavSection } from "@/types/Doc";
 

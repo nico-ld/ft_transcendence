@@ -7,12 +7,12 @@ import Image from "next/image";
 
 import { Login } from "@/actions/auth";
 import { ROLE_HOME } from "@/lib/utils";
-import { AuthError } from "./AuthError";
-import { FormField } from "../layout/FormField";
+import { AuthError } from "@/components/auth/AuthError";
+import { FormField } from "@/components/layout/FormField";
 import { useFormSubmit } from "@/actions/useFormSubmit";
-import { Button, buttonVariants } from "../ui/button";
-import { Spinner } from "../ui/spinner";
-import { toast } from "../ui/toast";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "@/components/ui/toast";
 
 import type { LoginError } from "@/types/LoginError";
 
