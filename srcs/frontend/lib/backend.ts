@@ -1,10 +1,13 @@
 import "server-only";
 import { cookies } from "next/headers";
+import { mockAdmin, mockUsers } from "./mocks";
 import type { Role } from "@/types/User";
 
 // docker-compose service name and port (see nginx.conf). BACKEND_URL can override
 // it, e.g. when running `bun dev` outside Docker.
 const BACKEND_URL = process.env.BACKEND_URL ?? "http://backend:8080";
+
+const USE_MOCK = process.env.MOCK_API === "true";
 
 // to match security.py
 export const SESSION_COOKIE = "session";
@@ -56,6 +59,8 @@ export function sessionFromResponse(res: Response): { value: string; maxAge?: nu
 
 /** The logged-in user (GET /auth/me), or null if nobody is logged in or the session is over. */
 export async function getCurrentUser(): Promise<BackendUser | null> {
+	if (USE_MOCK)
+		return mockAdmin;
 	if (!(await cookies()).has(SESSION_COOKIE))
 		return null;
 	const res = await backendFetch("/auth/me");
@@ -64,6 +69,8 @@ export async function getCurrentUser(): Promise<BackendUser | null> {
 
 /** Every account (GET /users), or null if the caller isn't an admin or the backend failed. */
 export async function getUsers(): Promise<BackendUser[] | null> {
+	if (USE_MOCK)
+		return mockUsers;
 	const res = await backendFetch("/users");
 	return res.ok ? ((await res.json()) as BackendUser[]) : null;
 }
