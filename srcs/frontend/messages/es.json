@@ -30,6 +30,7 @@
     "workSpace": "Espacio de trabajo"
   },
   "Header": {
+    "friends": "Amigos",
     "editProfile": "Modificar tu perfil",
     "logout": "Cerrar sesión",
     "loggingOut": "Cerrando sesión",
@@ -302,11 +303,36 @@
       "technical-writer": "Redactor técnico"
     }
   },
+  "Friends": {
+    "title": "Amigos",
+    "description": "Encuentra amigos",
+    "searchPlaceholder": "Buscar por nombre de usuario",
+    "search": "Buscar",
+    "noResults": "No se encontró ningún usuario",
+    "requests": "Solicitudes de amistad",
+    "friends": "Tus amigos",
+    "noFriends": "Actualmente no tienes amigos",
+    "sent": "Solicitudes enviadas",
+    "add": "Añadir",
+    "accept": "Aceptar",
+    "decline": "Rechazar",
+    "remove": "Eliminar",
+    "removed": "{username} eliminado de tus amigos",
+    "cancel": "Cancelar",
+    "pending": "Solicitud enviada",
+    "isFriend": "Amigo",
+    "online": "En línea",
+    "offline": "Desconectado",
+    "error": "Algo salió mal, inténtalo de nuevo"
+  },
   "Toast": {
     "loggedIn": "Sesión iniciada",
     "accountCreated": "Cuenta creada",
     "userCreated": "Usuario creado",
     "userUpdated": "Usuario actualizado",
-    "userDeleted": "Usuario eliminado"
+    "userDeleted": "Usuario eliminado",
+    "friendRequest": "{username} quiere ser tu amigo",
+    "friendAccepted": "{username} aceptó tu solicitud de amistad",
+    "loggedOut": "Se ha cerrado tu sesión"
   }
 }

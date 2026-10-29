@@ -30,6 +30,7 @@
     "workSpace": "Working Space"
   },
   "Header": {
+    "friends": "Friends",
     "editProfile": "Edit your profile",
     "logout": "Log out",
     "loggingOut": "Logging out",
@@ -299,11 +300,36 @@
       "technical-writer": "Technical Writer"
     }
   },
+  "Friends": {
+    "title": "Friends",
+    "description": "Find some friends",
+    "searchPlaceholder": "Search by username",
+    "search": "Search",
+    "noResults": "No user found",
+    "requests": "Friend requests",
+    "friends": "Your friends",
+    "noFriends": "You currently have no friends",
+    "sent": "Sent requests",
+    "add": "Add",
+    "accept": "Accept",
+    "decline": "Decline",
+    "remove": "Remove",
+    "removed": "{username} removed from your friends",
+    "cancel": "Cancel",
+    "pending": "Request sent",
+    "isFriend": "Friend",
+    "online": "Online",
+    "offline": "Offline",
+    "error": "Something went wrong, try again"
+  },
   "Toast": {
     "loggedIn": "Logged in",
     "accountCreated": "Account created",
     "userCreated": "User created",
     "userUpdated": "User updated",
-    "userDeleted": "User deleted"
+    "userDeleted": "User deleted",
+    "friendRequest": "{username} wants to be your friend",
+    "friendAccepted": "{username} accepted your friend request",
+    "loggedOut": "You were logged out"
   }
 }
