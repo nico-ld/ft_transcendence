@@ -200,9 +200,17 @@ As the subject asks, every member of the team also worked as a developer:
 
 *Worked on by:* nile-dai, amartel
 
-**Why:** pages arrive with their content already in the HTML. The dashboards come with the user's data in place, without a loading flash, and a visitor who isn't logged in is sent to the login page straight away. The public pages are fast and readable by search engines.
+**Why:** pages arrive with their content already in the HTML. The dashboards come with the user's data in place, without a loading flash, and a visitor who isn't logged in is sent to the login page straight away. The public pages are fast, and search engines get everything from the HTML: the content, a title and description in the page's language, the same page in the other languages, and the list of public pages.
 
-**How it works:** Next.js server components. The dashboards and the profile and workspace pages read the session cookie on the server, call the backend and render at request time (`getCurrentUser` in `srcs/frontend/lib/backend.ts`). With `cacheComponents`, the static part of these pages is prerendered and the user's part is streamed into it. The landing, legal and documentation pages are prerendered at build time in each language (`generateStaticParams`), and the legal and documentation pages have their own titles and descriptions (`generateMetadata`).
+**How it works:** Next.js server components, and the metadata Next.js puts in each page's `<head>`.
+- **Rendering:** the dashboards and the profile, workspace and friends pages read the session cookie on the server, call the backend and render at request time (`getCurrentUser` in `srcs/frontend/lib/backend.ts`). With `cacheComponents`, the static part of these pages is prerendered and the user's part is streamed into it. The landing, sign-up, legal and documentation pages are prerendered at build time in each language (`generateStaticParams`).
+- **Titles and descriptions:** every page has its own, in its language (`generateMetadata`, with the texts in `Metadata` in `srcs/frontend/messages/*.json` and `pageMetadata` in `srcs/frontend/lib/metadata.ts`). The root layout gives the site's description and a template that adds the site's name after each title: "Log in · Silk Space". The language comes from the route (`next/root-params`), not from the request, so the metadata doesn't stop a page from being prerendered.
+- **Languages:** each public page (landing, login, sign-up, legal, docs) has a canonical link to itself and `hreflang` links to the same page in English, French and Spanish. `x-default` points to the address without a language, which sends visitors to their browser's language.
+- **Private pages:** the pages behind a login are marked `noindex, nofollow` (the `(app)` layout) and disallowed in `/robots.txt`, in every language.
+- **`/sitemap.xml` and `/robots.txt`:** the sitemap lists every public page in every language, with its language links (`srcs/frontend/app/sitemap.ts`), and robots.txt points to it (`srcs/frontend/app/robots.ts`). Both are built at build time.
+- The absolute links use `SITE_URL`, read at build time, which defaults to `https://localhost:6767`, where nginx serves the site.
+
+**How to check it:** view a page's source (Ctrl+U): its text is in the HTML before any script runs, and its `<head>` has the page's title, description, canonical and language links. https://localhost:6767/sitemap.xml and https://localhost:6767/robots.txt list the public and private pages.
 
 ### Minor: Advanced search with filters, sorting and pagination (1 pt)
 
