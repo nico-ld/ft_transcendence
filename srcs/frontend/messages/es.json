@@ -1,7 +1,41 @@
 {
   "Metadata": {
     "title": "Silk Space",
-    "description": "Esta es una descripción"
+    "description": "Silk Space da a cada empleado un espacio de trabajo Linux listo para usar, con las herramientas de su puesto, que RR. HH. crea, cambia y elimina en unos pocos clics.",
+    "pages": {
+      "login": {
+        "title": "Iniciar sesión",
+        "description": "Inicia sesión en Silk Space con tu correo electrónico y tu contraseña, o con tu cuenta de 42."
+      },
+      "signup": {
+        "title": "Registrarse",
+        "description": "Crea tu cuenta de Silk Space. Después, un administrador te asigna un puesto y, con él, tu espacio de trabajo."
+      },
+      "user": {
+        "title": "Panel",
+        "description": "La memoria de tu espacio de trabajo, y el tiempo que has pasado en él esta semana y este mes."
+      },
+      "admin": {
+        "title": "Panel de administración",
+        "description": "Todas las cuentas con su puesto y su rol, y las métricas de los espacios de trabajo."
+      },
+      "guest": {
+        "title": "Todavía sin puesto",
+        "description": "Un administrador tiene que asignarte un puesto antes de que puedas usar un espacio de trabajo."
+      },
+      "profile": {
+        "title": "Tu perfil",
+        "description": "Tu nombre y apellido, tu nombre de usuario, tu avatar y tu contraseña."
+      },
+      "workspace": {
+        "title": "Espacio de trabajo",
+        "description": "La terminal de tu espacio de trabajo Linux, con las herramientas de tu puesto."
+      },
+      "friends": {
+        "title": "Amigos",
+        "description": "Encuentra a tus compañeros, responde a las solicitudes de amistad y mira quién está conectado."
+      }
+    }
   },
   "Legal": {
     "privacy": "Política de privacidad",

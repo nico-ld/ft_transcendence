@@ -12,6 +12,7 @@ import {
 	DOC_SECTIONS 
 } from "@/lib/docs";
 import { DocPageProps } from "@/types/Doc";
+import { languageAlternates } from "@/lib/metadata";
 
 export async function generateStaticParams() {
 	const locale = await getLocale();
@@ -28,7 +29,8 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
 
 	return {
 		title: doc.frontmatter.title,
-		description: doc.frontmatter.description
+		description: doc.frontmatter.description,
+		alternates: await languageAlternates(`/docs/${section}/${slug}`)
 	};
 }
 

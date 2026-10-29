@@ -8,6 +8,11 @@ import { ProfileForm } from "@/components/users/ProfileForm";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getCurrentUser } from "@/lib/backend";
 import { Role } from "@/types/User";
+import { pageMetadata } from "@/lib/metadata";
+
+export function generateMetadata() {
+	return pageMetadata("profile");
+}
 
 export default function ProfilePage() {
 	return (

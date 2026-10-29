@@ -6,6 +6,11 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/ca
 import { getCurrentUser } from "@/lib/backend";
 import { Role } from "@/types/User";
 import { getLocale, getTranslations } from "next-intl/server";
+import { pageMetadata } from "@/lib/metadata";
+
+export function generateMetadata() {
+	return pageMetadata("guest");
+}
 
 export default function GuestPage() {
 	return (
