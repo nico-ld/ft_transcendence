@@ -1,9 +1,8 @@
 FROM python:3.12
 WORKDIR /app
-COPY workspaces ./workspaces
-COPY backend/requirements.txt .
+COPY requirements.txt .
 RUN pip install -r requirements.txt
-COPY backend/app/ .
+COPY app/ .
 EXPOSE 8080
 # nginx does TLS: --proxy-headers + --forwarded-allow-ips trust nginx's
 # X-Forwarded-Proto/For so the app sees https and the real client IP

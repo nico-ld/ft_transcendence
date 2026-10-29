@@ -1,0 +1,29 @@
+# only what dev changes, everything else comes from docker-compose.yml
+services:
+  nginx:
+    volumes:
+      # shared so editing the config only needs `make dev-reload-nginx`,
+      # not an image rebuild. nginx never re-reads it on its own.
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ../docker/frontend/dev/Dockerfile
+    volumes:
+      # sources shared with the container, next dev recompiles on change
+      - ../frontend:/app
+      # anonymous volumes keep the image's own install: the host node_modules is
+      # built for macos/arm and the host .next holds a production build
+      - /app/node_modules
+      - /app/.next
+
+  backend:
+    volumes:
+      # sources shared with the container, --reload restarts uvicorn on change
+      - ../backend/app:/app
+    # overrides the image CMD, which has no --reload. compose replaces command
+    # rather than appending, so the whole line is repeated here.
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080",
+              "--proxy-headers", "--forwarded-allow-ips", "*",
+              "--root-path", "/api", "--reload"]
