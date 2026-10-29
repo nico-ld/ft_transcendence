@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import { useTheme } from "next-themes";
-import {ChevronDown, LogOut, Moon, UserRoundPen, Sun} from "lucide-react";
+import {ChevronDown, LogOut, Moon, UserRoundPen, Sun, Users} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
@@ -76,6 +76,11 @@ export function Header({ role, username, avatarUrl }: HeaderProps) {
 					<DropdownMenuItem render={<Link href="/profile" />}>
 						<UserRoundPen />
 						{t("editProfile")}
+					</DropdownMenuItem>
+
+					<DropdownMenuItem render={<Link href="/friends" />}>
+						<Users />
+						{t("friends")}
 					</DropdownMenuItem>
 
 					<LanguageSwitcher variant="submenu" />

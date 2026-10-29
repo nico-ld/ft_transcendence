@@ -27,6 +27,7 @@
     "workSpace": "Espace de travail"
   },
   "Header": {
+    "friends": "Amis",
     "editProfile": "Modifier le profil",
     "logout": "Se déconnecter",
     "loggingOut": "Déconnexion",
@@ -303,11 +304,36 @@
       "technical-writer": "Rédacteur technique"
     }
   },
+  "Friends": {
+    "title": "Amis",
+    "description": "Trouvez des amis",
+    "searchPlaceholder": "Rechercher par nom d'utilisateur",
+    "search": "Rechercher",
+    "noResults": "Aucun utilisateur trouvé",
+    "requests": "Demandes d'ami",
+    "friends": "Vos amis",
+    "noFriends": "Vous n'avez actuellement aucun ami",
+    "sent": "Demandes envoyées",
+    "add": "Ajouter",
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "remove": "Retirer",
+    "removed": "{username} a été retiré de vos amis",
+    "cancel": "Annuler",
+    "pending": "Demande envoyée",
+    "isFriend": "Ami",
+    "online": "En ligne",
+    "offline": "Hors ligne",
+    "error": "Une erreur est survenue, réessayez"
+  },
   "Toast": {
     "loggedIn": "Connecté",
     "accountCreated": "Compte créé",
     "userCreated": "Utilisateur créé",
     "userUpdated": "Utilisateur modifié",
-    "userDeleted": "Utilisateur supprimé"
+    "userDeleted": "Utilisateur supprimé",
+    "friendRequest": "{username} veut être votre ami",
+    "friendAccepted": "{username} a accepté votre demande d'ami",
+    "loggedOut": "Vous avez été déconnecté"
   }
 }
