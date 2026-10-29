@@ -45,7 +45,7 @@ export function ThemeSwitch({variant = "select"}: {variant?: "select" | "submenu
 					{t(`current.${current.value}`)}
 				</DropdownMenuSubTrigger>
 				<DropdownMenuSubContent>
-					<DropdownMenuRadioGroup value={current.value} onValueChange={handleChange} className="flex items-center gap-2">
+					<DropdownMenuRadioGroup value={current.value} onValueChange={handleChange} className="flex flex-col items-center gap-2">
 						{THEMES.map(({value, icon: Icon}) => (
 							<DropdownMenuRadioItem key={value} value={value}>
 								<Icon />
