@@ -33,6 +33,7 @@
     "editProfile": "Modificar tu perfil",
     "logout": "Cerrar sesión",
     "loggingOut": "Cerrando sesión",
+    "userMenu": "Abrir el menú de usuario",
     "current": {"light": "Modo claro", "dark": "Modo oscuro", "system": "Modo del sistema"},
     "light": "Modo claro",
     "dark": "Modo oscuro",

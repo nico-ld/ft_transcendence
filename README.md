@@ -250,9 +250,7 @@ choice".
 - The language is part of the address (`/en`, `/fr`, `/es`, set in `srcs/frontend/i18n/routing.ts`), and visitors arriving on `/` are sent to their browser's language.
 - Every text shown to the user, labels read by screen readers included, lives in `srcs/frontend/messages/{en,fr,es}.json`. The backend's English error messages are never shown as they are: the frontend turns them into translated messages.
 - The language can be changed from the landing page footer and from the user menu. Dates follow the chosen language.
-- The privacy policy and terms of service are written in each language (`srcs/frontend/content/legal/`).
-
-**Still to do:** the documentation pages (`srcs/frontend/content/docs/`) only exist in English for now.
+- The privacy policy, the terms of service and the documentation are written in each language (`srcs/frontend/content/legal/` and `srcs/frontend/content/docs/`), and a page keeps its address from one language to another.
 
 ### Minor: Remote authentication with OAuth 2.0 (1 pt)
 

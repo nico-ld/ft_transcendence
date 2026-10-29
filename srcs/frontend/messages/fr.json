@@ -30,10 +30,11 @@
     "editProfile": "Modifier le profil",
     "logout": "Se déconnecter",
     "loggingOut": "Déconnexion",
+    "userMenu": "Ouvrir le menu utilisateur",
     "current": {"light": "Mode clair", "dark": "Mode sombre", "system": "Mode système"},
     "light": "Mode clair",
     "dark": "Mode sombre",
-    "system": "Mode Système",
+    "system": "Mode système",
     "theme": "Thème",
     "admin": "Admin",
     "user": "Utilisateur"
