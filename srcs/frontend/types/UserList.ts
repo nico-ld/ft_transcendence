@@ -1,3 +1,4 @@
+import { BackendUser } from "@/lib/backend";
 import type { JobFilter, RoleFilter, SortKey, SortOrder } from "./User";
 
 export type Filters = {
@@ -26,6 +27,12 @@ export type FilterSubProps<T extends string> = {
 	labelOf: (option: T) => string;
 	countOf: (option: T) => number;
 	onChange: (option: T) => void;
+};
+
+export type UserRowProps = {
+	user: BackendUser;
+	viewerId: number;
+	onSelect: (user: BackendUser) => void;
 };
 
 export const NO_FILTERS: Filters = {
