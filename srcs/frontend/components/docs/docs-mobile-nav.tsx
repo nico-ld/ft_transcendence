@@ -3,7 +3,7 @@
 import { usePathname } from "@/i18n/navigation";
 import { ChevronDown } from "lucide-react";
 import { DocNavSection } from "@/types/Doc";
-import { DocsNav } from "./docs-nav";
+import { DocsNav } from "@/components/docs/docs-nav";
 import { useTranslations } from "next-intl";
 
 export function DocsMobileNav({sections}: {sections: DocNavSection[]}) {

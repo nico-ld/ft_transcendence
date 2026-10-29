@@ -11,7 +11,7 @@ import { ModifyUser } from "@/components/users/ModifyUser";
 
 import { NewUserForm } from "@/actions/NewUserForm";
 import { RemoveUser } from "@/actions/RemoveUser";
-import { UserPagination } from "./UserPagination";
+import { UserPagination } from "@/components/admin/UserPagination";
 
 import { AdminBadge, GuestBadge, UserBadge } from "../layout/CustomBadge";
 import { useTranslations } from "next-intl";

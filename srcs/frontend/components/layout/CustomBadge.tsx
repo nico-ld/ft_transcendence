@@ -1,4 +1,4 @@
-import { Badge } from "../ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Sword, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 

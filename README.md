@@ -11,7 +11,7 @@ To understand how we achieve this, please read the rest of this document.
 To run the project, copy-paste the following command in your terminal :
 
 ```
-make ft_silk_space
+make prod
 ```
 
 Thanks to the use of Docker, we handle all the prerequisites for you. Said prerequisites are :

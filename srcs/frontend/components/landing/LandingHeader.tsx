@@ -3,9 +3,9 @@
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { buttonVariants } from "../ui/button";
-import { SilkSpaceLogo } from "../ui/logo";
-import { ThemeSwitch } from "../layout/ThemeSwicth";
+import { buttonVariants } from "@/components/ui/button";
+import { SilkSpaceLogo } from "@/components/ui/logo";
+import { ThemeSwitch } from "@/components/layout/ThemeSwicth";
 
 export function LandingHeader({tab}: {tab: React.ReactNode}) {
 	const [isTop, setIsTop] = useState(true);
@@ -30,7 +30,7 @@ export function LandingHeader({tab}: {tab: React.ReactNode}) {
 					</nav>
 				</article>
 
-				<article className="flex items-center gap-3">
+				<article className="flex items-center gap-2">
 					<ThemeSwitch />
 					<Link href="/signup" className={buttonVariants({variant: 'outline'})}>{t("signup")}</Link>
 					<Link href="/login" className={buttonVariants({variant: 'default'})}>{t("signin")}</Link>
