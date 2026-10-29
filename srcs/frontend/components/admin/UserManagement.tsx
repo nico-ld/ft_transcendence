@@ -49,6 +49,7 @@ import { JOBS } from "@/types/jobs";
 import { ROLES, Role, type SortKey} from "@/types/User"
 import type { BackendUser } from "@/lib/backend";
 import type { Viewer } from "@/types/Viewer";
+import type { SortOrder, RoleFilter, JobFilter } from "@/types/User";
 
 type Filters = { query: string; role: RoleFilter; job: JobFilter };
 type Sort = { key: SortKey; order: SortOrder };
