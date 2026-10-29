@@ -369,5 +369,9 @@
     "friendRequest": "{username} veut être votre ami",
     "friendAccepted": "{username} a accepté votre demande d'ami",
     "loggedOut": "Vous avez été déconnecté"
+  },
+  "Validation": {
+    "username": "3 à 20 caractères : lettres, chiffres, _ ou -",
+    "email": "Une adresse email comme nom@exemple.com"
   }
 }

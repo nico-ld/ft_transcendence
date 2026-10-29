@@ -4,7 +4,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useActionState } from "react";
 import { Signup } from "@/actions/auth";
-import { ROLE_HOME } from "@/lib/utils";
+import { EMAIL_PATTERN, NAME_MAX_LENGTH, ROLE_HOME } from "@/lib/utils";
 import { AuthError } from "./AuthError";
 import { FormField } from "../layout/FormField";
 import { useFormSubmit } from "@/actions/useFormSubmit";
@@ -39,6 +39,7 @@ function SignupFields() {
 	const router = useRouter();
 	const t = useTranslations("Signup");
 	const n = useTranslations("Toast");
+	const v = useTranslations("Validation");
 
 	const [error, formAction, pending] = useActionState<SignupError, FormData>(
 		async (_prev, formData) => {
@@ -78,6 +79,7 @@ function SignupFields() {
 							name="lastName"
 							autoComplete="lastName"
 							error={fieldError("lastName")}
+							maxLength={NAME_MAX_LENGTH}
 							required
 						/>
 						<FormField
@@ -85,6 +87,7 @@ function SignupFields() {
 							name="firstName"
 							autoComplete="firstName"
 							error={fieldError("firstName")}
+							maxLength={NAME_MAX_LENGTH}
 							required
 						/>
 				</article>
@@ -94,6 +97,8 @@ function SignupFields() {
 					type="email"
 					autoComplete="email"
 					error={fieldError("email")}
+					pattern={EMAIL_PATTERN}
+					title={v("email")}
 					required
 				/>
 				<FormField

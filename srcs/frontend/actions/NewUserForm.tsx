@@ -23,6 +23,7 @@ import {
 import { useTranslations } from "next-intl";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "@/components/ui/toast";
+import { EMAIL_PATTERN, NAME_MAX_LENGTH, USERNAME_PATTERN } from "@/lib/utils";
 
 const NOTHING_YET: ActionResult = { error: "", done: false };
 
@@ -31,6 +32,7 @@ export function NewUserForm() {
 	const c = useTranslations("Common");
 	const l = useTranslations("Login");
 	const n = useTranslations("Toast");
+	const v = useTranslations("Validation");
 
 	const router = useRouter();
 	// controlled, so the dialog can close itself once the user is created
@@ -72,19 +74,19 @@ export function NewUserForm() {
 					<FieldGroup>
 						<Field>
 							<Label htmlFor="lastname-1">{t("userInfo.lastName")}</Label>
-							<Input id="lastname-1" name="lastname" placeholder={t("create.phLastName")} required/>
+							<Input id="lastname-1" name="lastname" placeholder={t("create.phLastName")} maxLength={NAME_MAX_LENGTH} required/>
 						</Field>
 						<Field>
 							<Label htmlFor="name-1">{t("userInfo.name")}</Label>
-							<Input id="name-1" name="name" placeholder={t("create.phName")} required/>
+							<Input id="name-1" name="name" placeholder={t("create.phName")} maxLength={NAME_MAX_LENGTH} required/>
 						</Field>
 						<Field>
 							<Label htmlFor="username-1">{t("userInfo.userName")}</Label>
-							<Input id="username-1" name="username" placeholder={t("create.phUserName")} required/>
+							<Input id="username-1" name="username" placeholder={t("create.phUserName")} pattern={USERNAME_PATTERN} title={v("username")} required/>
 						</Field>
 						<Field>
 							<Label htmlFor="email-1">{l("email")}</Label>
-							<Input id="email-1" name="email" type="email" placeholder={t("create.phEmail")} required/>
+							<Input id="email-1" name="email" type="email" placeholder={t("create.phEmail")} pattern={EMAIL_PATTERN} title={v("email")} required/>
 						</Field>
 						<Field>
 							<Label htmlFor="password-1">{l("password")}</Label>

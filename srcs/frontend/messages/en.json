@@ -369,5 +369,9 @@
     "friendRequest": "{username} wants to be your friend",
     "friendAccepted": "{username} accepted your friend request",
     "loggedOut": "You were logged out"
+  },
+  "Validation": {
+    "username": "3 to 20 characters: letters, digits, _ or -",
+    "email": "An email address like name@example.com"
   }
 }

@@ -372,5 +372,9 @@
     "friendRequest": "{username} quiere ser tu amigo",
     "friendAccepted": "{username} aceptó tu solicitud de amistad",
     "loggedOut": "Se ha cerrado tu sesión"
+  },
+  "Validation": {
+    "username": "De 3 a 20 caracteres: letras, números, _ o -",
+    "email": "Una dirección de correo como nombre@ejemplo.com"
   }
 }

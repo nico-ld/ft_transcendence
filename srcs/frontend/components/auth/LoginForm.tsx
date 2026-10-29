@@ -6,7 +6,7 @@ import { useActionState, useRef } from "react";
 import Image from "next/image";
 
 import { Login } from "@/actions/auth";
-import { ROLE_HOME } from "@/lib/utils";
+import { EMAIL_PATTERN, ROLE_HOME } from "@/lib/utils";
 import { AuthError } from "./AuthError";
 import { FormField } from "../layout/FormField";
 import { useFormSubmit } from "@/actions/useFormSubmit";
@@ -21,6 +21,7 @@ const FT_LOGIN_URL = "/api/auth/42/login";
 function LoginFields({oauthError = ""}: {oauthError?: LoginError}) {
 	const router = useRouter();
 	const t = useTranslations("Login");
+	const v = useTranslations("Validation");
 	const passwordRef = useRef<HTMLInputElement>(null);
 
 	function resetPassword() {
@@ -64,6 +65,8 @@ function LoginFields({oauthError = ""}: {oauthError?: LoginError}) {
 					name="email"
 					type="email"
 					autoComplete="email"
+					pattern={EMAIL_PATTERN}
+					title={v("email")}
 					required
 				/>
 				<FormField
