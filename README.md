@@ -42,12 +42,6 @@ Thanks to the use of Docker, we handle all the prerequisites for you. Said prere
 ### On AI:
   AI was used in this project to help with research, perform code audits, and troubleshoot problems to keep ft_silk_space running smoothly.
 
-• Team Information:
-For each team member mentioned at the top of the README.md, you must pro-
-vide:
-◦ Assigned role(s): PO, PM, Tech Lead, Developers, etc.
-◦ Brief description of their responsibilities.
-
 ## Team information :
 
 ### Product owner (PO) : *jdessoli*
@@ -90,13 +84,6 @@ As the subject asks, every member of the team also worked as a developer:
 
   The communication was mostly done through the Discord thanks to *nile-dai*, the Github thanks to *amartel* and *mmansier*, and the updated Trello thanks to *tseche*.
 
-• Technical Stack:
-◦ Frontend technologies and frameworks used.
-◦ Backend technologies and frameworks used.
-◦ Database system and why it was chosen.
-◦ Any other significant technologies or libraries.
-◦ Justification for major technical choices.
-
 ## Technical Stack :
 
 ### Frontend technologies :
@@ -127,16 +114,6 @@ As the subject asks, every member of the team also worked as a developer:
 ◦ Which team member(s) worked on each feature.
 ◦ Brief description of each feature’s functionality.
 
-Features list :
-
-• Modules:
-◦ List of all chosen modules (Major and Minor).
-◦ Point calculation (Major = 2pts, Minor = 1pt).
-◦ Justification for each module choice, especially for custom "Modules of
-choice".
-◦ How each module was implemented.
-◦ Which team member(s) worked on each module.
-
 ## Modules :
 
 | Module | Category | Type | Points |
@@ -155,7 +132,7 @@ choice".
 
 ### Major: Use a framework for both the frontend and backend (2 pts)
 
-*Worked on by:* TODO
+*Worked on by: the whole team* 
 
 **Why:** both frameworks give us routing, validation and a structure every member can follow, so the team could split the work between the front and the back end without reinventing the basics. Next.js renders pages on the server (see the SSR module) and has a clear place for everything; FastAPI checks every request against typed schemas and documents the API by itself.
 
@@ -166,7 +143,7 @@ choice".
 
 ### Major (module of choice): Isolated Linux workspaces with a web terminal (2 pts)
 
-*Worked on by:* TODO
+*Worked on by:* jdessoli, mmansier
 
 **Why we chose it:** it is what Silk Space is for. When an HR user gives an employee a job, the employee gets a Linux environment with the tools of that job (software engineer, data analyst, DevOps engineer, accountant or technical writer), which they open in their browser. Changing their job changes their tools and keeps their files; deleting their account deletes everything. No module in the list covers this.
 
@@ -185,7 +162,7 @@ choice".
 
 ### Major: Advanced permissions system (2 pts)
 
-*Worked on by:* TODO
+*Worked on by:* jdessoli, mmansier, tseche
 
 **Why:** Silk Space is run by HR admins. They create the accounts, give each employee a job (and with it a workspace) and delete the accounts of the people who leave. Employees only see and change their own account.
 
@@ -201,7 +178,7 @@ choice".
 
 ### Minor: Use an ORM for the database (1 pt)
 
-*Worked on by:* TODO
+*Worked on by:* tseche
 
 **Why:** the tables are defined once, as typed Python classes, and the queries are written in Python instead of SQL strings: values always travel as parameters, so they can't be used for SQL injection.
 
@@ -209,7 +186,7 @@ choice".
 
 ### Minor: A complete notification system (1 pt)
 
-*Worked on by:* TODO
+*Worked on by:* mmansier
 
 **Why:** every action that creates, changes or deletes something gets a clear confirmation, so nobody wonders whether a click worked.
 
@@ -221,7 +198,7 @@ choice".
 
 ### Minor: Server-Side Rendering (1 pt)
 
-*Worked on by:* TODO
+*Worked on by:* nile-dai, amartel
 
 **Why:** pages arrive with their content already in the HTML. The dashboards come with the user's data in place, without a loading flash, and a visitor who isn't logged in is sent to the login page straight away. The public pages are fast and readable by search engines.
 
@@ -229,7 +206,7 @@ choice".
 
 ### Minor: Advanced search with filters, sorting and pagination (1 pt)
 
-*Worked on by:* TODO
+*Worked on by:* jdessoli, mmansier
 
 **Why:** admins run every account from one list. Search, filters and pages keep it usable as the company grows, and find anyone in a few keystrokes.
 
@@ -242,7 +219,7 @@ choice".
 
 ### Minor: Support for multiple languages (1 pt)
 
-*Worked on by:* TODO
+*Worked on by:* nile-dai, jdessoli
 
 **Why:** the team and the first users speak French, English is the default, and Spanish makes the third language.
 
