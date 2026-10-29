@@ -117,10 +117,8 @@
     }
   },
   "Landing": {
-    "mainNav": "Principal",
     "signin": "Se connecter", "signup": "S'inscrire",
     "heroCta": "S'inscrire à Silk Space",
-    "resources": "Ressources",
     "headline": "Des environnements de travail prêts à l'emploi, rapidement déployés",
     "subtitle": "Une solution clé en main pour votre entreprise. Gérez vos équipes et vos sessions de travail en quelques clics, le tout depuis un espace centralisé.",
     "features": {
@@ -178,21 +176,6 @@
         "title": "Connexion impossible",
         "description": "Votre espace de travail est injoignable pour le moment."
       }
-    }
-  },
-  "Docs": {
-    "documentation": "Documentation",
-    "tocLabel": "Sur cette page",
-    "loading": "Chargement...",
-    "sections": {
-      "users": "Guide d'utilisation",
-      "developers": "Guide de développement"
-    },
-    "pager": {
-      "label": "Pagination",
-      "previous": "Précédent",
-      "next": "Suivant",
-      "home": "Accueil"
     }
   },
   "Stats": {

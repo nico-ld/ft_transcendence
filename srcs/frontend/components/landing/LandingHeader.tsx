@@ -7,7 +7,7 @@ import { buttonVariants } from "../ui/button";
 import { SilkSpaceLogo } from "../ui/logo";
 import { ThemeSwitch } from "../layout/ThemeSwicth";
 
-export function LandingHeader({tab}: {tab: React.ReactNode}) {
+export function LandingHeader() {
 	const [isTop, setIsTop] = useState(true);
 	const t = useTranslations("Landing");
 
@@ -23,12 +23,7 @@ export function LandingHeader({tab}: {tab: React.ReactNode}) {
 			data-is-top={isTop}
 			className="sticky top-0 z-40 border-b transition duration-300 bg-background/80 backdrop-blur data-[is-top=true]:bg-primary/15">
 			<section className="mx-auto flex h-14 w-full items-center justify-between px-4 md:px-6">
-				<article className="flex items-center gap-6">
-					<SilkSpaceLogo />
-					<nav aria-label={t("mainNav")} className="hidden items-center gap-4 text-sm md:flex">
-						{tab}
-					</nav>
-				</article>
+				<SilkSpaceLogo />
 
 				<article className="flex items-center gap-3">
 					<ThemeSwitch />
