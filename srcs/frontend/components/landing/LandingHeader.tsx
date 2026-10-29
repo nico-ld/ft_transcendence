@@ -3,9 +3,9 @@
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { buttonVariants } from "../ui/button";
-import { SilkSpaceLogo } from "../ui/logo";
-import { ThemeSwitch } from "../layout/ThemeSwicth";
+import { buttonVariants } from "@/components/ui/button";
+import { SilkSpaceLogo } from "@/components/ui/logo";
+import { ThemeSwitch } from "@/components/layout/ThemeSwicth";
 
 export function LandingHeader() {
 	const [isTop, setIsTop] = useState(true);
@@ -25,7 +25,7 @@ export function LandingHeader() {
 			<section className="mx-auto flex h-14 w-full items-center justify-between px-4 md:px-6">
 				<SilkSpaceLogo />
 
-				<article className="flex items-center gap-3">
+				<article className="flex items-center gap-2">
 					<ThemeSwitch />
 					<Link href="/signup" className={buttonVariants({variant: 'outline'})}>{t("signup")}</Link>
 					<Link href="/login" className={buttonVariants({variant: 'default'})}>{t("signin")}</Link>

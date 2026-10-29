@@ -3,20 +3,20 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChartLine, ExternalLink } from "lucide-react";
-import { Button, buttonVariants } from "../ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue
-} from "../ui/select";
+} from "@/components/ui/select";
 
 // uid in srcs/grafana/provisioning/dashboards/admin-metrics.json
 const DASHBOARD_UID = "admin-metrics";
