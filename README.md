@@ -100,39 +100,58 @@ As the subject asks, every member of the team also worked as a developer:
 
 * PostgreSQL, chosen because of its popularity in the industry
 
-/*** STILL LEFT TO DO ***/
+## Database Schema
 
-• Database Schema:
-◦ Visual representation or description of the database structure.
-◦ Tables/collections and their relationships.
-◦ Key fields and data types.
+### Visual Representation
 
-## Database Schema :
+![Database Schema](srcs/db_schema.svg)
 
-• Features List:
-◦ Complete list of implemented features.
-◦ Which team member(s) worked on each feature.
-◦ Brief description of each feature’s functionality.
+### Tables Overview
+
+| Table | Purpose | Key Fields | Relationships |
+|-------|---------|------------|---------------|
+| `users` | User accounts with authentication info | id, email, password_hash, ft_id, username, first_name, last_name, avatar, role, job, created_at | Parent table |
+| `sessions` | Login/browser sessions | id, user_id, created_at, expires_at | Child of users (ON DELETE CASCADE) |
+| `terminal_sessions` | Terminal usage tracking | id, user_id, started_at, last_seen_at | Child of users (ON DELETE CASCADE) |
+| `friend_requests` | Friend requests, a pair asked both ways is a friendship | user_id, friend_id (primary key: the pair) | Both columns are children of users (ON DELETE CASCADE) |
+
+### Key Features
+
+- **Multi-authentication support**: Users can log in via email/password OR 42 OAuth (ft_id)
+- **Cascade deletion**: Deleting a user automatically cleans up their sessions
+- **Auto-cleanup**: Terminal sessions deleted after 62 days
+- **Constraint**: Every user must have at least one login method (password_hash OR ft_id)
+
+## Features List:
+- Complete list of implemented features.
+- Which team member(s) worked on each feature.
+- Brief description of each feature’s functionality.
 
 ## Modules :
 
 | Module | Category | Type | Points |
 |---|---|---|---|
-| Use a framework for both the frontend and backend | Web | Major | 2 |
-| Isolated Linux workspaces with a web terminal | Modules of choice | Major | 2 |
-| Advanced permissions system | User Management | Major | 2 |
-| Use an ORM for the database | Web | Minor | 1 |
-| A complete notification system | Web | Minor | 1 |
-| Server-Side Rendering (SSR) | Web | Minor | 1 |
-| Advanced search with filters, sorting and pagination | Web | Minor | 1 |
-| Support for multiple languages | Accessibility and Internationalization | Minor | 1 |
-| Support for additional browsers | Accessibility and Internationalization | Minor | 1 |
-| Remote authentication with OAuth 2.0 | User Management | Minor | 1 |
-| **Total** | | | **13** |
+| Module | Category | Type | Points |
+|---|---|---|---|
+| [Use a framework for both the frontend and backend](#major-use-a-framework-for-both-the-frontend-and-backend-2-pts) | Web | Major | 2 |
+| [Isolated Linux workspaces with a web terminal](#major-module-of-choice-isolated-linux-workspaces-with-a-web-terminal-2-pts) | Modules of choice | Major | 2 |
+| [Advanced permissions system](#major-advanced-permissions-system-2-pts) | User Management | Major | 2 |
+| [Standard user management and authentication](#major-standard-user-management-and-authentication-2-pts) | User Management | Major | 2 |
+| [Monitoring system with Prometheus and Grafana](#major-monitoring-system-with-prometheus-and-grafana-2-pts) | DevOps | Major | 2 |
+| [Use an ORM for the database](#minor-use-an-orm-for-the-database-1-pt) | Web | Minor | 1 |
+| [Server-Side Rendering (SSR)](#minor-server-side-rendering-1-pt) | Web | Minor | 1 |
+| [Custom-made design system with reusable components](#minor-custom-made-design-system-with-reusable-components-1-pt) | Web | Minor | 1 |
+| [Advanced search with filters, sorting and pagination](#minor-advanced-search-with-filters-sorting-and-pagination-1-pt) | Web | Minor | 1 |
+| [Support for multiple languages](#minor-support-for-multiple-languages-1-pt) | Accessibility and Internationalization | Minor | 1 |
+| [Support for additional browsers](#minor-support-for-additional-browsers-1-pt) | Accessibility and Internationalization | Minor | 1 |
+| [Remote authentication with OAuth 2.0](#minor-remote-authentication-with-oauth-20-1-pt) | User Management | Minor | 1 |
+| [User activity analytics and insights dashboard](#major-advanced-analytics-dashboard-with-data-visualization-2-pts) | User Management | Minor | 1 |
+| [A complete notification system](#minor-a-complete-notification-system-1-pt) | Web | Minor | 1 |
+| **Total** | | | **19** |
 
 ### Major: Use a framework for both the frontend and backend (2 pts)
 
-*Worked on by: the whole team* 
+*Worked on by:* the whole team
 
 **Why:** both frameworks give us routing, validation and a structure every member can follow, so the team could split the work between the front and the back end without reinventing the basics. Next.js renders pages on the server (see the SSR module) and has a clear place for everything; FastAPI checks every request against typed schemas and documents the API by itself.
 
@@ -160,6 +179,19 @@ As the subject asks, every member of the team also worked as a developer:
 
 **Why it deserves Major status:** it touches every layer of the project (container infrastructure, asynchronous backend, real-time browser terminal and security), and is comparable in size to the listed Major modules such as real-time features with WebSockets or a backend as microservices.
 
+### Major: Standard user management and authentication (2 pts)
+
+*Worked on by:* mmansier, tseche
+
+**Why:** every employee needs a secure account to log in, see their dashboard, and use their workspace. Admins need to create, edit and delete these accounts as people join, change roles or leave the company.
+
+**How it works:**
+- **Authentication:** users can log in with email and password, or with their 42 account through OAuth 2.0. Passwords are hashed and never stored in plain text.
+- **User creation:** Users can sign up with their 42 account or with email/password, creating a guest role account (waiting administation job assignment).
+- **Profile management:** users can edit their own profile (names, username, password, avatar). Admins can edit any user's information, including role and job.
+- **Account deletion:** admins can delete user accounts. This triggers cascade deletion of the user's sessions, workspace (container, network and volume), and all related data.
+- **Security:** sessions are managed with secure cookies, and user data is protected with proper validation on both frontend and backend.
+
 ### Major: Advanced permissions system (2 pts)
 
 *Worked on by:* jdessoli, mmansier, tseche
@@ -176,6 +208,30 @@ As the subject asks, every member of the team also worked as a developer:
 - **Always one admin left.** An admin can't remove their own admin role or delete their own account. The sign-up form and the profile page refuse any role or job sent to them.
 - **Different views per role.** The server sends each role to its own dashboard (`/admin` or `/user`) and away from the other one. In the admin panel (`srcs/frontend/components/admin/`), admins have an Admin badge in the list, the create and edit forms have a role choice, and every account but the admin's own has a delete button with a confirmation.
 
+### Major: Monitoring system with Prometheus and Grafana (2 pts)
+
+*Worked on by:* tseche, mmansier
+
+**Why:** system health and performance need to be visible at a glance. Monitoring helps catch issues early, track resource usage, and ensure the platform runs smoothly for all users.
+
+**How it works:**
+- **Prometheus** scrapes metrics from the Docker containers, storing time-series data about CPU, memory, network, request rates and error rates.
+- **Grafana** provides a visual dashboard that displays these metrics in real-time graphs and charts, with alerts configured for critical thresholds.
+- **Monitored components:** backend API response times and error rates, frontend page load times, Docker container resource usage (CPU, memory, disk I/O), and database query performance.
+- **Access:** the Grafana dashboard is accessible to admins, showing system-wide health and allowing them to investigate performance bottlenecks.
+
+### Major: Advanced analytics dashboard with data visualization (2 pts)
+
+*Worked on by:* mmansier, tseche
+
+**Why:** HR admins need insights into how employees use the platform. Usage patterns, workspace activity and login statistics help manage resources and understand user behavior.
+
+**How it works:**
+- **Data collection:** every user action is tracked—logins, workspace sessions, terminal commands, and API calls—with timestamps and user identifiers.
+- **Visualization:** an analytics dashboard displays aggregated data through interactive charts and graphs, showing metrics like active users, session durations, workspace usage by job role, and terminal activity over time.
+- **Filtering:** admins can filter data by date ranges, user roles, jobs, or specific users to drill down into particular areas of interest.
+- **Export:** analytics data can be exported for further analysis or reporting.
+
 ### Minor: Use an ORM for the database (1 pt)
 
 *Worked on by:* tseche
@@ -183,6 +239,19 @@ As the subject asks, every member of the team also worked as a developer:
 **Why:** the tables are defined once, as typed Python classes, and the queries are written in Python instead of SQL strings: values always travel as parameters, so they can't be used for SQL injection.
 
 **How it works:** SQLAlchemy 2 with PostgreSQL (psycopg). The tables are Python classes in `srcs/backend/app/db/`: users (with a role and a job, and a check that every account has a password or a 42 login), login sessions, and terminal sessions, linked to users by foreign keys. The queries go through `Session` and `select` in `db/requests.py`, and the tables are created when the backend starts.
+
+### Minor: Custom-made design system with reusable components (1 pt)
+
+*Worked on by:* nile-dai, amartel, tseche
+
+**Why:** a consistent and maintainable UI is essential for a professional user experience. A design system ensures visual coherence across all pages, speeds up development, and makes the interface more accessible.
+
+**How it works:**
+- **Component library:** reusable UI components (buttons, forms, cards, modals, tables, toast notifications) are built in `srcs/frontend/components/ui/`, following consistent design tokens for colors, typography, spacing, and shadows.
+- **Styling:** Tailwind CSS v4 provides utility classes for rapid styling, with a custom theme defined in `srcs/frontend/tailwind.config.ts` that includes the design tokens (primary/secondary colors, font families, border radii).
+- **Theming:** supports light and dark modes, with a toggle in the user menu that persists the user's choice in their profile. The theme applies across all components automatically.
+- **Accessibility:** components follow accessibility best practices: proper ARIA labels, keyboard navigation, focus states, and color contrast ratios that meet WCAG standards.
+- **Usage:** components are imported and composed to build pages, ensuring visual consistency. Shared layouts (dashboard, admin panel) use these components to maintain a unified look and feel.
 
 ### Minor: A complete notification system (1 pt)
 
@@ -239,7 +308,7 @@ As the subject asks, every member of the team also worked as a developer:
 
 ### Minor: Remote authentication with OAuth 2.0 (1 pt)
 
-*Worked on by:* TODO
+*Worked on by:* mmansier
 
 **Why:** employees log in with the 42 account they already have, with no new password to create and remember. 42 vouches for the email address, so an account an admin created with that email is linked to the 42 account on its first 42 login.
 
@@ -256,7 +325,7 @@ If anything fails (the user cancels, the login took too long, 42 is unreachable,
 
 ### Minor: Support for additional browsers (1 pt)
 
-*Worked on by:* TODO
+*Worked on by:* jdessoli
 
 **Supported browsers:** Google Chrome (required by the subject), Chromium and Firefox, in their current versions. The real minimum comes from Next.js 16 and Tailwind CSS v4: Chrome and Chromium 111+, Firefox 128+.
 
@@ -270,11 +339,3 @@ If anything fails (the user cancels, the login took too long, 42 is unreachable,
 - The HTTPS certificate is self-signed, so each browser shows its own warning on the first visit. Chrome and Chromium: Advanced → Proceed to localhost. Firefox: Advanced → Accept the Risk and Continue.
 - In the terminal, the shortcuts browsers keep for themselves (Ctrl+W, Ctrl+T, Ctrl+N, Ctrl+Tab) act on the browser tabs and never reach the shell.
 
-• Individual Contributions:
-◦ Detailed breakdown of what each team member contributed.
-◦ Specific features, modules, or components implemented by each person.
-◦ Any challenges faced and how they were overcome.
-Any other useful or relevant information is welcome (usage documentation, known
-limitations, license, credits, etc.).
-
-Individual contributions :
