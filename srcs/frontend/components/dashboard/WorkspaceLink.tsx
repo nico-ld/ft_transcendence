@@ -3,8 +3,11 @@ import { ArrowRight } from "lucide-react";
 
 export function WorkspaceLink({href, label}: {href: string; label: string}) {
 	return (
+		// no prefetch because it preloads xterm.css on the dashboard and Chrome warns
+		// in the console that the preloaded file wasnt used
 		<Link
 			href={href}
+			prefetch={false}
 			className="group h-25 flex items-center gap-4 rounded-xl border border-highlight px-8 py text-lg font-medium text-highlight transition hover:-translate-y-0.5 hover:bg-highlight hover:text-highlight-foreground"
 		>
 			{label}
