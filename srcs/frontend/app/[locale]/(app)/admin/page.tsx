@@ -5,6 +5,7 @@ import { DashboardShell } from "@/components/dashboard/DashboardShell";
 import { StatsPanel } from "@/components/dashboard/StatsPanel";
 import { UserManagement } from "@/components/admin/UserManagement";
 import { GrafanaModal } from "@/components/dashboard/GrafanaModal";
+import { WorkspaceLink } from "@/components/dashboard/WorkspaceLink";
 import { getCurrentUser, getUsers } from "@/lib/backend";
 import { getSystemStats } from "@/lib/stats";
 import { ROLE_HOME } from "@/lib/utils";
@@ -31,7 +32,7 @@ async function AdminDashboard() {
 		getUsers(),
 		getSystemStats(),
 		getLocale(),
-		getTranslations("Stats")
+		getTranslations("Common")
 	]);
 
 	if (!viewer)
@@ -47,11 +48,12 @@ async function AdminDashboard() {
 	return (
 		<DashboardShell role={viewer.role} username={viewer.username} avatarUrl={viewer.avatar ?? undefined}>
 			<div className="flex flex-col gap-5">
-				{stats && (
-					<StatsPanel
-						stats={stats}
-						extras={[{ label: t("extra"), value: users ? String(users.length) : "-" }]}
-					/>
+				{/* an admin without a job has no workspace so we dont show stats */}
+				{viewer.job && stats && (
+					<>
+						<StatsPanel stats={stats} />
+						<WorkspaceLink href="/workspace" label={t("workSpace")} />
+					</>
 				)}
 				<GrafanaModal users={workspaceUsers} />
 			</div>

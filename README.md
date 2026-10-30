@@ -356,7 +356,7 @@ The workspace terminal also uses a WebSocket. It is described with the workspace
 **Why:** Silk Space is run by HR admins. They create the accounts, give each employee a job (and with it a workspace) and delete the accounts of the people who leave. Employees only see and change their own account.
 
 **Roles:**
-- **Admin:** the admin dashboard, with the system overview and every account. An admin can create users and other admins, change anyone's names, username, job and role, and delete accounts.
+- **Admin:** the admin dashboard, with the workspace metrics in Grafana and every account. An admin can create users and other admins, change anyone's names, username, job and role, and delete accounts.
 - **User:** their own dashboard and statistics, their workspace, their friends, and their profile, where they can change their names, username and password, but not their job or role.
 - **Guest:** an account without a job, after a sign up or a first 42 login. A guest has their profile and friends, and a page that tells them to wait for an admin. They become a user as soon as an admin gives them a job, and a guest again if the job is removed.
 
@@ -500,7 +500,7 @@ If anything fails (the user cancels, the login took too long, 42 is unreachable,
 **How it works:**
 - **Activity data:** every terminal opened is recorded with its start and its last activity (`terminal_sessions`). `GET /api/stats/me` (`srcs/backend/app/routers/stats.py`) merges the terminals open at the same time, so they count once, and computes the time spent this week, this month and on each day of the week, in the company's time zone (`TIMEZONE`, Europe/Paris by default). It also reads the memory the user's workspace uses right now from Docker.
 - **User dashboard:** the time this week and this month, a chart of the hours per day, and a ring with the used and free memory of the workspace.
-- **Admin dashboard:** the same overview, the number of registered users, and the Grafana view of each workspace (CPU, memory, network, uptime over time, see the monitoring module).
+- **Admin dashboard:** the same overview of their own workspace if the admin has a job, and the Grafana view of each workspace (CPU, memory, network, uptime over time, see the monitoring module).
 
 ### Minor (module of choice): CI/CD with conventional commits and automated checks (1 pt)
 
