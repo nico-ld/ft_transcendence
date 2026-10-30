@@ -4,7 +4,6 @@ import { ThemeProvider } from "next-themes";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { LegalFooter } from "@/components/legal/LegalFooter";
 import { Toaster } from "@/components/ui/toast";
 import { SITE_URL } from "@/lib/metadata";
 import "./globals.css";

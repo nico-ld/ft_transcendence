@@ -101,7 +101,6 @@ AI assistants were used as a tool, mostly for debugging errors, or explaining co
 
 - **Research:** explaining APIs and concepts that were new to us, such as the Docker Engine API, cgroups and cAdvisor metrics under rootless Docker.
 - **Debugging:** for example finding why the Grafana dashboards stayed empty under rootless Docker (cAdvisor needed the containerd socket and `pid: host`), and why the WebSockets were refused (`FRONTEND_URL` was missing the nginx port).
-- **Tests:** writing test scenarios for the role rules and the Prometheus alert rules, and the CI workflow.
 - **Documentation:** Reviewing and rewriting parts of this README.
 
 ## Team information
@@ -146,7 +145,7 @@ The meetings were organized by *nile-dai*. They kept the whole team up to date w
 
 The communication was mostly done through the Discord thanks to *nile-dai*, the Github thanks to *amartel* and *mmansier*, and the updated Trello thanks to *tseche*.
 
-Every change goes through a branch and a pull request on GitHub. Another member reviews and approves it before it reaches `master`, and automated checks run on it (see the CI/CD module).
+Every change goes through a branch and a pull request on GitHub. Another member reviews and approves it before it reaches `master`, and a GitHub Action checks its commit messages (see the CI/CD module).
 
 ## Technical Stack
 
@@ -197,7 +196,7 @@ The tables are created by SQLAlchemy when the backend starts (`srcs/backend/app/
 | `ft_id` | integer, nullable | Unique, the id of the linked 42 account. |
 | `username` | varchar | Display name, 3 to 20 letters, digits, `_` or `-`. |
 | `first_name`, `last_name` | varchar | |
-| `avatar` | varchar, nullable | The picture (a data URL, or the 42 picture's URL). Null for the default avatar. |
+| `avatar` | varchar, nullable | The uploaded picture, as a data URL. Null for the default avatar. |
 | `role` | enum `user_role` | `admin`, `user` or `guest`. |
 | `job` | enum `user_job`, nullable | `accountant`, `data-analyst`, `devops-engineer`, `software-engineer` or `technical-writer`. Null: no workspace. |
 | `created_at` | timestamp with time zone | Set by the database. |
@@ -263,7 +262,7 @@ The primary key is the pair, so the same request can't be sent twice. Two users 
 | Legal pages | Privacy policy and terms of service in the three languages, linked from every footer. | jdessoli |
 | Search engines | A title and description on every page, language links, `sitemap.xml` and `robots.txt`. | jdessoli |
 | Docker setup | `make prod` and `make dev`, nginx with HTTPS, a development stack with hot reload. | amartel, mmansier, jdessoli |
-| CI | Conventional commits checked by commitlint, and lint, type checks and builds on every pull request. | amartel |
+| CI | Conventional commits checked by commitlint, on the developer's machine and on every pull request. | amartel |
 
 ## Modules
 
@@ -357,7 +356,7 @@ The workspace terminal also uses a WebSocket. It is described with the workspace
 **Why:** Silk Space is run by HR admins. They create the accounts, give each employee a job (and with it a workspace) and delete the accounts of the people who leave. Employees only see and change their own account.
 
 **Roles:**
-- **Admin:** the admin dashboard, with the system overview and every account. An admin can create users and other admins, change anyone's names, username, job and role, and delete accounts.
+- **Admin:** the admin dashboard, with the workspace metrics in Grafana and every account. An admin can create users and other admins, change anyone's names, username, job and role, and delete accounts.
 - **User:** their own dashboard and statistics, their workspace, their friends, and their profile, where they can change their names, username and password, but not their job or role.
 - **Guest:** an account without a job, after a sign up or a first 42 login. A guest has their profile and friends, and a page that tells them to wait for an admin. They become a user as soon as an admin gives them a job, and a guest again if the job is removed.
 
@@ -486,7 +485,7 @@ The workspace terminal also uses a WebSocket. It is described with the workspace
 1. "login with 42" opens `/api/auth/42/login`. The backend redirects the browser to the 42 intra with our `client_id`, the `redirect_uri`, `scope=public` and a random `state`, which it also keeps in a signed `oauth_state` cookie for 10 minutes.
 2. The user accepts on the intra, which sends the browser back to `/api/auth/42/callback` with a `code` and the same `state`.
 3. The backend checks that the `state` matches the cookie, so a login this browser didn't start is refused (CSRF protection). It then trades the `code` and our client secret for an access token, server to server: the secret never reaches the browser.
-4. With that token it reads the profile from `/v2/me` (id, login, email, names, picture), then drops the token. Nothing from 42 is stored besides those fields.
+4. With that token it reads the profile from `/v2/me` (id, login, email, names), then drops the token. Nothing from 42 is stored besides those fields. The 42 picture isn't used: 42's CDN only serves it with a token, so a browser can't load it.
 5. It finds the account: the one with the same 42 id, or else the one with the same email, or else a new guest account with no job, so no workspace until an admin assigns one. An account found by its email is now linked to this 42 account: its password is removed and every browser logged in to it is logged out, because 42 has proven that the email belongs to this person while anyone can sign up with any email. From then on, it logs in with 42 only.
 6. It opens a session like a password login does (our own `session` cookie) and sends the browser to its dashboard (`/admin`, `/user` or `/guest`).
 
@@ -501,23 +500,19 @@ If anything fails (the user cancels, the login took too long, 42 is unreachable,
 **How it works:**
 - **Activity data:** every terminal opened is recorded with its start and its last activity (`terminal_sessions`). `GET /api/stats/me` (`srcs/backend/app/routers/stats.py`) merges the terminals open at the same time, so they count once, and computes the time spent this week, this month and on each day of the week, in the company's time zone (`TIMEZONE`, Europe/Paris by default). It also reads the memory the user's workspace uses right now from Docker.
 - **User dashboard:** the time this week and this month, a chart of the hours per day, and a ring with the used and free memory of the workspace.
-- **Admin dashboard:** the same overview, the number of registered users, and the Grafana view of each workspace (CPU, memory, network, uptime over time, see the monitoring module).
+- **Admin dashboard:** the number of registered users and of workspaces, the Grafana view of each workspace (CPU, memory, network, uptime over time, see the monitoring module), and the same overview of their own workspace if the admin has a job.
 
 ### Minor (module of choice): CI/CD with conventional commits and automated checks (1 pt)
 
 *Worked on by:* amartel, mmansier
 
-**Why we chose it:** five people pushed to the same repository. Clear commit messages and automatic checks on every pull request catch a broken build or an unreadable history before it reaches `master`, instead of during an evaluation.
+**Why we chose it:** five people pushed to the same repository. Clear commit messages, checked on every pull request, and a required review keep the history readable and stop unreviewed changes from reaching `master`.
 
 **How it works:**
-- **Conventional commits:** every commit message follows the conventional commits format (`feat`, `fix`, `docs`, `refactor`...), defined in `commitlint.config.js`. A Husky `commit-msg` hook refuses a noncompliant commit on the developer's machine, and the `commit-lint` workflow (`.github/workflows/commit-lint.yml`) checks every commit of a pull request again on GitHub.
-- **Automated checks:** the `ci` workflow (`.github/workflows/ci.yml`) runs on every pull request:
-  - **frontend:** install from the lockfile, ESLint, the TypeScript type check and the production build;
-  - **backend:** Ruff, and an import of the FastAPI app, which builds every router, schema and setting;
-  - **docker:** the compose files of `make dev` and `make prod` are valid, and so are the Prometheus configuration and alert rules (`promtool`).
+- **Conventional commits:** since commitlint was set up, every commit message follows the conventional commits format (`feat`, `fix`, `docs`, `refactor`...), defined in `commitlint.config.js`. A Husky `commit-msg` hook refuses a noncompliant commit on the developer's machine, and the `commit-lint` workflow (`.github/workflows/commit-lint.yml`) checks every commit of a pull request again on GitHub.
 - **Pull requests:** `master` is protected on GitHub: no direct push, no force push, and every pull request needs an approval from another member.
 
-**Value for the project:** a mistake that breaks the build, the API or the stack shows up on the pull request, with the step that failed, and the git history reads as a list of changes.
+**Value for the project:** a commit message that doesn't follow the format is refused before it reaches `master`, every change is reviewed by another member, and the git history reads as a list of changes.
 
 ## Individual Contributions
 

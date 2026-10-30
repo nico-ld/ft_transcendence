@@ -88,7 +88,13 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
 		return () => {
 			clearTimeout(retry);
 			socket.onclose = null; // leaving the app on purpose, no reconnect
-			socket.close();
+			socket.onmessage = null;
+			// closing a socket still connecting is an error in the console (a
+			// redirect to the login page or strict mode in dev) so we wait for it
+			if (socket.readyState === WebSocket.CONNECTING)
+				socket.onopen = () => socket.close();
+			else
+				socket.close();
 		};
 	}, []);
 

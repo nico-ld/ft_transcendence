@@ -48,18 +48,15 @@ def login_failed(reason: FtLoginError) -> RedirectResponse:
     return RedirectResponse(f"{settings.frontend_url}/login?error={reason}")
 
 
-class FtImage(BaseModel):
-    link: str | None = None
-
-
-# Fields matching 42 oauth response
+# Fields matching 42 oauth response, the picture isnt kept because
+# 42 cdn doesn't allow fetching without a bearer and I don't want to
+# add it
 class FtProfile(BaseModel):
     id: int
     email: Email
     login: str
     first_name: str
     last_name: str
-    image: FtImage | None = None
 
 
 def get_or_create_42_user(profile: FtProfile) -> User:
@@ -89,7 +86,6 @@ def get_or_create_42_user(profile: FtProfile) -> User:
             profile.last_name,
             profile.email,
             Role.GUEST,
-            avatar=profile.image.link if profile.image else None,
             ft_id=profile.id,
         )
     except IntegrityError:

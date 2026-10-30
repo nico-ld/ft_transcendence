@@ -30,7 +30,10 @@ async def events(ws: WebSocket):
     token = ws.cookies.get(SESSION_COOKIE)
     user = await run_in_threadpool(user_from_token, token)
     if user is None:
-        await ws.close(code=status.WS_1008_POLICY_VIOLATION)
+        # we accept and close because a refused handshake is a red error in the
+        # browser console, a clean close isnt. 4401 also stops the reconnects
+        await ws.accept()
+        await ws.close(*LOGGED_OUT)
         return
     await ws.accept()
     came_online = manager.connect(user.id, ws)

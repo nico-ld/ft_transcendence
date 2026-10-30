@@ -182,11 +182,13 @@
     }
   },
   "Stats": {
-    "title": "System Overview",
+    "title": "Your workspace",
+    "overview": "Overview",
+    "registered": "Registered users",
+    "workspaces": "Workspaces",
     "weekLabel": "Daily log time",
     "week": "This week",
     "month": "This month",
-    "extra": "Registered users",
     "grafana": "Show metrics in Grafana",
     "grafanaTitle": "Workspace metrics",
     "grafanaUser": "Workspace",

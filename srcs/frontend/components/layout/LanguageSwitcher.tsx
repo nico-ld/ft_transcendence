@@ -25,7 +25,6 @@ const LANGUAGE_NAMES: Record<Locale, string> = {
 };
 
 function LanguageOptions() {
-	const t = useTranslations("Language");
 	const locale = useLocale();
 	const pathname = usePathname();
 	const router = useRouter();

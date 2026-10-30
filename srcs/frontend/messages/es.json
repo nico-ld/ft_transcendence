@@ -182,11 +182,13 @@
     }
   },
   "Stats": {
-    "title": "Resumen del sistema",
+    "title": "Tu espacio de trabajo",
+    "overview": "Resumen",
+    "registered": "Usuarios registrados",
+    "workspaces": "Espacios de trabajo",
     "weekLabel": "Tiempo de conexión diario",
     "week": "Esta semana",
     "month": "Este mes",
-    "extra": "Usuarios registrados",
     "grafana": "Ver las métricas en Grafana",
     "grafanaTitle": "Métricas de los espacios de trabajo",
     "grafanaUser": "Espacio de trabajo",

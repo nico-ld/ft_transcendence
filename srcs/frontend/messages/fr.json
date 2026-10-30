@@ -179,11 +179,13 @@
     }
   },
   "Stats": {
-    "title": "Aperçu du système",
+    "title": "Votre espace de travail",
+    "overview": "Vue d'ensemble",
+    "registered": "Utilisateurs inscrits",
+    "workspaces": "Espaces de travail",
     "weekLabel": "Temps de connexion quotidien",
     "week": "Cette semaine",
     "month": "Ce mois",
-    "extra": "Utilisateurs inscrits",
     "grafana": "Voir les métriques dans Grafana",
     "grafanaTitle": "Métriques des espaces de travail",
     "grafanaUser": "Espace de travail",

@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { RemoveUser } from "@/actions/RemoveUser";
-import { AdminBadge, GuestBadge, UserBadge } from "@/components/layout/CustomBadge";
+import { GuestBadge, UserBadge } from "@/components/layout/CustomBadge";
 import {
 	Item,
 	ItemActions,

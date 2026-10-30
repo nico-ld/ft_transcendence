@@ -81,4 +81,4 @@ app.include_router(metrics.router)
 
 @app.get("/")
 def root():
-    return {"status": "ok", "robert": 67, "uptime": int(time.time() - start)}
+    return {"status": "ok", "uptime": int(time.time() - start)}

@@ -1,8 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { useTheme } from "next-themes";
-import {ChevronDown, LogOut, Moon, UserRoundPen, Sun, Users} from "lucide-react";
+import {ChevronDown, LogOut, UserRoundPen, Users} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -28,10 +27,8 @@ import { ThemeSwitch } from "@/components/layout/ThemeSwicth";
 
 
 export function Header({ role, username, avatarUrl }: HeaderProps) {
-	const { resolvedTheme, setTheme } = useTheme();
 	const [isPending, startTransition] = useTransition();
 
-	const isDark = resolvedTheme === "dark";
 	const home = ROLE_HOME[role];
 	
 	const locale = useLocale();

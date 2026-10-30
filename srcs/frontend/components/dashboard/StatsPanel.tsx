@@ -4,7 +4,7 @@ import { MemoryRing } from "@/components/dashboard/MemoryRing";
 import { WeekChart } from "@/components/dashboard/WeekChart";
 import { useTranslations } from "next-intl";
 
-function StatBlock({label, value}: {label: string; value: string}) {
+export function StatBlock({label, value}: {label: string; value: string}) {
 	return (
 		<div className="rounded-xl border p-3">
 			<p className="text-xs uppercase tracking-wider text-muted-foreground">{label}</p>
@@ -13,11 +13,11 @@ function StatBlock({label, value}: {label: string; value: string}) {
 	);
 }
 
-export function StatsPanel({stats, extras = []}: StatsPanelProps) {
+export function StatsPanel({stats}: StatsPanelProps) {
 	const t = useTranslations("Stats");
 
 	return (
-		<Card className="ring-border">
+		<Card className="h-fit ring-border">
 			<CardHeader>
 				<CardTitle>{t("title")}</CardTitle>
 			</CardHeader>
@@ -30,17 +30,6 @@ export function StatsPanel({stats, extras = []}: StatsPanelProps) {
 				</div>
 
 				<WeekChart data={stats.daily} />
-
-				{extras.length > 0 && (
-					<dl className="space-y-2 border-t pt-4 text-sm">
-						{extras.map((item) => (
-							<div key={item.label} className="flex justify-between">
-								<dt className="text-muted-foreground">{item.label}</dt>
-								<dd className="font-medium">{item.value}</dd>
-							</div>
-						))}
-					</dl>
-				)}
 			</CardContent>
 		</Card>
 	);
