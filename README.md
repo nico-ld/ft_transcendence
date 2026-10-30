@@ -500,7 +500,7 @@ If anything fails (the user cancels, the login took too long, 42 is unreachable,
 **How it works:**
 - **Activity data:** every terminal opened is recorded with its start and its last activity (`terminal_sessions`). `GET /api/stats/me` (`srcs/backend/app/routers/stats.py`) merges the terminals open at the same time, so they count once, and computes the time spent this week, this month and on each day of the week, in the company's time zone (`TIMEZONE`, Europe/Paris by default). It also reads the memory the user's workspace uses right now from Docker.
 - **User dashboard:** the time this week and this month, a chart of the hours per day, and a ring with the used and free memory of the workspace.
-- **Admin dashboard:** the same overview of their own workspace if the admin has a job, and the Grafana view of each workspace (CPU, memory, network, uptime over time, see the monitoring module).
+- **Admin dashboard:** the number of registered users and of workspaces, the Grafana view of each workspace (CPU, memory, network, uptime over time, see the monitoring module), and the same overview of their own workspace if the admin has a job.
 
 ### Minor (module of choice): CI/CD with conventional commits and automated checks (1 pt)
 

@@ -180,6 +180,9 @@
   },
   "Stats": {
     "title": "Votre espace de travail",
+    "overview": "Vue d'ensemble",
+    "registered": "Utilisateurs inscrits",
+    "workspaces": "Espaces de travail",
     "weekLabel": "Temps de connexion quotidien",
     "week": "Cette semaine",
     "month": "Ce mois",

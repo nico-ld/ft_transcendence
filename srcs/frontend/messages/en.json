@@ -183,6 +183,9 @@
   },
   "Stats": {
     "title": "Your workspace",
+    "overview": "Overview",
+    "registered": "Registered users",
+    "workspaces": "Workspaces",
     "weekLabel": "Daily log time",
     "week": "This week",
     "month": "This month",
