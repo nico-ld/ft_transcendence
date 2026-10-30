@@ -17,7 +17,7 @@ import { ROLES } from "@/types/User";
 import { DEFAULT_ORDER } from "@/types/UserList";
 
 import type { JobFilter, RoleFilter, SortOrder, SortKey } from "@/types/User";
-import type { Filters, Sort, UserFilterProps } from "@/types/UserList";
+import type { UserFilterProps } from "@/types/UserList";
 import { FilterSub } from "./FilterSub";
 
 export function UserFilter({sort, onSortChange, filters, onFiltersChange, count}: UserFilterProps) {

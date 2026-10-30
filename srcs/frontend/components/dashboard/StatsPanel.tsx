@@ -13,7 +13,7 @@ function StatBlock({label, value}: {label: string; value: string}) {
 	);
 }
 
-export function StatsPanel({stats, extras = []}: StatsPanelProps) {
+export function StatsPanel({stats}: StatsPanelProps) {
 	const t = useTranslations("Stats");
 
 	return (
@@ -30,17 +30,6 @@ export function StatsPanel({stats, extras = []}: StatsPanelProps) {
 				</div>
 
 				<WeekChart data={stats.daily} />
-
-				{extras.length > 0 && (
-					<dl className="space-y-2 border-t pt-4 text-sm">
-						{extras.map((item) => (
-							<div key={item.label} className="flex justify-between">
-								<dt className="text-muted-foreground">{item.label}</dt>
-								<dd className="font-medium">{item.value}</dd>
-							</div>
-						))}
-					</dl>
-				)}
 			</CardContent>
 		</Card>
 	);
